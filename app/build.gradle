@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'android-apt' (废弃)
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "democode.kiloproject"
+        minSdkVersion 15
+        targetSdkVersion 26
+
+        //方法数限制解除
+        multiDexEnabled true
+
+        //使用Apache库
+        useLibrary 'org.apache.http.legacy'
+
+        //JAVA1.8
+        jackOptions {
+            enabled true
+        }
+
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        //JAVA1.8使用
+        compileOptions {
+            targetCompatibility JavaVersion.VERSION_1_8
+            sourceCompatibility JavaVersion.VERSION_1_8
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    //链式网络请求
+    compile 'com.zhouyou:rxeasyhttp:2.0.4'
+
+    //权限管理
+    compile 'com.yanzhenjie:permission:1.1.2'
+
+    //ListView 下拉刷新的外层布局
+    compile 'com.yalantis:phoenix:1.2.3'
+
+    //ListView Adapter通用
+    compile 'com.zhy:base-adapter:3.0.3'
+
+    //sqlite数据库
+    compile 'org.litepal.android:core:1.6.0'
+
+    //三级PickerView控件
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:8.4.0'
+//    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+}
