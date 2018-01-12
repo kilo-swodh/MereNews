@@ -16,9 +16,9 @@ android {
         useLibrary 'org.apache.http.legacy'
 
         //JAVA1.8
-        jackOptions {
-            enabled true
-        }
+//        jackOptions {
+//            enabled true
+//        }
 
         versionCode 1
         versionName "1.0"
@@ -31,43 +31,51 @@ android {
         }
 
         //JAVA1.8使用
-        compileOptions {
-            targetCompatibility JavaVersion.VERSION_1_8
-            sourceCompatibility JavaVersion.VERSION_1_8
-        }
-
+//        compileOptions {
+//            targetCompatibility JavaVersion.VERSION_1_8
+//            sourceCompatibility JavaVersion.VERSION_1_8
+//        }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-
     //链式网络请求
     compile 'com.zhouyou:rxeasyhttp:2.0.4'
-
     //权限管理
     compile 'com.yanzhenjie:permission:1.1.2'
-
     //ListView 下拉刷新的外层布局
     compile 'com.yalantis:phoenix:1.2.3'
-
     //ListView Adapter通用
     compile 'com.zhy:base-adapter:3.0.3'
-
     //sqlite数据库
     compile 'org.litepal.android:core:1.6.0'
-
     //三级PickerView控件
     compile 'com.contrarywind:Android-PickerView:3.2.7'
-
     //ButterKnife
     compile 'com.jakewharton:butterknife:8.4.0'
-//    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
+    //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+
+    compile 'com.peng.library:one-push-core:1.2.3'
+    //华为推送和HMS服务只能选择其中的一个
+    //compile 'com.peng.library:one-push-huawei:1.2.1'
+    compile 'com.peng.library:one-push-huawei-hms:1.2.2'
+    compile 'com.peng.library:one-push-xiaomi:1.2.2'
+    compile 'com.peng.library:one-push-umeng:1.2.3'
+    compile 'com.peng.library:one-push-getui:1.2.1'
+    compile 'com.peng.library:one-push-meizu:1.2.3'
+    compile 'com.peng.library:one-push-jpush:1.2.1'
 }

@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context="democode.kiloproject.MainActivity">
 
+    <democode.kiloproject.widget.TitleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></democode.kiloproject.widget.TitleView>
+
+
     <TextView
         android:id="@+id/tv_demo"
         android:layout_width="wrap_content"
@@ -18,11 +26,11 @@
 
     <Button
         android:id="@+id/btn_show_picker"
-        android:text="Show pickerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="224dp"
+        android:text="Show pickerView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

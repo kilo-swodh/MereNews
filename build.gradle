@@ -3,21 +3,28 @@
 buildscript {
     repositories {
         jcenter()
+        google()
+        maven { url 'https://jitpack.io' }
+        //由于魅族个推等第三方库使用了不同的仓库，需要加上这个
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        maven { url 'http://developer.huawei.com/repo/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         //APT(废弃)
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         //JAVA1.8
-        classpath'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath'me.tatarka:gradle-retrolambda:3.3.0'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
