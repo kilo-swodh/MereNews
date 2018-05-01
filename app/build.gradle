@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt' (废弃)
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "democode.kiloproject"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
 
         //方法数限制解除
         multiDexEnabled true
@@ -44,38 +44,35 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
     //链式网络请求
-    compile 'com.zhouyou:rxeasyhttp:2.0.4'
+    implementation 'com.zhouyou:rxeasyhttp:2.0.4'
     //权限管理
-    compile 'com.yanzhenjie:permission:1.1.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     //ListView 下拉刷新的外层布局
-    compile 'com.yalantis:phoenix:1.2.3'
+//    implementation 'com.yalantis:phoenix:1.2.3'
     //ListView Adapter通用
-    compile 'com.zhy:base-adapter:3.0.3'
+    implementation 'com.zhy:base-adapter:3.0.3'
     //sqlite数据库
-    compile 'org.litepal.android:core:1.6.0'
-    //三级PickerView控件
-    compile 'com.contrarywind:Android-PickerView:3.2.7'
+//    implementation 'org.litepal.android:core:1.6.0'
     //ButterKnife
-    compile 'com.jakewharton:butterknife:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.4.0'
     //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
+    implementation 'com.mylhyl:acp:1.2.0'
 
-    compile 'com.peng.library:one-push-core:1.2.3'
-    //华为推送和HMS服务只能选择其中的一个
-    //compile 'com.peng.library:one-push-huawei:1.2.1'
-    compile 'com.peng.library:one-push-huawei-hms:1.2.2'
-    compile 'com.peng.library:one-push-xiaomi:1.2.2'
-    compile 'com.peng.library:one-push-umeng:1.2.3'
-    compile 'com.peng.library:one-push-getui:1.2.1'
-    compile 'com.peng.library:one-push-meizu:1.2.3'
-    compile 'com.peng.library:one-push-jpush:1.2.1'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    implementation 'com.android.support:support-v4:27.1.1'
+
+    implementation 'com.blankj:utilcode:1.14.1'
+    //工具包 https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
 }

@@ -2,7 +2,9 @@ package democode.kiloproject;
 
 import android.app.Application;
 
-import org.litepal.LitePal;
+import com.zhouyou.http.EasyHttp;
+
+//import org.litepal.LitePal;
 
 /**
  * Created by Administrator on 2017/12/9.
@@ -10,11 +12,14 @@ import org.litepal.LitePal;
 
 public class MyApplication extends Application {
 
-
+    String URL = "http://www.ssqfs.com/api/";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        LitePal.initialize(this);
+        EasyHttp.init(this);//默认初始化
+        EasyHttp.getInstance()
+                .setBaseUrl(URL);
+//        LitePal.initialize(this);
     }
 }

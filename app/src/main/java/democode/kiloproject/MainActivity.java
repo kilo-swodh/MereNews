@@ -2,149 +2,168 @@ package democode.kiloproject;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
-import com.yanzhenjie.alertdialog.AlertDialog;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.PermissionListener;
-import com.yanzhenjie.permission.RationaleListener;
+import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.callback.SimpleCallBack;
+import com.zhouyou.http.exception.ApiException;
+import com.zhy.adapter.abslistview.CommonAdapter;
+import com.zhy.adapter.abslistview.ViewHolder;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import democode.kiloproject.sqlite.Album;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.btn_show_picker)
-    Button btnShowPicker;
-    @BindView(R.id.tv_demo)
-    TextView tvDemo;
+
+    boolean isStart = false;
+    @BindView(R.id.lv_data)
+    ListView lvData;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+
+    private List<ItemData> mDatas;
+    Gson gson = new Gson();
+    CommonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        isStart = true;
 //        requestPermission();
     }
 
-    /**
-     * 申请权限
-     */
-    private void requestPermission() {
-        AndPermission
-                .with(mActivity)
-                .requestCode(200)
-                .permission(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-                )
-                .rationale(rationaleListener)
-                .callback(listener)
-                .start();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isStart) {
+
+            //初始化逻辑代码
+            doSomething();
+
+            isStart = false;
+        }
     }
 
-    /**
-     * 权限监听
-     * 国产系统适配版
-     */
-    private PermissionListener listener = new PermissionListener() {
-        @Override
-        public void onSucceed(int requestCode, List<String> grantedPermissions) {
-            // Successfully.
-            if (requestCode == 200) {
-                if (AndPermission.hasPermission(mActivity,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE)) {
-                    // TODO 执行拥有权限时的下一步。
-                    saveSQL();
-                } else {
-                    // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
-                    AndPermission.defaultSettingDialog(mActivity, requestCode).show();
+    private void doSomething() {
+        mDatas = new ArrayList<>();
 
-                    // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
-                }
-            }
-        }
-
-        @Override
-        public void onFailed(int requestCode, List<String> deniedPermissions) {
-            // Failure.
-            if (requestCode == 200) {
-                if (AndPermission.hasPermission(mActivity,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE)) {
-                    // TODO 执行拥有权限时的下一步。
-
-                } else {
-                    // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
-                    AndPermission.defaultSettingDialog(mActivity, requestCode).show();
-
-                    // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
-                }
-            }
-        }
-    };
-
-    /**
-     * 自定义对话框提醒用户授予权限
-     */
-    private RationaleListener rationaleListener = (requestCode, rationale) -> {
-        AlertDialog.newBuilder(this)
-                .setTitle("Tips")
-                .setMessage("Request permission to recommend content for you.")
-                .setPositiveButton("OK", (dialog, which) -> {
-                    rationale.resume();
-                })
-                .setNegativeButton("NO", (dialog, which) -> {
-                    rationale.cancel();
-                }).show();
-    };
-
-
-    /**
-     * 进行保存数据库操作(往外部存储卡)
-     */
-    private void saveSQL() {
-        Album album = new Album("name", 135.4f);
-        album.save();
-    }
-
-    @OnClick(R.id.btn_show_picker)
-    public void onViewClicked() {
-        //时间选择器
-        TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+        //刷新加载
+        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                tvDemo.setText(new SimpleDateFormat("yyyyMMddHHmmss").format(date));
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
-        }).build();
-        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-        pvTime.show();
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
 
-        //条件选择器
-//        OptionsPickerView pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
-//                //返回的分别是三个级别的选中位置
-//                String tx = options1Items.get(options1).getPickerViewText()
-//                        + options2Items.get(options1).get(option2)
-//                        + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
-//                tvOptions.setText(tx);
-//            }
-//        }).build();
-//        pvOptions.setPicker(options1Items, options2Items, options3Items);
-//        pvOptions.show();
+                //数据请求
+                EasyHttp.get("index.php?app=search&act=index&cate_id=15")
+                        .readTimeOut(30 * 1000)//局部定义读超时
+                        .writeTimeOut(30 * 1000)
+                        .connectTimeout(30 * 1000)
+//                .params("name","22)
+                        .timeStamp(true)
+                        .execute(new SimpleCallBack<String>() {
+                            @Override
+                            public void onError(ApiException e) {
+                                ToastUtils.showShort(e.getMessage());
+                                refreshlayout.finishLoadMore(false);//传入false表示加载失败
+                            }
+
+                            @Override
+                            public void onSuccess(String response) {
+                                if (response != null) {
+                                    GoodsData user = gson.fromJson(response, GoodsData.class);
+                                    for (GoodsData.ResultBean bean : user.getResult()) {
+                                        mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(),bean.getGoods_name()));
+                                    }
+                                };
+                                adapter.notifyDataSetChanged();
+                                refreshlayout.finishLoadMore(true/*,false*/);//传入false表示加载失败
+                            }
+                        });
+            }
+        });
+
+        //权限
+        Acp.getInstance(this).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                , Manifest.permission.READ_PHONE_STATE)
+                        /*以下为自定义提示语、按钮文字
+                        .setDeniedMessage()
+                        .setDeniedCloseBtn()
+                        .setDeniedSettingBtn()
+                        .setRationalMessage()
+                        .setRationalBtn()*/
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        requestData();
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        ToastUtils.showShort("权限被拒绝");
+                    }
+                });
+
+    }
+
+    private void requestData(){
+        //数据请求
+        EasyHttp.get("index.php?app=search&act=index&cate_id=15")
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .connectTimeout(30 * 1000)
+//                .params("name","22)
+                .timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.showShort(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        if (response != null) {
+                            GoodsData user = gson.fromJson(response, GoodsData.class);
+                            for (GoodsData.ResultBean bean : user.getResult()) {
+                                mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(),bean.getGoods_name()));
+                            }
+                        };
+
+                        adapter = new CommonAdapter<ItemData>(MainActivity.this, R.layout.item_layout, mDatas) {
+                            @Override
+                            protected void convert(ViewHolder viewHolder, ItemData item, int position) {
+                                viewHolder.setText(R.id.tv_title, item.getText());
+                                Glide.with(MainActivity.this).load(item.getImgUrl()).into((ImageView) viewHolder.getView(R.id.iv_image));
+                            }
+                        };
+                        lvData.setAdapter(adapter);
+                    }
+                });
     }
 }
