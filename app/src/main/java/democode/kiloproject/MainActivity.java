@@ -30,8 +30,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
-
-    boolean isStart = false;
     @BindView(R.id.lv_data)
     ListView lvData;
     @BindView(R.id.refreshLayout)
@@ -46,23 +44,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        isStart = true;
-//        requestPermission();
+        initStateBar(R.color.colorPrimary,false);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (isStart) {
-
-            //初始化逻辑代码
-            doSomething();
-
-            isStart = false;
-        }
-    }
-
-    private void doSomething() {
+    void initView() {
         mDatas = new ArrayList<>();
 
         //刷新加载
@@ -129,7 +115,6 @@ public class MainActivity extends BaseActivity {
                         ToastUtils.showShort("权限被拒绝");
                     }
                 });
-
     }
 
     private void requestData(){

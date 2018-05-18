@@ -54,13 +54,17 @@ dependencies {
     //链式网络请求
     implementation 'com.zhouyou:rxeasyhttp:2.0.4'
     //权限管理
+
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     //ListView 下拉刷新的外层布局
 //    implementation 'com.yalantis:phoenix:1.2.3'
+
     //ListView Adapter通用
     implementation 'com.zhy:base-adapter:3.0.3'
+
     //sqlite数据库
 //    implementation 'org.litepal.android:core:1.6.0'
+
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.4.0'
     //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
@@ -73,6 +77,11 @@ dependencies {
 
     implementation 'com.android.support:support-v4:27.1.1'
 
+    //工具包
+    // 文档https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
     implementation 'com.blankj:utilcode:1.14.1'
-    //工具包 https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
+
+    //状态栏沉浸
+    // 文档https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

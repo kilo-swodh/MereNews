@@ -2,6 +2,7 @@ package democode.kiloproject;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.Utils;
 import com.zhouyou.http.EasyHttp;
 
 //import org.litepal.LitePal;
@@ -17,9 +18,16 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //网络框架
         EasyHttp.init(this);//默认初始化
         EasyHttp.getInstance()
                 .setBaseUrl(URL);
+
+        //数据库
 //        LitePal.initialize(this);
+
+        //Util工具包
+        Utils.init(this);
     }
 }
