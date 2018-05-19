@@ -1,21 +1,21 @@
-package democode.kiloproject;
+package democode.kiloproject.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.mylhyl.acp.Acp;
-import com.mylhyl.acp.AcpListener;
-import com.mylhyl.acp.AcpOptions;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -27,6 +27,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import democode.kiloproject.GoodsData;
+import democode.kiloproject.ItemData;
+import democode.kiloproject.R;
+
+import static democode.kiloproject.activity.H5Activity.WEBVIEW_URL;
 
 public class MainActivity extends BaseActivity {
 
@@ -44,7 +49,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initStateBar(R.color.colorPrimary,false);
+        initStateBar(R.color.colorPrimary, false);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class MainActivity extends BaseActivity {
         mDatas = new ArrayList<>();
 
         //刷新加载
-        RefreshLayout refreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
+        RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -62,62 +67,53 @@ public class MainActivity extends BaseActivity {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
 
-                //数据请求
-                EasyHttp.get("index.php?app=search&act=index&cate_id=15")
-                        .readTimeOut(30 * 1000)//局部定义读超时
-                        .writeTimeOut(30 * 1000)
-                        .connectTimeout(30 * 1000)
+                if (adapter != null){
+                    //数据请求
+                    EasyHttp.get("index.php?app=search&act=index&cate_id=15")
+                            .readTimeOut(30 * 1000)//局部定义读超时
+                            .writeTimeOut(30 * 1000)
+                            .connectTimeout(30 * 1000)
 //                .params("name","22)
-                        .timeStamp(true)
-                        .execute(new SimpleCallBack<String>() {
-                            @Override
-                            public void onError(ApiException e) {
-                                ToastUtils.showShort(e.getMessage());
-                                refreshlayout.finishLoadMore(false);//传入false表示加载失败
-                            }
+                            .timeStamp(true)
+                            .execute(new SimpleCallBack<String>() {
+                                @Override
+                                public void onError(ApiException e) {
+                                    ToastUtils.showShort(e.getMessage());
+                                    refreshlayout.finishLoadMore(false);//传入false表示加载失败
+                                }
 
-                            @Override
-                            public void onSuccess(String response) {
-                                if (response != null) {
-                                    GoodsData user = gson.fromJson(response, GoodsData.class);
-                                    for (GoodsData.ResultBean bean : user.getResult()) {
-                                        mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(),bean.getGoods_name()));
+                                @Override
+                                public void onSuccess(String response) {
+                                    if (response != null) {
+                                        GoodsData user = gson.fromJson(response, GoodsData.class);
+                                        for (GoodsData.ResultBean bean : user.getResult()) {
+                                            mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(), bean.getGoods_name()));
+                                        }
                                     }
-                                };
-                                adapter.notifyDataSetChanged();
-                                refreshlayout.finishLoadMore(true/*,false*/);//传入false表示加载失败
-                            }
-                        });
+                                    adapter.notifyDataSetChanged();
+                                    refreshlayout.finishLoadMore(true/*,false*/);//传入false表示加载失败
+                                }
+                            });
+            }else {
+                    requestData();
+                }
             }
         });
 
-        //权限
-        Acp.getInstance(this).request(new AcpOptions.Builder()
-                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                , Manifest.permission.READ_PHONE_STATE)
-                        /*以下为自定义提示语、按钮文字
-                        .setDeniedMessage()
-                        .setDeniedCloseBtn()
-                        .setDeniedSettingBtn()
-                        .setRationalMessage()
-                        .setRationalBtn()*/
-                        .build(),
-                new AcpListener() {
-                    @Override
-                    public void onGranted() {
-                        requestData();
-                    }
-
-                    @Override
-                    public void onDenied(List<String> permissions) {
-                        ToastUtils.showShort("权限被拒绝");
-                    }
-                });
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(permissions -> {
+                    requestData();
+                })
+                .onDenied(permissions -> {
+                    // TODO ...
+                })
+                .start();
     }
 
-    private void requestData(){
+    private void requestData() {
         //数据请求
         EasyHttp.get("index.php?app=search&act=index&cate_id=15")
                 .readTimeOut(30 * 1000)//局部定义读超时
@@ -136,9 +132,10 @@ public class MainActivity extends BaseActivity {
                         if (response != null) {
                             GoodsData user = gson.fromJson(response, GoodsData.class);
                             for (GoodsData.ResultBean bean : user.getResult()) {
-                                mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(),bean.getGoods_name()));
+                                mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(), bean.getGoods_name()));
                             }
-                        };
+                        }
+                        ;
 
                         adapter = new CommonAdapter<ItemData>(MainActivity.this, R.layout.item_layout, mDatas) {
                             @Override
@@ -148,6 +145,9 @@ public class MainActivity extends BaseActivity {
                             }
                         };
                         lvData.setAdapter(adapter);
+                        Intent i = new Intent(mActivity, H5Activity.class);
+                        i.putExtra(WEBVIEW_URL, "http:www.baidu.com");
+                        startActivity(i);
                     }
                 });
     }

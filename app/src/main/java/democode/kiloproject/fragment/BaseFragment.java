@@ -1,4 +1,4 @@
-package democode.kiloproject;
+package democode.kiloproject.fragment;
 
 import android.app.Activity;
 import android.content.Context;

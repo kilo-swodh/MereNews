@@ -6,6 +6,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!--防止启动黑屏,影响体验,也可换为本地图片-->
+        <!--<item name="android:windowBackground">@color/color_white</item>-->
+
+        <item name="config_color_divider">@color/divider</item>
+        <!--标题栏主题样式-->
+        <item name="CustomTitleBarStyle">@style/QDTopBar</item>
+        <!--设置标题栏高度-->
+        <item name="titlebar_height">56dp</item>
+    </style>
+
+    <style name="QDTopBar" parent="CustomTitleBar.TopBar">
+        <item name="titlebar_bg_color">@color/colorPrimary</item>
+        <item name="titlebar_title_text_size">18sp</item>
+        <item name="titlebar_title_color">@color/color_white</item>
+        <item name="titlebar_subtitle_color">@color/config_color_white</item>
+        <item name="titlebar_text_btn_color_state_list">@color/config_color_white</item>
+        <item name="titlebar_image_btn_height">48dp</item>
     </style>
 
 </resources>
