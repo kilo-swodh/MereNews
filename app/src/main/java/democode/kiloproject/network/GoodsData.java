@@ -1,4 +1,4 @@
-package democode.kiloproject;
+package democode.kiloproject.network;
 
 import com.google.gson.annotations.SerializedName;
 

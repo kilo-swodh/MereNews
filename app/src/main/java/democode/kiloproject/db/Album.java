@@ -1,4 +1,4 @@
-package democode.kiloproject.sqlite;
+package democode.kiloproject.db;
 
 //import org.litepal.annotation.Column;
 //import org.litepal.crud.DataSupport;

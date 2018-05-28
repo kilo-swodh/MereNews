@@ -1,4 +1,4 @@
-package democode.kiloproject;
+package democode.kiloproject.network;
 
 public class ItemData {
     String imgUrl;

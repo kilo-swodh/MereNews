@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "democode.kiloproject"
         minSdkVersion 15
@@ -84,7 +83,7 @@ dependencies {
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    implementation 'com.blankj:utilcode:1.14.1'
+    implementation 'com.blankj:utilcode:1.16.1'
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
@@ -97,4 +96,8 @@ dependencies {
     //APK下载与更新
     // https://github.com/maning0303/MNUpdateAPK
 //    implementation 'com.github.maning0303:MNUpdateAPK:V1.1.8'
+
+    //跨组件通讯
+    // https://github.com/greenrobot/EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

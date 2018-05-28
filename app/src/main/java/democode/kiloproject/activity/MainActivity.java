@@ -1,14 +1,17 @@
 package democode.kiloproject.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.constraint.Placeholder;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -27,8 +30,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import democode.kiloproject.GoodsData;
-import democode.kiloproject.ItemData;
+import democode.kiloproject.network.GoodsData;
+import democode.kiloproject.network.ItemData;
 import democode.kiloproject.R;
 
 import static democode.kiloproject.activity.H5Activity.WEBVIEW_URL;
@@ -135,13 +138,16 @@ public class MainActivity extends BaseActivity {
                                 mDatas.add(new ItemData("http://img.ssqfs.com/" + bean.getDefault_image(), bean.getGoods_name()));
                             }
                         }
-                        ;
 
                         adapter = new CommonAdapter<ItemData>(MainActivity.this, R.layout.item_layout, mDatas) {
                             @Override
                             protected void convert(ViewHolder viewHolder, ItemData item, int position) {
                                 viewHolder.setText(R.id.tv_title, item.getText());
-                                Glide.with(MainActivity.this).load(item.getImgUrl()).into((ImageView) viewHolder.getView(R.id.iv_image));
+                                Glide.with(mActivity)
+                                        .load(item.getImgUrl())
+                                        .apply(RequestOptions.placeholderOf(R.mipmap.ic_launcher))
+                                        .apply(RequestOptions.errorOf(R.mipmap.ic_launcher_round))
+                                        .into((ImageView) viewHolder.getView(R.id.iv_image));
                             }
                         };
                         lvData.setAdapter(adapter);
