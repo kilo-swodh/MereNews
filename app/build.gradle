@@ -89,10 +89,6 @@ dependencies {
     // https://github.com/gyf-dev/ImmersionBar
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 
-    //通用标题栏
-    // https://github.com/xiaohaibin/CustomTitleBar
-    implementation 'com.xhb:commontitlebar:2.1.0'
-
     //APK下载与更新
     // https://github.com/maning0303/MNUpdateAPK
 //    implementation 'com.github.maning0303:MNUpdateAPK:V1.1.8'
@@ -100,4 +96,9 @@ dependencies {
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //内存泄露检测神器
+    // https://github.com/square/leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

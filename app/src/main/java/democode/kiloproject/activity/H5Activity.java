@@ -1,7 +1,9 @@
 package democode.kiloproject.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,14 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.gyf.barlibrary.ImmersionBar;
-import com.stx.xhb.commontitlebar.CustomTitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import democode.kiloproject.R;
 import democode.kiloproject.web.MWebChromeClient;
 import democode.kiloproject.web.MWebViewClient;
+import democode.kiloproject.widget.TitleBar;
 
 /**
  * 自定义实现的H5Activity类，主要用于在页面中展示H5页面，整个Activity只有一个Fragment控件
@@ -32,8 +33,8 @@ public class H5Activity extends BaseActivity {
     public ProgressBar progressBar;
     @BindView(R.id.webview)
     WebView webview;
-    @BindView(R.id.titlebar)
-    public CustomTitleBar titlebar;
+    @BindView(R.id.title_bar)
+    public TitleBar titlebar;
     @BindView(R.id.iv_error)
     public ImageView ivError;
 
@@ -46,7 +47,7 @@ public class H5Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5);
         ButterKnife.bind(this);
-        initStateBar(R.color.colorPrimary,false);
+        initStateBar(R.color.colorPrimary, false);
     }
 
     @Override
@@ -59,7 +60,10 @@ public class H5Activity extends BaseActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setDatabaseEnabled(false);
         webSettings.setAppCacheEnabled(false);
-        webSettings.setBlockNetworkImage(true);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSettings.setBlockNetworkImage(false);
         webview.addJavascriptInterface(this, "myWebBridge");
 
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -79,7 +83,10 @@ public class H5Activity extends BaseActivity {
         webview.setWebChromeClient(new MWebChromeClient(mActivity));
         webview.setWebViewClient(new MWebViewClient(mActivity));
 
-        titlebar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        titlebar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        titlebar.setTitleColor(Color.WHITE);
+        titlebar.setLeftImageResource(R.drawable.ic_arrow_back_white_24dp);
+        titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -88,9 +95,7 @@ public class H5Activity extends BaseActivity {
         loadURL = getIntent().getStringExtra(WEBVIEW_URL);
         if (!TextUtils.isEmpty(loadURL)) {
             webview.loadUrl(loadURL);
-
             titlebar.setTitle("加载中");
-
         }
     }
 
@@ -134,5 +139,17 @@ public class H5Activity extends BaseActivity {
     public void back() {
         LogUtils.d("JS回调了back()方法");
         onBackPressed();
+    }
+
+    public void loadWebColor(int color, boolean isBlackFront) {
+        initStateBarInt(color, isBlackFront);
+        titlebar.setBackgroundColor(color);
+        if (isBlackFront) {
+            titlebar.setTitleColor(Color.BLACK);
+            titlebar.setLeftImageResource(R.drawable.ic_arrow_back_black_24dp);
+        } else {
+            titlebar.setTitleColor(Color.WHITE);
+            titlebar.setLeftImageResource(R.drawable.ic_arrow_back_white_24dp);
+        }
     }
 }

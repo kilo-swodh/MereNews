@@ -2,12 +2,17 @@ package democode.kiloproject.web;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Toast;
+
+import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import democode.kiloproject.activity.H5Activity;
 
@@ -30,6 +35,7 @@ public class MWebChromeClient extends WebChromeClient {
     public void onProgressChanged(WebView view, int newProgress) {
         if (h5Activity!= null) {
             if (newProgress == 100) {
+                changeColor(view);
                 h5Activity.progressBar.setVisibility(View.GONE);//加载完网页进度条消失
             } else {
                 h5Activity.progressBar.setVisibility(View.VISIBLE);//开始加载网页时显示进度条
@@ -79,5 +85,25 @@ public class MWebChromeClient extends WebChromeClient {
     @Override
     public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
         return super.onJsPrompt(view, url, message, defaultValue, result);
+    }
+
+    protected void changeColor(WebView web) {
+        Bitmap bitmap = ConvertUtils.view2Bitmap(web);
+        int pixel = bitmap.getPixel(3, 3);
+        int redValue = Color.red(pixel);
+        int greenValue = Color.green(pixel);
+        int blueValue = Color.blue(pixel);
+        int alphaValue = Color.alpha(pixel);
+        boolean isWhite = false;
+        if (redValue >= 223 && greenValue >= 223 && blueValue >= 223)
+            isWhite = true;
+        int color = Color.argb(alphaValue, redValue, greenValue, blueValue);
+        String a = "0x" + Integer.toHexString(color);
+        LogUtils.d(h5Activity, "加载颜色" + a);
+        if (isWhite) {
+            h5Activity.loadWebColor(color,true);
+        }else {
+            h5Activity.loadWebColor(color,false);
+        }
     }
 }

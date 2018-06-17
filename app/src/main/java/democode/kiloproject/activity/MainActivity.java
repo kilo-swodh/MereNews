@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity {
                         };
                         lvData.setAdapter(adapter);
                         Intent i = new Intent(mActivity, H5Activity.class);
-                        i.putExtra(WEBVIEW_URL, "http:www.baidu.com");
+                        i.putExtra(WEBVIEW_URL, "http:www.4399.com");
                         startActivity(i);
                     }
                 });
