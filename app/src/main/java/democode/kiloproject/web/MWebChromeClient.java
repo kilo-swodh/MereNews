@@ -51,7 +51,8 @@ public class MWebChromeClient extends WebChromeClient {
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
         if (h5Activity != null){
-            h5Activity.titlebar.setTitle(title);
+//            h5Activity.titlebar.setTitle(title);
+            h5Activity.titlebar.setLeftTitle(title);
         }
     }
 

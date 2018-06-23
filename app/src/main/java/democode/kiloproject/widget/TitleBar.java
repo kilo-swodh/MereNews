@@ -1,5 +1,7 @@
 package democode.kiloproject.widget;
 
+import java.util.LinkedList;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -12,20 +14,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.LinkedList;
-
+/**
+ * 类描述：
+ * 创建人：Bob
+ * 创建时间：2015/9/25 11:36
+ */
 public class TitleBar extends ViewGroup implements View.OnClickListener {
-    private static final int DEFAULT_MAIN_TEXT_SIZE = 18;
-    private static final int DEFAULT_SUB_TEXT_SIZE = 12;
+    private static final int DEFAULT_MAIN_TEXT_SIZE = 20;
+    private static final int DEFAULT_SUB_TEXT_SIZE = 14;
     private static final int DEFAULT_ACTION_TEXT_SIZE = 15;
     private static final int DEFAULT_TITLE_BAR_HEIGHT = 48;
 
     private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";
 
-    private TextView mLeftText;
+    private LinearLayout mLeftLayout;
     private LinearLayout mRightLayout;
     private LinearLayout mCenterLayout;
-    private TextView mCenterText;
+    private TextView mLeftText;
+    private TextView mLeftTitle;
+    private TextView mCenterTitle;
     private TextView mSubTitleText;
     private View mCustomCenterView;
     private View mDividerView;
@@ -59,43 +66,62 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             mStatusBarHeight = getStatusBarHeight();
         }
         mActionPadding = dip2px(5);
-        mOutPadding = dip2px(8);
+        mOutPadding = dip2px(9);
         mHeight = dip2px(DEFAULT_TITLE_BAR_HEIGHT);
         initView(context);
     }
 
     private void initView(Context context) {
-        mLeftText = new TextView(context);
+
+        mLeftLayout = new LinearLayout(context);
         mCenterLayout = new LinearLayout(context);
         mRightLayout = new LinearLayout(context);
         mDividerView = new View(context);
 
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
 
+        //Left
+        mLeftText = new TextView(context);
+        mLeftTitle = new TextView(context);
+        mLeftLayout.addView(mLeftText);
+        mLeftLayout.addView(mLeftTitle);
+
+        mLeftLayout.setGravity(Gravity.CENTER);
+
+        mLeftTitle.setTextSize(DEFAULT_MAIN_TEXT_SIZE);
+        mLeftTitle.setSingleLine();
+        mLeftTitle.setGravity(Gravity.CENTER_VERTICAL);
+        mLeftTitle.setEllipsize(TextUtils.TruncateAt.END);
+
         mLeftText.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
         mLeftText.setSingleLine();
         mLeftText.setGravity(Gravity.CENTER_VERTICAL);
-        mLeftText.setPadding(mOutPadding + mActionPadding, 0, mOutPadding, 0);
+        mLeftText.setEllipsize(TextUtils.TruncateAt.END);
 
-        mCenterText = new TextView(context);
+        mLeftText.setPadding(mOutPadding + mActionPadding, 0, mOutPadding + mActionPadding, 0);
+
+        //Center
+        mCenterTitle = new TextView(context);
         mSubTitleText = new TextView(context);
-        mCenterLayout.addView(mCenterText);
+        mCenterLayout.addView(mCenterTitle);
         mCenterLayout.addView(mSubTitleText);
 
         mCenterLayout.setGravity(Gravity.CENTER);
-        mCenterText.setTextSize(DEFAULT_MAIN_TEXT_SIZE);
-        mCenterText.setSingleLine();
-        mCenterText.setGravity(Gravity.CENTER);
-        mCenterText.setEllipsize(TextUtils.TruncateAt.END);
+
+        mCenterTitle.setTextSize(DEFAULT_MAIN_TEXT_SIZE);
+        mCenterTitle.setSingleLine();
+        mCenterTitle.setGravity(Gravity.CENTER);
+        mCenterTitle.setEllipsize(TextUtils.TruncateAt.END);
 
         mSubTitleText.setTextSize(DEFAULT_SUB_TEXT_SIZE);
         mSubTitleText.setSingleLine();
         mSubTitleText.setGravity(Gravity.CENTER);
         mSubTitleText.setEllipsize(TextUtils.TruncateAt.END);
 
+        //Right
         mRightLayout.setPadding(mOutPadding, 0, mOutPadding, 0);
 
-        addView(mLeftText, layoutParams);
+        addView(mLeftLayout, layoutParams);
         addView(mCenterLayout);
         addView(mRightLayout, layoutParams);
         addView(mDividerView, new LayoutParams(LayoutParams.MATCH_PARENT, 1));
@@ -139,8 +165,24 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         mLeftText.setTextColor(color);
     }
 
-    public void setLeftVisible(boolean visible) {
+    public void setLeftTextVisible(boolean visible) {
         mLeftText.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public void setLeftTitle(CharSequence title){
+        mLeftTitle.setText(title);
+    }
+
+    public void setLeftTitleSize(float size) {
+        mLeftTitle.setTextSize(size);
+    }
+
+    public void setLeftTitleColor(int color) {
+        mLeftTitle.setTextColor(color);
+    }
+
+    public void setLeftTitleVisible(boolean visible) {
+        mLeftTitle.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setTitle(CharSequence title) {
@@ -152,7 +194,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             if (index > 0) {
                 setTitle(title.subSequence(0, index), "  " + title.subSequence(index + 1, title.length()), LinearLayout.HORIZONTAL);
             } else {
-                mCenterText.setText(title);
+                mCenterTitle.setText(title);
                 mSubTitleText.setVisibility(View.GONE);
             }
         }
@@ -160,7 +202,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     private void setTitle(CharSequence title, CharSequence subTitle, int orientation) {
         mCenterLayout.setOrientation(orientation);
-        mCenterText.setText(title);
+        mCenterTitle.setText(title);
 
         mSubTitleText.setText(subTitle);
         mSubTitleText.setVisibility(View.VISIBLE);
@@ -175,15 +217,15 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     }
 
     public void setTitleColor(int resid) {
-        mCenterText.setTextColor(resid);
+        mCenterTitle.setTextColor(resid);
     }
 
     public void setTitleSize(float size) {
-        mCenterText.setTextSize(size);
+        mCenterTitle.setTextSize(size);
     }
 
     public void setTitleBackground(int resid) {
-        mCenterText.setBackgroundResource(resid);
+        mCenterTitle.setBackgroundResource(resid);
     }
 
     public void setSubTitleColor(int resid) {
@@ -196,7 +238,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     public void setCustomTitle(View titleView) {
         if (titleView == null) {
-            mCenterText.setVisibility(View.VISIBLE);
+            mCenterTitle.setVisibility(View.VISIBLE);
             if (mCustomCenterView != null) {
                 mCenterLayout.removeView(mCustomCenterView);
             }
@@ -208,7 +250,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             mCustomCenterView = titleView;
             mCenterLayout.addView(titleView, layoutParams);
-            mCenterText.setVisibility(View.GONE);
+            mCenterTitle.setVisibility(View.GONE);
         }
     }
 
@@ -234,7 +276,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      * @param listener the onClickListener
      */
     public void setOnTitleClickListener(OnClickListener listener) {
-        mCenterText.setOnClickListener(listener);
+        mCenterTitle.setOnClickListener(listener);
     }
 
     @Override
@@ -248,7 +290,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a list of {@link Action}s.
-     *
      * @param actionList the actions to add
      */
     public void addActions(ActionList actionList) {
@@ -260,7 +301,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action}.
-     *
      * @param action the action to add
      */
     public View addAction(Action action) {
@@ -270,9 +310,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action} at the specified index.
-     *
      * @param action the action to add
-     * @param index  the position at which to add the action
+     * @param index the position at which to add the action
      */
     public View addAction(Action action, int index) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -291,7 +330,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
-     *
      * @param index position of action to remove
      */
     public void removeActionAt(int index) {
@@ -300,7 +338,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
-     *
      * @param action The action to remove
      */
     public void removeAction(Action action) {
@@ -318,7 +355,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Returns the number of actions currently registered with the action bar.
-     *
      * @return action count
      */
     public int getActionCount() {
@@ -327,7 +363,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Inflates a {@link View} with the given {@link Action}.
-     *
      * @param action the action to inflate
      * @return a view
      */
@@ -370,11 +405,11 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             height = MeasureSpec.getSize(heightMeasureSpec) + mStatusBarHeight;
         }
         mScreenWidth = MeasureSpec.getSize(widthMeasureSpec);
-        measureChild(mLeftText, widthMeasureSpec, heightMeasureSpec);
         measureChild(mRightLayout, widthMeasureSpec, heightMeasureSpec);
-        if (mLeftText.getMeasuredWidth() > mRightLayout.getMeasuredWidth()) {
+        measureChild(mLeftLayout, widthMeasureSpec - mRightLayout.getMeasuredWidth(), heightMeasureSpec);
+        if (mLeftLayout.getMeasuredWidth() > mRightLayout.getMeasuredWidth()) {
             mCenterLayout.measure(
-                    MeasureSpec.makeMeasureSpec(mScreenWidth - 2 * mLeftText.getMeasuredWidth(), MeasureSpec.EXACTLY)
+                    MeasureSpec.makeMeasureSpec(mScreenWidth - 2 * mLeftLayout.getMeasuredWidth(), MeasureSpec.EXACTLY)
                     , heightMeasureSpec);
         } else {
             mCenterLayout.measure(
@@ -387,16 +422,18 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mLeftText.layout(0, mStatusBarHeight, mLeftText.getMeasuredWidth(), mLeftText.getMeasuredHeight() + mStatusBarHeight);
+
         mRightLayout.layout(mScreenWidth - mRightLayout.getMeasuredWidth(), mStatusBarHeight,
                 mScreenWidth, mRightLayout.getMeasuredHeight() + mStatusBarHeight);
-        if (mLeftText.getMeasuredWidth() > mRightLayout.getMeasuredWidth()) {
-            mCenterLayout.layout(mLeftText.getMeasuredWidth(), mStatusBarHeight,
-                    mScreenWidth - mLeftText.getMeasuredWidth(), getMeasuredHeight());
+        if (mLeftLayout.getMeasuredWidth() > mRightLayout.getMeasuredWidth()) {
+            mCenterLayout.layout(mLeftLayout.getMeasuredWidth(), mStatusBarHeight,
+                    mScreenWidth - mLeftLayout.getMeasuredWidth(), getMeasuredHeight());
         } else {
             mCenterLayout.layout(mRightLayout.getMeasuredWidth(), mStatusBarHeight,
                     mScreenWidth - mRightLayout.getMeasuredWidth(), getMeasuredHeight());
         }
+        mLeftLayout.layout(0, mStatusBarHeight, mLeftLayout.getMeasuredWidth(),
+                mLeftLayout.getMeasuredHeight() + mStatusBarHeight);
         mDividerView.layout(0, getMeasuredHeight() - mDividerView.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
     }
 
@@ -408,7 +445,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     /**
      * 计算状态栏高度高度
      * getStatusBarHeight
-     *
      * @return
      */
     public static int getStatusBarHeight() {
@@ -438,9 +474,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      */
     public interface Action {
         String getText();
-
         int getDrawable();
-
         void performAction(View view);
     }
 
@@ -479,4 +513,5 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             return mText;
         }
     }
+
 }

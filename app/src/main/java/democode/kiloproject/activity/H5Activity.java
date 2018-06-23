@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,6 +86,7 @@ public class H5Activity extends BaseActivity {
 
         titlebar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         titlebar.setTitleColor(Color.WHITE);
+        titlebar.setLeftTitleColor(Color.WHITE);
         titlebar.setLeftImageResource(R.drawable.ic_arrow_back_white_24dp);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +94,12 @@ public class H5Activity extends BaseActivity {
                 finish();
             }
         });
+
         loadURL = getIntent().getStringExtra(WEBVIEW_URL);
         if (!TextUtils.isEmpty(loadURL)) {
             webview.loadUrl(loadURL);
-            titlebar.setTitle("加载中");
+//            titlebar.setTitle("加载中");
+            titlebar.setLeftTitle("加载中");
         }
     }
 
@@ -146,9 +150,11 @@ public class H5Activity extends BaseActivity {
         titlebar.setBackgroundColor(color);
         if (isBlackFront) {
             titlebar.setTitleColor(Color.BLACK);
+            titlebar.setLeftTitleColor(Color.BLACK);
             titlebar.setLeftImageResource(R.drawable.ic_arrow_back_black_24dp);
         } else {
             titlebar.setTitleColor(Color.WHITE);
+            titlebar.setLeftTitleColor(Color.WHITE);
             titlebar.setLeftImageResource(R.drawable.ic_arrow_back_white_24dp);
         }
     }
