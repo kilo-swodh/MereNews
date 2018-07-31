@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">KiloProject</string>
+
+    <string name="successfully">成功</string>
+    <string name="failure">失败</string>
+    <string name="setting">设置</string>
+    <string name="title_dialog">友情提示</string>
+    <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
+    <string name="message_permission_always_failed">请到设置中给予本App权限:\n\n%1$s</string>
+    <string name="message_setting_comeback">从设置中回来了</string>
+
+    <string name="permission_camera">相机</string>
+    <string name="permission_contact">通讯录</string>
+    <string name="permission_location">定位信息</string>
+
+    <string name="permission_calendar">日历</string>
+    <string name="permission_microphone">麦克风</string>
+    <string name="permission_storage">外部存储</string>
+
+    <string name="permission_phone">手机</string>
+    <string name="permission_sensors">传感器</string>
+    <string name="permission_sms">短信</string>
+
+    <string name="permission_setting">权限设置</string>
+    <string name="permission_install">安装应用</string>
+    <string name="permission_overlay">警报</string>
+
+    <string name="message_install_failed">安装应用的权限被禁止了</string>
+
+    <string name="message_overlay_failed">在其他应用上显示的权限被禁止了</string>
+
+    <string name="message_error_storage">请检查外部存储设备</string>
+
+    <string name="apk_name">android.apk</string>
+</resources>

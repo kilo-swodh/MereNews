@@ -100,7 +100,6 @@ public class MWebChromeClient extends WebChromeClient {
             isWhite = true;
         int color = Color.argb(alphaValue, redValue, greenValue, blueValue);
         String a = "0x" + Integer.toHexString(color);
-        LogUtils.d(h5Activity, "加载颜色" + a);
         if (isWhite) {
             h5Activity.loadWebColor(color,true);
         }else {

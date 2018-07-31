@@ -9,7 +9,7 @@ android {
         targetSdkVersion 27
 
         //方法数限制解除
-        multiDexEnabled true
+        multiDexEnabled false
 
         //使用Apache库
         useLibrary 'org.apache.http.legacy'
@@ -26,6 +26,11 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+
+            //打包清除未引用资源
+//            minifyEnabled true
+//            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -40,6 +45,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -47,11 +58,13 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:support-v4:27.1.1'
 
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 
     //链式网络请求
     // https://github.com/zhou-you/RxEasyHttp
@@ -59,7 +72,7 @@ dependencies {
 
     //权限
     // https://github.com/yanzhenjie/AndPermission
-    implementation 'com.yanzhenjie:permission:2.0.0-rc5'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc6'
 
     //ListView 下拉刷新的外层布局
     // https://github.com/scwang90/SmartRefreshLayout
@@ -71,19 +84,19 @@ dependencies {
 
     //sqlite数据库
     // https://github.com/LitePalFramework/LitePal
-//    implementation 'org.litepal.android:core:1.6.0'
+    //    implementation 'org.litepal.android:core:1.6.0'
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:8.4.0'
-    //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
 
+    //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    implementation 'com.blankj:utilcode:1.16.1'
+    implementation 'com.blankj:utilcode:1.16.4'
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
@@ -91,11 +104,16 @@ dependencies {
 
     //APK下载与更新
     // https://github.com/maning0303/MNUpdateAPK
-//    implementation 'com.github.maning0303:MNUpdateAPK:V1.1.8'
+    //    implementation 'com.github.maning0303:MNUpdateAPK:V1.1.8'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    // RecyclerView 和万能Adapter
+    // https://github.com/bingoogolapple/BGABaseAdapter-Android#%E4%BD%BF%E7%94%A8
+//    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9'
+//    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     //内存泄露检测神器
     // https://github.com/square/leakcanary

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
@@ -87,6 +88,20 @@ public class H5Activity extends BaseActivity {
         titlebar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         titlebar.setTitleColor(Color.WHITE);
         titlebar.setLeftTitleColor(Color.WHITE);
+        titlebar.setActionTextColor(Color.WHITE);
+        titlebar.addAction(new TitleBar.TextAction("分享") {
+            @Override
+            public void performAction(View view) {
+                Intent share_intent = new Intent();
+                share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
+                share_intent.setType("text/plain");//设置分享内容的类型
+                share_intent.putExtra(Intent.EXTRA_SUBJECT, "内容标题");//添加分享内容标题
+                share_intent.putExtra(Intent.EXTRA_TEXT, loadURL);//添加分享内容
+                //创建分享的Dialog
+                share_intent = Intent.createChooser(share_intent, "分享当前网页");
+                startActivity(share_intent);
+            }
+        });
         titlebar.setLeftImageResource(R.drawable.ic_arrow_back_white_24dp);
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +109,6 @@ public class H5Activity extends BaseActivity {
                 finish();
             }
         });
-
         loadURL = getIntent().getStringExtra(WEBVIEW_URL);
         if (!TextUtils.isEmpty(loadURL)) {
             webview.loadUrl(loadURL);

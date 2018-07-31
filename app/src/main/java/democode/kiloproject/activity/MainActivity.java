@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.constraint.Placeholder;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -17,6 +18,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 import com.zhouyou.http.EasyHttp;
@@ -104,16 +106,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.Group.STORAGE)
-                .onGranted(permissions -> {
-                    requestData();
-                })
-                .onDenied(permissions -> {
-                    // TODO ...
-                })
-                .start();
+        requestPermission(new Action() {
+            @Override
+            public void onAction(Object data) {
+                requestData();
+            }
+        },Permission.Group.STORAGE);
     }
 
     private void requestData() {

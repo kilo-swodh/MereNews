@@ -14,16 +14,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-/**
- * 类描述：
- * 创建人：Bob
- * 创建时间：2015/9/25 11:36
- */
+import com.blankj.utilcode.util.ScreenUtils;
+
 public class TitleBar extends ViewGroup implements View.OnClickListener {
-    private static final int DEFAULT_MAIN_TEXT_SIZE = 20;
-    private static final int DEFAULT_SUB_TEXT_SIZE = 14;
-    private static final int DEFAULT_ACTION_TEXT_SIZE = 15;
-    private static final int DEFAULT_TITLE_BAR_HEIGHT = 48;
+    private static float DEFAULT_MAIN_TEXT_SIZE = 20;
+    private static float DEFAULT_SUB_TEXT_SIZE = 14;
+    private static float DEFAULT_ACTION_TEXT_SIZE = 16;
+    private static float DEFAULT_TITLE_BAR_HEIGHT = 48;
+    private static float DEFAULT_ACTION_PADDING = 6;
+    private static float DEFAULT_OUT_PADDING = 5;
+    private static float DEFAULT_DEVIDER_PADDING = 2;
 
     private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";
 
@@ -43,6 +43,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     private int mStatusBarHeight;
     private int mActionPadding;
     private int mOutPadding;
+    private int mActionDeviderPadding;
     private int mActionTextColor;
     private int mHeight;
 
@@ -65,8 +66,19 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         if (mImmersive) {
             mStatusBarHeight = getStatusBarHeight();
         }
-        mActionPadding = dip2px(5);
-        mOutPadding = dip2px(9);
+        if (ScreenUtils.isTablet()){
+            DEFAULT_MAIN_TEXT_SIZE = 24;
+            DEFAULT_SUB_TEXT_SIZE = 17;
+            DEFAULT_ACTION_TEXT_SIZE = 21;
+            DEFAULT_TITLE_BAR_HEIGHT = 60;
+            DEFAULT_ACTION_PADDING = 8;
+            DEFAULT_OUT_PADDING = 8;
+            DEFAULT_DEVIDER_PADDING = 3;
+        }
+
+        mActionPadding = dip2px(DEFAULT_ACTION_PADDING);
+        mActionDeviderPadding = dip2px(DEFAULT_DEVIDER_PADDING);
+        mOutPadding = dip2px(DEFAULT_OUT_PADDING);
         mHeight = dip2px(DEFAULT_TITLE_BAR_HEIGHT);
         initView(context);
     }
@@ -97,8 +109,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         mLeftText.setSingleLine();
         mLeftText.setGravity(Gravity.CENTER_VERTICAL);
         mLeftText.setEllipsize(TextUtils.TruncateAt.END);
-
-        mLeftText.setPadding(mOutPadding + mActionPadding, 0, mOutPadding + mActionPadding, 0);
+        mLeftText.setPadding(mOutPadding , 0, mOutPadding , 0);
 
         //Center
         mCenterTitle = new TextView(context);
@@ -143,6 +154,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     public void setLeftImageResource(int resId) {
         mLeftText.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0);
+        mLeftText.setPadding(mOutPadding * 3, 0, mOutPadding * 3, 0);
     }
 
     public void setLeftClickListener(OnClickListener l) {
@@ -151,10 +163,12 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     public void setLeftText(CharSequence title) {
         mLeftText.setText(title);
+        mLeftText.setPadding(mOutPadding * 3, 0, mOutPadding * 3, 0);
     }
 
     public void setLeftText(int resid) {
         mLeftText.setText(resid);
+        mLeftText.setPadding(mOutPadding * 3, 0, mOutPadding * 3, 0);
     }
 
     public void setLeftTextSize(float size) {
@@ -171,6 +185,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     public void setLeftTitle(CharSequence title){
         mLeftTitle.setText(title);
+        mLeftTitle.setPadding(mOutPadding , 0 , 0 , 0);
     }
 
     public void setLeftTitleSize(float size) {
@@ -242,7 +257,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             if (mCustomCenterView != null) {
                 mCenterLayout.removeView(mCustomCenterView);
             }
-
         } else {
             if (mCustomCenterView != null) {
                 mCenterLayout.removeView(mCustomCenterView);
@@ -316,6 +330,10 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     public View addAction(Action action, int index) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT);
+        if (index == 0)
+            params.setMargins(mActionDeviderPadding, 0, mActionDeviderPadding, 0);
+        else
+            params.setMargins(mActionDeviderPadding, 0, mActionDeviderPadding /2 , 0);
         View view = inflateAction(action);
         mRightLayout.addView(view, index, params);
         return view;
@@ -437,7 +455,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         mDividerView.layout(0, getMeasuredHeight() - mDividerView.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
     }
 
-    public static int dip2px(int dpValue) {
+    public static int dip2px(float dpValue) {
         final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
@@ -513,5 +531,4 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             return mText;
         }
     }
-
 }
