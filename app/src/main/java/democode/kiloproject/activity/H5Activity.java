@@ -16,14 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import democode.kiloproject.R;
 import democode.kiloproject.web.MWebChromeClient;
 import democode.kiloproject.web.MWebViewClient;
+import democode.kiloproject.widget.MyWebView;
 import democode.kiloproject.widget.TitleBar;
 
 /**
@@ -34,7 +33,7 @@ public class H5Activity extends BaseActivity {
     @BindView(R.id.progress_bar)
     public ProgressBar progressBar;
     @BindView(R.id.webview)
-    WebView webview;
+    MyWebView webview;
     @BindView(R.id.title_bar)
     public TitleBar titlebar;
     @BindView(R.id.iv_error)
