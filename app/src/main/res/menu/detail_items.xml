@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".album.AlbumDetailActivity">
+
+    <item android:id="@+id/action_comment"
+        android:title="评论"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_comment"
+        app:showAsAction="always|withText" />
+
+    <item android:id="@+id/action_link"
+        android:title="复制链接"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_link"
+        app:showAsAction="ifRoom|withText" />
+
+    <item android:id="@+id/action_browser"
+        android:title="@string/action_browser"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_open_in_browser"
+        app:showAsAction="ifRoom|withText" />
+
+    <item android:id="@+id/action_star"
+        android:title="@string/action_star"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_star_no"
+        app:showAsAction="always|withText" />
+
+    <item android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="always|withText" />
+
+</menu>

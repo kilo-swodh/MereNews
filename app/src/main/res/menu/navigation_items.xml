@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_his"
+            android:title="历史"
+            android:icon="@drawable/ic_history"/>
+        <item
+            android:id="@+id/nav_coll"
+            android:title="收藏"
+            android:icon="@drawable/ic_collections"/>
+    </group>
+
+    <group
+        android:checkableBehavior="none"
+        android:id="@+id/group_settings">
+        <item android:id="@+id/nav_theme"
+            android:title="主题风格"
+            android:icon="@drawable/ic_theme"/>
+        <item android:id="@+id/nav_setting"
+            android:title="设置"
+            android:icon="@drawable/ic_settings"/>
+        <item android:id="@+id/nav_about"
+            android:title="关于"
+            android:icon="@drawable/ic_about"/>
+        <item android:id="@+id/nav_exit"
+            android:title="退出应用"
+            android:icon="@drawable/ic_exit"/>
+    </group>
+</menu>

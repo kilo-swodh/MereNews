@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KiloProject</string>
+    <string name="app_name">Android News</string>
 
     <string name="successfully">Successful</string>
     <string name="failure">Failure</string>
@@ -30,4 +30,15 @@
     <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
 
     <string name="message_error_storage">Please check the external storage device.</string>
+
+    <string name="apk_name">android.apk</string>
+
+    <string name="action_comment">Comment</string>
+    <string name="action_link">Copy Link</string>
+    <string name="action_browser">Open In Browser</string>
+    <string name="action_star">Collection</string>
+    <string name="action_share">Share</string>
+
+    <string name="load_success">Load Success</string>
+    <string name="load_fail">Load Failed</string>
 </resources>

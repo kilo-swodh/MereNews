@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KiloProject</string>
+    <string name="app_name">安卓新闻</string>
 
     <string name="successfully">成功</string>
     <string name="failure">失败</string>
@@ -32,4 +32,13 @@
     <string name="message_error_storage">请检查外部存储设备</string>
 
     <string name="apk_name">android.apk</string>
+
+    <string name="action_comment">评论</string>
+    <string name="action_link">复制链接</string>
+    <string name="action_browser">浏览器中打开</string>
+    <string name="action_star">收藏</string>
+    <string name="action_share">分享</string>
+
+    <string name="load_success">加载成功</string>
+    <string name="load_fail">加载失败</string>
 </resources>
