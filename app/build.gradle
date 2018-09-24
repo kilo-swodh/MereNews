@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 //apply plugin: 'android-apt' (废弃)
 
 android {
@@ -66,27 +67,37 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
 
     //链式网络请求
+
     // https://github.com/zhou-you/RxEasyHttp
     implementation 'com.zhouyou:rxeasyhttp:2.1.3'
 
     //权限
+
     // https://github.com/yanzhenjie/AndPermission
     implementation 'com.yanzhenjie:permission:2.0.0-rc6'
 
-    //ListView 下拉刷新的外层布局
+    //下拉刷新的外层布局
+
     // https://github.com/scwang90/SmartRefreshLayout
-//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+
+    //没有使用特殊Header，可以不加这行
 
     //ListView Adapter通用
+
     // https://github.com/hongyangAndroid/baseAdapter
     implementation 'com.zhy:base-adapter:3.0.3'
 
     //sqlite数据库
+
     // https://github.com/LitePalFramework/LitePal
+
     //    implementation 'org.litepal.android:core:1.6.0'
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
+
     //    apt 'com.jakewharton:butterknife-compiler:8.4.0' (废弃)
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
@@ -95,42 +106,51 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 
     //工具包
+
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
     implementation 'com.blankj:utilcode:1.20.3'
 
     //状态栏沉浸
+
     // https://github.com/gyf-dev/ImmersionBar
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 
     //APK下载与更新
+
     // https://github.com/maning0303/MNUpdateAPK
+
     //    implementation 'com.github.maning0303:MNUpdateAPK:V1.1.8'
 
     //跨组件通讯
+
     // https://github.com/greenrobot/EventBus
-//    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     //RecyclerView
+
     //https://www.jianshu.com/p/b343fcff51b0
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
 
-//    RecyclerView刷新
-    //https://github.com/anzaizai/EasyRefreshLayout
-    implementation 'com.github.anzaizai:EasyRefreshLayout:1.3.1'
-
     //内存泄露检测神器
+
     // https://github.com/square/leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     //主界面控件
+
     //https://github.com/florent37/MaterialViewPager
     implementation 'com.github.florent37:materialviewpager:1.2.3'
+
     //dependencies
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
 
     //轮播图
+
     //https://github.com/youth5201314/banner
     implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //侧滑返回
 }

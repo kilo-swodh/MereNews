@@ -11,10 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -23,7 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.GalleyBean;
+import androidnews.kiloproject.bean.net.GalleyData;
+import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.widget.PinchImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class GalleyActivity extends BaseActivity {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    private GalleyBean galleyContent;
+    private GalleyData galleyContent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class GalleyActivity extends BaseActivity {
     }
 
     @Override
-    void initSlowly() {
+    protected void initSlowly() {
         String skipID = getIntent().getStringExtra("skipID");
         if (!TextUtils.isEmpty(skipID)) {
             EasyHttp.get("/photo/api/set/" + skipID)
@@ -62,14 +62,16 @@ public class GalleyActivity extends BaseActivity {
                     .execute(new SimpleCallBack<String>() {
                         @Override
                         public void onError(ApiException e) {
-                            ToastUtils.showShort(e.getMessage());
+                            SnackbarUtils.with(galleyViewpager).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            if (!TextUtils.isEmpty(response)) {
-                                galleyContent = gson.fromJson(response, GalleyBean.class);
+                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
+                                galleyContent = gson.fromJson(response, GalleyData.class);
                                 initGalley();
+                            }else {
+                                SnackbarUtils.with(galleyViewpager).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
                     });
@@ -79,7 +81,7 @@ public class GalleyActivity extends BaseActivity {
 
     private void initGalley() {
         progressBar.setVisibility(View.GONE);
-        List<GalleyBean.PhotosBean> beans = galleyContent.getPhotos();
+        List<GalleyData.PhotosBean> beans = galleyContent.getPhotos();
         tvGalleyPage.setText("1/" + beans.size());
         tvGalleyTitle.setText(galleyContent.getSetname());
         tvGalleyText.setText(beans.get(0).getNote());
@@ -135,7 +137,7 @@ public class GalleyActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                List<GalleyBean.PhotosBean> beans = galleyContent.getPhotos();
+                List<GalleyData.PhotosBean> beans = galleyContent.getPhotos();
                 tvGalleyPage.setText((position + 1) + "/" + beans.size());
                 tvGalleyTitle.setText(galleyContent.getSetname());
                 tvGalleyText.setText(beans.get(position).getNote());

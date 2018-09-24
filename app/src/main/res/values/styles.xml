@@ -7,22 +7,16 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
 
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/main_text_color_drak</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
 
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
 
-        <!-- Material Theme -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/accent_color</item>
-
-        <item name="android:statusBarColor" tools:targetApi="21">@color/statusBarColor</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/colorPrimary</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/colorAccent</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
-
 
     </style>
 
@@ -35,6 +29,10 @@
         <item name="android:colorBackground">@android:color/white</item>  <!-- 设置背景颜色-->
         <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
         <item name="android:textColor">@color/main_text_color</item>
+    </style>
+
+    <style name="AppThemeColor" parent="AppTheme">
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
 </resources>

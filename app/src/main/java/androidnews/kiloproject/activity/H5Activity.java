@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import com.blankj.utilcode.util.LogUtils;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import androidnews.kiloproject.web.MWebChromeClient;
@@ -45,7 +46,7 @@ public class H5Activity extends BaseActivity {
     }
 
     @Override
-    void initSlowly() {
+    protected void initSlowly() {
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);

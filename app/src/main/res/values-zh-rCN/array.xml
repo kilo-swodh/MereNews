@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nav Drawer Menu Items -->
+    <array name="language">
+        <item>@string/auto</item>
+        <item>@string/english</item>
+        <item>@string/chinese</item>
+    </array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <!--<array name="nav_drawer_icons">-->
+    <!--<item>@drawable/ic_drawer_home_pressed</item>-->
+    <!--<item>@drawable/ic_drawer_explore_pressed</item>-->
+    <!--<item>@drawable/ic_drawer_follow_pressed</item>-->
+    <!--<item>@drawable/ic_drawer_collect_pressed</item>-->
+    <!--<item>@drawable/ic_drawer_draft_pressed</item>-->
+    <!--<item>@drawable/ic_drawer_question_pressed</item>-->
+    <!--</array>-->
+
+    <array name="address_tag">
+        <item>热点</item>
+        <item>科技</item>
+        <item>娱乐</item>
+        <item>网易独家</item>
+        <item>体育</item>
+        <item>游戏</item>
+        <item>健康</item>
+        <item>NBA</item>
+        <item>商业</item>
+        <item>教育</item>
+        <item>轻松一刻</item>
+        <item>古玩</item>
+        <item>政务</item>
+        <item>精选</item>
+        <item>暴雪游戏</item>
+        <item>手机</item>
+        <item>足球</item>
+        <item>数码</item>
+        <item>跑步</item>
+        <item>历史</item>
+        <item>股票</item>
+        <item>彩票</item>
+        <item>智能</item>
+        <item>CBA</item>
+        <item>中国足球</item>
+        <item>旅游</item>
+        <item>网易博客</item>
+        <!--<item>知乎日报</item>-->
+        <!--<item>汽车</item>-->
+        <!--<item>果壳精选</item>-->
+
+        <item>电影</item>
+        <item>时尚</item>
+        <item>情感</item>
+        <item>电台</item>
+        <item>家居</item>
+        <item>亲子</item>
+        <item>新闻</item>
+    </array>
+</resources>

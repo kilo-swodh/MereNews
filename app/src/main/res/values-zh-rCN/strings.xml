@@ -39,6 +39,37 @@
     <string name="action_star">收藏</string>
     <string name="action_share">分享</string>
 
+    <string name="star_no">已取消收藏</string>
+    <string name="star_yes">已添加收藏</string>
+
+    <string name="history">历史</string>
+    <string name="theme">主题风格</string>
+    <string name="about">关于</string>
+    <string name="exit">退出应用</string>
+
     <string name="load_success">加载成功</string>
     <string name="load_fail">加载失败</string>
+    <string name="error_163">网易客户端专属内容</string>
+
+    <string name="empty_content">什么也没有...</string>
+    <string name="no_comment">未开放评论区</string>
+
+    <string name="news">报道</string>
+
+    <string name="setting_basic">基础</string>
+    <string name="setting_other">其他</string>
+
+    <string name="language">语言</string>
+    <string name="clear_cache">清理数据(包含历史/收藏等)</string>
+    <string name="auto_refresh">自动刷新</string>
+    <string name="auto_refresh_detail">首次进入App自动刷新</string>
+    <string name="md_statusbar">老款状态栏风格</string>
+    <string name="md_statusbar_detail">仿5.0时代的MD风格</string>
+    <string name="open_source">开源相关</string>
+    <string name="swipe_back">滑动返回</string>
+    <string name="swipe_back_detail">从左向右滑动页面返回</string>
+
+    <string name="select_tip">请选择</string>
+
+
 </resources>

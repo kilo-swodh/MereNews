@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/AppThemeColor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +27,13 @@
         </activity>
 
         <activity android:name=".activity.H5Activity"/>
-        <activity android:name=".activity.GalleyActivity"/>
+        <activity android:name=".activity.GalleyActivity"
+            android:theme="@style/AppThemeColor"/>
         <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.CacheActivity"/>
+        <activity android:name=".activity.CommentActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.SelectActivity"/>
     </application>
 
     <meta-data

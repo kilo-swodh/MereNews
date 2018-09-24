@@ -34,11 +34,47 @@
     <string name="apk_name">android.apk</string>
 
     <string name="action_comment">Comment</string>
-    <string name="action_link">Copy Link</string>
-    <string name="action_browser">Open In Browser</string>
+    <string name="action_link">Copy link</string>
+    <string name="action_browser">Open in browser</string>
     <string name="action_star">Collection</string>
     <string name="action_share">Share</string>
 
-    <string name="load_success">Load Success</string>
-    <string name="load_fail">Load Failed</string>
+    <string name="star_no">Collection cancelled</string>
+    <string name="star_yes">Collection completed</string>
+
+    <string name="history">History</string>
+    <string name="theme">Theme</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+
+    <string name="load_success">Load success</string>
+    <string name="load_fail">Load failed</string>
+    <string name="error_163">163Server Error</string>
+
+    <string name="empty_content">It\'s nothing.</string>
+    <string name="no_comment">No comment</string>
+
+    <string name="news">News</string>
+
+    <string name="setting_basic">Basic</string>
+    <string name="setting_other">Misc</string>
+
+    <string name="language">Language</string>
+    <string name="clear_cache">Clear data(Including history / collection, etc.)</string>
+    <string name="auto_refresh">auto refresh</string>
+    <string name="auto_refresh_detail">First entry into App auto refresh</string>
+    <string name="md_statusbar">Statusbar style</string>
+    <string name="md_statusbar_detail">Apply Lollipop style</string>
+    <string name="open_source">Open source</string>
+    <string name="swipe_back">Sliding Back</string>
+    <string name="swipe_back_detail">Sliding back from left to right</string>
+
+    <string name="github_address">https://github.com/kilo-swodh/MaterialDesignNews</string>
+
+    <string name="auto">Auto</string>
+    <string name="english">English</string>
+    <string name="chinese">中文</string>
+
+    <string name="select_tip">Please Select</string>
+
 </resources>

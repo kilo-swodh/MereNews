@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1976D2</color>
-    <color name="colorAccent">#CDDC39</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#FFC107</color>
 
-    <color name="main_text_color_drak">#333</color>
-    <color name="main_text_color">#666</color>
+    <color name="main_text_color_drak">#212121</color>
+    <color name="main_text_color">#757575</color>
+    <color name="divider">#BDBDBD</color>
 
     <color name="transparent">#00000000</color><!--透明色 -->
     <color name="white">#FFFFFF</color><!--白色 -->

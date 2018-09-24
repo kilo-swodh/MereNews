@@ -5,13 +5,18 @@ import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
 import com.yanzhenjie.permission.PermissionActivity;
 import com.zhouyou.http.EasyHttp;
 
+import org.greenrobot.eventbus.EventBus;
 import androidnews.kiloproject.widget.LauncherView;
 import androidnews.kiloproject.widget.AlertWindow;
+
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
+import static androidnews.kiloproject.system.AppConfig.HOST163;
 
 //import org.litepal.LitePal;
 
@@ -22,12 +27,11 @@ import androidnews.kiloproject.widget.AlertWindow;
 public class MyApplication extends Application {
     private static MyApplication instance;
 
-    public static final String HOST163 = "http://c.m.163.com";
-
     @Override
     public void onCreate() {
         super.onCreate();
 
+        instance = this;
         //检测内存泄露
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -41,7 +45,7 @@ public class MyApplication extends Application {
         EasyHttp.init(this);//默认初始化
         EasyHttp.getInstance()
                 .setBaseUrl(HOST163)
-                .debug("Android News Debug", true);;
+                .debug("网络DEBUG", true);;
 
         //数据库
 //        LitePal.initialize(this);
@@ -49,12 +53,14 @@ public class MyApplication extends Application {
         //Util工具包
         Utils.init(this);
 
+        AppConfig.isSwipeBack = SPUtils.getInstance().getBoolean(CONFIG_SWIPE_BACK);
+
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
                 if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注册
                     return;
-//                EventBus.getDefault().register(activity);
+                EventBus.getDefault().register(activity);
             }
 
             @Override
@@ -76,7 +82,7 @@ public class MyApplication extends Application {
             public void onActivityDestroyed(Activity activity) {
                 if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注销
                     return;
-//                EventBus.getDefault().unregister(activity);
+                EventBus.getDefault().unregister(activity);
             }
         });
     }

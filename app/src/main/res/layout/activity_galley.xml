@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,14 +27,17 @@
 
     <TextView
         android:id="@+id/tv_galley_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="正在加载"
         android:textColor="@color/white"
         android:textSize="@dimen/text_small"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_galley_text"
+        app:layout_constraintEnd_toStartOf="@+id/tv_galley_page"
         app:layout_constraintStart_toStartOf="@+id/tv_galley_text" />
 
     <TextView
