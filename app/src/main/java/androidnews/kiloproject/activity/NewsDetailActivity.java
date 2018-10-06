@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -15,19 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.CacheDiskUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.reflect.TypeToken;
-import com.gyf.barlibrary.ImmersionBar;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -39,6 +36,7 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.NewsDetailData;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.widget.NestedScrollWebView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
@@ -50,18 +48,20 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUSBAR;
 import static androidnews.kiloproject.system.AppConfig.getNewsDetailA;
 import static androidnews.kiloproject.system.AppConfig.getNewsDetailB;
+import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class NewsDetailActivity extends BaseActivity {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.webview)
-    WebView webview;
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
     @BindView(R.id.progress)
     ProgressBar progress;
-
+    @BindView(R.id.web_news)
+    NestedScrollWebView webView;
     private String html;
     private NewsDetailData currentData;
     private boolean isStar = false;
@@ -72,10 +72,7 @@ public class NewsDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
         initView();
-        if (SPUtils.getInstance().getBoolean(CONFIG_STATUSBAR))
-            ImmersionBar.with(mActivity).fitsSystemWindows(true).statusBarDarkFont(true).init();
-        else
-            initStateBar(android.R.color.white, true);
+        initStateBar(R.color.main_background, true);
     }
 
     @Override
@@ -90,26 +87,29 @@ public class NewsDetailActivity extends BaseActivity {
                     .execute(new SimpleCallBack<String>() {
                         @Override
                         public void onError(ApiException e) {
-                            SnackbarUtils.with(webview).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                             progress.setVisibility(View.GONE);
                         }
 
                         @Override
                         public void onSuccess(String response) {
                             progress.setVisibility(View.GONE);
-                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
+                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 String jsonNoHeader = response.substring(20, response.length());
                                 String jsonFine = jsonNoHeader.substring(0, jsonNoHeader.length() - 1);
 
-                                if (response.contains("点这里升级")){
-                                    ToastUtils.showShort(R.string.load_fail);
+                                if (response.contains("点这里升级")) {
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.server_fail)).showError();
                                     finish();
                                     return;
-                                }else {
-                                    LogUtils.d("fuck : " + response);
                                 }
-
-                                currentData = gson.fromJson(jsonFine, NewsDetailData.class);
+                                try {
+                                    currentData = gson.fromJson(jsonFine, NewsDetailData.class);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.server_fail)).showError();
+                                    finish();
+                                }
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -126,8 +126,10 @@ public class NewsDetailActivity extends BaseActivity {
                                                 }
                                             }
                                         });
-                                initWeb();
-                                loadUrl();
+                                if (webView != null) {
+                                    initWeb();
+                                    loadUrl();
+                                }
                             } else {
                                 progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
@@ -136,13 +138,15 @@ public class NewsDetailActivity extends BaseActivity {
                     });
         } else {
             String html = getIntent().getStringExtra("htmlText");
+            if (isNightMode)
+                html.replace("<body>", "<body bgcolor=\"#000000\" body text=\"white\">");
             if (!StringUtils.isEmpty(html)) {
                 progress.setVisibility(View.GONE);
                 initWeb();
                 getSupportActionBar().setTitle(R.string.news);
-                webview.loadData(html, "text/html; charset=UTF-8", null);
+                webView.loadData(html, "text/html; charset=UTF-8", null);
             } else {
-                SnackbarUtils.with(webview).setMessage(getString(R.string.load_fail)).showError();
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
             }
             progress.setVisibility(View.GONE);
         }
@@ -172,17 +176,17 @@ public class NewsDetailActivity extends BaseActivity {
                         if (isStar) {
                             item.setIcon(R.drawable.ic_star_no);
                             checkStar(true);
-                            SnackbarUtils.with(webview).setMessage(getString(R.string.star_no)).showSuccess();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
                             isStar = false;
                         } else {
                             item.setIcon(R.drawable.ic_star_ok);
                             saveCache(CACHE_COLLECTION);
-                            SnackbarUtils.with(webview).setMessage(getString(R.string.star_yes)).showSuccess();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
                             isStar = true;
                         }
                         break;
                     case R.id.action_comment:
-                        if (TextUtils.isEmpty(currentData.getReplyBoard()) || TextUtils.isEmpty(currentData.getDocid())) {
+                        if (currentData == null || TextUtils.isEmpty(currentData.getReplyBoard()) || TextUtils.isEmpty(currentData.getDocid())) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.no_comment)).showError();
                             break;
                         }
@@ -195,7 +199,7 @@ public class NewsDetailActivity extends BaseActivity {
                         ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShareLink()));
-                        SnackbarUtils.with(webview).setMessage(getString(R.string.action_link)
+                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
                                 + " " + getString(R.string.successfully)).showSuccess();
                         break;
                     case R.id.action_browser:
@@ -217,8 +221,7 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     private void initWeb() {
-        WebSettings webSetting = webview.getSettings();
-
+        WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDomStorageEnabled(true);
         webSetting.setAllowFileAccess(true);
@@ -226,9 +229,11 @@ public class NewsDetailActivity extends BaseActivity {
         webSetting.setAppCacheEnabled(true);
         webSetting.setDatabaseEnabled(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
     }
 
     private void loadUrl() {
+        String colorBody = isNightMode ? "<body bgcolor=\"#000000\" body text=\"white\">" : "<body>";
         html = "<!DOCTYPE html>" +
                 "<html lang=\"zh\">" +
                 "<head>" +
@@ -248,7 +253,7 @@ public class NewsDetailActivity extends BaseActivity {
                 "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
                 "</style>" +
                 "</head>" +
-                "<body>"
+                colorBody
                 + "<p><h2>" + currentData.getTitle() + "</h2></p>"
                 + "<p><div><div id=\"from\">" + currentData.getSource() +
                 "</div><div id=\"time\">" + currentData.getPtime() + "</div></div></p>"
@@ -267,7 +272,7 @@ public class NewsDetailActivity extends BaseActivity {
             }
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        webview.loadData(html, "text/html; charset=UTF-8", null);
+        webView.loadData(html, "text/html; charset=UTF-8", null);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -280,33 +285,33 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        webview.onPause();
+        webView.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        webview.onResume();
+        webView.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        if (webview != null) {
+        if (webView != null) {
             // 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再
             // destory()
-            ViewParent parent = webview.getParent();
+            ViewParent parent = webView.getParent();
             if (parent != null) {
-                ((ViewGroup) parent).removeView(webview);
+                ((ViewGroup) parent).removeView(webView);
             }
 
-            webview.stopLoading();
+            webView.stopLoading();
             // 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
-            webview.getSettings().setJavaScriptEnabled(false);
-            webview.clearHistory();
-            webview.clearView();
-            webview.removeAllViews();
-            webview.destroy();
-            webview = null;
+            webView.getSettings().setJavaScriptEnabled(false);
+            webView.clearHistory();
+            webView.clearView();
+            webView.removeAllViews();
+            webView.destroy();
+            webView = null;
         }
         super.onDestroy();
     }

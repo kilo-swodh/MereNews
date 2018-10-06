@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/floralwhite">
+    android:background="@color/comment_bg_level_two">
 
     <View
         android:id="@+id/view"
         android:layout_width="@dimen/avatar_width"
         android:layout_height="0dp"
-        android:background="@android:color/white"
+        android:background="@color/main_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_normal"
         android:layout_marginStart="@dimen/margin_normal"
-        android:textColor="@color/dodgerblue"
+        android:textColor="@color/comment_name"
         android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"

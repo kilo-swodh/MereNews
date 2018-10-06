@@ -1,11 +1,13 @@
 package androidnews.kiloproject.fragment;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -46,9 +48,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.getMainDataA;
 import static androidnews.kiloproject.system.AppConfig.getMainDataB;
+import static androidnews.kiloproject.system.base.BaseActivity.isLollipop;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -56,7 +60,7 @@ import static androidnews.kiloproject.system.AppConfig.getMainDataB;
 public class MainRvFragment extends BaseRvFragment {
 
     MainRvAdapter mainAdapter;
-//    MainListData contents;
+    //    MainListData contents;
     List<NewMainListData> contents;
 
     private static final boolean GRID_LAYOUT = false;
@@ -86,8 +90,7 @@ public class MainRvFragment extends BaseRvFragment {
         typeStr = getResources().getStringArray(R.array.address)[position];
 
         this.CACHE_LIST_DATA = typeStr + "_data";
-        LogUtils.d("fuck : "+ typeStr);
-        mainAdapter = new MainRvAdapter(getActivity(), contents);
+        mainAdapter = new MainRvAdapter(mActivity, contents);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -124,7 +127,8 @@ public class MainRvFragment extends BaseRvFragment {
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 String json = CacheDiskUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
-                    contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {}.getType());
+                    contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
+                    }.getType());
                     if (contents != null && contents.size() > 0) {
                         contents.get(0)
                                 .setItemType(HEADER);
@@ -147,9 +151,10 @@ public class MainRvFragment extends BaseRvFragment {
     }
 
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible){
-            if (contents == null || SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH))
-                requestData(TYPE_REFRESH);
+        if (isVisible) {
+            if (contents == null || SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) {
+                refreshLayout.autoRefresh();
+            }
         }
     }
 
@@ -159,7 +164,7 @@ public class MainRvFragment extends BaseRvFragment {
             case TYPE_REFRESH:
                 currentPage = 0;
             case TYPE_LOADMORE:
-                dataUrl = getMainDataA + typeStr + "/"  + currentPage + getMainDataB;
+                dataUrl = getMainDataA + typeStr + "/" + currentPage + getMainDataB;
                 break;
         }
         EasyHttp.get(dataUrl)
@@ -170,28 +175,36 @@ public class MainRvFragment extends BaseRvFragment {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        switch (type) {
-                            case TYPE_REFRESH:
-                                refreshLayout.finishRefresh(false);
-                                break;
-                            case TYPE_LOADMORE:
-                                refreshLayout.finishLoadMore(false);
-                                break;
+                        if (refreshLayout != null) {
+                            switch (type) {
+                                case TYPE_REFRESH:
+                                    refreshLayout.finishRefresh(false);
+                                    break;
+                                case TYPE_LOADMORE:
+                                    refreshLayout.finishLoadMore(false);
+                                    break;
+                            }
+                            SnackbarUtils.with(refreshLayout).
+                                    setMessage(getString(R.string.load_fail) + e.getMessage()).
+                                    showError();
                         }
-                        SnackbarUtils.with(refreshLayout).
-                                setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                showError();
                     }
 
                     @Override
                     public void onSuccess(String response) {
-                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
+                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                             Observable.create(new ObservableOnSubscribe<Boolean>() {
                                 @Override
                                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                    HashMap<String, List<NewMainListData>> retMap = gson.fromJson(response,
-                                            new TypeToken<HashMap<String, List<NewMainListData>>>() {}.getType());
-
+                                    HashMap<String, List<NewMainListData>> retMap = null;
+                                    try {
+                                        retMap = gson.fromJson(response,
+                                                new TypeToken<HashMap<String, List<NewMainListData>>>() {
+                                                }.getType());
+                                    }catch (Exception e1){
+                                        e1.printStackTrace();
+                                        loadFailed(type);
+                                    }
                                     //设置头部轮播
                                     if (type == TYPE_REFRESH) {
                                         NewMainListData first = retMap.get(typeStr).get(0);
@@ -200,7 +213,7 @@ public class MainRvFragment extends BaseRvFragment {
                                             for (int i = 0; i < first.getAds().size(); i++) {
                                                 NewMainListData.AdsBean bean =
                                                         first.getAds().get(i);
-                                                if (!bean.getSkipID().contains("|")){
+                                                if (!bean.getSkipID().contains("|")) {
                                                     first.getAds().remove(i);
                                                     continue;
                                                 }
@@ -261,19 +274,23 @@ public class MainRvFragment extends BaseRvFragment {
                                         }
                                     });
                         } else {
-                            switch (type) {
-                                case TYPE_REFRESH:
-                                    refreshLayout.finishRefresh(false);
-                                    SnackbarUtils.with(refreshLayout).showError();
-                                    break;
-                                case TYPE_LOADMORE:
-                                    refreshLayout.finishLoadMore(false);
-                                    SnackbarUtils.with(refreshLayout).showError();
-                                    break;
-                            }
+                           loadFailed(type);
                         }
                     }
                 });
+    }
+
+    private void loadFailed(int type){
+        switch (type) {
+            case TYPE_REFRESH:
+                refreshLayout.finishRefresh(false);
+                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
+                break;
+            case TYPE_LOADMORE:
+                refreshLayout.finishLoadMore(false);
+                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
+                break;
+        }
     }
 
     private void createAdapter() {
@@ -298,7 +315,7 @@ public class MainRvFragment extends BaseRvFragment {
                 ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
                 //noinspection ConstantConditions
                 cm.setPrimaryClip(ClipData.newPlainText("link", contents.get(position).getUrl()));
-                SnackbarUtils.with(mRecyclerView).setMessage(getString(R.string.action_link)
+                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
                         + " " + getString(R.string.successfully)).showSuccess();
                 return true;
             }
@@ -316,21 +333,31 @@ public class MainRvFragment extends BaseRvFragment {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        SnackbarUtils.with(mRecyclerView).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
+                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                     }
 
                     @Override
                     public void onSuccess(String response) {
-                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
+                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                             GalleyData galleyContent = gson.fromJson(response, GalleyData.class);
-                            NewMainListData bean = contents.get(0);
-                            bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getSquareimgurl());
-                            mainAdapter.notifyItemChanged(0);
+                            if (contents != null) {
+                                NewMainListData bean = contents.get(0);
+                                bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getSquareimgurl());
+                                mainAdapter.notifyItemChanged(0);
 
-                            String json = gson.toJson(contents);
-                            CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                String json = gson.toJson(contents);
+                                CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, json);
+                            }
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_CLEAR)) {
+            CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, "");
+        }
+        super.onDestroy();
     }
 }

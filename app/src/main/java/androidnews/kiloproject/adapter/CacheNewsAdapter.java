@@ -35,5 +35,4 @@ public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder
                 .apply(options)
                 .into((ImageView) helper.getView(R.id.item_card_img));
     }
-
 }

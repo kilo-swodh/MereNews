@@ -1,8 +1,12 @@
 package androidnews.kiloproject.activity;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,16 +17,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.CacheDiskUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
+import com.bumptech.glide.Glide;
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -31,15 +39,17 @@ import java.util.TimerTask;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.TypeArrayBean;
 import androidnews.kiloproject.bean.net.PhotoCenterData;
+import androidnews.kiloproject.event.RestartEvent;
 import androidnews.kiloproject.fragment.MainRvFragment;
-import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.receiver.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static androidnews.kiloproject.activity.SelectActivity.SELECT_RESULT;
+import static androidnews.kiloproject.activity.ChannelActivity.SELECT_RESULT;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +67,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     int bgPosition = 0;
     TypeArrayBean typeArrayBean;
 
+    public static final int DEFAULT_PAGE = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,29 +79,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout.addDrawerListener(mDrawerToggle);
         final Toolbar toolbar = mViewPager.getToolbar();
         initToolbar(toolbar);
+        getSupportActionBar().setTitle(R.string.app_name);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_add_lib:
-                        startActivityForResult(new Intent(mActivity,SelectActivity.class),SELECT_RESULT);
+                        startActivityForResult(new Intent(mActivity, ChannelActivity.class), SELECT_RESULT);
                         break;
                 }
                 return false;
             }
         });
+
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void initSlowly() {
-        typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY,TypeArrayBean.CREATOR);
-        if (typeArrayBean == null){
+        if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_CLEAR)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Glide.get(mActivity).clearDiskCache();
+                }
+            }).start();
+        }
+
+        typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
+        if (typeArrayBean == null) {
             typeArrayBean = new TypeArrayBean();
             typeArrayBean.setTypeArray(new ArrayList<>());
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < DEFAULT_PAGE; i++) {
                 typeArrayBean.getTypeArray().add(i);
             }
-            CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY,typeArrayBean);
+            CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, typeArrayBean);
         }
 
         navigation.setNavigationItemSelectedListener(this);
@@ -108,7 +133,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                    case 2:
 //                        return EntertainmentRvFragment.newInstance();
 //                    default:
-                        return MainRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
+                return MainRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
 //                }
             }
 
@@ -127,16 +152,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-        final View logo = findViewById(R.id.logo_white);
-        if (logo != null) {
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+//        final View logo = findViewById(R.id.logo_white);
+//        if (logo != null) {
+//            logo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mViewPager.notifyHeaderChanged();
+//                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
 
         String dataUrl = "http://pic.news.163.com/photocenter/api/list/0001/00AN0001,00AO0001,00AP0001/0/10/cacheMoreData.json";
         EasyHttp.get(dataUrl)
@@ -154,12 +179,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     public void onSuccess(String s) {
                         String temp = s.replace(")", "}");
                         String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
-                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
-                            photoData = gson.fromJson(response, PhotoCenterData.class);
+                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                            try {
+                                photoData = gson.fromJson(response, PhotoCenterData.class);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
+                            }
                             startBgAnimate();
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Glide.with(mActivity).resumeRequests();
     }
 
     @Override
@@ -175,24 +211,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Intent intent;
         switch (id) {
             case R.id.nav_his:
-                intent = new Intent(mActivity,CacheActivity.class);
-                intent.putExtra("type",CACHE_HISTORY);
+                intent = new Intent(mActivity, CacheActivity.class);
+                intent.putExtra("type", CACHE_HISTORY);
                 startActivity(intent);
                 break;
             case R.id.nav_coll:
-                intent = new Intent(mActivity,CacheActivity.class);
-                intent.putExtra("type",CACHE_COLLECTION);
+                intent = new Intent(mActivity, CacheActivity.class);
+                intent.putExtra("type", CACHE_COLLECTION);
                 startActivity(intent);
                 break;
-            case R.id.nav_theme:
-                ToastUtils.showShort("主题风格这块还没开始做,等下个版本看吧");
-                break;
             case R.id.nav_setting:
-                intent = new Intent(mActivity,SettingActivity.class);
+                intent = new Intent(mActivity, SettingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_about:
-                ToastUtils.showShort("关于这块还没开始做,等下个版本看吧");
+                intent = new Intent(mActivity, AboutActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_exit:
                 System.exit(0);
@@ -219,9 +253,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case SELECT_RESULT:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     initSlowly();
                 }
                 break;
@@ -230,6 +264,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     Timer timer;
     TimerTask timerTask;
+
     private void startBgAnimate() {
         timer = new Timer();
         timerTask = new TimerTask() {
@@ -238,19 +273,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (bgPosition == photoData.getCacheMoreData().size()){
-                            bgPosition = 0;
+                        if (mViewPager != null) {
+                            if (bgPosition == photoData.getCacheMoreData().size()) {
+                                bgPosition = 0;
+                            }
+                            mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
+                            bgPosition++;
                         }
-                        mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
-                        bgPosition++;
                     }
                 });
             }
         };
-        timer.schedule(timerTask ,0,10 * 1000);
+        timer.schedule(timerTask, 0, 10 * 1000);
     }
 
-    private void cancelTimer(){
+    private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -261,9 +298,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {/* Do something */}
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Glide.with(mActivity).pauseRequests();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelTimer();
+        mViewPager = null;
+        EventBus.getDefault().unregister(this);
     }
 }

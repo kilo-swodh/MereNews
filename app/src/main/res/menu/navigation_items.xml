@@ -10,20 +10,15 @@
             android:id="@+id/nav_coll"
             android:title="@string/action_star"
             android:icon="@drawable/ic_collections"/>
-    </group>
 
-    <group
-        android:checkableBehavior="none"
-        android:id="@+id/group_settings">
-        <item android:id="@+id/nav_theme"
-            android:title="@string/theme"
-            android:icon="@drawable/ic_theme"/>
         <item android:id="@+id/nav_setting"
             android:title="@string/setting"
             android:icon="@drawable/ic_settings"/>
+
         <item android:id="@+id/nav_about"
             android:title="@string/about"
             android:icon="@drawable/ic_about"/>
+
         <item android:id="@+id/nav_exit"
             android:title="@string/exit"
             android:icon="@drawable/ic_exit"/>

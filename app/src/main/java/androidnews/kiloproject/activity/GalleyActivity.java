@@ -1,8 +1,10 @@
 package androidnews.kiloproject.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +16,8 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -48,6 +52,8 @@ public class GalleyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galley);
         ButterKnife.bind(this);
+//        ViewCompat.setTransitionName(galleyViewpager, "banner_pic");
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
     }
 
     @Override
@@ -90,7 +96,6 @@ public class GalleyActivity extends BaseActivity {
         RequestOptions options = new RequestOptions();
         options.error(R.drawable.ic_error);
 
-        final int picWidth = Math.min(ScreenUtils.getScreenWidth(),ScreenUtils.getScreenHeight());
         galleyViewpager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -103,7 +108,7 @@ public class GalleyActivity extends BaseActivity {
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container, int position) {
+            public Object instantiateItem(ViewGroup container,final int position) {
                 PinchImageView piv;
                 if (viewCache.size() > 0) {
                     piv = viewCache.remove();
@@ -113,7 +118,14 @@ public class GalleyActivity extends BaseActivity {
                 }
                 String imageUrl = galleyContent.getPhotos().get(position).getImgurl();
 
-                Glide.with(mActivity).load(imageUrl).apply(options).into(piv);
+                Glide.with(mActivity).load(imageUrl).apply(options).into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                        piv.setImageDrawable(resource);
+                        if (position == 0 && isLollipop())
+                            ViewCompat.setTransitionName(piv, "big_card");
+                    }
+                });
                 container.addView(piv);
                 return piv;
             }

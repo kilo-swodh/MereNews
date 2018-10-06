@@ -5,6 +5,7 @@
     android:layout_height="102dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
+    android:background="@color/main_background"
     android:layout_marginBottom="@dimen/cardMarginVertical"
     android:layout_marginLeft="@dimen/cardMarginHorizontal"
     android:layout_marginRight="@dimen/cardMarginHorizontal"
@@ -16,7 +17,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/item_card_img"
@@ -42,8 +44,8 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="标题标题标题标题标题标题标题标题标题标题标题标题"
-            android:textColor="@color/black"
+            android:text=""
+            android:textColor="@color/main_text_color_drak"
             android:textSize="@dimen/text_small"
             app:layout_constraintBottom_toTopOf="@+id/item_card_from"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +58,7 @@
             android:layout_height="0dp"
             android:ellipsize="end"
             android:text=""
-            android:textColor="@color/gray"
+            android:textColor="@color/main_text_color"
             android:textSize="@dimen/text_mini"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginLeft="@dimen/margin_normal"
@@ -70,10 +72,10 @@
             android:id="@+id/item_card_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_mini"
-            android:textColor="@color/gray"
-            android:text="央视网"
             android:layout_marginBottom="@dimen/margin_small"
+            android:text=""
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/text_mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_card_text" />
 
@@ -83,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
-            android:textColor="@color/gray"
+            android:textColor="@color/main_text_color"
             android:textSize="@dimen/text_mini"
             app:layout_constraintBottom_toBottomOf="@+id/item_card_from"
             app:layout_constraintEnd_toEndOf="parent"

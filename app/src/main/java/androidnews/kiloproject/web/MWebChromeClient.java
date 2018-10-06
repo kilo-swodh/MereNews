@@ -11,17 +11,17 @@ import android.webkit.WebView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 
-import androidnews.kiloproject.activity.H5Activity;
+import androidnews.kiloproject.activity.AboutActivity;
 
 /**
  * 自定义实现WebChromeClient对象
  */
 public class MWebChromeClient extends WebChromeClient {
-    H5Activity h5Activity = null;
+    AboutActivity aboutActivity = null;
 
     public MWebChromeClient(Activity activity){
-        if (activity instanceof H5Activity){
-            h5Activity = (H5Activity) activity;
+        if (activity instanceof AboutActivity){
+            aboutActivity = (AboutActivity) activity;
         }
     }
 
@@ -30,13 +30,13 @@ public class MWebChromeClient extends WebChromeClient {
      */
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
-        if (h5Activity!= null) {
+        if (aboutActivity != null) {
             if (newProgress == 100) {
                 changeColor(view);
-                h5Activity.progressBar.setVisibility(View.GONE);//加载完网页进度条消失
+                aboutActivity.progressBar.setVisibility(View.GONE);//加载完网页进度条消失
             } else {
-                h5Activity.progressBar.setVisibility(View.VISIBLE);//开始加载网页时显示进度条
-                h5Activity.progressBar.setProgress(newProgress);//设置进度值
+                aboutActivity.progressBar.setVisibility(View.VISIBLE);//开始加载网页时显示进度条
+                aboutActivity.progressBar.setProgress(newProgress);//设置进度值
             }
         }
     }

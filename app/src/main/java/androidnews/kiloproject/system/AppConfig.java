@@ -20,18 +20,23 @@ public class AppConfig {
     public static final String getMainDataA = "/nc/article/headline/";
     public static final String getMainDataB = "-20.html";
 
+    public static final String CHECK_UPADTE_ADDRESS = "http://osyuohm14.bkt.clouddn.com/update";
+
 
     public static final String CONFIG_LANGUAGE = "config_language";
 
     public static final String CONFIG_AUTO_REFRESH = "config_auto_refresh";
 
-    public static final String CONFIG_STATUSBAR = "config_statusbar";
+    public static final String CONFIG_AUTO_CLEAR = "config_auto_clear";
 
     public static final String CONFIG_SWIPE_BACK = "config_swipe_back";
 
+    public static final String CONFIG_NIGHT_MODE = "config_night_mode";
+
     public static final String CONFIG_TYPE_ARRAY = "config_type_array";
+
 
     public static boolean isSwipeBack = false;
 
-
+    public static boolean isNightMode = false;
 }

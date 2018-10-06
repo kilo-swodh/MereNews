@@ -3,20 +3,25 @@ package androidnews.kiloproject.system;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.yanzhenjie.permission.PermissionActivity;
 import com.zhouyou.http.EasyHttp;
 
 import org.greenrobot.eventbus.EventBus;
-import androidnews.kiloproject.widget.LauncherView;
-import androidnews.kiloproject.widget.AlertWindow;
 
+import androidnews.kiloproject.widget.AlertWindow;
+import androidnews.kiloproject.widget.LauncherView;
+
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.HOST163;
+import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 //import org.litepal.LitePal;
 
@@ -32,6 +37,8 @@ public class MyApplication extends Application {
         super.onCreate();
 
         instance = this;
+
+        CrashReport.initCrashReport(getApplicationContext(), "e86bab41f6", false);
         //检测内存泄露
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -45,7 +52,8 @@ public class MyApplication extends Application {
         EasyHttp.init(this);//默认初始化
         EasyHttp.getInstance()
                 .setBaseUrl(HOST163)
-                .debug("网络DEBUG", true);;
+//                .debug("网络DEBUG", true);
+        ;
 
         //数据库
 //        LitePal.initialize(this);
@@ -53,38 +61,41 @@ public class MyApplication extends Application {
         //Util工具包
         Utils.init(this);
 
-        AppConfig.isSwipeBack = SPUtils.getInstance().getBoolean(CONFIG_SWIPE_BACK);
-
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
-                if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注册
-                    return;
-                EventBus.getDefault().register(activity);
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) { }
-
-            @Override
-            public void onActivityResumed(Activity activity) { }
-
-            @Override
-            public void onActivityPaused(Activity activity) { }
-
-            @Override
-            public void onActivityStopped(Activity activity) { }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) { }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注销
-                    return;
-                EventBus.getDefault().unregister(activity);
-            }
-        });
+//        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+//            @Override
+//            public void onActivityCreated(Activity activity, Bundle bundle) {
+//                if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注册
+//                    return;
+//                EventBus.getDefault().register(activity);
+//            }
+//
+//            @Override
+//            public void onActivityStarted(Activity activity) {
+//            }
+//
+//            @Override
+//            public void onActivityResumed(Activity activity) {
+//            }
+//
+//            @Override
+//            public void onActivityPaused(Activity activity) {
+//            }
+//
+//            @Override
+//            public void onActivityStopped(Activity activity) {
+//            }
+//
+//            @Override
+//            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+//            }
+//
+//            @Override
+//            public void onActivityDestroyed(Activity activity) {
+//                if (activity instanceof PermissionActivity) //第三方Activity通通跳过EventBus注销
+//                    return;
+//                EventBus.getDefault().unregister(activity);
+//            }
+//        });
     }
 
     public static MyApplication getInstance() {

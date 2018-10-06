@@ -11,7 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidnews.kiloproject.activity.H5Activity;
+import androidnews.kiloproject.activity.AboutActivity;
 
 /**
  * 自定义实现WebViewClient类
@@ -23,11 +23,11 @@ public class MWebViewClient extends WebViewClient {
      *	2、返回: return false; webview处理url是在webview内部执行。
      */
 
-    H5Activity h5Activity = null;
+    AboutActivity aboutActivity = null;
 
     public MWebViewClient(Activity activity){
-        if (activity instanceof H5Activity){
-            h5Activity = (H5Activity) activity;
+        if (activity instanceof AboutActivity){
+            aboutActivity = (AboutActivity) activity;
         }
     }
 
@@ -48,7 +48,7 @@ public class MWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        h5Activity.ivError.setVisibility(View.GONE);
+        aboutActivity.ivError.setVisibility(View.GONE);
     }
 
     /**
@@ -66,7 +66,7 @@ public class MWebViewClient extends WebViewClient {
     @TargetApi(21)
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        h5Activity.ivError.setVisibility(View.VISIBLE);
+        aboutActivity.ivError.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -83,6 +83,6 @@ public class MWebViewClient extends WebViewClient {
      */
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        h5Activity.ivError.setVisibility(View.VISIBLE);
+        aboutActivity.ivError.setVisibility(View.VISIBLE);
     }
 }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_largest">24dp</dimen>
     <dimen name="margin_large">16dp</dimen>
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_small">4dp</dimen>
-    <dimen name="margin_mini">2dp</dimen>
 
-    <dimen name="text_largest">24sp</dimen>
-    <dimen name="text_large">21sp</dimen>
     <dimen name="text_normal">18sp</dimen>
     <dimen name="text_small">15sp</dimen>
     <dimen name="text_mini">12sp</dimen>

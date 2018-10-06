@@ -1,7 +1,11 @@
 package androidnews.kiloproject.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -26,6 +30,7 @@ import androidnews.kiloproject.bean.net.NewMainListData;
 
 import static androidnews.kiloproject.fragment.BaseRvFragment.CELL;
 import static androidnews.kiloproject.fragment.BaseRvFragment.HEADER;
+import static androidnews.kiloproject.system.base.BaseActivity.isLollipop;
 import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, BaseViewHolder> {
@@ -75,13 +80,19 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                                 Intent intent;
                                 if (!TextUtils.isEmpty(rawId)) {
                                     int index = rawId.lastIndexOf("|");
-                                    if (index != -1){
-                                        skipID = rawId.substring(index - 4,rawId.length());
+                                    if (index != -1) {
+                                        skipID = rawId.substring(index - 4, rawId.length());
                                         intent = new Intent(mContext, GalleyActivity.class);
                                         intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
-                                        startActivity(intent);
-                                    }else {
-                                        ToastUtils.showShort(R.string.load_fail);
+
+                                        if (isLollipop()) {
+                                            ActivityOptionsCompat activityOptions = ActivityOptionsCompat
+                                                    .makeSceneTransitionAnimation((Activity) mContext, helper.getView(R.id.card_view), "big_card");
+                                            startActivity(intent, activityOptions.toBundle());
+                                        } else
+                                            startActivity(intent);
+                                    } else {
+                                        ToastUtils.showShort(R.string.server_fail);
                                         return;
                                     }
                                 } else {
@@ -101,10 +112,17 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                     helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
                     helper.setImageResource(R.id.item_card_img, R.color.white);
                 } else {
-                    Glide.with(mContext)
-                            .load(item.getImgsrc())
-                            .apply(options)
-                            .into((ImageView) helper.getView(R.id.item_card_img));
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
+                        if (!((Activity) mContext).isDestroyed()) {
+                            Glide.with(mContext)
+                                    .load(item.getImgsrc())
+                                    .apply(options)
+                                    .into((ImageView) helper.getView(R.id.item_card_img));
+                        } else
+                            Glide.with(mContext)
+                                    .load(item.getImgsrc())
+                                    .apply(options)
+                                    .into((ImageView) helper.getView(R.id.item_card_img));
                     helper.setText(R.id.item_card_subtitle, "");
                 }
                 break;

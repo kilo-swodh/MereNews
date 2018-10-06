@@ -1,9 +1,14 @@
 package androidnews.kiloproject.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +24,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.gyf.barlibrary.ImmersionBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
@@ -36,7 +42,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUSBAR;
 
 public class CacheActivity extends BaseActivity {
 
@@ -48,6 +53,7 @@ public class CacheActivity extends BaseActivity {
     CacheNewsAdapter cacheNewsAdapter;
     List<CacheNews> currentData;
     int type;
+    boolean isChange;
     @BindView(R.id.progress)
     ProgressBar progress;
     @BindView(R.id.root_view)
@@ -76,51 +82,78 @@ public class CacheActivity extends BaseActivity {
             }
         } else {
             setEmptyView();
-            progress.setVisibility(View.GONE);
             SnackbarUtils.with(rvContent).setMessage(getString(R.string.load_fail)).showError();
         }
-        if (SPUtils.getInstance().getBoolean(CONFIG_STATUSBAR))
-            ImmersionBar.with(mActivity).fitsSystemWindows(true).statusBarDarkFont(true).init();
-        else
-            initStateBar(android.R.color.white, true);
+
+        initStateBar(R.color.main_background, true);
     }
 
     @Override
     protected void initSlowly() {
         if (type > 0) {
             final String cacheJson = CacheDiskUtils.getInstance().getString(type + "", "");
-            Observable.create(new ObservableOnSubscribe<Boolean>() {
+            Observable.create(new ObservableOnSubscribe<Integer>() {
                 @Override
-                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                     if (!TextUtils.isEmpty(cacheJson)) {
                         currentData = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
                         }.getType());
-                        e.onNext(NetworkUtils.isConnected());
+                        if (NetworkUtils.isConnected())
+                            e.onNext(1);
+                        else
+                            e.onNext(2);
                     } else {
-                        setEmptyView();
+                        e.onNext(0);
                     }
                     e.onComplete();
                 }
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Boolean>() {
+                    .subscribe(new Consumer<Integer>() {
                         @Override
-                        public void accept(Boolean aBoolean) throws Exception {
+                        public void accept(Integer i) throws Exception {
                             progress.setVisibility(View.GONE);
                             cacheNewsAdapter = new CacheNewsAdapter(mActivity, currentData);
                             cacheNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                     Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                                    if (aBoolean) {
-                                        intent.putExtra("docid", currentData.get(position).getDocid());
-                                        startActivity(intent);
-                                    } else {
-                                        intent.putExtra("htmlText", currentData.get(position).getHtmlText());
-                                        startActivity(intent);
+                                    switch (i) {
+                                        case 1:
+                                            intent.putExtra("docid", currentData.get(position).getDocid());
+                                            break;
+                                        case 2:
+                                            intent.putExtra("htmlText", currentData.get(position).getHtmlText());
+                                            break;
                                     }
+                                    startActivity(intent);
                                 }
                             });
+                            cacheNewsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                                    builder.setTitle(R.string.delete)
+                                            .setMessage(R.string.delete_message)
+                                            .setCancelable(true)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    isChange = true;
+                                                    currentData.remove(position);
+                                                    cacheNewsAdapter.notifyDataSetChanged();
+                                                }
+                                            }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
+                                    return true;
+                                }
+                            });
+                            if (i == 0)
+                                setEmptyView();
                             rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
                             rvContent.setAdapter(cacheNewsAdapter);
                         }
@@ -133,5 +166,15 @@ public class CacheActivity extends BaseActivity {
     private void setEmptyView() {
         progress.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isChange){
+            String saveJson = gson.toJson(currentData, new TypeToken<List<CacheNews>>() {
+            }.getType());
+            CacheDiskUtils.getInstance().put(type + "",saveJson);
+        }
     }
 }
