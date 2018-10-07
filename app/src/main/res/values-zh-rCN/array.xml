@@ -46,10 +46,7 @@
         <item>中国足球</item>
         <item>旅游</item>
         <item>网易博客</item>
-        <!--<item>知乎日报</item>-->
-        <!--<item>汽车</item>-->
-        <!--<item>果壳精选</item>-->
-
+        <item>军事</item>
         <item>电影</item>
         <item>时尚</item>
         <item>情感</item>
@@ -57,5 +54,10 @@
         <item>家居</item>
         <item>亲子</item>
         <item>新闻</item>
+        <item>汽车</item>
+        <item>社会</item>
+        <item>论坛</item>
+        <!--<item>知乎日报</item>-->
+        <!--<item>果壳精选</item>-->
     </array>
 </resources>

@@ -22,9 +22,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.gyf.barlibrary.ImmersionBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
@@ -91,7 +89,7 @@ public class CacheActivity extends BaseActivity {
     @Override
     protected void initSlowly() {
         if (type > 0) {
-            final String cacheJson = CacheDiskUtils.getInstance().getString(type + "", "");
+            final String cacheJson = SPUtils.getInstance().getString(type + "", "");
             Observable.create(new ObservableOnSubscribe<Integer>() {
                 @Override
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
@@ -174,7 +172,7 @@ public class CacheActivity extends BaseActivity {
         if (isChange){
             String saveJson = gson.toJson(currentData, new TypeToken<List<CacheNews>>() {
             }.getType());
-            CacheDiskUtils.getInstance().put(type + "",saveJson);
+            SPUtils.getInstance().put(type + "",saveJson);
         }
     }
 }

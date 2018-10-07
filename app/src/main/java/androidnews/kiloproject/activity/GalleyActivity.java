@@ -1,5 +1,7 @@
 package androidnews.kiloproject.activity;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,16 +14,21 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.yanzhenjie.permission.Action;
 import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import java.io.File;
+import java.security.Permission;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +38,7 @@ import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.widget.PinchImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GalleyActivity extends BaseActivity {
 
@@ -44,8 +52,11 @@ public class GalleyActivity extends BaseActivity {
     TextView tvGalleyPage;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.btn_galley_download)
+    View btnGalleyDownload;
 
     private GalleyData galleyContent;
+    private String currentImg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,10 +84,10 @@ public class GalleyActivity extends BaseActivity {
 
                         @Override
                         public void onSuccess(String response) {
-                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response,"{}")) {
+                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 galleyContent = gson.fromJson(response, GalleyData.class);
                                 initGalley();
-                            }else {
+                            } else {
                                 SnackbarUtils.with(galleyViewpager).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
@@ -92,10 +103,11 @@ public class GalleyActivity extends BaseActivity {
         tvGalleyTitle.setText(galleyContent.getSetname());
         tvGalleyText.setText(beans.get(0).getNote());
 
-        final LinkedList<PinchImageView> viewCache = new LinkedList<PinchImageView>();
+        LinkedList<PinchImageView> viewCache = new LinkedList<PinchImageView>();
         RequestOptions options = new RequestOptions();
         options.error(R.drawable.ic_error);
 
+        currentImg = galleyContent.getPhotos().get(0).getImgurl();
         galleyViewpager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -108,7 +120,7 @@ public class GalleyActivity extends BaseActivity {
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container,final int position) {
+            public Object instantiateItem(ViewGroup container, final int position) {
                 PinchImageView piv;
                 if (viewCache.size() > 0) {
                     piv = viewCache.remove();
@@ -145,6 +157,7 @@ public class GalleyActivity extends BaseActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // 滚动的时候改变自定义控件的动画
+                currentImg = galleyContent.getPhotos().get(position).getImgurl();
             }
 
             @Override
@@ -160,6 +173,57 @@ public class GalleyActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.btn_galley_download)
+    public void onViewClicked() {
+        requestPermission(new Action() {
+            @Override
+            public void onAction(Object data) {
+                String fileName = currentImg.substring(currentImg.lastIndexOf('/'),currentImg.length());
+                EasyHttp.downLoad(currentImg)
+                        .savePath("/sdcard/Download")
+                        .saveName(fileName)//不设置默认名字是时间戳生成的
+                        .execute(new DownloadProgressCallBack<String>() {
+                            @Override
+                            public void update(long bytesRead, long contentLength, boolean done) {
+                                int progress = (int) (bytesRead * 100 / contentLength);
+
+                                if (done) {//下载完成
+                                }
+                            }
+
+                            @Override
+                            public void onStart() {
+                                //开始下载
+                            }
+
+                            @Override
+                            public void onComplete(String path) {
+                                //下载完成，path：下载文件保存的完整路径
+                                SnackbarUtils.with(tvGalleyTitle)
+                                        .setMessage(getString(R.string.download_success))
+//                                        .setAction(getString(R.string.check), new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                Intent intent = new Intent(Intent.ACTION_VIEW,
+//                                                        UriUtils.file2Uri(new File("/mnt/sdcard/Download/" + fileName)));
+//                                                startActivity(intent);
+//                                            }
+//                                        })
+                                        .showSuccess();
+                            }
+
+                            @Override
+                            public void onError(ApiException e) {
+                                //下载失败
+                                SnackbarUtils.with(tvGalleyTitle)
+                                        .setMessage(getString(R.string.download_fail)+e.getMessage())
+                                        .showError();
+                            }
+                        });
+            }
+        },Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 }
 

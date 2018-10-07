@@ -2,46 +2,46 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="true" android:state_selected="true">
         <shape>
-            <stroke android:width="1.0dip" android:color="@color/subscribe_bg" android:dashGap="2.0dip" android:dashWidth="4.0dip" />
-            <solid android:color="@color/subscribe_bg" />
+            <stroke android:width="1.0dip" android:color="@color/splash_bg" android:dashGap="2.0dip" android:dashWidth="4.0dip" />
+            <solid android:color="@color/splash_bg" />
             <corners android:radius="5dp"/>
         </shape>
     </item>
     <item android:state_selected="true">
         <shape>
-            <stroke android:width="1.0dip" android:color="@color/subscribe_item_disabled_stroke" />
-            <solid android:color="@color/subscribe_item_selected_bg" />
+            <stroke android:width="1.0dip" android:color="@color/colorAccent" />
+            <solid android:color="@color/splash_bg" />
             <corners android:radius="5dp"/>
         </shape>
     </item>
 
     <item android:state_pressed="false" android:state_selected="true">
         <shape>
-            <stroke android:width="0.5dip" android:color="@android:color/black" />
-            <solid android:color="@android:color/black" />
+            <stroke android:width="0.5dip" android:color="@color/main_text_color_drak" />
+            <solid android:color="@color/main_text_color_drak" />
             <corners android:radius="5dp"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape>
-            <stroke android:width="0.5dip" android:color="@color/subscribe_item_disabled_stroke" />
-            <solid android:color="@color/subscribe_item_disabled_bg" />
+            <stroke android:width="0.5dip" android:color="@color/divider" />
+            <solid android:color="@color/main_background" />
             <corners android:radius="5dp"/>
         </shape>
     </item>
 
     <item android:state_pressed="true">
         <shape>
-            <stroke android:width="0.5dip" android:color="@color/subscribe_item_pressed_stroke" />
-            <solid android:color="@color/subscribe_item_pressed_bg" />
+            <stroke android:width="0.5dip" android:color="@color/divider" />
+            <solid android:color="@color/main_background" />
             <corners android:radius="5dp"/>
         </shape>
     </item>
     <item>
         <shape>
-            <stroke android:width="0.5dip" android:color="@color/subscribe_item_disabled_stroke" />
-            <solid android:color="@color/subscribe_item_disabled_bg" />
+            <stroke android:width="0.5dip" android:color="@color/divider" />
+            <solid android:color="@color/main_background" />
             <corners android:radius="5dp"/>
         </shape>
     </item>

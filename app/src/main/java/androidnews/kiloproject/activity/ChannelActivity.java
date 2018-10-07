@@ -42,12 +42,8 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
     Toolbar toolbar;
     @BindView(R.id.my_category_text)
     TextView myCategoryText;
-    @BindView(R.id.seperate_line)
-    View seperateLine;
     @BindView(R.id.more_category_text)
     TextView moreCategoryText;
-    @BindView(R.id.subscribe_main_layout)
-    LinearLayout subscribeMainLayout;
     /**
      * 用户栏目对应的适配器，可以拖动
      */

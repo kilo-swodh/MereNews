@@ -47,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static androidnews.kiloproject.activity.ChannelActivity.SELECT_RESULT;
+import static androidnews.kiloproject.activity.SettingActivity.SETTING_RESULT;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
@@ -222,7 +223,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_setting:
                 intent = new Intent(mActivity, SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,SETTING_RESULT);
                 break;
             case R.id.nav_about:
                 intent = new Intent(mActivity, AboutActivity.class);
@@ -255,6 +256,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SELECT_RESULT:
+            case SETTING_RESULT:
                 if (resultCode == RESULT_OK) {
                     initSlowly();
                 }
@@ -273,7 +275,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (mViewPager != null) {
+                        if (mViewPager != null && photoData != null) {
                             if (bgPosition == photoData.getCacheMoreData().size()) {
                                 bgPosition = 0;
                             }

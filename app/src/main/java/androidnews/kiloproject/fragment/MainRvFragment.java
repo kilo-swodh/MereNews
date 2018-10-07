@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.CacheDiskUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
@@ -37,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.adapter.MainRvAdapter;
 import androidnews.kiloproject.bean.net.GalleyData;
@@ -49,10 +48,10 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.getMainDataA;
 import static androidnews.kiloproject.system.AppConfig.getMainDataB;
-import static androidnews.kiloproject.system.base.BaseActivity.isLollipop;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -107,25 +106,25 @@ public class MainRvFragment extends BaseRvFragment {
         //Use this now
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
 
-        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
-        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
+//        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
+//        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                requestData(TYPE_REFRESH);
+                requestData(TYPE_REFRESH, true);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                requestData(TYPE_LOADMORE);
+                requestData(TYPE_LOADMORE, true);
             }
         });
 
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                String json = CacheDiskUtils.getInstance().getString(CACHE_LIST_DATA, "");
+                String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
                     contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
                     }.getType());
@@ -158,7 +157,7 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestData(int type) {
+    private void requestData(int type, boolean isNotify) {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
@@ -181,7 +180,10 @@ public class MainRvFragment extends BaseRvFragment {
                                     refreshLayout.finishRefresh(false);
                                     break;
                                 case TYPE_LOADMORE:
-                                    refreshLayout.finishLoadMore(false);
+                                    if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
+                                        mainAdapter.loadMoreFail();
+                                    else
+                                        refreshLayout.finishLoadMore(false);
                                     break;
                             }
                             SnackbarUtils.with(refreshLayout).
@@ -201,41 +203,51 @@ public class MainRvFragment extends BaseRvFragment {
                                         retMap = gson.fromJson(response,
                                                 new TypeToken<HashMap<String, List<NewMainListData>>>() {
                                                 }.getType());
-                                    }catch (Exception e1){
-                                        e1.printStackTrace();
-                                        loadFailed(type);
-                                    }
-                                    //设置头部轮播
-                                    if (type == TYPE_REFRESH) {
-                                        NewMainListData first = retMap.get(typeStr).get(0);
-                                        first.setItemType(HEADER);
-                                        if (first.getAds() != null) {
-                                            for (int i = 0; i < first.getAds().size(); i++) {
-                                                NewMainListData.AdsBean bean =
-                                                        first.getAds().get(i);
-                                                if (!bean.getSkipID().contains("|")) {
-                                                    first.getAds().remove(i);
-                                                    continue;
-                                                }
-                                                if (bean.getImgsrc().equals("bigimg")) {
-                                                    requestRealPic(i, bean.getSkipID());
+                                        //设置头部轮播
+                                        if (type == TYPE_REFRESH) {
+                                            NewMainListData first = retMap.get(typeStr).get(0);
+                                            first.setItemType(HEADER);
+                                            if (first.getAds() != null) {
+                                                for (int i = 0; i < first.getAds().size(); i++) {
+                                                    NewMainListData.AdsBean bean =
+                                                            first.getAds().get(i);
+                                                    if (!bean.getSkipID().contains("|")) {
+                                                        first.getAds().remove(i);
+                                                        continue;
+                                                    }
+                                                    if (bean.getImgsrc().equals("bigimg")) {
+                                                        requestRealPic(i, bean.getSkipID());
+                                                    }
                                                 }
                                             }
                                         }
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
+                                        loadFailed(type);
                                     }
+                                    List<NewMainListData> newList = new ArrayList<>();
                                     switch (type) {
                                         case TYPE_REFRESH:
                                             currentPage = 0;
-                                            contents = retMap.get(typeStr);
-                                            CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
+                                            contents = new ArrayList<>();
+                                            newList = retMap.get(typeStr);
+                                            for (NewMainListData content : newList) {
+                                                if (TextUtils.isEmpty(content.getTAG()))
+//                                                if (!TextUtils.isEmpty(content.getSource()) && TextUtils.isEmpty(content.getTAG()))
+                                                    contents.add(content);
+                                            }
+                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;
-                                            List<NewMainListData> newList = new ArrayList<>();
                                             newList.addAll(contents);
                                             boolean isAllSame = true;
                                             for (NewMainListData newBean : retMap.get(typeStr)) {
                                                 boolean isSame = false;
+//                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
+                                                if (!TextUtils.isEmpty(newBean.getTAG())){
+                                                    continue;
+                                                }
                                                 for (NewMainListData myBean : contents) {
                                                     if (TextUtils.equals(myBean.getDocid(), newBean.getDocid())) {
                                                         isSame = true;
@@ -261,33 +273,40 @@ public class MainRvFragment extends BaseRvFragment {
                                     .subscribe(new Consumer<Boolean>() {
                                         @Override
                                         public void accept(Boolean o) throws Exception {
-                                            SnackbarUtils.with(refreshLayout)
-                                                    .setMessage(getString(R.string.load_success))
-                                                    .showSuccess();
                                             if (mainAdapter == null || type == TYPE_REFRESH) {
                                                 createAdapter();
                                                 refreshLayout.finishRefresh(true);
                                             } else if (type == TYPE_LOADMORE) {
                                                 mainAdapter.notifyDataSetChanged();
-                                                refreshLayout.finishLoadMore(true);
+                                                if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
+                                                    mainAdapter.loadMoreComplete();
+                                                else
+                                                    refreshLayout.finishLoadMore(true);
                                             }
+                                            if (isNotify)
+                                                SnackbarUtils.with(refreshLayout)
+                                                        .setMessage(getString(R.string.load_success))
+                                                        .showSuccess();
                                         }
                                     });
                         } else {
-                           loadFailed(type);
+                            loadFailed(type);
                         }
                     }
                 });
     }
 
-    private void loadFailed(int type){
+    private void loadFailed(int type) {
         switch (type) {
             case TYPE_REFRESH:
                 refreshLayout.finishRefresh(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;
             case TYPE_LOADMORE:
-                refreshLayout.finishLoadMore(false);
+                if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
+                    mainAdapter.loadMoreFail();
+                else
+                    refreshLayout.finishLoadMore(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;
         }
@@ -302,10 +321,28 @@ public class MainRvFragment extends BaseRvFragment {
                 Intent intent = null;
                 switch (bean.getItemType()) {
                     case CELL:
-                        intent = new Intent(getActivity(), NewsDetailActivity.class);
-                        intent.putExtra("docid", bean.getDocid().replace("_special", "").trim());
-                        startActivity(intent);
-                        break;
+                        if (!TextUtils.isEmpty(bean.getSkipID()) && TextUtils.equals(bean.getSkipType(), "photoset")) {
+                            String skipID = "";
+                            String rawId;
+                            rawId = bean.getSkipID();
+                            if (!TextUtils.isEmpty(rawId)) {
+                                int index = rawId.lastIndexOf("|");
+                                if (index != -1) {
+                                    skipID = rawId.substring(index - 4, rawId.length());
+                                    intent = new Intent(mActivity, GalleyActivity.class);
+                                    intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
+                                    startActivity(intent);
+                                } else {
+                                    SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
+                                    return;
+                                }
+                            }
+                            break;
+                        }else {
+                            intent = new Intent(getActivity(), NewsDetailActivity.class);
+                            intent.putExtra("docid", bean.getDocid().replace("_special", "").trim());
+                            startActivity(intent);
+                        }
                 }
             }
         });
@@ -321,6 +358,17 @@ public class MainRvFragment extends BaseRvFragment {
             }
         });
         mRecyclerView.setAdapter(mainAdapter);
+        if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
+            mainAdapter.setPreLoadNumber(5);
+            mainAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+                @Override
+                public void onLoadMoreRequested() {
+                    requestData(TYPE_LOADMORE, false);
+                }
+            }, mRecyclerView);
+            mainAdapter.disableLoadMoreIfNotFullPage();
+            refreshLayout.setEnableLoadMore(false);
+        }
     }
 
     private void requestRealPic(final int position, String rawId) {
@@ -346,7 +394,7 @@ public class MainRvFragment extends BaseRvFragment {
                                 mainAdapter.notifyItemChanged(0);
 
                                 String json = gson.toJson(contents);
-                                CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                SPUtils.getInstance().put(CACHE_LIST_DATA, json);
                             }
                         }
                     }
@@ -356,7 +404,7 @@ public class MainRvFragment extends BaseRvFragment {
     @Override
     public void onDestroy() {
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_CLEAR)) {
-            CacheDiskUtils.getInstance().put(CACHE_LIST_DATA, "");
+            SPUtils.getInstance().put(CACHE_LIST_DATA, "");
         }
         super.onDestroy();
     }

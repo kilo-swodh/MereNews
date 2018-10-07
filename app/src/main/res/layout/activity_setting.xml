@@ -1,415 +1,479 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_background"
-    android:id="@+id/root_layout">
+    android:background="@color/main_background">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0.0dip"
+        android:layout_height="?actionBarSize"
+        android:background="@color/main_background"
+        android:elevation="@dimen/elevation_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ToolbarPopupTheme" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0.0dip"
-            android:layout_height="?actionBarSize"
-            android:background="@color/main_background"
-            android:elevation="@dimen/elevation_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ToolbarPopupTheme" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/setting_basic"
-            android:textColor="@color/main_text_colorful"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-            <android.support.constraint.ConstraintLayout
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/setting_basic"
+                android:textColor="@color/main_text_colorful"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_language"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_language,tv_language_detail,view1" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_language"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/language"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_language,tv_language_detail,view_language" />
 
-                <TextView
-                    android:id="@+id/tv_language_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="Auto"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_language" />
+                    <TextView
+                        android:id="@+id/tv_language"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/language"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="0.0dip"
-                    android:layout_height="1.0px"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_language_detail" />
+                    <TextView
+                        android:id="@+id/tv_language_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="Auto"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_language" />
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_clear_cache"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_clear_cache,tv_clear_cache_detail,view1" />
+                    <View
+                        android:id="@+id/view_language"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_language_detail" />
 
-                <TextView
-                    android:id="@+id/tv_clear_cache"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/clear_cache"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view1" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_clear_cache"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_clear_cache,tv_clear_cache_detail,view_language" />
 
-                <TextView
-                    android:id="@+id/tv_clear_cache_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/clear_cache_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache" />
+                    <TextView
+                        android:id="@+id/tv_clear_cache"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_language" />
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="0.0dip"
-                    android:layout_height="1.0px"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache_detail" />
+                    <TextView
+                        android:id="@+id/tv_clear_cache_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/clear_cache_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache" />
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_auto_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_auto_refresh,tv_auto_refresh_detail,view2,sw_auto_refresh" />
+                    <View
+                        android:id="@+id/view_auto_refresh"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache_detail" />
 
-                <TextView
-                    android:id="@+id/tv_auto_refresh"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/auto_refresh"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_auto_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_auto_refresh,tv_auto_refresh_detail,view_auto_refresh,sw_auto_refresh" />
 
-                <TextView
-                    android:id="@+id/tv_auto_refresh_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/auto_refresh_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh" />
+                    <TextView
+                        android:id="@+id/tv_auto_refresh"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/auto_refresh"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_auto_refresh" />
 
-                <Switch
-                    android:id="@+id/sw_auto_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginRight="@dimen/margin_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_auto_refresh_detail"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                    app:layout_constraintTop_toTopOf="@+id/tv_auto_refresh" />
+                    <TextView
+                        android:id="@+id/tv_auto_refresh_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/auto_refresh_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh" />
 
-                <View
-                    android:id="@+id/view3"
-                    android:layout_width="0.0dip"
-                    android:layout_height="1.0px"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh_detail" />
+                    <Switch
+                        android:id="@+id/sw_auto_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_auto_refresh_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_auto_refresh" />
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_auto_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_auto_clear,tv_auto_clear_detail,sw_auto_clear,view3" />
+                    <View
+                        android:id="@+id/view_auto_loadmore"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh_detail" />
 
-                <TextView
-                    android:id="@+id/tv_auto_clear"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/auto_clear"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_auto_loadmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_auto_loadmore,tv_auto_loadmore_detail,view_auto_loadmore,sw_auto_loadmore" />
 
-                <TextView
-                    android:id="@+id/tv_auto_clear_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/auto_clear_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear" />
+                    <TextView
+                        android:id="@+id/tv_auto_loadmore"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/auto_loadmore"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_loadmore"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_auto_loadmore" />
 
-                <Switch
-                    android:id="@+id/sw_auto_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginRight="@dimen/margin_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_auto_clear_detail"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                    app:layout_constraintTop_toTopOf="@+id/tv_auto_clear" />
+                    <TextView
+                        android:id="@+id/tv_auto_loadmore_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/auto_loadmore_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_loadmore"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_loadmore" />
 
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="0.0dip"
-                    android:layout_height="1.0px"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear_detail" />
+                    <Switch
+                        android:id="@+id/sw_auto_loadmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_auto_loadmore_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_auto_loadmore" />
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_swipe_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_swipe_back,tv_swipe_back_detail,sw_swipe_back,view4" />
+                    <View
+                        android:id="@+id/view_auto_clear"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_loadmore_detail" />
 
-                <TextView
-                    android:id="@+id/tv_swipe_back"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/swipe_back"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view4" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_auto_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="tv_auto_clear,tv_auto_clear_detail,sw_auto_clear,view_auto_clear" />
 
-                <TextView
-                    android:id="@+id/tv_swipe_back_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/swipe_back_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back" />
+                    <TextView
+                        android:id="@+id/tv_auto_clear"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/auto_clear"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_auto_clear" />
 
-                <Switch
-                    android:id="@+id/sw_swipe_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginRight="@dimen/margin_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_swipe_back_detail"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                    app:layout_constraintTop_toTopOf="@+id/tv_swipe_back" />
+                    <TextView
+                        android:id="@+id/tv_auto_clear_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/auto_clear_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear" />
 
-                <View
-                    android:id="@+id/view5"
-                    android:layout_width="0.0dip"
-                    android:layout_height="1.0px"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginRight="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:background="@color/divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back_detail" />
+                    <Switch
+                        android:id="@+id/sw_auto_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_auto_clear_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_auto_clear" />
 
-                <android.support.constraint.Group
-                    android:id="@+id/group_night_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_night_theme,tv_night_theme_detail,sw_night_theme,view5" />
+                    <View
+                        android:id="@+id/view_swipe_back"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear_detail" />
 
-                <TextView
-                    android:id="@+id/tv_night_theme"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/night_theme"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+                    <android.support.constraint.Group
+                        android:id="@+id/group_swipe_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_swipe_back,tv_swipe_back_detail,sw_swipe_back,view_swipe_back" />
 
-                <TextView
-                    android:id="@+id/tv_night_theme_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_normal"
-                    android:layout_marginLeft="@dimen/margin_large"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/night_theme_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_night_theme" />
+                    <TextView
+                        android:id="@+id/tv_swipe_back"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/swipe_back"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_swipe_back" />
 
-                <Switch
-                    android:id="@+id/sw_night_theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginRight="@dimen/margin_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_night_theme_detail"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                    app:layout_constraintTop_toTopOf="@+id/tv_night_theme" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/tv_swipe_back_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/swipe_back_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:text="@string/setting_other"
-            android:textColor="@color/main_text_colorful"
-            android:textSize="@dimen/text_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view1" />
+                    <Switch
+                        android:id="@+id/sw_swipe_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_swipe_back_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_swipe_back" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
+                    <View
+                        android:id="@+id/view_night_theme"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back_detail" />
 
-            <android.support.constraint.ConstraintLayout
+                    <android.support.constraint.Group
+                        android:id="@+id/group_night_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_night_theme,tv_night_theme_detail,sw_night_theme,view_night_theme" />
+
+                    <TextView
+                        android:id="@+id/tv_night_theme"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/night_theme"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_night_theme" />
+
+                    <TextView
+                        android:id="@+id/tv_night_theme_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/night_theme_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_night_theme" />
+
+                    <Switch
+                        android:id="@+id/sw_night_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_night_theme_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_night_theme" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/textauto_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/setting_other"
+                android:textColor="@color/main_text_colorful"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_language" />
+
+            <android.support.v7.widget.CardView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textauto_refresh">
 
-                <android.support.constraint.Group
-                    android:id="@+id/check_update"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-                <TextView
-                    android:id="@+id/tv_check_update"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:text="@string/check_update"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <android.support.constraint.Group
+                        android:id="@+id/check_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
 
-                <TextView
-                    android:id="@+id/tv_check_update_detail"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_normal"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:paddingTop="@dimen/margin_normal"
-                    android:text="@string/check_update_detail"
-                    android:textColor="@color/main_text_color_drak"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_check_update" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
-    </android.support.constraint.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_check_update"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/check_update"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.v4.widget.NestedScrollView>
+                    <TextView
+                        android:id="@+id/tv_check_update_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/check_update_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_check_update" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
@@ -18,13 +19,16 @@ import android.view.ViewParent;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -62,6 +66,8 @@ public class NewsDetailActivity extends BaseActivity {
     ProgressBar progress;
     @BindView(R.id.web_news)
     NestedScrollWebView webView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private String html;
     private NewsDetailData currentData;
     private boolean isStar = false;
@@ -89,6 +95,7 @@ public class NewsDetailActivity extends BaseActivity {
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                             progress.setVisibility(View.GONE);
+                            refreshLayout.finishRefresh();
                         }
 
                         @Override
@@ -99,15 +106,15 @@ public class NewsDetailActivity extends BaseActivity {
                                 String jsonFine = jsonNoHeader.substring(0, jsonNoHeader.length() - 1);
 
                                 if (response.contains("点这里升级")) {
-                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.server_fail)).showError();
+                                    ToastUtils.showShort(getString(R.string.server_fail));
                                     finish();
                                     return;
                                 }
                                 try {
                                     currentData = gson.fromJson(jsonFine, NewsDetailData.class);
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
-                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.server_fail)).showError();
+                                    ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
                                     finish();
                                 }
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
@@ -124,6 +131,7 @@ public class NewsDetailActivity extends BaseActivity {
                                                     isStar = true;
                                                     toolbar.getMenu().getItem(3).setIcon(R.drawable.ic_star_ok);
                                                 }
+                                                refreshLayout.finishRefresh();
                                             }
                                         });
                                 if (webView != null) {
@@ -131,6 +139,7 @@ public class NewsDetailActivity extends BaseActivity {
                                     loadUrl();
                                 }
                             } else {
+                                refreshLayout.finishRefresh();
                                 progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             }
@@ -211,6 +220,12 @@ public class NewsDetailActivity extends BaseActivity {
                 return false;
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initSlowly();
+            }
+        });
     }
 
     @Override
@@ -229,7 +244,6 @@ public class NewsDetailActivity extends BaseActivity {
         webSetting.setAppCacheEnabled(true);
         webSetting.setDatabaseEnabled(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-
     }
 
     private void loadUrl() {
@@ -317,7 +331,7 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     private void saveCache(int type) {
-        String hisJson = CacheDiskUtils.getInstance().getString(type + "", "");
+        String hisJson = SPUtils.getInstance().getString(type + "", "");
         List<CacheNews> list;
         if (TextUtils.isEmpty(hisJson)) {
             list = new ArrayList<>();
@@ -339,11 +353,11 @@ public class NewsDetailActivity extends BaseActivity {
 
         String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
         }.getType());
-        CacheDiskUtils.getInstance().put(type + "", saveJson);
+        SPUtils.getInstance().put(type + "", saveJson);
     }
 
     private boolean checkStar(boolean isClear) {
-        String hisJson = CacheDiskUtils.getInstance().getString(CACHE_COLLECTION + "", "");
+        String hisJson = SPUtils.getInstance().getString(CACHE_COLLECTION + "", "");
         List<CacheNews> list;
         if (!TextUtils.isEmpty(hisJson)) {
             list = gson.fromJson(hisJson, new TypeToken<List<CacheNews>>() {
@@ -354,7 +368,7 @@ public class NewsDetailActivity extends BaseActivity {
                         list.remove(cache);
                         String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
                         }.getType());
-                        CacheDiskUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
+                        SPUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
                     }
                     return true;
                 }

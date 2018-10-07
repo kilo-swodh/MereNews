@@ -20,8 +20,8 @@ android {
 //            enabled true
 //        }
 
-        versionCode 6
-        versionName "beta6"
+        versionCode 8
+        versionName "beta8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

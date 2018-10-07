@@ -46,7 +46,7 @@
         <item>T1348649503389</item> //中国足球
         <item>T1348654204705</item> //旅游
         <item>T1349837698345</item> //网易博客
-
+        <item>T1348648141035</item> //军事
         <item>T1348648650048</item> //电影
         <item>T1348650593803</item> //时尚
         <item>T1348650839000</item> //情感
@@ -54,9 +54,11 @@
         <item>T1348654105308</item> //家居
         <item>T1397116135282</item> //亲子
         <item>T1371543208049</item> //新闻
+        <item>T1348654060988</item> //汽车
+        <item>T1348648037603</item> //社会
+        <item>T1349837670307</item> //论坛
 
         <!--<item>zhihu</item> //知乎-->
-        <!--<item>auto</item> //汽车-->
         <!--<item>guoke</item> //果壳-->
     </array>
 
@@ -88,7 +90,7 @@
         <item>Chinese Football</item>
         <item>Travel</item>
         <item>NetEase Blog</item>
-
+        <item>Military</item>
         <item>Movie</item>
         <item>Smart</item>
         <item>Emotion</item>
@@ -96,8 +98,10 @@
         <item>Home Furnishing</item>
         <item>Parenting</item>
         <item>News</item>
+        <item>Auto</item>
+        <item>Sociology</item>
+        <item>Forum</item>
         <!--<item>ZhiHuDaily</item>-->
-        <!--<item>Auto</item>-->
         <!--<item>GuoKr</item>-->
     </array>
 </resources>

@@ -27,9 +27,14 @@
     <string name="about">About</string>
     <string name="exit">Exit</string>
 
+    <string name="loading">Now loading</string>
     <string name="load_success">Load success</string>
     <string name="load_fail">Load failed</string>
     <string name="server_fail">Server returns data exception</string>
+    <string name="download_success">Download success</string>
+    <string name="download_fail">Download fail</string>
+
+    <string name="check">Check</string>
 
     <string name="empty_content">It\'s nothing.</string>
     <string name="no_comment">No comment</string>
@@ -44,6 +49,8 @@
     <string name="clear_cache_detail">Prudent point</string>
     <string name="auto_refresh">auto refresh</string>
     <string name="auto_refresh_detail">First entry into App auto refresh</string>
+    <string name="auto_loadmore">Preloading data</string>
+    <string name="auto_loadmore_detail">When you browse to the end, load in advance, avoid waiting, and consume more traffic.</string>
     <string name="auto_clear">Automatic cleaning cache</string>
     <string name="auto_clear_detail">Clear cache when quit App</string>
     <string name="night_theme">Night Theme</string>
@@ -54,6 +61,7 @@
     <string name="swipe_back_detail">Sliding back from left to right</string>
 
     <string name="start_after_exit">Start after exit</string>
+    <string name="start_after_restart_list">The interface will refresh after returning so that the settings will take effect.</string>
 
     <string name="update_address">https://www.pgyer.com/android_news</string>
 

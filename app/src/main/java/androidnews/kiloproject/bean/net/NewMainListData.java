@@ -108,9 +108,27 @@ public class NewMainListData implements MultiItemEntity {
     private String specialID;
     private String speciallogo;
     private String specialadlogo;
+    private String TAG;
+    private String TAGS;
     private List<?> editor;
     private List<AdsBean> ads;
     private List<SpecialextraBean> specialextra;
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    public String getTAGS() {
+        return TAGS;
+    }
+
+    public void setTAGS(String TAGS) {
+        this.TAGS = TAGS;
+    }
 
     public String getTemplate() {
         return template;
@@ -570,6 +588,24 @@ public class NewMainListData implements MultiItemEntity {
         private String imgsrc;
         private String ptime;
         private String daynum;
+        private String TAG;
+        private String TAGS;
+
+        public String getTAG() {
+            return TAG;
+        }
+
+        public void setTAG(String TAG) {
+            this.TAG = TAG;
+        }
+
+        public String getTAGS() {
+            return TAGS;
+        }
+
+        public void setTAGS(String TAGS) {
+            this.TAGS = TAGS;
+        }
 
         public int getVotecount() {
             return votecount;

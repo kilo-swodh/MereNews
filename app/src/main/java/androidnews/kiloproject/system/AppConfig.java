@@ -27,6 +27,8 @@ public class AppConfig {
 
     public static final String CONFIG_AUTO_REFRESH = "config_auto_refresh";
 
+    public static final String CONFIG_AUTO_LOADMORE = "config_auto_loadmore";
+
     public static final String CONFIG_AUTO_CLEAR = "config_auto_clear";
 
     public static final String CONFIG_SWIPE_BACK = "config_swipe_back";

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <devices>
+          <device id="pixel_2_xl" />
+        </devices>
+      </config>
     </shared>
   </component>
   <component name="AndroidLogFilters">
@@ -11,8 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa42d13d-cfe4-454d-b4b8-4ca23ad7c64f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" />
@@ -24,157 +26,35 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" />
-      <change beforePath="$PROJECT_DIR$/.idea/AndroidNews.iml" afterPath="$PROJECT_DIR$/.idea/AndroidNews.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_common_1_1_0_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_0.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_common_1_1_0_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_0.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_0.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_0.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_appcompat_v7_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cardview_v7_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_design_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_recyclerview_v7_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_annotations_27_1_1_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_compat_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_ui_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_utils_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_fragment_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_media_compat_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_v4_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_vector_drawable_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_transition_27_1_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_gyf_barlibrary_barlibrary_2_3_0.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_haha_haha_2_0_3_jar.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_analyzer_1_5_4.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_android_1_5_4.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_watcher_1_5_4_jar.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" />
+      <change beforePath="$PROJECT_DIR$/app/release/app-release.apk" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/release/output.json" afterPath="$PROJECT_DIR$/app/release/output.json" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/H5Activity.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SelectActivity.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebChromeClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebChromeClient.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebViewClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebViewClient.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/EasyTipDragView.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/adapter/AbsTipAdapter.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/adapter/AddTipAdapter.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/adapter/DragTipAdapter.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/bean/SimpleTitleTip.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/bean/Tip.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/listener/OnDragDropListener.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/widget/DragDropController.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/widget/DragDropGirdView.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/easytagdragview/widget/TipItemView.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/color/navigation_menu_item_color.xml" afterPath="$PROJECT_DIR$/app/src/main/res/color/navigation_menu_item_color.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_arrow_back_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_arrow_back_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_cancel_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_check_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_close_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_close_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_expand_less_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_expand_less_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_expand_more_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_expand_more_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_refresh_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_refresh_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_arrow_back_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_arrow_back_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_cancel_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_check_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_close_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_close_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_expand_less_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_expand_less_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_expand_more_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_expand_more_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_refresh_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_refresh_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_arrow_back_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_arrow_back_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_cancel_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_check_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_close_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_close_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_expand_less_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_expand_less_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_expand_more_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_expand_more_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_refresh_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_refresh_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_arrow_back_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_arrow_back_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_cancel_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_check_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_close_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_close_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_expand_less_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_expand_less_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_expand_more_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_expand_more_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_refresh_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_refresh_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_arrow_back_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_arrow_back_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_cancel_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_check_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_close_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_close_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_expand_less_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_expand_less_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_expand_more_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_expand_more_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_refresh_black_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_refresh_white_24dp.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/delete.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_delete.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_theme.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_unhappy.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_unhappy.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_wait.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tag_add_bg.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tag_item_bg.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/color/subscribe_item_text_color.xml" afterPath="$PROJECT_DIR$/app/src/main/res/color/subscribe_item_text_color.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_h5.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_h5.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_select.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/comment_level_one.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/comment_level_one.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/comment_level_two.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/comment_level_two.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/header_logo.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_big.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_big.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_small.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_small.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_add_item.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_easytagdrag.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_tag_item.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/array.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/array.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/array.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/array.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
@@ -201,15 +81,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="MainRvFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
+      <file leaf-file-name="GalleyActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="162" column="23" lean-forward="false" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
+            <state relative-caret-position="260">
+              <caret line="207" column="64" lean-forward="false" selection-start-line="207" selection-start-column="64" selection-end-line="207" selection-end-column="64" />
               <folding>
-                <element signature="e#4280#4281#0" expanded="true" />
-                <element signature="e#4337#4338#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="274">
+              <caret line="36" column="27" lean-forward="false" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_galley.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="65" column="61" lean-forward="false" selection-start-line="65" selection-start-column="61" selection-end-line="65" selection-end-column="61" />
+              <folding>
+                <element signature="e#2610#2631#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="248">
+              <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="7" column="66" lean-forward="false" selection-start-line="7" selection-start-column="66" selection-end-line="7" selection-end-column="66" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="160" column="80" lean-forward="false" selection-start-line="160" selection-start-column="80" selection-end-line="160" selection-end-column="80" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -227,39 +174,40 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>glide</find>
-      <find>adapter</find>
-      <find>onSuccess</find>
-      <find>加载失败</find>
-      <find>ToastUtils.</find>
-      <find>app:layout_constraintEnd_toEndOf=&quot;@+id/view</find>
-      <find>app:layout_constraintEnd_toEndOf=&quot;@+id</find>
-      <find>nig</find>
-      <find>recre</find>
       <find>refreshLayout.</find>
-      <find>CONFIG_STATUSBAR</find>
-      <find>md_statusbar</find>
-      <find>tv_auto_clear_detail</find>
-      <find>statusba</find>
-      <find>CONFIG_AUTO_CLEAR</find>
-      <find>json</find>
-      <find>AlertDialog.Builder builder</find>
-      <find>widget.CardView</find>
-      <find>new TypeToken&lt;List&lt;CacheNews&gt;&gt;</find>
-      <find>ImmersionBar.with(</find>
-      <find>catch</find>
-      <find>ToastUtils.s</find>
-      <find>toolbar</find>
-      <find>realp</find>
-      <find>server_</find>
-      <find>snack</find>
-      <find>event</find>
-      <find>@Subscribe</find>
-      <find>SnackbarUtils.with(refreshLayout)</find>
-      <find>snackbar</find>
+      <find>refreshLayout.finishLoadMore</find>
+      <find>Result</find>
+      <find>startActivityForResult</find>
+      <find>result</find>
+      <find>start_after_restart_list</find>
+      <find>hisjson</find>
+      <find>kv.</find>
+      <find>clear</find>
+      <find>mmkv</find>
+      <find>T1348648141035</find>
+      <find>gall</find>
+      <find>T1348654060988</find>
+      <find>galley</find>
+      <find>server_fail</find>
+      <find>votecount</find>
+      <find>refreshlayout</find>
+      <find>rootLayout</find>
+      <find>seperateLine</find>
+      <find>fill_parent</find>
+      <find>px</find>
+      <find>isMove</find>
+      <find>save</find>
+      <find>text=&quot;</find>
+      <find>load</find>
+      <find>下载</find>
+      <find>glide</find>
+      <find>currentImg</find>
+      <find>beans</find>
+      <find>fail</find>
     </findStrings>
     <replaceStrings>
       <replace>auto_clear</replace>
+      <replace>match_parent</replace>
     </replaceStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -2344,62 +2292,68 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_h5.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/assets/about.html" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/OtherGridView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/DragAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/channel_items.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SelectActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/DragGrid.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_select.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-night/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/channel_category_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebViewClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/NestedScrollWebview.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_night.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-v21/ripple_bg_drawable.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-v21/ripple_bg.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/array.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/array.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/color/subscribe_item_text_color.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="477" />
-    <option name="y" value="209" />
+    <option name="x" value="-8" />
     <option name="width" value="1386" />
     <option name="height" value="688" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -2413,6 +2367,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -2503,7 +2459,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -2532,7 +2488,7 @@
               <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="menu" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
@@ -2542,23 +2498,27 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="device.picker.selection" value="6c96e7c3" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../baseProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/release/app-release.apk" />
     <property name="ExportApk.ApkPath" value="D:\Kilo Lab\Android\AndroidNews\app" />
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="ExportApk.SignV2" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="MainActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;Main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;deta&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;sett&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;detail&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.NewsDetailActivity&#10;det&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;base&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java&#10;cach&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CacheActivity&#10;main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;set&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_setting.xml&#10;about&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.AboutActivity&#10;mainf&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;setti&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_setting.xml&#10;NewsDetailActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;MainRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;setting&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SettingActivity&#10;MaterialViewPagerAnimator&#9;PSI&#9;JAVA://com.github.florent37.materialviewpager.MaterialViewPagerAnimator&#10;fragment_&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/fragment_recyclerview.xml&#10;my&#9;PSI&#9;JAVA://androidnews.kiloproject.system.MyApplication&#10;chann&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_channel.xml&#10;comm&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CommentActivity&#10;channel&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;SelectActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SelectActivity" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_galley.xml&#10;base&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java&#10;gall&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.GalleyActivity&#10;main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;ch&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;MainRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;sett&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_setting.xml&#10;chan&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;frag&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/fragment_recyclerview.xml&#10;detai&#9;ACTION&#9;template.create.ActivityMaster/Detail Flow&#10;spla&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;small&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_small.xml&#10;Ma&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;Main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;SETTING&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;Det&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;mainf&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;splas&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SplashActivity&#10;detail&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;MainActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;deta&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;det&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;cach&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CacheActivity&#10;set&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_setting.xml&#10;about&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.AboutActivity&#10;setti&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_setting.xml&#10;NewsDetailActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;setting&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SettingActivity&#10;MaterialViewPagerAnimator&#9;PSI&#9;JAVA://com.github.florent37.materialviewpager.MaterialViewPagerAnimator&#10;fragment_&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/fragment_recyclerview.xml&#10;my&#9;PSI&#9;JAVA://androidnews.kiloproject.system.MyApplication&#10;chann&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_channel.xml&#10;comm&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CommentActivity&#10;channel&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;SelectActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SelectActivity" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.packageName">
+      <recent name="androidnews.kiloproject.fragment" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="androidnews.kiloproject.bean.data" />
     </key>
@@ -2736,34 +2696,34 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32921347" sideWeight="0.50429183" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5808989" sideWeight="0.49570817" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26067415" sideWeight="0.49785408" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32921347" sideWeight="0.49570817" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34157303" sideWeight="0.5332618" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6269663" sideWeight="0.50429183" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921347" sideWeight="0.4967811" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29662922" sideWeight="0.49570817" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20708154" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2988764" sideWeight="0.49785408" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45393258" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19688842" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3235955" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23932584" sideWeight="0.5332618" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921347" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -2806,250 +2766,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="30" />
+      <option name="time" value="54" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_easytagdrag.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/delete.png" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7700">
-          <caret line="345" column="13" lean-forward="false" selection-start-line="345" selection-start-column="13" selection-end-line="345" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/color/subscribe_item_text_color.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="55" lean-forward="false" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/a_l.9.png">
-      <provider selected="true" editor-type-id="ninepatcheditor">
-        <state />
-      </provider>
-      <provider editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_unhappy.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-night/ic_unhappy.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/channel_category_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="37" column="49" lean-forward="false" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_empty.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="39" column="29" lean-forward="false" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebViewClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="57" column="58" lean-forward="false" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
-          <folding>
-            <element signature="e#1672#1673#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/NestedScrollWebView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1000">
-          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="186" column="0" lean-forward="false" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
-          <folding>
-            <element signature="e#2270#2293#0" expanded="false" />
-            <element signature="e#3075#3104#0" expanded="false" />
-            <element signature="e#3977#4006#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="925">
-          <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="103" column="38" lean-forward="false" selection-start-line="103" selection-start-column="38" selection-end-line="103" selection-end-column="38" />
-          <folding>
-            <element signature="e#1500#1522#0" expanded="false" />
-            <element signature="e#1564#1585#0" expanded="false" />
-            <element signature="e#2202#2224#0" expanded="false" />
-            <element signature="e#2266#2288#0" expanded="false" />
-            <element signature="e#3720#3742#0" expanded="false" />
-            <element signature="e#3786#3808#0" expanded="false" />
-            <element signature="e#3892#3913#0" expanded="false" />
-            <element signature="e#5051#5072#0" expanded="false" />
-            <element signature="e#5119#5141#0" expanded="false" />
-            <element signature="e#5552#5574#0" expanded="false" />
-            <element signature="e#5622#5644#0" expanded="false" />
-            <element signature="e#5736#5757#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="53" column="36" lean-forward="false" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/materialviewpager/1.2.3/ffc6cde799d94bc0b6ea19c936c3f43f68b81c71/materialviewpager-1.2.3-sources.jar!/com/github/florent37/materialviewpager/MaterialViewPagerAnimator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5149">
-          <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_items.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_night.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" column="25" lean-forward="false" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3057,30 +2782,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="51" lean-forward="false" selection-start-line="0" selection-start-column="44" selection-end-line="0" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
           <caret line="20" column="8" lean-forward="false" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
-          <folding>
-            <element signature="e#523#540#0" expanded="false" />
-            <element signature="e#661#676#0" expanded="false" />
-            <element signature="e#793#807#0" expanded="false" />
-          </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3a064e5e871316c382ec70f19c08b5df/jars/classes.jar!/android/support/v4/widget/NestedScrollView.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-800">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3088,45 +2806,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/ripple_bg.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/ripple_bg_drawable.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="3" column="44" lean-forward="false" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
           <caret line="121" column="19" lean-forward="false" selection-start-line="121" selection-start-column="19" selection-end-line="121" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="29" column="48" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3134,91 +2840,489 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="29" column="67" lean-forward="false" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/PhotoCenterData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="39" lean-forward="false" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/CacheNews.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mmkv-1.0.10.aar/5418079e622836cdf63225098a7cdc4f/jars/classes.jar!/com/tencent/mmkv/MMKV.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1090">
+          <caret line="137" column="19" lean-forward="false" selection-start-line="137" selection-start-column="19" selection-end-line="137" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/TypeArrayBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="366" column="35" lean-forward="false" selection-start-line="366" selection-start-column="35" selection-end-line="366" selection-end-column="35" />
+        <state relative-caret-position="225">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="31" column="36" lean-forward="true" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-night/list_item_card_small.xml">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-night/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_card_small.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
         <state relative-caret-position="175">
-          <caret line="7" column="51" lean-forward="false" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
+          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="142" column="81" lean-forward="true" selection-start-line="142" selection-start-column="81" selection-end-line="142" selection-end-column="81" />
+        <state relative-caret-position="294">
+          <caret line="174" column="37" lean-forward="false" selection-start-line="174" selection-start-column="12" selection-end-line="174" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+        <state relative-caret-position="112">
+          <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="88" column="75" lean-forward="false" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
-          <folding>
-            <element signature="e#4493#4513#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="57">
+          <caret line="101" column="33" lean-forward="false" selection-start-line="101" selection-start-column="33" selection-end-line="101" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/array.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="124" selection-end-column="16" />
+        <state relative-caret-position="491">
+          <caret line="57" column="2" lean-forward="false" selection-start-line="57" selection-start-column="2" selection-end-line="58" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/array.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="58" column="28" lean-forward="false" selection-start-line="58" selection-start-column="14" selection-end-line="58" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="593" column="32" lean-forward="false" selection-start-line="593" selection-start-column="32" selection-end-line="593" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="4" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2650">
+          <caret line="140" column="41" lean-forward="false" selection-start-line="140" selection-start-column="41" selection-end-line="140" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="39" column="45" lean-forward="false" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.scwang.smartrefresh/SmartRefreshLayout/1.1.0-alpha-14/aa074661bb4092fa5a72f173513acb7843117db6/SmartRefreshLayout-1.1.0-alpha-14-sources.jar!/com/scwang/smartrefresh/layout/SmartRefreshLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="2300" column="30" lean-forward="false" selection-start-line="2300" selection-start-column="30" selection-end-line="2300" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="74" column="15" lean-forward="true" selection-start-line="74" selection-start-column="15" selection-end-line="74" selection-end-column="15" />
+        <state relative-caret-position="1975">
+          <caret line="133" column="78" lean-forward="false" selection-start-line="133" selection-start-column="78" selection-end-line="133" selection-end-column="78" />
           <folding>
-            <element signature="e#4574#4605#0" expanded="false" />
+            <element signature="e#10922#10923#0" expanded="false" />
+            <element signature="e#10966#10967#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="47" lean-forward="true" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
+        <state relative-caret-position="97">
+          <caret line="81" column="42" lean-forward="false" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="42" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="369" column="37" lean-forward="false" selection-start-line="369" selection-start-column="37" selection-end-line="369" selection-end-column="37" />
+        <state relative-caret-position="160">
+          <caret line="381" column="33" lean-forward="false" selection-start-line="381" selection-start-column="33" selection-end-line="381" selection-end-column="33" />
           <folding>
-            <element signature="e#16202#16203#0" expanded="false" />
-            <element signature="e#16247#16248#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="268" column="71" lean-forward="true" selection-start-line="268" selection-start-column="71" selection-end-line="268" selection-end-column="71" />
+          <folding>
+            <element signature="e#566#592#0" expanded="false" />
+            <element signature="e#1506#1528#0" expanded="false" />
+            <element signature="e#1570#1592#0" expanded="false" />
+            <element signature="e#1622#1645#0" expanded="false" />
+            <element signature="e#1741#1761#0" expanded="false" />
+            <element signature="e#2133#2155#0" expanded="false" />
+            <element signature="e#2199#2221#0" expanded="false" />
+            <element signature="e#2263#2285#0" expanded="false" />
+            <element signature="e#3278#3299#0" expanded="false" />
+            <element signature="e#3351#3372#0" expanded="false" />
+            <element signature="e#3422#3444#0" expanded="false" />
+            <element signature="e#3482#3500#0" expanded="false" />
+            <element signature="e#3614#3634#0" expanded="false" />
+            <element signature="e#4097#4118#0" expanded="false" />
+            <element signature="e#4170#4191#0" expanded="false" />
+            <element signature="e#4235#4257#0" expanded="false" />
+            <element signature="e#4415#4434#0" expanded="false" />
+            <element signature="e#4894#4915#0" expanded="false" />
+            <element signature="e#4967#4988#0" expanded="false" />
+            <element signature="e#5038#5060#0" expanded="false" />
+            <element signature="e#5945#5966#0" expanded="false" />
+            <element signature="e#6018#6039#0" expanded="false" />
+            <element signature="e#6089#6111#0" expanded="false" />
+            <element signature="e#6149#6170#0" expanded="false" />
+            <element signature="e#6284#6304#0" expanded="false" />
+            <element signature="e#6785#6806#0" expanded="false" />
+            <element signature="e#6858#6879#0" expanded="false" />
+            <element signature="e#6923#6945#0" expanded="false" />
+            <element signature="e#6983#7011#0" expanded="false" />
+            <element signature="e#7125#7144#0" expanded="false" />
+            <element signature="e#7611#7632#0" expanded="false" />
+            <element signature="e#7684#7705#0" expanded="false" />
+            <element signature="e#7755#7777#0" expanded="false" />
+            <element signature="e#8689#8710#0" expanded="false" />
+            <element signature="e#8760#8782#0" expanded="false" />
+            <element signature="e#8820#8842#0" expanded="false" />
+            <element signature="e#8956#8976#0" expanded="false" />
+            <element signature="e#9478#9499#0" expanded="false" />
+            <element signature="e#9543#9565#0" expanded="false" />
+            <element signature="e#9603#9632#0" expanded="false" />
+            <element signature="e#9746#9765#0" expanded="false" />
+            <element signature="e#10254#10275#0" expanded="false" />
+            <element signature="e#10774#10795#0" expanded="false" />
+            <element signature="e#10847#10868#0" expanded="false" />
+            <element signature="e#10918#10940#0" expanded="false" />
+            <element signature="e#11859#11880#0" expanded="false" />
+            <element signature="e#11930#11952#0" expanded="false" />
+            <element signature="e#11990#12013#0" expanded="false" />
+            <element signature="e#12127#12147#0" expanded="false" />
+            <element signature="e#12652#12673#0" expanded="false" />
+            <element signature="e#12717#12739#0" expanded="false" />
+            <element signature="e#12777#12807#0" expanded="false" />
+            <element signature="e#12921#12940#0" expanded="false" />
+            <element signature="e#13432#13453#0" expanded="false" />
+            <element signature="e#13951#13972#0" expanded="false" />
+            <element signature="e#14024#14045#0" expanded="false" />
+            <element signature="e#14095#14117#0" expanded="false" />
+            <element signature="e#15069#15090#0" expanded="false" />
+            <element signature="e#15140#15162#0" expanded="false" />
+            <element signature="e#15200#15220#0" expanded="false" />
+            <element signature="e#15334#15354#0" expanded="false" />
+            <element signature="e#15850#15871#0" expanded="false" />
+            <element signature="e#15915#15937#0" expanded="false" />
+            <element signature="e#15975#16002#0" expanded="false" />
+            <element signature="e#16116#16135#0" expanded="false" />
+            <element signature="e#16618#16639#0" expanded="false" />
+            <element signature="e#17131#17152#0" expanded="false" />
+            <element signature="e#17204#17225#0" expanded="false" />
+            <element signature="e#17275#17297#0" expanded="false" />
+            <element signature="e#18196#18217#0" expanded="false" />
+            <element signature="e#18267#18289#0" expanded="false" />
+            <element signature="e#18327#18347#0" expanded="false" />
+            <element signature="e#18461#18481#0" expanded="false" />
+            <element signature="e#18977#18998#0" expanded="false" />
+            <element signature="e#19042#19064#0" expanded="false" />
+            <element signature="e#19102#19129#0" expanded="false" />
+            <element signature="e#19243#19262#0" expanded="false" />
+            <element signature="e#19745#19766#0" expanded="false" />
+            <element signature="e#20259#20280#0" expanded="false" />
+            <element signature="e#20332#20353#0" expanded="false" />
+            <element signature="e#20403#20425#0" expanded="false" />
+            <element signature="e#21330#21351#0" expanded="false" />
+            <element signature="e#21401#21423#0" expanded="false" />
+            <element signature="e#21461#21482#0" expanded="false" />
+            <element signature="e#21596#21616#0" expanded="false" />
+            <element signature="e#22117#22139#0" expanded="false" />
+            <element signature="e#22190#22211#0" expanded="false" />
+            <element signature="e#22255#22277#0" expanded="false" />
+            <element signature="e#22315#22343#0" expanded="false" />
+            <element signature="e#22457#22476#0" expanded="false" />
+            <element signature="e#23034#23055#0" expanded="false" />
+            <element signature="e#23640#23662#0" expanded="false" />
+            <element signature="e#23704#23726#0" expanded="false" />
+            <element signature="e#23756#23779#0" expanded="false" />
+            <element signature="e#23875#23895#0" expanded="false" />
+            <element signature="e#24236#24258#0" expanded="false" />
+            <element signature="e#24301#24323#0" expanded="false" />
+            <element signature="e#24367#24389#0" expanded="false" />
+            <element signature="e#24431#24453#0" expanded="false" />
+            <element signature="e#25514#25536#0" expanded="false" />
+            <element signature="e#25588#25610#0" expanded="false" />
+            <element signature="e#25660#25682#0" expanded="false" />
+            <element signature="e#25720#25742#0" expanded="false" />
+            <element signature="e#25856#25876#0" expanded="false" />
+            <element signature="e#26345#26367#0" expanded="false" />
+            <element signature="e#26418#26440#0" expanded="false" />
+            <element signature="e#26492#26514#0" expanded="false" />
+            <element signature="e#26558#26580#0" expanded="false" />
+            <element signature="e#26618#26647#0" expanded="false" />
+            <element signature="e#26761#26780#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1300">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="42" column="72" lean-forward="false" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="15" lean-forward="false" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-night/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/DragGrid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="250" column="97" lean-forward="false" selection-start-line="250" selection-start-column="97" selection-end-line="250" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/channel_category_item.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+          <folding>
+            <element signature="e#887#906#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/color/subscribe_item_text_color.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="82" lean-forward="false" selection-start-line="3" selection-start-column="82" selection-end-line="3" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="348" column="44" lean-forward="false" selection-start-line="348" selection-start-column="40" selection-end-line="348" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="42" column="60" lean-forward="true" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
+          <folding>
+            <element signature="e#1514#1535#0" expanded="false" />
+            <element signature="e#1579#1600#0" expanded="false" />
+            <element signature="e#2174#2195#0" expanded="false" />
+            <element signature="e#2239#2260#0" expanded="false" />
+            <element signature="e#2847#2868#0" expanded="false" />
+            <element signature="e#2912#2933#0" expanded="false" />
+            <element signature="e#4643#4664#0" expanded="false" />
+            <element signature="e#5024#5044#0" expanded="false" />
+            <element signature="e#5088#5110#0" expanded="false" />
+            <element signature="e#5152#5173#0" expanded="false" />
+            <element signature="e#5203#5224#0" expanded="false" />
+            <element signature="e#5819#5840#0" expanded="false" />
+            <element signature="e#6404#6426#0" expanded="false" />
+            <element signature="e#6470#6492#0" expanded="false" />
+            <element signature="e#6537#6558#0" expanded="false" />
+            <element signature="e#6600#6621#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1578">
+          <caret line="260" column="45" lean-forward="true" selection-start-line="260" selection-start-column="45" selection-end-line="260" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="31" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="160" column="80" lean-forward="false" selection-start-line="160" selection-start-column="80" selection-end-line="160" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="66" lean-forward="false" selection-start-line="7" selection-start-column="66" selection-end-line="7" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="65" column="61" lean-forward="false" selection-start-line="65" selection-start-column="61" selection-end-line="65" selection-end-column="61" />
+          <folding>
+            <element signature="e#2610#2631#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="36" column="27" lean-forward="false" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="207" column="64" lean-forward="false" selection-start-line="207" selection-start-column="64" selection-end-line="207" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3228,54 +3332,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-25">
-          <caret line="47" column="53" lean-forward="false" selection-start-line="47" selection-start-column="53" selection-end-line="47" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="301" column="41" lean-forward="false" selection-start-line="301" selection-start-column="41" selection-end-line="301" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#3076#3093#0" expanded="false" />
-            <element signature="e#3906#3907#0" expanded="false" />
-            <element signature="e#3983#3984#0" expanded="false" />
-            <element signature="e#7603#7634#0" expanded="false" />
-            <element signature="e#10166#10815#0" expanded="false" />
-            <element signature="e#10814#10815#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="26" column="16" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
+        <state relative-caret-position="248">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="162" column="23" lean-forward="false" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
-          <folding>
-            <element signature="e#4280#4281#0" expanded="true" />
-            <element signature="e#4337#4338#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

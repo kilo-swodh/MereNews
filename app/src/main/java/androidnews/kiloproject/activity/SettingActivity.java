@@ -12,13 +12,11 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -31,10 +29,7 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
-import org.greenrobot.eventbus.EventBus;
-
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.event.RestartEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +37,7 @@ import butterknife.OnClick;
 
 import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
@@ -51,8 +47,6 @@ import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 public class SettingActivity extends BaseActivity {
-
-    SPUtils spUtils;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.textView)
@@ -63,16 +57,12 @@ public class SettingActivity extends BaseActivity {
     TextView tvLanguage;
     @BindView(R.id.tv_language_detail)
     TextView tvLanguageDetail;
-    @BindView(R.id.view1)
-    View view1;
     @BindView(R.id.group_clear_cache)
     Group groupClearCache;
     @BindView(R.id.tv_clear_cache)
     TextView tvClearCache;
     @BindView(R.id.tv_clear_cache_detail)
     TextView tvClearCacheDetail;
-    @BindView(R.id.view2)
-    View view2;
     @BindView(R.id.group_auto_refresh)
     Group groupAutoRefresh;
     @BindView(R.id.tv_auto_refresh)
@@ -81,10 +71,6 @@ public class SettingActivity extends BaseActivity {
     TextView tvAutoRefreshDetail;
     @BindView(R.id.sw_auto_refresh)
     Switch swAutoRefresh;
-    @BindView(R.id.view3)
-    View view3;
-    @BindView(R.id.view4)
-    View view4;
     @BindView(R.id.group_swipe_back)
     Group groupSwipeBack;
     @BindView(R.id.tv_swipe_back)
@@ -93,8 +79,6 @@ public class SettingActivity extends BaseActivity {
     TextView tvSwipeBackDetail;
     @BindView(R.id.sw_swipe_back)
     Switch swSwipeBack;
-    @BindView(R.id.view5)
-    View view5;
     @BindView(R.id.group_night_theme)
     Group groupNightTheme;
     @BindView(R.id.tv_night_theme)
@@ -103,20 +87,12 @@ public class SettingActivity extends BaseActivity {
     TextView tvNightThemeDetail;
     @BindView(R.id.sw_night_theme)
     Switch swNightTheme;
-    @BindView(R.id.card_view1)
-    CardView cardView1;
-    @BindView(R.id.textView2)
-    TextView textView2;
     @BindView(R.id.check_update)
     Group checkUpdate;
     @BindView(R.id.tv_check_update)
     TextView tvCheckUpdate;
     @BindView(R.id.tv_check_update_detail)
     TextView tvCheckUpdateDetail;
-    @BindView(R.id.root_layout)
-    NestedScrollView rootLayout;
-
-    ImageView imageView;
     @BindView(R.id.group_auto_clear)
     Group groupAutoClear;
     @BindView(R.id.tv_auto_clear)
@@ -125,10 +101,22 @@ public class SettingActivity extends BaseActivity {
     TextView tvAutoClearDetail;
     @BindView(R.id.sw_auto_clear)
     Switch swAutoClear;
+    @BindView(R.id.group_auto_loadmore)
+    Group groupAutoLoadmore;
+    @BindView(R.id.tv_auto_loadmore)
+    TextView tvAutoLoadmore;
+    @BindView(R.id.tv_auto_loadmore_detail)
+    TextView tvAutoLoadmoreDetail;
+    @BindView(R.id.sw_auto_loadmore)
+    Switch swAutoLoadmore;
 
+
+    public static final int SETTING_RESULT = 998;
     private int currentLanguage = 0;
     private boolean isAutoRefresh = false;
     private boolean isAutoClear = false;
+    private boolean isAutoLoadMore = false;
+    SPUtils spUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -164,6 +152,18 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isAutoRefresh = isChecked;
                 spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
+            }
+        });
+
+        isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
+        swAutoLoadmore.setChecked(isAutoLoadMore);
+        swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isAutoLoadMore = isChecked;
+                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
+                setResult(RESULT_OK);
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).showSuccess();
             }
         });
 
@@ -206,6 +206,7 @@ public class SettingActivity extends BaseActivity {
     @OnClick({R.id.tv_language, R.id.tv_language_detail,
             R.id.tv_clear_cache, R.id.tv_clear_cache_detail,
             R.id.tv_auto_refresh, R.id.tv_auto_refresh_detail,
+            R.id.tv_auto_loadmore, R.id.tv_auto_loadmore_detail,
             R.id.tv_auto_clear, R.id.tv_auto_clear_detail,
             R.id.tv_swipe_back, R.id.tv_swipe_back_detail,
             R.id.tv_check_update, R.id.tv_check_update_detail,
@@ -261,6 +262,20 @@ public class SettingActivity extends BaseActivity {
                     isAutoRefresh = true;
                 }
                 spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
+                break;
+
+            case R.id.tv_auto_loadmore:
+            case R.id.tv_auto_loadmore_detail:
+                if (isAutoLoadMore) {
+                    swAutoLoadmore.setChecked(false);
+                    isAutoLoadMore = false;
+                } else {
+                    swAutoLoadmore.setChecked(true);
+                    isAutoLoadMore = true;
+                }
+                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
+                setResult(RESULT_OK);
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).showSuccess();
                 break;
 
             case R.id.tv_auto_clear:
@@ -359,20 +374,18 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void applyNightMode() {
-        if (isNightMode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
         restartWithAnime();
     }
 
     private void restartWithAnime() {
-        animateRevealShow(rootLayout, isNightMode, new Animator.AnimatorListener() {
+        animateRevealShow(toolbar, isNightMode, new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 swAutoRefresh.setEnabled(false);
                 groupAutoRefresh.setClickable(false);
+                swAutoLoadmore.setEnabled(false);
+                groupAutoLoadmore.setClickable(false);
                 swAutoClear.setEnabled(false);
                 groupAutoClear.setClickable(false);
                 swNightTheme.setEnabled(false);
@@ -390,6 +403,8 @@ public class SettingActivity extends BaseActivity {
             public void onAnimationCancel(Animator animation) {
                 swAutoRefresh.setEnabled(true);
                 groupAutoRefresh.setClickable(true);
+                swAutoLoadmore.setEnabled(true);
+                groupAutoLoadmore.setClickable(true);
                 swAutoClear.setEnabled(true);
                 groupAutoClear.setClickable(true);
                 swNightTheme.setEnabled(true);

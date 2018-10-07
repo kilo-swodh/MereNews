@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/main_background">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ToolbarPopupTheme" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,118 +23,128 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <LinearLayout
-            android:id="@+id/subscribe_main_layout"
-            android:layout_width="fill_parent"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/subscribe_bg"
-            android:orientation="vertical">
+            android:background="@color/subscribe_bg">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
+
+            <TextView
+                android:id="@+id/my_category_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/my_category_text"
-                    style="@style/subscribe_my_tip_text"
-                    android:text="@string/subscribe_my_category" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/margin_normal">
+                android:text="@string/subscribe_my_category"
+                android:textColor="@color/default_text"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <TextView
-                        android:id="@+id/tv_complete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/complete"
-                        android:textColor="@color/subscribe_item_selected_stroke"
-                        android:textSize="@dimen/text_small"
-                        android:visibility="gone" />
+            <TextView
+                android:id="@+id/tv_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:clickable="true"
+                android:text="@string/complete"
+                android:textColor="@color/comment_name"
+                android:textSize="@dimen/text_normal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/my_category_text" />
 
-                    <TextView
-                        android:id="@+id/tv_save"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/save"
-                        android:textColor="@color/main_text_colorful"
-                        android:textSize="@dimen/text_small"
-                        android:visibility="visible" />
-                </FrameLayout>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:clickable="true"
+                android:text="@string/save"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_normal"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/my_category_text" />
 
             <View
-                android:id="@+id/seperate_line"
-                style="@style/subscribe_seperate_line" />
+                android:id="@+id/divider"
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@color/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_category_text" />
 
             <androidnews.kiloproject.widget.DragGrid
                 android:id="@+id/userGridView"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_large"
                 android:gravity="center"
                 android:horizontalSpacing="@dimen/margin_small"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="4"
                 android:scrollbars="vertical"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="14.0px" />
+                android:verticalSpacing="@dimen/margin_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/channel_tip"
+                android:textColor="@color/default_text"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userGridView" />
+
+            <TextView
+                android:id="@+id/more_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/text_normal"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@string/subscribe_more_category"
+                android:textColor="@color/default_text"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintTop_toBottomOf="@+id/userGridView"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidnews.kiloproject.widget.OtherGridView
+                android:id="@+id/otherGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="@string/channel_tip"
-                android:paddingRight="@dimen/margin_normal"
-                android:textColor="@color/divider"
-                android:textSize="@dimen/text_small" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/subscribe_activity_bg"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/margin_large">
-
-                <TextView
-                    android:id="@+id/more_category_text"
-                    style="@style/subscribe_more_tip_text"
-                    android:layout_marginBottom="@dimen/margin_large"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:text="@string/subscribe_more_category" />
-
-                <androidnews.kiloproject.widget.OtherGridView
-                    android:id="@+id/otherGridView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:gravity="center"
-                    android:horizontalSpacing="@dimen/margin_small"
-                    android:listSelector="@android:color/transparent"
-                    android:numColumns="4"
-                    android:scrollbars="vertical"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="14.0px" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_large"
+                app:layout_constraintTop_toBottomOf="@+id/more_category_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/margin_small"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/margin_large" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>

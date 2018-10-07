@@ -17,16 +17,6 @@
     <color name="comment_name">@color/dodgerblue</color>
     <color name="comment_bg_level_two">@color/floralwhite</color>
 
-
-    <color name="subscribe_item_selected_bg">@color/splash_bg</color>
-    <color name="subscribe_item_selected_stroke">@color/comment_name</color>
-    <color name="subscribe_item_disabled_stroke">@color/divider</color>
-    <color name="subscribe_item_disabled_bg">@color/main_background</color>
-    <color name="subscribe_item_pressed_stroke">@color/divider</color>
-    <color name="subscribe_item_pressed_bg">@color/main_background</color>
-
-    <item name="subscribe_item_text_color_normal" type="color">@color/default_text</item>
-
     <color name="default_text">@color/main_text_color</color>
     <color name="subscribe_item_text_color_pressed">@color/divider</color>
     <color name="subscribe_tip_text">@color/divider</color>
