@@ -5,7 +5,7 @@
     android:layout_height="102dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-    android:background="@color/main_background"
+    android:foreground = "?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/cardMarginVertical"
     android:layout_marginLeft="@dimen/cardMarginHorizontal"
     android:layout_marginRight="@dimen/cardMarginHorizontal"
@@ -18,7 +18,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="@color/awesome_background">
 
         <ImageView
             android:id="@+id/item_card_img"
@@ -58,7 +58,7 @@
             android:layout_height="0dp"
             android:ellipsize="end"
             android:text=""
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_mini"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginLeft="@dimen/margin_normal"

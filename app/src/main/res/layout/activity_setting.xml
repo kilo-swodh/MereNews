@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -48,14 +47,15 @@
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:focusable="true"
+                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/awesome_background">
 
                     <android.support.constraint.Group
                         android:id="@+id/group_language"
@@ -174,6 +174,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
                         android:text="@string/auto_refresh_detail"
                         android:textColor="@color/main_text_color_drak"
                         android:textSize="@dimen/text_small"
@@ -226,6 +227,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore_detail"
                         android:textColor="@color/main_text_color_drak"
@@ -244,7 +246,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_auto_loadmore" />
 
                     <View
-                        android:id="@+id/view_auto_clear"
+                        android:id="@+id/view_back_exit"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -256,46 +258,46 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_auto_loadmore_detail" />
 
                     <android.support.constraint.Group
-                        android:id="@+id/group_auto_clear"
+                        android:id="@+id/group_back_exit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:constraint_referenced_ids="tv_auto_clear,tv_auto_clear_detail,sw_auto_clear,view_auto_clear" />
+                        app:constraint_referenced_ids="tv_back_exit,tv_back_exit_detail,sw_back_exit,view_back_exit" />
 
                     <TextView
-                        android:id="@+id/tv_auto_clear"
+                        android:id="@+id/tv_back_exit"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
-                        android:text="@string/auto_clear"
+                        android:text="@string/back_exit"
                         android:textColor="@color/main_text_color_drak"
                         android:textSize="@dimen/text_normal"
-                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_back_exit"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_auto_clear" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_back_exit" />
 
                     <TextView
-                        android:id="@+id/tv_auto_clear_detail"
+                        android:id="@+id/tv_back_exit_detail"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
-                        android:text="@string/auto_clear_detail"
+                        android:text="@string/back_exit_detail"
                         android:textColor="@color/main_text_color_drak"
                         android:textSize="@dimen/text_small"
-                        app:layout_constraintEnd_toStartOf="@+id/sw_auto_clear"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_back_exit"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_back_exit" />
 
                     <Switch
-                        android:id="@+id/sw_auto_clear"
+                        android:id="@+id/sw_back_exit"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_auto_clear_detail"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_back_exit_detail"
                         app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                        app:layout_constraintTop_toTopOf="@+id/tv_auto_clear" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_back_exit" />
 
                     <View
                         android:id="@+id/view_swipe_back"
@@ -307,7 +309,7 @@
                         android:background="@color/divider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_auto_clear_detail" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_back_exit_detail" />
 
                     <android.support.constraint.Group
                         android:id="@+id/group_swipe_back"
@@ -333,6 +335,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/swipe_back_detail"
                         android:textColor="@color/main_text_color_drak"
@@ -351,7 +354,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_swipe_back" />
 
                     <View
-                        android:id="@+id/view_night_theme"
+                        android:id="@+id/view_random_header"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -363,47 +366,48 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back_detail" />
 
                     <android.support.constraint.Group
-                        android:id="@+id/group_night_theme"
+                        android:id="@+id/group_random_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_night_theme,tv_night_theme_detail,sw_night_theme,view_night_theme" />
+                        app:constraint_referenced_ids="tv_random_header,tv_random_header_detail,sw_random_header,view_random_header" />
 
                     <TextView
-                        android:id="@+id/tv_night_theme"
+                        android:id="@+id/tv_random_header"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
-                        android:text="@string/night_theme"
+                        android:text="@string/random_header_server"
                         android:textColor="@color/main_text_color_drak"
                         android:textSize="@dimen/text_normal"
-                        app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_random_header"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_night_theme" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_random_header" />
 
                     <TextView
-                        android:id="@+id/tv_night_theme_detail"
+                        android:id="@+id/tv_random_header_detail"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_normal"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
-                        android:text="@string/night_theme_detail"
+                        android:text="@string/random_header_server_detail"
                         android:textColor="@color/main_text_color_drak"
                         android:textSize="@dimen/text_small"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/sw_night_theme"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_random_header"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_night_theme" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_random_header" />
 
                     <Switch
-                        android:id="@+id/sw_night_theme"
+                        android:id="@+id/sw_random_header"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_night_theme_detail"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_random_header_detail"
                         app:layout_constraintEnd_toEndOf="@+id/tv_language"
-                        app:layout_constraintTop_toTopOf="@+id/tv_night_theme" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_random_header" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
@@ -427,6 +431,7 @@
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:focusable="true"
+                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -437,7 +442,53 @@
                     android:layout_height="fill_parent">
 
                     <android.support.constraint.Group
-                        android:id="@+id/check_update"
+                        android:id="@+id/group_join_us"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_join_us"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/join_us"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_join_us_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/join_us_detail"
+                        android:textColor="@color/main_text_color_drak"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_join_us" />
+
+                    <View
+                        android:id="@+id/view_check_update"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_join_us_detail" />
+
+                    <android.support.constraint.Group
+                        android:id="@+id/group_check_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
@@ -454,7 +505,7 @@
                         android:textSize="@dimen/text_normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_check_update" />
 
                     <TextView
                         android:id="@+id/tv_check_update_detail"

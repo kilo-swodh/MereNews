@@ -22,18 +22,18 @@
         <item>热点</item>
         <item>科技</item>
         <item>娱乐</item>
-        <item>网易独家</item>
+        <item>独家</item>
         <item>体育</item>
         <item>游戏</item>
         <item>健康</item>
         <item>NBA</item>
         <item>商业</item>
         <item>教育</item>
-        <item>轻松一刻</item>
+        <item>笑话</item>
         <item>古玩</item>
         <item>政务</item>
         <item>精选</item>
-        <item>暴雪游戏</item>
+        <item>暴雪</item>
         <item>手机</item>
         <item>足球</item>
         <item>数码</item>
@@ -43,9 +43,9 @@
         <item>彩票</item>
         <item>智能</item>
         <item>CBA</item>
-        <item>中国足球</item>
+        <item>国足</item>
         <item>旅游</item>
-        <item>网易博客</item>
+        <item>博客</item>
         <item>军事</item>
         <item>电影</item>
         <item>时尚</item>
@@ -57,7 +57,11 @@
         <item>汽车</item>
         <item>社会</item>
         <item>论坛</item>
-        <!--<item>知乎日报</item>-->
-        <!--<item>果壳精选</item>-->
+        <item>知乎</item>
+        <item>果壳</item>
+        <item>热点视频</item>
+        <item>娱乐视频</item>
+        <item>搞笑视频</item>
+        <item>精品视频</item>
     </array>
 </resources>

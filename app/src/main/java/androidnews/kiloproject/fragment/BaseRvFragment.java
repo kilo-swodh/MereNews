@@ -26,6 +26,9 @@ public class BaseRvFragment extends BaseLazyFragment {
 
     Gson gson = new Gson();
 
+    protected long lastAutoRefreshTime = 0;
+    public static final long dividerAutoRefresh = 3 * 60 * 1000;
+
     public static final int TYPE_LOADMORE = 1000;
     public static final int TYPE_REFRESH = 1001;
 
@@ -38,7 +41,6 @@ public class BaseRvFragment extends BaseLazyFragment {
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
-
 
     @Override
     public void onDestroyView() {

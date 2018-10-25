@@ -33,7 +33,7 @@
         android:layout_marginLeft="@dimen/margin_normal"
         android:layout_marginStart="@dimen/margin_normal"
         android:textColor="@color/comment_name"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_mini"
         app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintStart_toEndOf="@+id/iv_avatar"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
         android:textColor="@color/main_text_color_drak"
-        android:textSize="@dimen/text_normal"
+        android:textSize="@dimen/text_small"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintStart_toStartOf="@+id/iv_avatar"
         app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />

@@ -19,6 +19,7 @@
     <!--</array>-->
 
     <array name="address">
+        <!-- 0到37为网易 -->
         <item>T1348647909107</item> //头条
         <item>T1348649580692</item> //科技
         <item>T1348648517839</item> //娱乐
@@ -35,7 +36,7 @@
         <item>T1467284926140</item> //精选
         <item>T1397016069906</item> //暴雪
         <item>T1348649654285</item> //手机
-        <item>T1399700447917</item> //足球
+        <item>T1348649176279</item> //足球
         <item>T1348649776727</item> //数码
         <item>T1411113472760</item> //跑步
         <item>T1368497029546</item> //历史
@@ -57,9 +58,21 @@
         <item>T1348654060988</item> //汽车
         <item>T1348648037603</item> //社会
         <item>T1349837670307</item> //论坛
+        <!-- 38到39为知乎果壳 -->
+        <item>zhihu</item> //知乎
+        <item>guoke</item> //果壳
+        <!-- 0到40为视频 -->
+        <item>V9LG4B3A0</item> //热点视频
+        <item>V9LG4CHOR</item> //娱乐视频
+        <item>V9LG4E6VR</item> //搞笑视频
+        <item>00850FRB</item> //精品视频
+    </array>
 
-        <!--<item>zhihu</item> //知乎-->
-        <!--<item>guoke</item> //果壳-->
+    <array name="good_tag">
+        <item>独家</item>
+        <item>语音</item>
+        <item>专题</item>
+        <item>音频</item>
     </array>
 
     <array name="address_tag">
@@ -101,7 +114,11 @@
         <item>Auto</item>
         <item>Sociology</item>
         <item>Forum</item>
-        <!--<item>ZhiHuDaily</item>-->
-        <!--<item>GuoKr</item>-->
+        <item>ZhiHuDaily</item>
+        <item>GuoKr</item>
+        <item>Hot Video</item>
+        <item>Entertainment video</item>
+        <item>Funny video</item>
+        <item>Excellent video</item>
     </array>
 </resources>

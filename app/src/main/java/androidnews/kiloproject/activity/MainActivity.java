@@ -1,12 +1,8 @@
 package androidnews.kiloproject.activity;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,6 +20,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -39,7 +37,8 @@ import java.util.TimerTask;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.TypeArrayBean;
 import androidnews.kiloproject.bean.net.PhotoCenterData;
-import androidnews.kiloproject.event.RestartEvent;
+import androidnews.kiloproject.fragment.GuoKrRvFragment;
+import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
 import androidnews.kiloproject.receiver.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
@@ -50,8 +49,11 @@ import static androidnews.kiloproject.activity.ChannelActivity.SELECT_RESULT;
 import static androidnews.kiloproject.activity.SettingActivity.SETTING_RESULT;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
+import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,6 +71,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TypeArrayBean typeArrayBean;
 
     public static final int DEFAULT_PAGE = 4;
+
+    public static final int TYPE_ZHIHU = 38;
+    public static final int TYPE_GUOKR = 39;
+    public static final int TYPE_V_HOT = 40;
+    public static final int TYPE_V_ENTERTAINMENT = 41;
+    public static final int TYPE_V_FUNNY = 42;
+    public static final int TYPE_V_EXCELLENT = 43;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,21 +101,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return false;
             }
         });
-
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void initSlowly() {
-        if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_CLEAR)) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Glide.get(mActivity).clearDiskCache();
-                }
-            }).start();
-        }
 
         typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
         if (typeArrayBean == null) {
@@ -126,16 +126,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-//                switch (position % 4) {
-//                    case 0:
-//                        return MainRvFragment.newInstance();
-//                    case 1:
-//                        return TechRvFragment.newInstance();
-//                    case 2:
-//                        return EntertainmentRvFragment.newInstance();
-//                    default:
+                int type = typeArrayBean.getTypeArray().get(position);
+                if (type >= TYPE_ZHIHU)
+                    switch (type) {
+                        case TYPE_ZHIHU:
+                            return new ZhihuRvFragment();
+                        case TYPE_GUOKR:
+                            return new GuoKrRvFragment();
+                    }
                 return MainRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
-//                }
             }
 
             @Override
@@ -183,7 +182,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                             try {
                                 photoData = gson.fromJson(response, PhotoCenterData.class);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
                             }
@@ -223,14 +222,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_setting:
                 intent = new Intent(mActivity, SettingActivity.class);
-                startActivityForResult(intent,SETTING_RESULT);
+                startActivityForResult(intent, SETTING_RESULT);
                 break;
             case R.id.nav_about:
                 intent = new Intent(mActivity, AboutActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_exit:
-                System.exit(0);
+            case R.id.nav_theme:
+                if (isNightMode) {
+                    isNightMode = false;
+                } else {
+                    isNightMode = true;
+                }
+                SPUtils.getInstance().put(CONFIG_NIGHT_MODE, isNightMode);
+                recreate();
                 break;
 
         }
@@ -251,6 +256,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 super.onOptionsItemSelected(item);
     }
 
+    private long firstTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (SPUtils.getInstance().getBoolean(CONFIG_BACK_EXIT)
+                    && System.currentTimeMillis() - firstTime > 2000) {
+                SnackbarUtils.with(mViewPager).setMessage(getString(R.string.click_to_exit)).show();
+                firstTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -268,25 +291,44 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TimerTask timerTask;
 
     private void startBgAnimate() {
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mViewPager != null && photoData != null) {
-                            if (bgPosition == photoData.getCacheMoreData().size()) {
-                                bgPosition = 0;
+        if (SPUtils.getInstance().getBoolean(CONFIG_RANDOM_HEADER)) {
+            mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                @Override
+                public HeaderDesign getHeaderDesign(int page) {
+                    int postion = page % photoData.getCacheMoreData().size();
+
+                    return HeaderDesign.fromColorResAndUrl(
+                            R.color.deepskyblue,
+                            photoData.getCacheMoreData().get(postion).getCover());
+                }
+                //execute others actions if needed (ex : modify your header logo)
+            });
+            mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
+        } else {
+            timer = new Timer();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mViewPager != null && photoData != null) {
+                                if (bgPosition == photoData.getCacheMoreData().size()) {
+                                    bgPosition = 0;
+                                }
+                                try {
+                                    mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
+                                    bgPosition++;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
-                            bgPosition++;
                         }
-                    }
-                });
-            }
-        };
-        timer.schedule(timerTask, 0, 10 * 1000);
+                    });
+                }
+            };
+            timer.schedule(timerTask, 0, 10 * 1000);
+        }
     }
 
     private void cancelTimer() {
@@ -312,8 +354,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        cancelTimer();
-        mViewPager = null;
+        if (!SPUtils.getInstance().getBoolean(CONFIG_RANDOM_HEADER)
+                && timer != null
+                && timerTask != null)
+            cancelTimer();
         EventBus.getDefault().unregister(this);
     }
 }

@@ -1,5 +1,9 @@
 package androidnews.kiloproject.system.base;
 
+import android.annotation.TargetApi;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,9 +24,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
@@ -36,13 +38,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.activity.SettingActivity;
-import androidnews.kiloproject.event.RestartEvent;
-import androidnews.kiloproject.permission.InstallRationale;
-import androidnews.kiloproject.permission.OverlayRationale;
 import androidnews.kiloproject.permission.RuntimeRationale;
-import androidnews.kiloproject.permission.WriteApkTask;
-
 import androidnews.kiloproject.system.MyApplication;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;

@@ -25,7 +25,6 @@
 
     <string name="history">History</string>
     <string name="about">About</string>
-    <string name="exit">Exit</string>
 
     <string name="loading">Now loading</string>
     <string name="load_success">Load success</string>
@@ -33,8 +32,6 @@
     <string name="server_fail">Server returns data exception</string>
     <string name="download_success">Download success</string>
     <string name="download_fail">Download fail</string>
-
-    <string name="check">Check</string>
 
     <string name="empty_content">It\'s nothing.</string>
     <string name="no_comment">No comment</string>
@@ -51,17 +48,23 @@
     <string name="auto_refresh_detail">First entry into App auto refresh</string>
     <string name="auto_loadmore">Preloading data</string>
     <string name="auto_loadmore_detail">When you browse to the end, load in advance, avoid waiting, and consume more traffic.</string>
-    <string name="auto_clear">Automatic cleaning cache</string>
-    <string name="auto_clear_detail">Clear cache when quit App</string>
-    <string name="night_theme">Night Theme</string>
-    <string name="night_theme_detail">Apply dark background</string>
+    <string name="night_theme">Theme Switch</string>
     <string name="check_update">Check the update</string>
     <string name="check_update_detail">The current version is </string>
+    <string name="join_us">Add user group</string>
+    <string name="join_us_detail">QQ group num:938435700</string>
+    <string name="join_us_error">No QQ mobile</string>
     <string name="swipe_back">Sliding Back</string>
     <string name="swipe_back_detail">Sliding back from left to right</string>
+    <string name="back_exit">Press the back button to exit(HomePage)</string>
+    <string name="back_exit_detail">Double click the back button to exit the app</string>
+    <string name="random_header_server">Cover slide switch</string>
+    <string name="random_header_server_detail">Change from automatic to channel.</string>
 
+    <string name="click_to_exit">Press again to exit the app</string>
     <string name="start_after_exit">Start after exit</string>
     <string name="start_after_restart_list">The interface will refresh after returning so that the settings will take effect.</string>
+    <string name="start_after_restart_app">The next entry will take effect.</string>
 
     <string name="update_address">https://www.pgyer.com/android_news</string>
 
@@ -75,10 +78,14 @@
 
     <string name="subscribe_my_category">Switchover channel</string>
     <string name="subscribe_more_category">More channel</string>
-    <string name="complete">Complete</string>
-    <string name="save">Save</string>
-    <string name="channel_tip">Long click sort or delete</string>
+
+    <string name="channel">Channel</string>
+    <string name="channel_tip1">Long click sort or delete</string>
+    <string name="channel_tip2">Click Add</string>
 
     <string name="delete">Delete</string>
     <string name="delete_message">Do you want to delete this item?</string>
+
+    <string name="zhihu">Zhihu</string>
+    <string name="guokr">GuoKr</string>
 </resources>

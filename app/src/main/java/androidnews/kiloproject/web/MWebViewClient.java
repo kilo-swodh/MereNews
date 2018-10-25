@@ -3,6 +3,7 @@ package androidnews.kiloproject.web;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebResourceError;
@@ -63,7 +64,7 @@ public class MWebViewClient extends WebViewClient {
      * 加载页面失败的时候回调该方法
      */
     // 该方法为android23中新添加的API，android23中会执行该方法
-    @TargetApi(21)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
         aboutActivity.ivError.setVisibility(View.VISIBLE);

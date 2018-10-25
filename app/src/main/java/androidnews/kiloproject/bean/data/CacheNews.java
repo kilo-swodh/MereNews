@@ -13,6 +13,7 @@ public class CacheNews{
     String source;
     String docid;
     String htmlText;
+    int type;
 
     public CacheNews(String title, String imgUrl, String source, String docid, String htmlText) {
         this.title = title;
@@ -20,6 +21,14 @@ public class CacheNews{
         this.source = source;
         this.docid = docid;
         this.htmlText = htmlText;
+    }
+
+    public static int getCacheHistory() {
+        return CACHE_HISTORY;
+    }
+
+    public static int getCacheCollection() {
+        return CACHE_COLLECTION;
     }
 
     public String getTitle() {
@@ -60,5 +69,13 @@ public class CacheNews{
 
     public void setHtmlText(String htmlText) {
         this.htmlText = htmlText;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

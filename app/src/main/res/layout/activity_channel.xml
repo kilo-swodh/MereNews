@@ -42,34 +42,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <TextView
-                android:id="@+id/tv_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginRight="@dimen/margin_large"
-                android:clickable="true"
-                android:text="@string/complete"
-                android:textColor="@color/comment_name"
+                android:layout_marginEnd="@dimen/text_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/channel_tip1"
+                android:textColor="@color/default_text"
                 android:textSize="@dimen/text_normal"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/my_category_text" />
-
-            <TextView
-                android:id="@+id/tv_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginRight="@dimen/margin_large"
-                android:clickable="true"
-                android:text="@string/save"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_normal"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/my_category_text" />
+                app:layout_constraintTop_toTopOf="@+id/my_category_text"
+                app:layout_constraintBottom_toBottomOf="@+id/my_category_text"/>
 
             <View
                 android:id="@+id/divider"
@@ -107,7 +90,7 @@
                 android:layout_marginEnd="@dimen/text_normal"
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_large"
-                android:text="@string/channel_tip"
+                android:text="@string/channel_tip2"
                 android:textColor="@color/default_text"
                 android:textSize="@dimen/text_normal"
                 app:layout_constraintEnd_toEndOf="parent"

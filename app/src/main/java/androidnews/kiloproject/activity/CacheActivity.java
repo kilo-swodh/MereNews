@@ -38,6 +38,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.activity.MainActivity.TYPE_GUOKR;
+import static androidnews.kiloproject.activity.MainActivity.TYPE_ZHIHU;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 
@@ -82,7 +84,6 @@ public class CacheActivity extends BaseActivity {
             setEmptyView();
             SnackbarUtils.with(rvContent).setMessage(getString(R.string.load_fail)).showError();
         }
-
         initStateBar(R.color.main_background, true);
     }
 
@@ -93,15 +94,15 @@ public class CacheActivity extends BaseActivity {
             Observable.create(new ObservableOnSubscribe<Integer>() {
                 @Override
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                    if (!TextUtils.isEmpty(cacheJson)) {
+                    if (TextUtils.isEmpty(cacheJson) || TextUtils.equals(cacheJson, "[]")) {
+                        e.onNext(0);
+                    } else {
                         currentData = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
                         }.getType());
                         if (NetworkUtils.isConnected())
                             e.onNext(1);
                         else
                             e.onNext(2);
-                    } else {
-                        e.onNext(0);
                     }
                     e.onComplete();
                 }
@@ -112,19 +113,50 @@ public class CacheActivity extends BaseActivity {
                         public void accept(Integer i) throws Exception {
                             progress.setVisibility(View.GONE);
                             cacheNewsAdapter = new CacheNewsAdapter(mActivity, currentData);
+                            if (i == 0)
+                                setEmptyView();
                             cacheNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                                    switch (i) {
-                                        case 1:
-                                            intent.putExtra("docid", currentData.get(position).getDocid());
+                                    CacheNews cacheNews = currentData.get(position);
+                                    Intent intent;
+                                    switch (cacheNews.getType()) {
+                                        case TYPE_ZHIHU:
+                                            if (i == 0)
+                                                return;
+                                            intent = new Intent(mActivity, ZhiHuDetailActivity.class);
+                                            try {
+                                                intent.putExtra("id", Integer.parseInt(cacheNews.getDocid()));
+                                            }catch (Exception e){
+                                                e.printStackTrace();
+                                            }
                                             break;
-                                        case 2:
-                                            intent.putExtra("htmlText", currentData.get(position).getHtmlText());
+                                        case TYPE_GUOKR:
+                                            if (i == 0)
+                                                return;
+                                            intent = new Intent(mActivity, GuoKrDetailActivity.class);
+                                            try {
+                                                intent.putExtra("id", Integer.parseInt(cacheNews.getDocid()));
+                                                intent.putExtra("title", cacheNews.getTitle());
+                                                intent.putExtra("img", cacheNews.getImgUrl());
+                                            }catch (Exception e){
+                                                e.printStackTrace();
+                                            }
+                                            break;
+                                        default:
+                                            intent = new Intent(mActivity, NewsDetailActivity.class);
+                                            switch (i) {
+                                                case 1:
+                                                    intent.putExtra("docid", cacheNews.getDocid());
+                                                    break;
+                                                case 2:
+                                                    intent.putExtra("htmlText", cacheNews.getHtmlText());
+                                                    break;
+                                            }
                                             break;
                                     }
-                                    startActivity(intent);
+                                    if (intent != null)
+                                        startActivity(intent);
                                 }
                             });
                             cacheNewsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
@@ -150,8 +182,6 @@ public class CacheActivity extends BaseActivity {
                                     return true;
                                 }
                             });
-                            if (i == 0)
-                                setEmptyView();
                             rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
                             rvContent.setAdapter(cacheNewsAdapter);
                         }
@@ -169,10 +199,10 @@ public class CacheActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isChange){
+        if (isChange) {
             String saveJson = gson.toJson(currentData, new TypeToken<List<CacheNews>>() {
             }.getType());
-            SPUtils.getInstance().put(type + "",saveJson);
+            SPUtils.getInstance().put(type + "", saveJson);
         }
     }
 }

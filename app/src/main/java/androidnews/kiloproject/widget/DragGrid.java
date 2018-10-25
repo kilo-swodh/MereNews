@@ -422,7 +422,8 @@ public class DragGrid extends GridView {
             if (dPosition != dragPosition) {
                 //dragGroup设置为不可见
                 ViewGroup dragGroup = (ViewGroup) getChildAt(dragPosition);
-                dragGroup.setVisibility(View.INVISIBLE);
+                if (dragGroup != null)
+                    dragGroup.setVisibility(View.INVISIBLE);
                 float to_x = 1;// 当前下方positon
                 float to_y;// 当前下方右边positon
                 //x_vlaue移动的距离百分比（相对于自己长度的百分比）
@@ -443,7 +444,7 @@ public class DragGrid extends GridView {
                         } else if (holdPosition % 4 == 0) {
                             to_x = 3 * x_vlaue;
                             to_y = -y_vlaue;
-                            System.out.println("=============to_y ="+to_y);
+                            System.out.println("=============to_y =" + to_y);
                         } else {
                             to_x = -x_vlaue;
                             to_y = 0;

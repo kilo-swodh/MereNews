@@ -12,6 +12,15 @@ public class NewMainListData implements MultiItemEntity {
     }
 
     private int itemType;
+    private boolean isReaded;
+
+    public boolean isReaded() {
+        return isReaded;
+    }
+
+    public void setReaded(boolean readed) {
+        isReaded = readed;
+    }
 
     public NewMainListData(int itemType) {
         this.itemType = itemType;

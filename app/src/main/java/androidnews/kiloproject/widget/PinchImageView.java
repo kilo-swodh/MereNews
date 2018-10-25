@@ -613,7 +613,11 @@ public class PinchImageView extends AppCompatImageView {
             super.onDraw(canvas);
             canvas.restore();
         } else {
-            super.onDraw(canvas);
+            try {
+                super.onDraw(canvas);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

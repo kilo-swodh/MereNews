@@ -19,8 +19,8 @@
             android:title="@string/about"
             android:icon="@drawable/ic_about"/>
 
-        <item android:id="@+id/nav_exit"
-            android:title="@string/exit"
-            android:icon="@drawable/ic_exit"/>
+        <item android:id="@+id/nav_theme"
+            android:title="@string/night_theme"
+            android:icon="@drawable/ic_theme"/>
     </group>
 </menu>

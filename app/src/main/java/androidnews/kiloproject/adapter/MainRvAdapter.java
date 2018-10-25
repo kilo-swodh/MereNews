@@ -88,7 +88,12 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                                         if (isLollipop()) {
                                             ActivityOptionsCompat activityOptions = ActivityOptionsCompat
                                                     .makeSceneTransitionAnimation((Activity) mContext, helper.getView(R.id.card_view), "big_card");
-                                            startActivity(intent, activityOptions.toBundle());
+                                            try {
+                                                startActivity(intent, activityOptions.toBundle());
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                                startActivity(intent);
+                                            }
                                         } else
                                             startActivity(intent);
                                     } else {
@@ -108,21 +113,21 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                 helper.setText(R.id.item_card_text, item.getTitle());
                 helper.setText(R.id.item_card_time, item.getPtime().substring(5, item.getPtime().length()));
                 helper.setText(R.id.item_card_from, item.getSource().replace("$", ""));
+                if (item.isReaded())
+                    helper.setTextColor(R.id.item_card_text,
+                            mContext.getResources().getColor(R.color.main_text_color_read));
+                else
+                    helper.setTextColor(R.id.item_card_text,
+                            mContext.getResources().getColor(R.color.main_text_color_drak));
                 if (TextUtils.isEmpty(item.getImgsrc())) {
                     helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
                     helper.setImageResource(R.id.item_card_img, R.color.white);
                 } else {
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
-                        if (!((Activity) mContext).isDestroyed()) {
-                            Glide.with(mContext)
-                                    .load(item.getImgsrc())
-                                    .apply(options)
-                                    .into((ImageView) helper.getView(R.id.item_card_img));
-                        } else
-                            Glide.with(mContext)
-                                    .load(item.getImgsrc())
-                                    .apply(options)
-                                    .into((ImageView) helper.getView(R.id.item_card_img));
+                    if (!((Activity) mContext).isFinishing())
+                        Glide.with(mContext)
+                                .load(item.getImgsrc())
+                                .apply(options)
+                                .into((ImageView) helper.getView(R.id.item_card_img));
                     helper.setText(R.id.item_card_subtitle, "");
                 }
                 break;

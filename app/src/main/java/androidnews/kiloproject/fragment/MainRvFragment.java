@@ -1,13 +1,11 @@
 package androidnews.kiloproject.fragment;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -15,15 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhouyou.http.EasyHttp;
@@ -38,6 +35,7 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.adapter.MainRvAdapter;
+import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.GalleyData;
 import androidnews.kiloproject.bean.net.NewMainListData;
 import io.reactivex.Observable;
@@ -47,15 +45,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_CLEAR;
+import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.getMainDataA;
 import static androidnews.kiloproject.system.AppConfig.getMainDataB;
 
-/**
- * Created by florentchampigny on 24/04/15.
- */
 public class MainRvFragment extends BaseRvFragment {
 
     MainRvAdapter mainAdapter;
@@ -87,40 +82,12 @@ public class MainRvFragment extends BaseRvFragment {
             position = args.getInt("type");
         }
         typeStr = getResources().getStringArray(R.array.address)[position];
-
         this.CACHE_LIST_DATA = typeStr + "_data";
-        mainAdapter = new MainRvAdapter(mActivity, contents);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-        if (GRID_LAYOUT) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        } else {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        }
-        mRecyclerView.setHasFixedSize(true);
-
-        //Use this now
-        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
-
-//        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
-//        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                requestData(TYPE_REFRESH, true);
-            }
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                requestData(TYPE_LOADMORE, true);
-            }
-        });
-
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -129,9 +96,27 @@ public class MainRvFragment extends BaseRvFragment {
                     contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
                     }.getType());
                     if (contents != null && contents.size() > 0) {
-                        contents.get(0)
-                                .setItemType(HEADER);
-                        e.onNext(true);
+                        try {
+                            contents.get(0)
+                                    .setItemType(HEADER);
+                            final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
+                            List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
+                            }.getType());
+                            if (cacheNews != null && cacheNews.size() > 0)
+                                for (NewMainListData data : contents) {
+                                    for (CacheNews cacheNew : cacheNews) {
+                                        if (TextUtils.equals(data.getDocid(), cacheNew.getDocid())) {
+                                            data.setReaded(true);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                            e.onNext(true);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                            e.onNext(false);
+                        }
                     } else
                         e.onNext(false);
                 } else e.onNext(false);
@@ -147,17 +132,43 @@ public class MainRvFragment extends BaseRvFragment {
                         MainRvFragment.super.onViewCreated(view, savedInstanceState);
                     }
                 });
+        if (GRID_LAYOUT) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        } else {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        }
+        mRecyclerView.setHasFixedSize(true);
+
+        //Use this now
+        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+
+//        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
+//        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                requestData(TYPE_REFRESH);
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                requestData(TYPE_LOADMORE);
+            }
+        });
     }
 
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
-            if (contents == null || SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) {
+            if (contents == null ||
+                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                            (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
         }
     }
 
-    private void requestData(int type, boolean isNotify) {
+    private void requestData(int type) {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
@@ -226,38 +237,86 @@ public class MainRvFragment extends BaseRvFragment {
                                         loadFailed(type);
                                     }
                                     List<NewMainListData> newList = new ArrayList<>();
+
+                                    final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
+                                    List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
+                                    }.getType());
+
                                     switch (type) {
                                         case TYPE_REFRESH:
                                             currentPage = 0;
                                             contents = new ArrayList<>();
-                                            newList = retMap.get(typeStr);
+                                            try {
+                                                newList = retMap.get(typeStr);
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
+                                                loadFailed(type);
+                                            }
                                             for (NewMainListData content : newList) {
-                                                if (TextUtils.isEmpty(content.getTAG()))
+                                                String mTag = content.getTAGS();
+                                                String[] goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
+                                                if (TextUtils.isEmpty(mTag))
 //                                                if (!TextUtils.isEmpty(content.getSource()) && TextUtils.isEmpty(content.getTAG()))
                                                     contents.add(content);
+                                                else {
+                                                    for (String gTag : goodTags) {
+                                                        if (TextUtils.equals(gTag, mTag)) {
+                                                            contents.add(content);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                if (cacheNews != null && cacheNews.size() > 0)
+                                                    for (CacheNews cacheNew : cacheNews) {
+                                                        if (TextUtils.equals(content.getDocid(), cacheNew.getDocid())) {
+                                                            content.setReaded(true);
+                                                            break;
+                                                        }
+                                                    }
                                             }
-                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
+                                            try {
+                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
+                                            }
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;
-                                            newList.addAll(contents);
+                                            try {
+                                                newList.addAll(contents);
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
+                                            }
                                             boolean isAllSame = true;
-                                            for (NewMainListData newBean : retMap.get(typeStr)) {
-                                                boolean isSame = false;
+                                            try {
+                                                for (NewMainListData newBean : retMap.get(typeStr)) {
+                                                    boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                if (!TextUtils.isEmpty(newBean.getTAG())){
-                                                    continue;
-                                                }
-                                                for (NewMainListData myBean : contents) {
-                                                    if (TextUtils.equals(myBean.getDocid(), newBean.getDocid())) {
-                                                        isSame = true;
-                                                        break;
+                                                    if (!TextUtils.isEmpty(newBean.getTAGS())) {
+                                                        continue;
+                                                    }
+                                                    for (NewMainListData myBean : contents) {
+                                                        if (TextUtils.equals(myBean.getDocid(), newBean.getDocid())) {
+                                                            isSame = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!isSame) {
+                                                        if (cacheNews != null && cacheNews.size() > 0)
+                                                            for (CacheNews cacheNew : cacheNews) {
+                                                                if (TextUtils.equals(newBean.getDocid(), cacheNew.getDocid())) {
+                                                                    newBean.setReaded(true);
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                        newList.add(newBean);
+                                                        isAllSame = false;
                                                     }
                                                 }
-                                                if (!isSame) {
-                                                    newList.add(newBean);
-                                                    isAllSame = false;
-                                                }
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
+                                                loadFailed(type);
                                             }
                                             if (!isAllSame) {
                                                 contents.clear();
@@ -275,18 +334,27 @@ public class MainRvFragment extends BaseRvFragment {
                                         public void accept(Boolean o) throws Exception {
                                             if (mainAdapter == null || type == TYPE_REFRESH) {
                                                 createAdapter();
-                                                refreshLayout.finishRefresh(true);
+                                                lastAutoRefreshTime = System.currentTimeMillis();
+                                                try {
+                                                    refreshLayout.finishRefresh(true);
+                                                    SnackbarUtils.with(refreshLayout)
+                                                            .setMessage(getString(R.string.load_success))
+                                                            .showSuccess();
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+
                                             } else if (type == TYPE_LOADMORE) {
                                                 mainAdapter.notifyDataSetChanged();
                                                 if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
                                                     mainAdapter.loadMoreComplete();
                                                 else
-                                                    refreshLayout.finishLoadMore(true);
+                                                    try {
+                                                        refreshLayout.finishLoadMore(true);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
                                             }
-                                            if (isNotify)
-                                                SnackbarUtils.with(refreshLayout)
-                                                        .setMessage(getString(R.string.load_success))
-                                                        .showSuccess();
                                         }
                                     });
                         } else {
@@ -313,7 +381,7 @@ public class MainRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
-        mainAdapter = new MainRvAdapter(getActivity(), contents);
+        mainAdapter = new MainRvAdapter(mActivity, contents);
         mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -328,6 +396,7 @@ public class MainRvFragment extends BaseRvFragment {
                             if (!TextUtils.isEmpty(rawId)) {
                                 int index = rawId.lastIndexOf("|");
                                 if (index != -1) {
+
                                     skipID = rawId.substring(index - 4, rawId.length());
                                     intent = new Intent(mActivity, GalleyActivity.class);
                                     intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
@@ -338,10 +407,12 @@ public class MainRvFragment extends BaseRvFragment {
                                 }
                             }
                             break;
-                        }else {
+                        } else {
                             intent = new Intent(getActivity(), NewsDetailActivity.class);
                             intent.putExtra("docid", bean.getDocid().replace("_special", "").trim());
                             startActivity(intent);
+                            bean.setReaded(true);
+                            mainAdapter.notifyItemChanged(position);
                         }
                 }
             }
@@ -357,13 +428,15 @@ public class MainRvFragment extends BaseRvFragment {
                 return true;
             }
         });
+        if (mRecyclerView == null)
+            return;
         mRecyclerView.setAdapter(mainAdapter);
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
             mainAdapter.setPreLoadNumber(5);
             mainAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                 @Override
                 public void onLoadMoreRequested() {
-                    requestData(TYPE_LOADMORE, false);
+                    requestData(TYPE_LOADMORE);
                 }
             }, mRecyclerView);
             mainAdapter.disableLoadMoreIfNotFullPage();
@@ -381,31 +454,28 @@ public class MainRvFragment extends BaseRvFragment {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
+                        if (refreshLayout != null)
+                            SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                     }
 
                     @Override
                     public void onSuccess(String response) {
                         if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                             GalleyData galleyContent = gson.fromJson(response, GalleyData.class);
-                            if (contents != null) {
+                            if (contents != null && contents.size() > 0) {
                                 NewMainListData bean = contents.get(0);
-                                bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getSquareimgurl());
-                                mainAdapter.notifyItemChanged(0);
-
-                                String json = gson.toJson(contents);
-                                SPUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                try {
+                                    bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getSquareimgurl());
+                                    if (mainAdapter != null)
+                                        mainAdapter.notifyItemChanged(0);
+                                    String json = gson.toJson(contents);
+                                    SPUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
                 });
-    }
-
-    @Override
-    public void onDestroy() {
-        if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_CLEAR)) {
-            SPUtils.getInstance().put(CACHE_LIST_DATA, "");
-        }
-        super.onDestroy();
     }
 }

@@ -71,7 +71,11 @@ public class DragAdapter extends BaseAdapter {
     @Override
     public ChannelItem getItem(int position) {
         if (channelList != null && channelList.size() != 0) {
-            return channelList.get(position);
+            try {
+                return channelList.get(position);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -200,6 +204,7 @@ public class DragAdapter extends BaseAdapter {
      * 删除频道列表
      */
     public void remove() {
+        if (remove_position == -1) return;
         channelList.remove(remove_position);
         remove_position = -1;
         notifyDataSetChanged();

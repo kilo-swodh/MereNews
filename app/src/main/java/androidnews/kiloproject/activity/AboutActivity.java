@@ -87,12 +87,6 @@ public class AboutActivity extends BaseActivity {
         String url = "file:///android_asset/about.html";
         webView.loadUrl(url);
 
-//        loadURL = getIntent().getStringExtra(WEBVIEW_URL);
-//        if (!TextUtils.isEmpty(loadURL)) {
-//            webView.loadUrl(loadURL);
-//            webView.loadData(loadURL, "text/html; charset=UTF-8", null);
-//            titlebar.setTitle("加载中");
-//        }
     }
 
     @Override

@@ -1,9 +1,12 @@
 package androidnews.kiloproject.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.CacheDiskUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -67,10 +71,6 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
     DragGrid userGridView;
     @BindView(R.id.otherGridView)
     OtherGridView otherGridView;
-    @BindView(R.id.tv_complete)
-    TextView tvComplete;
-    @BindView(R.id.tv_save)
-    TextView tvSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +78,25 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_channel);
         ButterKnife.bind(this);
 
-        initToolbar(toolbar, true);
-
         initStateBar(R.color.main_background, true);
     }
 
     @Override
     protected void initSlowly() {
+        initToolbar(toolbar, true);
+        getSupportActionBar().setTitle(getString(R.string.channel));
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.action_save:
+                        saveChannel();
+                        break;
+                }
+                return false;
+            }
+        });
         TypeArrayBean typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
         if (typeArrayBean == null || typeArrayBean.getTypeArray() == null) {
             typeArrayBean = new TypeArrayBean();
@@ -150,13 +162,11 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
             }
         });
 
-        userAdapter.setOnStartDragingListener(new DragAdapter.OnStartDragingListener() {
-            @Override
-            public void onStartDraging() {
-                tvSave.setVisibility(View.GONE);
-                tvComplete.setVisibility(View.VISIBLE);
-            }
-        });
+//        userAdapter.setOnStartDragingListener(new DragAdapter.OnStartDragingListener() {
+//            @Override
+//            public void onStartDraging() {
+//            }
+//        });
     }
 
     /**
@@ -172,30 +182,6 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
             case R.id.userGridView:
                 //TODO position为 0的不可以进行任何操作
                 Toast.makeText(getBaseContext(), tags[position], Toast.LENGTH_SHORT).show();
-//			if (position != 0) {
-//				final ImageView moveImageView = getView(view);
-//				if (moveImageView != null) {
-//					TextView newTextView = (TextView) view.findViewById(R.id.text_item);
-//					final int[] startLocation = new int[2];
-//					newTextView.getLocationInWindow(startLocation);
-//					final ChannelItem channel = ((DragAdapter) parent.getAdapter()).getItem(position);//获取点击的频道内容
-//					otherAdapter.setVisible(false);
-//					//添加到最后一个
-//					otherAdapter.addItem(channel);
-//					new Handler().postDelayed(new Runnable() {
-//						public void run() {
-//							try {
-//								int[] endLocation = new int[2];
-//								//获取终点的坐标
-//								otherGridView.getChildAt(otherGridView.getLastVisiblePosition()).getLocationInWindow(endLocation);
-//								MoveAnim(moveImageView, startLocation , endLocation, channel,userGridView);
-//								userAdapter.setRemove(position);
-//							} catch (Exception localException) {
-//							}
-//						}
-//					}, 50L);
-//				}
-//			}
                 break;
             case R.id.otherGridView:
                 final ImageView moveImageView = getView(view);
@@ -346,19 +332,10 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
         finish();
     }
 
-    @OnClick({R.id.tv_complete, R.id.tv_save})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_complete:
-                userAdapter.hideDeleteIcon(true);
-                userAdapter.showDeleteIcon(false);
-                userAdapter.notifyDataSetChanged();
-                tvComplete.setVisibility(View.GONE);
-                tvSave.setVisibility(View.VISIBLE);
-                break;
-            case R.id.tv_save:
-                saveChannel();
-                break;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (NetworkUtils.isConnected())
+            getMenuInflater().inflate(R.menu.channel_items, menu);//加载menu布局
+        return true;
     }
 }

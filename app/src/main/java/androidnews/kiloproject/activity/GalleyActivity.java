@@ -1,6 +1,7 @@
 package androidnews.kiloproject.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -99,6 +100,8 @@ public class GalleyActivity extends BaseActivity {
     private void initGalley() {
         progressBar.setVisibility(View.GONE);
         List<GalleyData.PhotosBean> beans = galleyContent.getPhotos();
+        if (beans == null || beans.size() == 0)
+            return;
         tvGalleyPage.setText("1/" + beans.size());
         tvGalleyTitle.setText(galleyContent.getSetname());
         tvGalleyText.setText(beans.get(0).getNote());
@@ -130,14 +133,15 @@ public class GalleyActivity extends BaseActivity {
                 }
                 String imageUrl = galleyContent.getPhotos().get(position).getImgurl();
 
-                Glide.with(mActivity).load(imageUrl).apply(options).into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        piv.setImageDrawable(resource);
-                        if (position == 0 && isLollipop())
-                            ViewCompat.setTransitionName(piv, "big_card");
-                    }
-                });
+                if (!(mActivity.isFinishing()))
+                    Glide.with(mActivity).load(imageUrl).apply(options).into(new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                            piv.setImageDrawable(resource);
+                            if (position == 0 && isLollipop())
+                                ViewCompat.setTransitionName(piv, "big_card");
+                        }
+                    });
                 container.addView(piv);
                 return piv;
             }
@@ -180,7 +184,7 @@ public class GalleyActivity extends BaseActivity {
         requestPermission(new Action() {
             @Override
             public void onAction(Object data) {
-                String fileName = currentImg.substring(currentImg.lastIndexOf('/'),currentImg.length());
+                String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
                 EasyHttp.downLoad(currentImg)
                         .savePath("/sdcard/Download")
                         .saveName(fileName)//不设置默认名字是时间戳生成的
@@ -218,12 +222,12 @@ public class GalleyActivity extends BaseActivity {
                             public void onError(ApiException e) {
                                 //下载失败
                                 SnackbarUtils.with(tvGalleyTitle)
-                                        .setMessage(getString(R.string.download_fail)+e.getMessage())
+                                        .setMessage(getString(R.string.download_fail) + e.getMessage())
                                         .showError();
                             }
                         });
             }
-        },Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 }
 

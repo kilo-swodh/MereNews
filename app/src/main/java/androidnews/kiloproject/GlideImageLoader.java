@@ -1,5 +1,6 @@
 package androidnews.kiloproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
@@ -28,11 +29,7 @@ public class GlideImageLoader extends ImageLoader {
          切记不要胡乱强转！
          */
 
-        //Glide 加载图片简单用法
-        Glide.with(context).load(path).apply(options).into(imageView);
-
-        //用fresco加载图片简单用法，记得要写下面的createImageView方法
-        Uri uri = Uri.parse((String) path);
-        imageView.setImageURI(uri);
+        if (imageView != null && !((Activity) context).isFinishing())
+                Glide.with(context).load(path).apply(options).into(imageView);
     }
 }
