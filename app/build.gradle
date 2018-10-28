@@ -19,8 +19,8 @@ android {
 //            enabled true
 //        }
 
-        versionCode 20
-        versionName "beta 20"
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -154,4 +154,10 @@ dependencies {
 
     //NestedScrollWebView
     api 'com.github.rhlff:NestedScrollWebView:v1.0.2'
+
+    //播放器
+    api 'cn.jzvd:jiaozivideoplayer:6.3.1'
+
+    //dialog
+    api 'com.github.javiersantos:MaterialStyledDialogs:2.1'
 }

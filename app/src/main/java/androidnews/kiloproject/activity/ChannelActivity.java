@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,12 @@ import androidnews.kiloproject.widget.OtherGridView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.activity.MainActivity.DEFAULT_PAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
@@ -97,76 +104,96 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
                 return false;
             }
         });
-        TypeArrayBean typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
-        if (typeArrayBean == null || typeArrayBean.getTypeArray() == null) {
-            typeArrayBean = new TypeArrayBean();
-            typeArrayBean.setTypeArray(new ArrayList<>());
-            for (int i = 0; i < DEFAULT_PAGE; i++) {
-                typeArrayBean.getTypeArray().add(i);
-            }
-            CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, typeArrayBean);
-        }
-        tags = getResources().getStringArray(R.array.address_tag);
-        int userOrder = 1, otherOrder = 1;
-        for (int i = 0; i < tags.length; i++) {
-            boolean isSame = false;
-            for (Integer integer : typeArrayBean.getTypeArray()) {
-                if (i == integer)
-                    isSame = true;
-            }
-            if (isSame) {
-                userChannelList.add(new ChannelItem(i, tags[i], userOrder, 1, 0));
-                userOrder++;
-            } else {
-                otherChannelList.add(new ChannelItem(i, tags[i], otherOrder, 0, 0));
-                otherOrder++;
-            }
-        }
 
-        userAdapter = new DragAdapter(this, userChannelList, userGridView);
-        userGridView.setAdapter(userAdapter);
-        otherAdapter = new OtherAdapter(this, otherChannelList);
-        otherGridView.setAdapter(this.otherAdapter);
-        //设置GRIDVIEW的ITEM的点击监听
-        otherGridView.setOnItemClickListener(this);
-        userGridView.setOnItemClickListener(this);
-        userAdapter.setOnDelecteItemListener(new DragAdapter.OnDelecteItemListener() {
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void onDelete(final int position, View v, ViewGroup parent) {
-                if (position != 0) {
-                    View view = userGridView.getChildAt(position);
-                    final ImageView moveImageView = getView(view);
-                    if (moveImageView != null) {
-                        TextView newTextView = (TextView) view.findViewById(R.id.text_item);
-                        final int[] startLocation = new int[2];
-                        newTextView.getLocationInWindow(startLocation);
-                        final ChannelItem channel = userAdapter.getItem(position);//获取点击的频道内容
-                        otherAdapter.setVisible(false);
-                        userAdapter.setIsDeleteing(true);
-                        //添加到最后一个
-                        otherAdapter.addItem(channel);
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                try {
-                                    int[] endLocation = new int[2];
-                                    //获取终点的坐标
-                                    otherGridView.getChildAt(otherGridView.getLastVisiblePosition()).getLocationInWindow(endLocation);
-                                    MoveAnim(moveImageView, startLocation, endLocation, channel, userGridView);
-                                    userAdapter.setRemove(position);
-                                } catch (Exception localException) {
-                                }
-                            }
-                        }, 50L);
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                TypeArrayBean typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
+                if (typeArrayBean == null || typeArrayBean.getTypeArray() == null) {
+                    typeArrayBean = new TypeArrayBean();
+                    typeArrayBean.setTypeArray(new ArrayList<>());
+                    for (int i = 0; i < DEFAULT_PAGE; i++) {
+                        typeArrayBean.getTypeArray().add(i);
+                    }
+                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, typeArrayBean);
+                }
+                tags = getResources().getStringArray(R.array.address_tag);
+                int userOrder = 1, otherOrder = 1;
+
+                for (Integer integer : typeArrayBean.getTypeArray()) {
+                    int samePosition = -1;
+                    for (int i = 0; i < tags.length; i++) {
+                        if (i == integer)
+                            samePosition = i;
+                    }
+                    if (samePosition != -1) {
+                        userChannelList.add(new ChannelItem(samePosition, tags[samePosition], userOrder, 1, 0));
+                        userOrder++;
                     }
                 }
-            }
-        });
 
-//        userAdapter.setOnStartDragingListener(new DragAdapter.OnStartDragingListener() {
-//            @Override
-//            public void onStartDraging() {
-//            }
-//        });
+                for (int i = 0; i < tags.length; i++) {
+                    boolean isSame = false;
+                    for (ChannelItem item : userChannelList) {
+                        if (TextUtils.equals(item.name,tags[i])){
+                            isSame = true;
+                        }
+                    }
+                    if (!isSame) {
+                        otherChannelList.add(new ChannelItem(i, tags[i], otherOrder, 0, 0));
+                        otherOrder++;
+                    }
+                }
+                e.onNext(true);
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
+                            userAdapter = new DragAdapter(mActivity, userChannelList, userGridView);
+                            userGridView.setAdapter(userAdapter);
+                            otherAdapter = new OtherAdapter(mActivity, otherChannelList);
+                            otherGridView.setAdapter(ChannelActivity.this.otherAdapter);
+                            //设置GRIDVIEW的ITEM的点击监听
+                            otherGridView.setOnItemClickListener(ChannelActivity.this);
+                            userGridView.setOnItemClickListener(ChannelActivity.this);
+                            userAdapter.setOnDelecteItemListener(new DragAdapter.OnDelecteItemListener() {
+                                @Override
+                                public void onDelete(final int position, View v, ViewGroup parent) {
+                                    if (position != 0) {
+                                        View view = userGridView.getChildAt(position);
+                                        final ImageView moveImageView = getView(view);
+                                        if (moveImageView != null) {
+                                            TextView newTextView = (TextView) view.findViewById(R.id.text_item);
+                                            final int[] startLocation = new int[2];
+                                            newTextView.getLocationInWindow(startLocation);
+                                            final ChannelItem channel = userAdapter.getItem(position);//获取点击的频道内容
+                                            otherAdapter.setVisible(false);
+                                            userAdapter.setIsDeleteing(true);
+                                            //添加到最后一个
+                                            otherAdapter.addItem(channel);
+                                            new Handler().postDelayed(new Runnable() {
+                                                public void run() {
+                                                    try {
+                                                        int[] endLocation = new int[2];
+                                                        //获取终点的坐标
+                                                        otherGridView.getChildAt(otherGridView.getLastVisiblePosition()).getLocationInWindow(endLocation);
+                                                        MoveAnim(moveImageView, startLocation, endLocation, channel, userGridView);
+                                                        userAdapter.setRemove(position);
+                                                    } catch (Exception localException) {
+                                                    }
+                                                }
+                                            }, 50L);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
     /**

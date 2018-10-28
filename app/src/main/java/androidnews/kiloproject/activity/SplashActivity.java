@@ -21,11 +21,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SPUtils spUtils = SPUtils.getInstance();
-        AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
         if (isNightMode)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         startActivity(new Intent(this, MainActivity.class));
+        AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         finish();
     }
 }

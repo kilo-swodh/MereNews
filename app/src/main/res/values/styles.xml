@@ -39,7 +39,7 @@
         <item name="android:textColorPrimary">@color/colorful_theme</item>
     </style>
 
-    <style name="AppThemeMain" parent="AppThemeColor">  //主界面专用
+    <style name="AppThemeMain" parent="AppThemeColor">//主界面专用
         <item name="android:windowIsTranslucent">false</item>//就是关掉这个Activity的透明背景
         <item name="android:textColorPrimary">@color/splash_bg</item>
     </style>

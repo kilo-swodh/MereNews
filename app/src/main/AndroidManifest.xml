@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="androidnews.kiloproject">
 
     <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
@@ -13,6 +14,8 @@
     <!--WRITE_EXTERNAL_STORAGE"/>-->
     <!--8.0安装需要的权限-->
     <!--REQUEST_INSTALL_PACKAGES" />-->
+
+    <uses-sdk tools:overrideLibrary="cn.jzvd"/>
 
     <application
         android:name="androidnews.kiloproject.system.MyApplication"
@@ -32,7 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity"
-            android:theme="@style/AppThemeMain"/>
+            android:theme="@style/AppThemeMain"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.GalleyActivity"
             android:theme="@style/AppThemeColor"/>

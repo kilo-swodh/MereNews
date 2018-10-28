@@ -34,7 +34,6 @@ import static androidnews.kiloproject.system.base.BaseActivity.isLollipop;
 import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, BaseViewHolder> {
-
     RequestOptions options;
     Context mContext;
 

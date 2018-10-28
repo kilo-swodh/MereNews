@@ -211,14 +211,15 @@ public class NewsDetailActivity extends BaseDetailActivity {
         String title = "";
         String source = "";
         String pTime = "";
+        String body = "";
         try {
             title = currentData.getTitle();
             source = currentData.getSource();
             pTime = currentData.getPtime();
+            body = currentData.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        String colorBody = "<body>";
         String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body>";
         html = "<!DOCTYPE html>" +
                 "<html lang=\"zh\">" +
@@ -245,7 +246,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 + "<p><div><div id=\"from\">" + source +
                 "</div><div id=\"time\">" + pTime + "</div></div></p>"
                 + "<font size=\"4\">"
-                + currentData.getBody() + "</font></body>" +
+                + body + "</font></body>" +
                 "</html>";
         if (currentData.getVideo() != null) {
             for (NewsDetailData.VideoBean videoBean : currentData.getVideo()) {

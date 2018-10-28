@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MD新闻</string>
+    <string name="app_name">Mere新闻</string>
 
     <string name="successfully">成功</string>
     <string name="setting">设置</string>
@@ -45,12 +45,12 @@
     <string name="clear_cache">清空缓存</string>
     <string name="clear_cache_detail">包含收藏/历史数据</string>
     <string name="auto_refresh">自动刷新</string>
-    <string name="auto_refresh_detail">首次进入App自动刷新</string>
+    <string name="auto_refresh_detail">切换时自动刷新</string>
     <string name="auto_loadmore">预加载数据</string>
     <string name="auto_loadmore_detail">当快浏览到尽头时提前加载,避免等待,更耗费流量</string>
     <string name="night_theme">主题切换</string>
     <string name="check_update">检查更新</string>
-    <string name="check_update_detail">当前版本为 </string>
+    <string name="check_update_detail">当前版本为:</string>
     <string name="join_us">加用户群</string>
     <string name="join_us_detail">企鹅群号:938435700</string>
     <string name="join_us_error">没有找到手Q</string>

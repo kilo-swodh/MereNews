@@ -36,7 +36,7 @@ public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, Bas
                 final CommentLevel data = item;
                 helper.setText(R.id.tv_text, data.getText());
                 helper.setText(R.id.tv_time, data.getTime());
-                helper.setText(R.id.tv_name, data.getName().replace("&nbsp",""));
+                helper.setText(R.id.tv_name, data.getName().replace("&nbsp"," "));
                 Glide.with(mContext).load(data.getImgUrl()).apply(options).into((CircleImageView)helper.getView(R.id.iv_avatar));
                 break;
         }

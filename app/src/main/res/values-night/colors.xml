@@ -17,30 +17,4 @@
     <color name="comment_name">@color/deepskyblue</color>
     <color name="comment_bg_level_two">@color/colorPrimary</color>
 
-    <!--透明色 -->
-    <color name="white">#FFFFFF</color><!--白色 -->
-
-    <color name="floralwhite">#FFFAF0</color><!--花白色 -->
-
-    <color name="red">#FF0000</color><!--红色 -->
-
-    <color name="paleturquoise">#AFEEEE</color><!--苍宝石绿 -->
-
-    <color name="purple">#800080</color><!--紫色 -->
-
-    <color name="dodgerblue">#1E90FF</color><!--闪兰色 -->
-
-    <color name="cyan">#00FFFF</color><!--青色 -->
-
-    <color name="lime">#00FF00</color><!--酸橙色 -->
-
-    <color name="deepskyblue">#00BFFF</color><!--深天蓝色 -->
-
-    <color name="green">#008000</color><!--绿色 -->
-
-    <color name="blue">#0000FF</color><!--蓝色 -->
-
-    <color name="black">#000000</color><!--黑色 -->
-
-    <color name="mask">#66000000</color><!--半透明遮罩 -->
 </resources>

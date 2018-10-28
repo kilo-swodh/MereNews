@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Material News</string>
+    <string name="app_name">Mere News</string>
 
     <string name="successfully">Successful</string>
     <string name="setting">Setting</string>
@@ -45,12 +45,12 @@
     <string name="clear_cache">Clear collection / History</string>
     <string name="clear_cache_detail">Prudent point</string>
     <string name="auto_refresh">auto refresh</string>
-    <string name="auto_refresh_detail">First entry into App auto refresh</string>
+    <string name="auto_refresh_detail">Automatic refresh during handover</string>
     <string name="auto_loadmore">Preloading data</string>
     <string name="auto_loadmore_detail">When you browse to the end, load in advance, avoid waiting, and consume more traffic.</string>
     <string name="night_theme">Theme Switch</string>
     <string name="check_update">Check the update</string>
-    <string name="check_update_detail">The current version is </string>
+    <string name="check_update_detail">The current version is:</string>
     <string name="join_us">Add user group</string>
     <string name="join_us_detail">QQ group num:938435700</string>
     <string name="join_us_error">No QQ mobile</string>

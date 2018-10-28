@@ -1,8 +1,10 @@
 package androidnews.kiloproject.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,12 +17,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -38,12 +43,14 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.TypeArrayBean;
 import androidnews.kiloproject.bean.net.PhotoCenterData;
 import androidnews.kiloproject.fragment.GuoKrRvFragment;
+import androidnews.kiloproject.fragment.VideoRvFragment;
 import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
 import androidnews.kiloproject.receiver.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jzvd.Jzvd;
 
 import static androidnews.kiloproject.activity.ChannelActivity.SELECT_RESULT;
 import static androidnews.kiloproject.activity.SettingActivity.SETTING_RESULT;
@@ -54,6 +61,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static com.zhouyou.http.EasyHttp.getContext;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -71,6 +79,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TypeArrayBean typeArrayBean;
 
     public static final int DEFAULT_PAGE = 4;
+
+    public static final String SAVE_MD_VIEWPAGER = "view_pager";
 
     public static final int TYPE_ZHIHU = 38;
     public static final int TYPE_GUOKR = 39;
@@ -133,6 +143,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             return new ZhihuRvFragment();
                         case TYPE_GUOKR:
                             return new GuoKrRvFragment();
+                        case TYPE_V_HOT:
+                        case TYPE_V_ENTERTAINMENT:
+                        case TYPE_V_FUNNY:
+                        case TYPE_V_EXCELLENT:
+                            return VideoRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
                     }
                 return MainRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
             }
@@ -235,9 +250,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     isNightMode = true;
                 }
                 SPUtils.getInstance().put(CONFIG_NIGHT_MODE, isNightMode);
-                recreate();
+                intent = getIntent();
+                finish();
+                startActivity(intent);
                 break;
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -261,6 +277,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (Jzvd.backPress()) {
+                return true;
+            }
             if (SPUtils.getInstance().getBoolean(CONFIG_BACK_EXIT)
                     && System.currentTimeMillis() - firstTime > 2000) {
                 SnackbarUtils.with(mViewPager).setMessage(getString(R.string.click_to_exit)).show();
@@ -348,6 +367,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onPause() {
         super.onPause();
+        Jzvd.releaseAllVideos();
         Glide.with(mActivity).pauseRequests();
     }
 

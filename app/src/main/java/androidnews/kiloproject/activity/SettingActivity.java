@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v7.widget.CardView;
@@ -16,14 +17,18 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -33,6 +38,7 @@ import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JZUserActionStd;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
@@ -381,22 +387,29 @@ public class SettingActivity extends BaseActivity {
                                                 .showError();
                                     }
                                     if (AppUtils.getAppVersionCode() < Integer.parseInt(response.trim())) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                                        builder.setTitle(R.string.update_title)
-                                                .setMessage(R.string.update_message)
-                                                .setCancelable(true)
-                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                                        new MaterialStyledDialog.Builder(mActivity)
+                                                .setHeaderDrawable(R.drawable.ic_warning)
+                                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                                .setTitle(getResources().getString(R.string.update_title))
+                                                .setDescription(getResources().getString(R.string.update_message))
+                                                .setHeaderColor(R.color.colorPrimary)
+                                                .setPositiveText(android.R.string.ok)
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                                         Uri uri = Uri.parse(getString(R.string.update_address));
                                                         startActivity(new Intent(Intent.ACTION_VIEW, uri));
                                                     }
-                                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        }).show();
+                                                })
+                                                .setNegativeText(getResources().getString(android.R.string.cancel))
+                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
                                     } else {
                                         SnackbarUtils.with(toolbar)
                                                 .setMessage(getString(R.string.update_title_no))

@@ -1,0 +1,33 @@
+html,body,applet,object,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,p,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,th,td {
+	background: rgba(0,0,0,0) !important;
+	color: #fff !important;
+	border-color: #A0A0A0 !important;
+}
+
+div,input,button,textarea,select,option,optgroup {
+	background-color: #000 !important;
+	color: #fff !important;
+	border-color: #A0A0A0 !important;
+}
+
+a,a * {
+	color: #ffffff !important;
+	text-decoration: none !important;
+	font-weight: bold !important;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+a:active,a:hover,a:active *,a:hover * {
+	color: #1F72D0 !important;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+p,span {
+	font color: #FF0000 !important;
+	color: #ffffff !important;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+html {
+	-webkit-filter: contrast(50%);
+}
