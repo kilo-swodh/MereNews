@@ -28,8 +28,8 @@ public class BaseDetailActivity extends BaseActivity {
     ProgressBar progress;
     @BindView(R.id.web_news)
     NestedScrollWebView webView;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+//    @BindView(R.id.refreshLayout)
+//    SmartRefreshLayout refreshLayout;
 
     public static final int MAX_HISTORY = 512;
 

@@ -19,15 +19,14 @@ android {
 //            enabled true
 //        }
 
-        versionCode 100
-        versionName "1.0.0"
+        versionCode 105
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             //混淆
             minifyEnabled false
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -102,12 +101,12 @@ dependencies {
     //工具包
 
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    api 'com.blankj:utilcode:1.20.4'
+    api 'com.blankj:utilcode:1.21.2'
 
     //状态栏沉浸
 
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.2-beta01'
+    api 'com.gyf.immersionbar:immersionbar:2.3.2-beta03'
 
     //APK下载与更新
 

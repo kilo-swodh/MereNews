@@ -5,34 +5,25 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -40,7 +31,6 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.NewsDetailData;
 import androidnews.kiloproject.bean.net.ZhihuDetailData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -91,13 +81,28 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                         break;
                     case R.id.action_star:
                         if (isStar) {
-                            item.setIcon(R.drawable.ic_star_no);
-                            checkStar(true);
-                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                @Override
+                                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                    e.onNext(checkStar(true));
+                                    e.onComplete();
+                                }
+                            }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Consumer<Boolean>() {
+                                        @Override
+                                        public void accept(Boolean aBoolean) throws Exception {
+                                            if (aBoolean) {
+                                                item.setIcon(R.drawable.ic_star_no);
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                                            } else
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
+                                        }
+                                    });
                             isStar = false;
                         } else {
                             item.setIcon(R.drawable.ic_star_ok);
-                            saveCache(CACHE_COLLECTION);
+                            saveCacheAsyn(CACHE_COLLECTION);
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
                             isStar = true;
                         }
@@ -109,7 +114,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShare_url()));
                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successfully)).showSuccess();
+                                + " " + getString(R.string.successful)).showSuccess();
                         break;
                     case R.id.action_browser:
                         Uri uri = Uri.parse(currentData.getShare_url());
@@ -120,12 +125,12 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                 return false;
             }
         });
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initSlowly();
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                initSlowly();
+//            }
+//        });
     }
 
 
@@ -143,7 +148,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                             progress.setVisibility(View.GONE);
-                            refreshLayout.finishRefresh();
+//                            refreshLayout.finishRefresh();
                         }
 
                         @Override
@@ -161,6 +166,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                                         e.onNext(checkStar(false));
+                                        e.onComplete();
                                     }
                                 }).subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -169,9 +175,9 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                                             public void accept(Boolean aBoolean) throws Exception {
                                                 if (aBoolean) {
                                                     isStar = true;
-                                                    toolbar.getMenu().getItem(3).setIcon(R.drawable.ic_star_ok);
+                                                    toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
                                                 }
-                                                refreshLayout.finishRefresh();
+//                                                refreshLayout.finishRefresh();
                                             }
                                         });
                                 if (webView != null) {
@@ -179,14 +185,14 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                                     loadUrl();
                                 }
                             } else {
-                                refreshLayout.finishRefresh();
+//                                refreshLayout.finishRefresh();
                                 progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
                     });
         } else {
-            refreshLayout.finishRefresh();
+//            refreshLayout.finishRefresh();
             progress.setVisibility(View.GONE);
             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
         }
@@ -196,43 +202,43 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        webView.loadData(currentData.getBody(), "text/html; charset=UTF-8", null);
         webView.loadUrl(currentData.getShare_url());
+        saveCacheAsyn(CACHE_HISTORY);
+    }
+
+    private void saveCacheAsyn(int type) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                saveCache(CACHE_HISTORY);
+                String cacheJson = SPUtils.getInstance().getString(type + "", "");
+                List<CacheNews> list;
+                if (TextUtils.isEmpty(cacheJson)) {
+                    list = new ArrayList<>();
+                } else {
+                    list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
+                    }.getType());
+                    for (CacheNews cacheNews : list) {
+                        if (TextUtils.equals(cacheNews.getDocid(), currentData.getId() + ""))
+                            return;
+                    }
+                }
+
+                CacheNews cacheNews = new CacheNews(currentData.getTitle(),
+                        currentData.getImage(),
+                        getString(R.string.zhihu),
+                        currentData.getId() + "",
+                        currentData.getBody());
+                cacheNews.setType(TYPE_ZHIHU);
+                list.add(0, cacheNews);
+
+                if (list.size() > MAX_HISTORY) {
+                    list.remove(list.size() - 1);
+                }
+
+                String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
+                }.getType());
+                SPUtils.getInstance().put(type + "", saveJson);
             }
         }).start();
-    }
-
-    private void saveCache(int type) {
-        String cacheJson = SPUtils.getInstance().getString(type + "", "");
-        List<CacheNews> list;
-        if (TextUtils.isEmpty(cacheJson)) {
-            list = new ArrayList<>();
-        } else {
-            list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            for (CacheNews cacheNews : list) {
-                if (TextUtils.equals(cacheNews.getDocid(), currentData.getId() + ""))
-                    return;
-            }
-        }
-
-        CacheNews cacheNews = new CacheNews(currentData.getTitle(),
-                currentData.getImage(),
-                getString(R.string.zhihu),
-                currentData.getId() + "",
-                currentData.getBody());
-        cacheNews.setType(TYPE_ZHIHU);
-        list.add(0, cacheNews);
-
-        if (list.size() > MAX_HISTORY){
-            list.remove(list.size() - 1);
-        }
-
-        String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-        }.getType());
-        SPUtils.getInstance().put(type + "", saveJson);
     }
 
     private boolean checkStar(boolean isClear) {

@@ -5,13 +5,13 @@
     tools:context=".album.AlbumDetailActivity">
 
     <item android:id="@+id/action_comment"
-        android:title="评论"
+        android:title="@string/action_comment"
         android:orderInCategory="80"
         android:icon="@drawable/ic_comment"
         app:showAsAction="always|withText" />
 
     <item android:id="@+id/action_link"
-        android:title="复制链接"
+        android:title="@string/action_link"
         android:orderInCategory="80"
         android:icon="@drawable/ic_link"
         app:showAsAction="ifRoom|withText" />

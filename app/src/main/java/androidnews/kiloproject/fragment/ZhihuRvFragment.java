@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.gson.reflect.TypeToken;
@@ -298,7 +299,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
 
     private void createAdapter() {
         loadMoreDate = contents.getDate();
-        mAdapter = new ZhihuAdapter(mActivity, contents.getStories());
+        mAdapter = new ZhihuAdapter(mActivity,Glide.with(this), contents.getStories());
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -325,7 +326,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
                     (ViewGroup) refreshLayout.getParent(), false);
 
             Banner banner = header.findViewById(R.id.banner);
-            banner.setImageLoader(new GlideImageLoader())
+            banner.setImageLoader(new GlideImageLoader(Glide.with(this)))
                     .setBannerAnimation(Transformer.FlipHorizontal)
                     .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                     .setDelayTime(5 * 1000)

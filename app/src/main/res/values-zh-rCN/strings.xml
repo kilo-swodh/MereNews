@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Mere新闻</string>
 
-    <string name="successfully">成功</string>
+    <string name="successful">成功</string>
+    <string name="fail">失败</string>
+    <string name="save">保存</string>
     <string name="setting">设置</string>
-    <string name="title_dialog">友情提示</string>
     <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
     <string name="message_permission_always_failed">请到设置中给予本App权限:\n\n%1$s</string>
     <string name="message_setting_comeback">从设置中回来了</string>
@@ -19,12 +20,20 @@
     <string name="action_browser">浏览器中打开</string>
     <string name="action_star">收藏</string>
     <string name="action_share">分享</string>
+    <string name="action_delete_all">全部删除</string>
+
+    <string name="action_block_source">屏蔽该来源</string>
+    <string name="action_block_keywords">屏蔽关键词</string>
+
+    <string name="source">新闻源</string>
+    <string name="keywords">关键词</string>
 
     <string name="star_no">已取消收藏</string>
     <string name="star_yes">已添加收藏</string>
 
     <string name="history">历史</string>
     <string name="about">关于</string>
+    <string name="block_rule">屏蔽规则</string>
 
     <string name="loading">正在加载</string>
     <string name="load_success">加载成功</string>
@@ -63,8 +72,11 @@
 
     <string name="click_to_exit">再按一次退出应用</string>
     <string name="start_after_exit">退出界面后生效</string>
-    <string name="start_after_restart_list">返回后界面将刷新以使该设置生效</string>
+    <string name="start_after_restart_list">下拉刷新新闻后生效</string>
     <string name="start_after_restart_app">下次进入应用生效</string>
+
+    <string name="tip_title">友情提示</string>
+    <string name="update_title">发现一个新版本</string>
 
     <string name="update_message">您可到应用商店更新,或点击确认进行下载安装</string>
     <string name="update_title_no">恭喜,当前已是最新版本</string>
@@ -78,7 +90,11 @@
 
     <string name="delete">删除</string>
     <string name="delete_message">是否删除该条内容</string>
+    <string name="repeated">这条重复了</string>
 
     <string name="zhihu">知乎</string>
     <string name="guokr">果壳精选</string>
+
+    <string name="shortcut_star">收藏记录</string>
+    <string name="shortcut_disabled">快捷方式已被禁用</string>
 </resources>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.gson.reflect.TypeToken;
@@ -340,7 +341,7 @@ public class VideoRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
-        mainAdapter = new VideoRvAdapter(mActivity, contents);
+        mainAdapter = new VideoRvAdapter(mActivity,Glide.with(this), contents);
 //        mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

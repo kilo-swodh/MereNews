@@ -1,10 +1,8 @@
 package androidnews.kiloproject.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -17,15 +15,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -40,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.TypeArrayBean;
+import androidnews.kiloproject.bean.data.IntArrayBean;
 import androidnews.kiloproject.bean.net.PhotoCenterData;
 import androidnews.kiloproject.fragment.GuoKrRvFragment;
 import androidnews.kiloproject.fragment.VideoRvFragment;
@@ -51,9 +48,13 @@ import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.Jzvd;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.activity.ChannelActivity.SELECT_RESULT;
-import static androidnews.kiloproject.activity.SettingActivity.SETTING_RESULT;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
@@ -61,7 +62,6 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
-import static com.zhouyou.http.EasyHttp.getContext;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,11 +76,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     PhotoCenterData photoData;
     int bgPosition = 0;
-    TypeArrayBean typeArrayBean;
+    IntArrayBean intArrayBean;
 
     public static final int DEFAULT_PAGE = 4;
 
     public static final String SAVE_MD_VIEWPAGER = "view_pager";
+
+    public static final String NEWS_PHOTO_URL = "http://pic.news.163.com/photocenter/api/list/0001/00AN0001,00AO0001,00AP0001/0/10/cacheMoreData.json";
 
     public static final int TYPE_ZHIHU = 38;
     public static final int TYPE_GUOKR = 39;
@@ -88,6 +90,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public static final int TYPE_V_ENTERTAINMENT = 41;
     public static final int TYPE_V_FUNNY = 42;
     public static final int TYPE_V_EXCELLENT = 43;
+
+    public static final int SELECT_RESULT = 999;
+    public static final int SETTING_RESULT = 998;
+    public static final int BLOCK_RESULT = 997;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,54 +124,110 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void initSlowly() {
 
-        typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
-        if (typeArrayBean == null) {
-            typeArrayBean = new TypeArrayBean();
-            typeArrayBean.setTypeArray(new ArrayList<>());
-            for (int i = 0; i < DEFAULT_PAGE; i++) {
-                typeArrayBean.getTypeArray().add(i);
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                intArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, IntArrayBean.CREATOR);
+                if (intArrayBean == null) {
+                    intArrayBean = new IntArrayBean();
+                    intArrayBean.setTypeArray(new ArrayList<>());
+                    e.onNext(true);
+                    for (int i = 0; i < DEFAULT_PAGE; i++) {
+                        intArrayBean.getTypeArray().add(i);
+                    }
+                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, intArrayBean);
+                }else e.onNext(true);
+                e.onComplete();
             }
-            CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, typeArrayBean);
-        }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
+                            mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                                @Override
+                                public Fragment getItem(int position) {
+                                    int type = intArrayBean.getTypeArray().get(position);
+                                    if (type >= TYPE_ZHIHU)
+                                        switch (type) {
+                                            case TYPE_ZHIHU:
+                                                return new ZhihuRvFragment();
+                                            case TYPE_GUOKR:
+                                                return new GuoKrRvFragment();
+                                            case TYPE_V_HOT:
+                                            case TYPE_V_ENTERTAINMENT:
+                                            case TYPE_V_FUNNY:
+                                            case TYPE_V_EXCELLENT:
+                                                return VideoRvFragment.newInstance(intArrayBean.getTypeArray().get(position));
+                                        }
+                                    return MainRvFragment.newInstance(intArrayBean.getTypeArray().get(position));
+                                }
+
+                                @Override
+                                public int getCount() {
+                                    return intArrayBean.getTypeArray().size();
+                                }
+
+                                @Override
+                                public CharSequence getPageTitle(int position) {
+                                    String[] tags = getResources().getStringArray(R.array.address_tag);
+                                    return tags[intArrayBean.getTypeArray().get(position)];
+                                }
+                            });
+
+                            mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+                            mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+
+                            EasyHttp.get(NEWS_PHOTO_URL)
+                                    .readTimeOut(30 * 1000)//局部定义读超时
+                                    .writeTimeOut(30 * 1000)
+                                    .connectTimeout(30 * 1000)
+                                    .timeStamp(true)
+                                    .execute(new SimpleCallBack<String>() {
+                                        @Override
+                                        public void onError(ApiException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        @Override
+                                        public void onSuccess(final String s) {
+                                            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                                @Override
+                                                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                                    String temp = s.replace(")", "}");
+                                                    String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
+                                                    if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                                                        try {
+                                                            photoData = gson.fromJson(response, PhotoCenterData.class);
+                                                            e.onNext(true);
+                                                        } catch (Exception e1) {
+                                                            e1.printStackTrace();
+                                                            e.onNext(false);
+                                                        }
+                                                    } else e.onNext(false);
+                                                    e.onComplete();
+                                                }
+                                            }).subscribeOn(Schedulers.computation())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(new Consumer<Boolean>() {
+                                                        @Override
+                                                        public void accept(Boolean aBoolean) throws Exception {
+                                                            if (aBoolean)
+                                                                startBgAnimate();
+                                                            else
+                                                                SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
+                                                        }
+                                                    });
+                                        }
+                                    });
+                        }
+                    }
+                });
 
         navigation.setNavigationItemSelectedListener(this);
-
         ColorStateList csl = getBaseContext().getResources().getColorStateList(R.color.navigation_menu_item_color);
         navigation.setItemTextColor(csl);
-
-        mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                int type = typeArrayBean.getTypeArray().get(position);
-                if (type >= TYPE_ZHIHU)
-                    switch (type) {
-                        case TYPE_ZHIHU:
-                            return new ZhihuRvFragment();
-                        case TYPE_GUOKR:
-                            return new GuoKrRvFragment();
-                        case TYPE_V_HOT:
-                        case TYPE_V_ENTERTAINMENT:
-                        case TYPE_V_FUNNY:
-                        case TYPE_V_EXCELLENT:
-                            return VideoRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
-                    }
-                return MainRvFragment.newInstance(typeArrayBean.getTypeArray().get(position));
-            }
-
-            @Override
-            public int getCount() {
-                return typeArrayBean.getTypeArray().size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                String[] tags = getResources().getStringArray(R.array.address_tag);
-                return tags[typeArrayBean.getTypeArray().get(position)];
-            }
-        });
-
-        mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
-        mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
 //        final View logo = findViewById(R.id.logo_white);
 //        if (logo != null) {
@@ -177,34 +239,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                }
 //            });
 //        }
-
-        String dataUrl = "http://pic.news.163.com/photocenter/api/list/0001/00AN0001,00AO0001,00AP0001/0/10/cacheMoreData.json";
-        EasyHttp.get(dataUrl)
-                .readTimeOut(30 * 1000)//局部定义读超时
-                .writeTimeOut(30 * 1000)
-                .connectTimeout(30 * 1000)
-                .timeStamp(true)
-                .execute(new SimpleCallBack<String>() {
-                    @Override
-                    public void onError(ApiException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onSuccess(String s) {
-                        String temp = s.replace(")", "}");
-                        String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
-                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                            try {
-                                photoData = gson.fromJson(response, PhotoCenterData.class);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
-                            }
-                            startBgAnimate();
-                        }
-                    }
-                });
     }
 
     @Override
@@ -234,6 +268,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(mActivity, CacheActivity.class);
                 intent.putExtra("type", CACHE_COLLECTION);
                 startActivity(intent);
+                break;
+            case R.id.nav_block:
+                intent = new Intent(mActivity, BlockActivity.class);
+                startActivityForResult(intent, BLOCK_RESULT);
                 break;
             case R.id.nav_setting:
                 intent = new Intent(mActivity, SettingActivity.class);
@@ -299,9 +337,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (requestCode) {
             case SELECT_RESULT:
             case SETTING_RESULT:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK)
                     initSlowly();
-                }
+                break;
+            case BLOCK_RESULT:
+                if (resultCode == RESULT_OK)
+                    SnackbarUtils.with(mViewPager)
+                            .setMessage(getResources()
+                                    .getString(R.string.start_after_restart_list))
+                            .show();
                 break;
         }
     }

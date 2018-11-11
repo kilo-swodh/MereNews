@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_add_lib"
-        android:title=""
+        android:title="@string/channel"
         android:orderInCategory="80"
         android:icon="@drawable/ic_library_add"
         app:showAsAction="always|withText" />

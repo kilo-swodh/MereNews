@@ -26,31 +26,43 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.MainActivity"
             android:theme="@style/AppThemeMain"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
+
         <activity android:name=".activity.AboutActivity"/>
+
         <activity android:name=".activity.GalleyActivity"
             android:theme="@style/AppThemeColor"/>
+
         <activity android:name=".activity.NewsDetailActivity"/>
+
         <activity android:name=".activity.CacheActivity"/>
+
         <activity android:name=".activity.CommentActivity"/>
+
         <activity android:name=".activity.SettingActivity"/>
+
         <activity android:name=".activity.ChannelActivity"/>
+
         <activity android:name=".activity.ZhiHuDetailActivity"/>
+
         <activity android:name=".activity.GuoKrDetailActivity"/>
+
+        <activity android:name=".activity.BlockActivity"/>
 
     </application>
 
     <meta-data
         android:name="android.max_aspect"
-        android:value="2.1" />
+        android:value="2.2" />
 </manifest>

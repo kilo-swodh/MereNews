@@ -38,7 +38,6 @@ import androidnews.kiloproject.system.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.JZUserActionStd;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
@@ -54,7 +53,6 @@ import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 public class SettingActivity extends BaseActivity {
 
-    public static final int SETTING_RESULT = 998;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.textView)
@@ -293,7 +291,7 @@ public class SettingActivity extends BaseActivity {
                         }
                     }
                 }).start();
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successfully)).showSuccess();
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).showSuccess();
                 break;
 
             case R.id.tv_auto_refresh:

@@ -31,13 +31,12 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.DragAdapter;
 import androidnews.kiloproject.adapter.OtherAdapter;
 import androidnews.kiloproject.bean.data.ChannelItem;
-import androidnews.kiloproject.bean.data.TypeArrayBean;
+import androidnews.kiloproject.bean.data.IntArrayBean;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.widget.DragGrid;
 import androidnews.kiloproject.widget.OtherGridView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -67,7 +66,6 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
     ArrayList<ChannelItem> userChannelList = new ArrayList<>();
     ArrayList<ChannelItem> otherChannelList = new ArrayList<>();
 
-    public static final int SELECT_RESULT = 999;
     String[] tags;
 
     /**
@@ -108,19 +106,19 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                TypeArrayBean typeArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, TypeArrayBean.CREATOR);
-                if (typeArrayBean == null || typeArrayBean.getTypeArray() == null) {
-                    typeArrayBean = new TypeArrayBean();
-                    typeArrayBean.setTypeArray(new ArrayList<>());
+                IntArrayBean intArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, IntArrayBean.CREATOR);
+                if (intArrayBean == null || intArrayBean.getTypeArray() == null) {
+                    intArrayBean = new IntArrayBean();
+                    intArrayBean.setTypeArray(new ArrayList<>());
                     for (int i = 0; i < DEFAULT_PAGE; i++) {
-                        typeArrayBean.getTypeArray().add(i);
+                        intArrayBean.getTypeArray().add(i);
                     }
-                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, typeArrayBean);
+                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, intArrayBean);
                 }
                 tags = getResources().getStringArray(R.array.address_tag);
                 int userOrder = 1, otherOrder = 1;
 
-                for (Integer integer : typeArrayBean.getTypeArray()) {
+                for (Integer integer : intArrayBean.getTypeArray()) {
                     int samePosition = -1;
                     for (int i = 0; i < tags.length; i++) {
                         if (i == integer)
@@ -353,8 +351,8 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
             for (ChannelItem item : userChannelList) {
                 result.add(item.getId());
             }
-        SnackbarUtils.with(moreCategoryText).setMessage(getString(R.string.successfully)).show();
-        CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, new TypeArrayBean(result));
+        SnackbarUtils.with(moreCategoryText).setMessage(getString(R.string.successful)).show();
+        CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, new IntArrayBean(result));
         setResult(RESULT_OK);
         finish();
     }

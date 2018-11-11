@@ -6,17 +6,20 @@ import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.youth.banner.loader.ImageLoader;
 
 public class GlideImageLoader extends ImageLoader {
 
     RequestOptions options;
+    private final RequestManager glide;
 
-    public GlideImageLoader() {
+    public GlideImageLoader(RequestManager glide) {
         options = new RequestOptions();
         options.centerCrop()
                 .error(R.drawable.ic_error);
+        this.glide = glide;
     }
 
     @Override
@@ -28,8 +31,6 @@ public class GlideImageLoader extends ImageLoader {
          传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
          切记不要胡乱强转！
          */
-
-        if (imageView != null && !((Activity) context).isFinishing())
-                Glide.with(context).load(path).apply(options).into(imageView);
+        glide.load(path).apply(options).into(imageView);
     }
 }

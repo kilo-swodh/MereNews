@@ -41,7 +41,7 @@ public final class RuntimeRationale implements Rationale<List<String>> {
 
         new AlertDialog.Builder(context)
                 .setCancelable(false)
-                .setTitle(R.string.title_dialog)
+                .setTitle(R.string.tip_title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override

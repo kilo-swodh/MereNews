@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Mere News</string>
 
-    <string name="successfully">Successful</string>
+    <string name="successful">Successful</string>
+    <string name="fail">Fail</string>
+    <string name="save">Save</string>
     <string name="setting">Setting</string>
-    <string name="title_dialog">Tips</string>
     <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
     <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
     <string name="message_setting_comeback">The user comes back from the settings page.</string>
@@ -19,12 +20,20 @@
     <string name="action_browser">Open in browser</string>
     <string name="action_star">Collection</string>
     <string name="action_share">Share</string>
+    <string name="action_delete_all">Delete All</string>
+
+    <string name="action_block_source">Shielded News source</string>
+    <string name="action_block_keywords">Shielded keywords</string>
+
+    <string name="source">News source</string>
+    <string name="keywords">Keywords</string>
 
     <string name="star_no">Collection cancelled</string>
     <string name="star_yes">Collection completed</string>
 
     <string name="history">History</string>
     <string name="about">About</string>
+    <string name="block_rule">Block rule</string>
 
     <string name="loading">Now loading</string>
     <string name="load_success">Load success</string>
@@ -63,7 +72,7 @@
 
     <string name="click_to_exit">Press again to exit the app</string>
     <string name="start_after_exit">Start after exit</string>
-    <string name="start_after_restart_list">The interface will refresh after returning so that the settings will take effect.</string>
+    <string name="start_after_restart_list">Pull down and refresh news and take effect</string>
     <string name="start_after_restart_app">The next entry will take effect.</string>
 
     <string name="update_address">https://www.pgyer.com/android_news</string>
@@ -72,7 +81,9 @@
     <string name="english">English</string>
     <string name="chinese">中文</string>
 
+    <string name="tip_title">Tips</string>
     <string name="update_title">There are newer versions</string>
+
     <string name="update_message">You can go to the app store to update, or click ok to download and install</string>
     <string name="update_title_no">Congratulations, this is the latest version</string>
 
@@ -85,7 +96,11 @@
 
     <string name="delete">Delete</string>
     <string name="delete_message">Do you want to delete this item?</string>
+    <string name="repeated">This one is repeated.</string>
 
     <string name="zhihu">Zhihu</string>
     <string name="guokr">GuoKr</string>
+
+    <string name="shortcut_star">Collection record</string>
+    <string name="shortcut_disabled">Shortcuts have been disabled.</string>
 </resources>

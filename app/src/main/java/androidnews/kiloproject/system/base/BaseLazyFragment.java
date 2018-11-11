@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
+
 /**
  * Created by dasu on 2016/9/27.
  *

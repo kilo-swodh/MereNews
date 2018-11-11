@@ -3,22 +3,33 @@ package androidnews.kiloproject.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -35,6 +46,8 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.adapter.MainRvAdapter;
+import androidnews.kiloproject.bean.data.BlockArrayBean;
+import androidnews.kiloproject.bean.data.BlockItem;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.GalleyData;
 import androidnews.kiloproject.bean.net.NewMainListData;
@@ -45,9 +58,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.bean.data.BlockItem.TYPE_KEYWORDS;
+import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_BLOCK_LIST;
 import static androidnews.kiloproject.system.AppConfig.getMainDataA;
 import static androidnews.kiloproject.system.AppConfig.getMainDataB;
 
@@ -63,6 +79,9 @@ public class MainRvFragment extends BaseRvFragment {
 
     private int currentPage = 0;
     private int questPage = 20;
+
+    BlockArrayBean blockArray;
+    CacheDiskUtils cacheUtil;
 
     String typeStr;
 
@@ -83,6 +102,7 @@ public class MainRvFragment extends BaseRvFragment {
         }
         typeStr = getResources().getStringArray(R.array.address)[position];
         this.CACHE_LIST_DATA = typeStr + "_data";
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -91,6 +111,9 @@ public class MainRvFragment extends BaseRvFragment {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                cacheUtil = CacheDiskUtils.getInstance();
+                blockArray = cacheUtil.getParcelable(CONFIG_BLOCK_LIST, BlockArrayBean.CREATOR);
+
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
                     contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
@@ -103,15 +126,42 @@ public class MainRvFragment extends BaseRvFragment {
                             List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
                             }.getType());
                             if (cacheNews != null && cacheNews.size() > 0)
-                                for (NewMainListData data : contents) {
+                                for (NewMainListData dataItem : contents) {
+                                    boolean isHisBingo = false;
                                     for (CacheNews cacheNew : cacheNews) {
-                                        if (TextUtils.equals(data.getDocid(), cacheNew.getDocid())) {
-                                            data.setReaded(true);
+                                        if (isHisBingo)
+                                            break;
+                                        if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                            dataItem.setReaded(true);
+                                            isHisBingo = true;
                                             break;
                                         }
                                     }
+                                    if (blockArray != null && blockArray.getTypeArray().size() > 0
+                                            && dataItem.getAds() == null) {
+                                        boolean isBlockBingo = false;
+                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                            if (isBlockBingo)
+                                                break;
+                                            switch (blockItem.getType()) {
+                                                case TYPE_SOURCE:
+                                                    if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                        dataItem.setBlocked(true);
+                                                        isBlockBingo = true;
+                                                    }else
+                                                        dataItem.setBlocked(false);
+                                                    break;
+                                                case TYPE_KEYWORDS:
+                                                    if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                        dataItem.setBlocked(true);
+                                                        isBlockBingo = true;
+                                                    }else
+                                                        dataItem.setBlocked(false);
+                                                    break;
+                                            }
+                                        }
+                                    }
                                 }
-
                             e.onNext(true);
                         } catch (Exception e1) {
                             e1.printStackTrace();
@@ -252,27 +302,55 @@ public class MainRvFragment extends BaseRvFragment {
                                                 e1.printStackTrace();
                                                 loadFailed(type);
                                             }
-                                            for (NewMainListData content : newList) {
-                                                String mTag = content.getTAGS();
+                                            for (NewMainListData dataItem : newList) {
+                                                String mTag = dataItem.getTAGS();
                                                 String[] goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
                                                 if (TextUtils.isEmpty(mTag))
 //                                                if (!TextUtils.isEmpty(content.getSource()) && TextUtils.isEmpty(content.getTAG()))
-                                                    contents.add(content);
+                                                    contents.add(dataItem);
                                                 else {
                                                     for (String gTag : goodTags) {
                                                         if (TextUtils.equals(gTag, mTag)) {
-                                                            contents.add(content);
+                                                            contents.add(dataItem);
                                                             break;
                                                         }
                                                     }
                                                 }
-                                                if (cacheNews != null && cacheNews.size() > 0)
+                                                if (cacheNews != null && cacheNews.size() > 0) {
+                                                    boolean isHisBingo = false;
                                                     for (CacheNews cacheNew : cacheNews) {
-                                                        if (TextUtils.equals(content.getDocid(), cacheNew.getDocid())) {
-                                                            content.setReaded(true);
+                                                        if (isHisBingo)
+                                                            break;
+                                                        if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                                            dataItem.setReaded(true);
+                                                            isHisBingo = true;
                                                             break;
                                                         }
                                                     }
+                                                }
+                                                if (blockArray != null && blockArray.getTypeArray().size() > 0) {
+                                                    boolean isBlockBingo = false;
+                                                    for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                        if (isBlockBingo)
+                                                            break;
+                                                        switch (blockItem.getType()) {
+                                                            case TYPE_SOURCE:
+                                                                if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                                    dataItem.setBlocked(true);
+                                                                    isBlockBingo = true;
+                                                                }else
+                                                                    dataItem.setBlocked(false);
+                                                                break;
+                                                            case TYPE_KEYWORDS:
+                                                                if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                                    dataItem.setBlocked(true);
+                                                                    isBlockBingo = true;
+                                                                }else
+                                                                    dataItem.setBlocked(false);
+                                                                break;
+                                                        }
+                                                    }
+                                                }
                                             }
                                             try {
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
@@ -289,28 +367,51 @@ public class MainRvFragment extends BaseRvFragment {
                                             }
                                             boolean isAllSame = true;
                                             try {
-                                                for (NewMainListData newBean : retMap.get(typeStr)) {
+                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!TextUtils.isEmpty(newBean.getTAGS())) {
+                                                    if (!TextUtils.isEmpty(dataItem.getTAGS())) {
                                                         continue;
                                                     }
                                                     for (NewMainListData myBean : contents) {
-                                                        if (TextUtils.equals(myBean.getDocid(), newBean.getDocid())) {
+                                                        if (TextUtils.equals(myBean.getDocid(), dataItem.getDocid())) {
                                                             isSame = true;
                                                             break;
                                                         }
                                                     }
                                                     if (!isSame) {
-                                                        if (cacheNews != null && cacheNews.size() > 0)
+                                                        if (cacheNews != null && cacheNews.size() > 0) {
                                                             for (CacheNews cacheNew : cacheNews) {
-                                                                if (TextUtils.equals(newBean.getDocid(), cacheNew.getDocid())) {
-                                                                    newBean.setReaded(true);
+                                                                if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                                                    dataItem.setReaded(true);
                                                                     break;
                                                                 }
                                                             }
-
-                                                        newList.add(newBean);
+                                                        }
+                                                        if (blockArray != null && blockArray.getTypeArray().size() > 0) {
+                                                            boolean isBlockBingo = false;
+                                                            for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                                if (isBlockBingo)
+                                                                    break;
+                                                                switch (blockItem.getType()) {
+                                                                    case TYPE_SOURCE:
+                                                                        if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                                            dataItem.setBlocked(true);
+                                                                            isBlockBingo = true;
+                                                                        }else
+                                                                            dataItem.setBlocked(false);
+                                                                        break;
+                                                                    case TYPE_KEYWORDS:
+                                                                        if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                                            dataItem.setBlocked(true);
+                                                                            isBlockBingo = true;
+                                                                        }else
+                                                                            dataItem.setBlocked(false);
+                                                                        break;
+                                                                }
+                                                            }
+                                                        }
+                                                        newList.add(dataItem);
                                                         isAllSame = false;
                                                     }
                                                 }
@@ -381,18 +482,18 @@ public class MainRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
-        mainAdapter = new MainRvAdapter(mActivity, contents);
+        mainAdapter = new MainRvAdapter(mActivity,Glide.with(this), contents);
         mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                NewMainListData bean = contents.get(position);
+                NewMainListData item = contents.get(position);
                 Intent intent = null;
-                switch (bean.getItemType()) {
+                switch (item.getItemType()) {
                     case CELL:
-                        if (!TextUtils.isEmpty(bean.getSkipID()) && TextUtils.equals(bean.getSkipType(), "photoset")) {
+                        if (!TextUtils.isEmpty(item.getSkipID()) && TextUtils.equals(item.getSkipType(), "photoset")) {
                             String skipID = "";
                             String rawId;
-                            rawId = bean.getSkipID();
+                            rawId = item.getSkipID();
                             if (!TextUtils.isEmpty(rawId)) {
                                 int index = rawId.lastIndexOf("|");
                                 if (index != -1) {
@@ -409,10 +510,12 @@ public class MainRvFragment extends BaseRvFragment {
                             break;
                         } else {
                             intent = new Intent(getActivity(), NewsDetailActivity.class);
-                            intent.putExtra("docid", bean.getDocid().replace("_special", "").trim());
+                            intent.putExtra("docid", item.getDocid().replace("_special", "").trim());
                             startActivity(intent);
-                            bean.setReaded(true);
-                            mainAdapter.notifyItemChanged(position);
+                            if (!item.isReaded()) {
+                                item.setReaded(true);
+                                mainAdapter.notifyItemChanged(position);
+                            }
                         }
                 }
             }
@@ -420,11 +523,162 @@ public class MainRvFragment extends BaseRvFragment {
         mainAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                //noinspection ConstantConditions
-                cm.setPrimaryClip(ClipData.newPlainText("link", contents.get(position).getUrl()));
-                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
-                        + " " + getString(R.string.successfully)).showSuccess();
+                final String[] items = {
+                        getResources().getString(R.string.action_link)
+                        , getResources().getString(R.string.action_block_source)
+                        , getResources().getString(R.string.action_block_keywords)
+                };
+                AlertDialog.Builder listDialog = new AlertDialog.Builder(mActivity);
+                listDialog.setItems(items,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                                        //noinspection ConstantConditions
+                                        cm.setPrimaryClip(ClipData.newPlainText("link", contents.get(position).getUrl()));
+                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
+                                                + " " + getString(R.string.successful)).showSuccess();
+                                        break;
+                                    case 1:
+                                        Observable.create(new ObservableOnSubscribe<Integer>() {
+                                            @Override
+                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                                try {
+                                                    String newSource = contents.get(position).getSource();
+                                                    if (blockArray == null)
+                                                        blockArray = new BlockArrayBean();
+                                                    boolean isAdd = true;
+                                                    if (blockArray.getTypeArray().size() > 0) {
+                                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                            if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
+                                                                isAdd = false;
+                                                        }
+                                                    }
+                                                    if (isAdd) {
+                                                        blockArray.getTypeArray().add(
+                                                                new BlockItem(TYPE_SOURCE, newSource));
+                                                        cacheUtil.put(CONFIG_BLOCK_LIST, blockArray);
+                                                        e.onNext(1);
+                                                    }else {
+                                                        e.onNext(2);
+                                                    }
+                                                } catch (Exception e1) {
+                                                    e1.printStackTrace();
+                                                    e.onNext(0);
+                                                } finally {
+                                                    e.onComplete();
+                                                }
+                                            }
+                                        }).subscribeOn(Schedulers.computation())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new Consumer<Integer>() {
+                                                    @Override
+                                                    public void accept(Integer i) throws Exception {
+                                                        switch (i){
+                                                            case 0:
+                                                                SnackbarUtils.with(refreshLayout)
+                                                                        .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
+                                                                        .showSuccess();
+                                                                break;
+                                                            case 1:
+                                                                SnackbarUtils.with(refreshLayout)
+                                                                        .setMessage(getString(R.string.start_after_restart_list))
+                                                                        .showSuccess();
+                                                                break;
+                                                            case 2:
+                                                                SnackbarUtils.with(refreshLayout)
+                                                                        .setMessage(getString(R.string.repeated))
+                                                                        .showSuccess();
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                        dialog.dismiss();
+                                        break;
+                                    case 2:
+                                        final EditText editText = new EditText(mActivity);
+                                        editText.setText(contents.get(position).getTitle());
+                                        editText.setTextColor(getResources().getColor(R.color.black));
+                                        new MaterialStyledDialog.Builder(mActivity)
+                                                .setHeaderDrawable(R.drawable.ic_edit)
+                                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                                .setCustomView(editText)
+                                                .setHeaderColor(R.color.colorAccent)
+                                                .setPositiveText(R.string.save)
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        Observable.create(new ObservableOnSubscribe<Integer>() {
+                                                            @Override
+                                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                                                try {
+                                                                    if (blockArray == null)
+                                                                        blockArray = new BlockArrayBean();
+
+                                                                    String keywords = editText.getText().toString();
+                                                                    boolean isAdd = true;
+                                                                    if (blockArray.getTypeArray().size() > 0) {
+                                                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                                            if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
+                                                                                isAdd = false;
+                                                                        }
+                                                                    }
+                                                                    if (isAdd) {
+                                                                        blockArray.getTypeArray().add(
+                                                                                new BlockItem(TYPE_KEYWORDS,keywords));
+                                                                        cacheUtil.put(CONFIG_BLOCK_LIST, blockArray);
+                                                                        e.onNext(1);
+                                                                    }else {
+                                                                        e.onNext(2);
+                                                                    }
+                                                                } catch (Exception e1) {
+                                                                    e1.printStackTrace();
+                                                                    e.onNext(0);
+                                                                } finally {
+                                                                    e.onComplete();
+                                                                }
+                                                            }
+                                                        }).subscribeOn(Schedulers.computation())
+                                                                .observeOn(AndroidSchedulers.mainThread())
+                                                                .subscribe(new Consumer<Integer>() {
+                                                                    @Override
+                                                                    public void accept(Integer i) throws Exception {
+                                                                        switch (i){
+                                                                            case 0:
+                                                                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
+                                                                                        + " " + getString(R.string.fail)).showSuccess();
+                                                                                break;
+                                                                            case 1:
+                                                                                SnackbarUtils.with(refreshLayout)
+                                                                                        .setMessage(getString(R.string.start_after_restart_list))
+                                                                                        .showSuccess();
+                                                                                break;
+                                                                            case 2:
+                                                                                SnackbarUtils.with(refreshLayout)
+                                                                                        .setMessage(getString(R.string.repeated))
+                                                                                        .showSuccess();
+                                                                                break;
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                })
+                                                .setNegativeText(getResources().getString(android.R.string.cancel))
+                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
+                                        dialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                listDialog.show();
                 return true;
             }
         });
@@ -461,7 +715,13 @@ public class MainRvFragment extends BaseRvFragment {
                     @Override
                     public void onSuccess(String response) {
                         if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                            GalleyData galleyContent = gson.fromJson(response, GalleyData.class);
+                            GalleyData galleyContent;
+                            try {
+                                galleyContent = gson.fromJson(response, GalleyData.class);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return;
+                            }
                             if (contents != null && contents.size() > 0) {
                                 NewMainListData bean = contents.get(0);
                                 try {

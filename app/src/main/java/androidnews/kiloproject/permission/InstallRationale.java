@@ -36,7 +36,7 @@ public class InstallRationale implements Rationale<File> {
     public void showRationale(Context context, File data, final RequestExecutor executor) {
         new AlertDialog.Builder(context)
                 .setCancelable(false)
-                .setTitle(R.string.title_dialog)
+                .setTitle(R.string.tip_title)
                 .setMessage(R.string.message_install_failed)
                 .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
                     @Override

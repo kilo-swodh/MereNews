@@ -57,6 +57,8 @@ public class AppConfig {
 
     public static final String CONFIG_TYPE_ARRAY = "config_type_array";
 
+    public static final String CONFIG_BLOCK_LIST = "config_block_list";
+
     public static boolean isSwipeBack = false;
 
     public static boolean isNightMode = false;

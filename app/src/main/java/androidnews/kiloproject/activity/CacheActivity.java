@@ -16,10 +16,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.CacheDiskUtils;
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 
@@ -69,20 +71,16 @@ public class CacheActivity extends BaseActivity {
 
         initToolbar(toolbar, true);
         type = getIntent().getIntExtra("type", 0);
-        if (type != 0) {
-            switch (type) {
-                case CACHE_HISTORY:
-                    getSupportActionBar().setTitle(getString(R.string.history));
-                    break;
-                case CACHE_COLLECTION:
-                    getSupportActionBar().setTitle(getString(R.string.action_star));
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            setEmptyView();
-            SnackbarUtils.with(rvContent).setMessage(getString(R.string.load_fail)).showError();
+//        type = (type == 0) ? CACHE_COLLECTION : type;
+        switch (type) {
+            case CACHE_HISTORY:
+                getSupportActionBar().setTitle(getString(R.string.history));
+                break;
+            case CACHE_COLLECTION:
+                getSupportActionBar().setTitle(getString(R.string.action_star));
+                break;
+            default:
+                break;
         }
         initStateBar(R.color.main_background, true);
     }
@@ -90,10 +88,11 @@ public class CacheActivity extends BaseActivity {
     @Override
     protected void initSlowly() {
         if (type > 0) {
-            final String cacheJson = SPUtils.getInstance().getString(type + "", "");
             Observable.create(new ObservableOnSubscribe<Integer>() {
                 @Override
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                    String cacheJson = SPUtils.getInstance().getString(type + "", "");
+
                     if (TextUtils.isEmpty(cacheJson) || TextUtils.equals(cacheJson, "[]")) {
                         e.onNext(0);
                     } else {
@@ -112,7 +111,7 @@ public class CacheActivity extends BaseActivity {
                         @Override
                         public void accept(Integer i) throws Exception {
                             progress.setVisibility(View.GONE);
-                            cacheNewsAdapter = new CacheNewsAdapter(mActivity, currentData);
+                            cacheNewsAdapter = new CacheNewsAdapter(mActivity,Glide.with(mActivity), currentData);
                             if (i == 0)
                                 setEmptyView();
                             cacheNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -127,7 +126,7 @@ public class CacheActivity extends BaseActivity {
                                             intent = new Intent(mActivity, ZhiHuDetailActivity.class);
                                             try {
                                                 intent.putExtra("id", Integer.parseInt(cacheNews.getDocid()));
-                                            }catch (Exception e){
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                             break;
@@ -139,7 +138,7 @@ public class CacheActivity extends BaseActivity {
                                                 intent.putExtra("id", Integer.parseInt(cacheNews.getDocid()));
                                                 intent.putExtra("title", cacheNews.getTitle());
                                                 intent.putExtra("img", cacheNews.getImgUrl());
-                                            }catch (Exception e){
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                             break;

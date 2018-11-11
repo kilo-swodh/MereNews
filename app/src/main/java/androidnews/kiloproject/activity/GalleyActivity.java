@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.gyf.barlibrary.ImmersionBar;
 import com.yanzhenjie.permission.Action;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.DownloadProgressCallBack;
@@ -66,6 +67,7 @@ public class GalleyActivity extends BaseActivity {
         ButterKnife.bind(this);
 //        ViewCompat.setTransitionName(galleyViewpager, "banner_pic");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+        ImmersionBar.with(this).navigationBarColor(R.color.black).init();
     }
 
     @Override
@@ -133,15 +135,14 @@ public class GalleyActivity extends BaseActivity {
                 }
                 String imageUrl = galleyContent.getPhotos().get(position).getImgurl();
 
-                if (!(mActivity.isFinishing()))
-                    Glide.with(mActivity).load(imageUrl).apply(options).into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                            piv.setImageDrawable(resource);
-                            if (position == 0 && isLollipop())
-                                ViewCompat.setTransitionName(piv, "big_card");
-                        }
-                    });
+                Glide.with(mActivity).load(imageUrl).apply(options).into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                        piv.setImageDrawable(resource);
+                        if (position == 0 && isLollipop())
+                            ViewCompat.setTransitionName(piv, "big_card");
+                    }
+                });
                 container.addView(piv);
                 return piv;
             }

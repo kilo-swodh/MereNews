@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -177,7 +178,7 @@ public class CommentActivity extends BaseActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        commentAdapter = new CommentAdapter(mActivity, comments);
+                        commentAdapter = new CommentAdapter(mActivity,Glide.with(mActivity), comments);
                         rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
                         rvContent.setAdapter(commentAdapter);
                     }

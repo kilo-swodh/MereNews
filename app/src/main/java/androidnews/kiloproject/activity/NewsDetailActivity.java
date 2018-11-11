@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -17,8 +16,6 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -82,13 +79,28 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         break;
                     case R.id.action_star:
                         if (isStar) {
-                            item.setIcon(R.drawable.ic_star_no);
-                            checkStar(true);
-                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                @Override
+                                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                    e.onNext(checkStar(true));
+                                    e.onComplete();
+                                }
+                            }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Consumer<Boolean>() {
+                                        @Override
+                                        public void accept(Boolean aBoolean) throws Exception {
+                                            if (aBoolean) {
+                                                item.setIcon(R.drawable.ic_star_no);
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                                            }else
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
+                                        }
+                                    });
                             isStar = false;
                         } else {
                             item.setIcon(R.drawable.ic_star_ok);
-                            saveCache(CACHE_COLLECTION);
+                            saveCacheAsyn(CACHE_COLLECTION);
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
                             isStar = true;
                         }
@@ -108,7 +120,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShareLink()));
                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successfully)).showSuccess();
+                                + " " + getString(R.string.successful)).showSuccess();
                         break;
                     case R.id.action_browser:
                         Uri uri = Uri.parse(currentData.getShareLink());
@@ -119,12 +131,12 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 return false;
             }
         });
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initSlowly();
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                initSlowly();
+//            }
+//        });
     }
 
     @Override
@@ -141,7 +153,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                             progress.setVisibility(View.GONE);
-                            refreshLayout.finishRefresh();
+//                            refreshLayout.finishRefresh();
                         }
 
                         @Override
@@ -167,6 +179,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                                         e.onNext(checkStar(false));
+                                        e.onComplete();
                                     }
                                 }).subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -175,9 +188,9 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                             public void accept(Boolean aBoolean) throws Exception {
                                                 if (aBoolean) {
                                                     isStar = true;
-                                                    toolbar.getMenu().getItem(3).setIcon(R.drawable.ic_star_ok);
+                                                    toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
                                                 }
-                                                refreshLayout.finishRefresh();
+//                                                refreshLayout.finishRefresh();
                                             }
                                         });
                                 if (webView != null) {
@@ -185,131 +198,166 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                     loadUrl();
                                 }
                             } else {
-                                refreshLayout.finishRefresh();
+//                                refreshLayout.finishRefresh();
                                 progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
                     });
         } else {
-            String html = getIntent().getStringExtra("htmlText");
-            if (isNightMode)
-                html.replace("<body>", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
-            if (!StringUtils.isEmpty(html)) {
-                progress.setVisibility(View.GONE);
-                initWeb();
-                getSupportActionBar().setTitle(R.string.news);
-                webView.loadData(html, "text/html; charset=UTF-8", null);
-            } else {
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
-            }
-            progress.setVisibility(View.GONE);
+            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                @Override
+                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                    html = getIntent().getStringExtra("htmlText");
+                    if (isNightMode)
+                        html.replace("<body>", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
+                    if (!StringUtils.isEmpty(html)) {
+                        e.onNext(true);
+                    } else {
+                        e.onNext(false);
+                    }
+                    e.onComplete();
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean aBoolean) throws Exception {
+                            if (aBoolean) {
+                                initWeb();
+                                getSupportActionBar().setTitle(R.string.news);
+                                webView.loadData(html, "text/html; charset=UTF-8", null);
+                            }else
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
         }
     }
 
     private void loadUrl() {
-        String title = "";
-        String source = "";
-        String pTime = "";
-        String body = "";
-        try {
-            title = currentData.getTitle();
-            source = currentData.getSource();
-            pTime = currentData.getPtime();
-            body = currentData.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body>";
-        html = "<!DOCTYPE html>" +
-                "<html lang=\"zh\">" +
-                "<head>" +
-                "<meta charset=\"UTF-8\" />" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
-                "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
-                "<title>Document</title>" +
-                "<style>" +
-                "body img{" +
-                "width: 100%;" +
-                "height: 100%;" +
-                "}" +
-                "body video{" +
-                "width: 100%;" +
-                "height: 100%;" +
-                "}" +
-                "p{margin: 25px auto}" +
-                "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
-                "</style>" +
-                "</head>" +
-                colorBody
-                + "<p><h2>" + title + "</h2></p>"
-                + "<p><div><div id=\"from\">" + source +
-                "</div><div id=\"time\">" + pTime + "</div></div></p>"
-                + "<font size=\"4\">"
-                + body + "</font></body>" +
-                "</html>";
-        if (currentData.getVideo() != null) {
-            for (NewsDetailData.VideoBean videoBean : currentData.getVideo()) {
-                String mediaUrl = videoBean.getMp4_url();
-                if (TextUtils.isEmpty(mediaUrl)) {
-                    mediaUrl = videoBean.getUrl_mp4();
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                String title = "";
+                String source = "";
+                String pTime = "";
+                String body = "";
+                if (currentData == null)
+                    return;
+                try {
+                    title = currentData.getTitle();
+                    source = currentData.getSource();
+                    pTime = currentData.getPtime();
+                    body = currentData.getBody();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
+                String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body>";
+                html = "<!DOCTYPE html>" +
+                        "<html lang=\"zh\">" +
+                        "<head>" +
+                        "<meta charset=\"UTF-8\" />" +
+                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
+                        "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
+                        "<title>Document</title>" +
+                        "<style>" +
+                        "body img{" +
+                        "width: 100%;" +
+                        "height: 100%;" +
+                        "}" +
+                        "body video{" +
+                        "width: 100%;" +
+                        "height: 100%;" +
+                        "}" +
+                        "p{margin: 25px auto}" +
+                        "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
+                        "</style>" +
+                        "</head>" +
+                        colorBody
+                        + "<p><h2>" + title + "</h2></p>"
+                        + "<p><div><div id=\"from\">" + source +
+                        "</div><div id=\"time\">" + pTime + "</div></div></p>"
+                        + "<font size=\"4\">"
+                        + body + "</font></body>" +
+                        "</html>";
+                if (currentData.getVideo() != null) {
+                    for (NewsDetailData.VideoBean videoBean : currentData.getVideo()) {
+                        String mediaUrl = videoBean.getMp4_url();
+                        if (TextUtils.isEmpty(mediaUrl)) {
+                            mediaUrl = videoBean.getUrl_mp4();
+                        }
 
-                if (mediaUrl.endsWith(".mp3")) {       //音频
-                    html = html.replace(videoBean.getRef(),
-                            "<audio  src=\"" + mediaUrl +
-                                    "\" controls=\"controls\" src=\"" + videoBean.getCover() + "\"></audio >");
-                    type = TPYE_AUDIO;
-                } else {
-                    html = html.replace(videoBean.getRef(),
-                            "<video src=\"" + mediaUrl +
-                                    "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"></video>");
+                        if (mediaUrl.endsWith(".mp3")) {       //音频
+                            html = html.replace(videoBean.getRef(),
+                                    "<audio  src=\"" + mediaUrl +
+                                            "\" controls=\"controls\" src=\"" + videoBean.getCover() + "\"></audio >");
+                            type = TPYE_AUDIO;
+                        } else {
+                            html = html.replace(videoBean.getRef(),
+                                    "<video src=\"" + mediaUrl +
+                                            "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"></video>");
+                        }
+                    }
                 }
+                if (currentData.getImg() != null) {
+                    for (NewsDetailData.ImgBean imgBean : currentData.getImg()) {
+                        html = html.replace(imgBean.getRef(), "<img src=\"" + imgBean.getSrc() + "\"/>");
+                    }
+                }
+                e.onNext(true);
+                e.onComplete();
             }
-        }
-        if (currentData.getImg() != null) {
-            for (NewsDetailData.ImgBean imgBean : currentData.getImg()) {
-                html = html.replace(imgBean.getRef(), "<img src=\"" + imgBean.getSrc() + "\"/>");
-            }
-        }
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        webView.loadData(html, "text/html; charset=UTF-8", null);
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean b) throws Exception {
+                        getSupportActionBar().setDisplayShowTitleEnabled(false);
+                        if (b) {
+                            webView.loadData(html, "text/html; charset=UTF-8", null);
+                            saveCacheAsyn(CACHE_HISTORY);
+                        }
+                    }
+                });
+    }
+
+    private void saveCacheAsyn(int type) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                saveCache(CACHE_HISTORY);
+                String cacheJson = SPUtils.getInstance().getString(type + "", "");
+                List<CacheNews> list;
+                if (TextUtils.isEmpty(cacheJson)) {
+                    list = new ArrayList<>();
+                } else {
+                    list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
+                    }.getType());
+                    for (CacheNews cacheNews : list) {
+                        if (cacheNews.getDocid().equals(currentData.getDocid()))
+                            return;
+                    }
+                }
+
+                CacheNews cacheNews = new CacheNews(currentData.getTitle(),
+                        currentData.getRecImgsrc(),
+                        currentData.getSource(),
+                        currentData.getDocid(),
+                        html);
+                list.add(0, cacheNews);
+
+                if (list.size() > MAX_HISTORY) {
+                    list.remove(list.size() - 1);
+                }
+                try {
+                    String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
+                    }.getType());
+                    SPUtils.getInstance().put(type + "", saveJson);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
-    }
-
-    private void saveCache(int type) {
-        String cacheJson = SPUtils.getInstance().getString(type + "", "");
-        List<CacheNews> list;
-        if (TextUtils.isEmpty(cacheJson)) {
-            list = new ArrayList<>();
-        } else {
-            list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            for (CacheNews cacheNews : list) {
-                if (cacheNews.getDocid().equals(currentData.getDocid()))
-                    return;
-            }
-        }
-
-        CacheNews cacheNews = new CacheNews(currentData.getTitle(),
-                currentData.getRecImgsrc(),
-                currentData.getSource(),
-                currentData.getDocid(),
-                html);
-        list.add(0, cacheNews);
-
-        if (list.size() > MAX_HISTORY) {
-            list.remove(list.size() - 1);
-        }
-
-        String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-        }.getType());
-        SPUtils.getInstance().put(type + "", saveJson);
     }
 
     private boolean checkStar(boolean isClear) {

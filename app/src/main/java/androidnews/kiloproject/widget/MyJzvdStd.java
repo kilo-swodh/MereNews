@@ -1,10 +1,8 @@
 package androidnews.kiloproject.widget;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -358,7 +356,7 @@ public class MyJzvdStd extends Jzvd {
         new MaterialStyledDialog.Builder(getContext())
                 .setHeaderDrawable(R.drawable.ic_warning)
                 .setHeaderScaleType(ImageView.ScaleType.CENTER)
-                .setTitle(getResources().getString(R.string.title_dialog))
+                .setTitle(getResources().getString(R.string.tip_title))
                 .setDescription(getResources().getString(cn.jzvd.R.string.tips_not_wifi))
                 .setHeaderColor(R.color.colorPrimary)
                 .setPositiveText(getResources().getString(cn.jzvd.R.string.tips_not_wifi_confirm))
