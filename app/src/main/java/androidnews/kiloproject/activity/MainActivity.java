@@ -2,6 +2,7 @@ package androidnews.kiloproject.activity;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,14 +16,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
-import com.github.florent37.materialviewpager.MaterialViewPager;
-import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.gyf.barlibrary.ImmersionBar;
+import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
+import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -32,21 +30,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.IntArrayBean;
 import androidnews.kiloproject.bean.net.PhotoCenterData;
 import androidnews.kiloproject.fragment.GuoKrRvFragment;
 import androidnews.kiloproject.fragment.VideoRvFragment;
 import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
-import androidnews.kiloproject.receiver.MessageEvent;
+import androidnews.kiloproject.event.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import cn.jzvd.Jzvd;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -65,22 +61,16 @@ import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.materialViewPager)
     MaterialViewPager mViewPager;
-    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
     ActionBarDrawerToggle mDrawerToggle;
-    @BindView(R.id.navigation)
     NavigationView navigation;
 
     PhotoCenterData photoData;
     int bgPosition = 0;
-    IntArrayBean intArrayBean;
+    int[] channelArray = new int[DEFAULT_PAGE];
 
     public static final int DEFAULT_PAGE = 4;
-
-    public static final String SAVE_MD_VIEWPAGER = "view_pager";
 
     public static final String NEWS_PHOTO_URL = "http://pic.news.163.com/photocenter/api/list/0001/00AN0001,00AO0001,00AP0001/0/10/cacheMoreData.json";
 
@@ -91,16 +81,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public static final int TYPE_V_FUNNY = 42;
     public static final int TYPE_V_EXCELLENT = 43;
 
-    public static final int SELECT_RESULT = 999;
-    public static final int SETTING_RESULT = 998;
-    public static final int BLOCK_RESULT = 997;
+    private SPUtils spUtils;
+
+    public static final int colors1[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
+    public static final int colors2[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
+    public static final int colors3[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
+    public static final int colors4[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigation = (NavigationView) findViewById(R.id.navigation);
 
+        spUtils = SPUtils.getInstance();
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
         drawerLayout.addDrawerListener(mDrawerToggle);
         final Toolbar toolbar = mViewPager.getToolbar();
@@ -123,20 +119,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initSlowly() {
-
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                intArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, IntArrayBean.CREATOR);
-                if (intArrayBean == null) {
-                    intArrayBean = new IntArrayBean();
-                    intArrayBean.setTypeArray(new ArrayList<>());
-                    e.onNext(true);
+                String arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
+                if (TextUtils.isEmpty(arrayStr)){
                     for (int i = 0; i < DEFAULT_PAGE; i++) {
-                        intArrayBean.getTypeArray().add(i);
+                        channelArray[i] = i;
                     }
-                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, intArrayBean);
-                }else e.onNext(true);
+                    e.onNext(true);
+                }else {
+                    String[] channelStrArray = arrayStr.split("#");
+                    channelArray = new int[channelStrArray.length];
+                    for (int i = 0; i < channelStrArray.length; i++) {
+                        channelArray[i] = Integer.parseInt(channelStrArray[i]);
+                    }
+                    e.onNext(true);
+                }
+                saveChannel(channelArray);
                 e.onComplete();
             }
         }).subscribeOn(Schedulers.computation())
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
                                 @Override
                                 public Fragment getItem(int position) {
-                                    int type = intArrayBean.getTypeArray().get(position);
+                                    int type = channelArray[position];
                                     if (type >= TYPE_ZHIHU)
                                         switch (type) {
                                             case TYPE_ZHIHU:
@@ -159,20 +159,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                             case TYPE_V_ENTERTAINMENT:
                                             case TYPE_V_FUNNY:
                                             case TYPE_V_EXCELLENT:
-                                                return VideoRvFragment.newInstance(intArrayBean.getTypeArray().get(position));
+                                                return VideoRvFragment.newInstance(channelArray[position]);
                                         }
-                                    return MainRvFragment.newInstance(intArrayBean.getTypeArray().get(position));
+                                    return MainRvFragment.newInstance(channelArray[position]);
                                 }
 
                                 @Override
                                 public int getCount() {
-                                    return intArrayBean.getTypeArray().size();
+                                    return channelArray.length;
                                 }
 
                                 @Override
                                 public CharSequence getPageTitle(int position) {
                                     String[] tags = getResources().getStringArray(R.array.address_tag);
-                                    return tags[intArrayBean.getTypeArray().get(position)];
+                                    return tags[channelArray[position]];
                                 }
                             });
 
@@ -287,7 +287,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     isNightMode = true;
                 }
-                SPUtils.getInstance().put(CONFIG_NIGHT_MODE, isNightMode);
+                spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
                 intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -318,7 +318,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (Jzvd.backPress()) {
                 return true;
             }
-            if (SPUtils.getInstance().getBoolean(CONFIG_BACK_EXIT)
+            if (spUtils.getBoolean(CONFIG_BACK_EXIT)
                     && System.currentTimeMillis() - firstTime > 2000) {
                 SnackbarUtils.with(mViewPager).setMessage(getString(R.string.click_to_exit)).show();
                 firstTime = System.currentTimeMillis();
@@ -354,43 +354,106 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TimerTask timerTask;
 
     private void startBgAnimate() {
-        if (SPUtils.getInstance().getBoolean(CONFIG_RANDOM_HEADER)) {
-            mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-                @Override
-                public HeaderDesign getHeaderDesign(int page) {
-                    int postion = page % photoData.getCacheMoreData().size();
-
-                    return HeaderDesign.fromColorResAndUrl(
-                            R.color.deepskyblue,
-                            photoData.getCacheMoreData().get(postion).getCover());
-                }
-                //execute others actions if needed (ex : modify your header logo)
-            });
-            mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
-        } else {
-            timer = new Timer();
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mViewPager != null && photoData != null) {
-                                if (bgPosition == photoData.getCacheMoreData().size()) {
-                                    bgPosition = 0;
-                                }
-                                try {
-                                    mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
-                                    bgPosition++;
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+        switch (spUtils.getInt(CONFIG_RANDOM_HEADER)){
+            case 0:
+                timer = new Timer();
+                timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mViewPager != null && photoData != null) {
+                                    if (bgPosition == photoData.getCacheMoreData().size()) {
+                                        bgPosition = 0;
+                                    }
+                                    try {
+                                        mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
+                                        bgPosition++;
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
+                        });
+                    }
+                };
+                timer.schedule(timerTask, 0, 10 * 1000);
+                break;
+            case 1:
+                mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                    @Override
+                    public HeaderDesign getHeaderDesign(int page) {
+                        int postion = page % photoData.getCacheMoreData().size();
+
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.deepskyblue,
+                                photoData.getCacheMoreData().get(postion).getCover());
+                    }
+                    //execute others actions if needed (ex : modify your header logo)
+                });
+                mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
+                break;
+            case 2:
+                mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                    @Override
+                    public HeaderDesign getHeaderDesign(int page) {
+                        switch (page % 4) {
+                            case 0:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors1));
+                            case 1:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors2));
+                            case 2:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors3));
+                            case 3:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors4));
                         }
-                    });
-                }
-            };
-            timer.schedule(timerTask, 0, 10 * 1000);
+                        return null;
+                    }
+                    //execute others actions if needed (ex : modify your header logo)
+                });
+                mViewPager.setImageDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors4),200);
+                break;
+            case 3:
+                mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                    @Override
+                    public HeaderDesign getHeaderDesign(int page) {
+                        switch (page % 5) {
+                            case 0:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.cyan,
+                                        getResources().getDrawable(R.color.paleturquoise));
+                            case 1:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.gold,
+                                        getResources().getDrawable(R.color.paleturquoise));
+                            case 2:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.lime,
+                                        getResources().getDrawable(R.color.paleturquoise));
+                            case 3:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.orangered,
+                                        getResources().getDrawable(R.color.paleturquoise));
+                            case 4:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        getResources().getDrawable(R.color.paleturquoise));
+                        }
+                        return null;
+                    }
+                    //execute others actions if needed (ex : modify your header logo)
+                });
+                mViewPager.setImageDrawable(getResources().getDrawable(R.color.paleturquoise),200);
+                break;
         }
     }
 
@@ -403,6 +466,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             timerTask.cancel();
             timerTask = null;
         }
+    }
+
+    public static boolean saveChannel(int[] channelArray){
+        StringBuilder sb = new StringBuilder();
+        try {
+            for (Integer integer : channelArray) {
+                sb.append(integer + "#");
+            }
+            SPUtils.getInstance().put(CONFIG_TYPE_ARRAY,sb.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -418,7 +495,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!SPUtils.getInstance().getBoolean(CONFIG_RANDOM_HEADER)
+        if (spUtils.getInt(CONFIG_RANDOM_HEADER) == 0
                 && timer != null
                 && timerTask != null)
             cancelTimer();

@@ -1,14 +1,13 @@
-package androidnews.kiloproject;
+package androidnews.kiloproject.ui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.youth.banner.loader.ImageLoader;
+
+import androidnews.kiloproject.R;
 
 public class GlideImageLoader extends ImageLoader {
 

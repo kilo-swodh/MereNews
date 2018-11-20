@@ -3,16 +3,13 @@ package androidnews.kiloproject.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -25,7 +22,7 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidnews.kiloproject.GlideImageLoader;
+import androidnews.kiloproject.ui.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
@@ -88,7 +85,6 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                                         skipID = rawId.substring(index - 4, rawId.length());
                                         intent = new Intent(mContext, GalleyActivity.class);
                                         intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
-
                                         if (isLollipop()) {
                                             ActivityOptionsCompat activityOptions = ActivityOptionsCompat
                                                     .makeSceneTransitionAnimation((Activity) mContext, helper.getView(R.id.card_view), "big_card");

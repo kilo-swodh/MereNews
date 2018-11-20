@@ -12,17 +12,12 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.base.BaseLazyFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 
 public class BaseRvFragment extends BaseLazyFragment {
 
-    @BindView(R.id.rv_content)
     RecyclerView mRecyclerView;
-    @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    Unbinder unbinder;
 
     Gson gson = new Gson();
 
@@ -38,13 +33,10 @@ public class BaseRvFragment extends BaseLazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        refreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refreshLayout);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_content);
+        refreshLayout.setHeaderTriggerRate(0.7f);
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

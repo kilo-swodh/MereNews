@@ -1,4 +1,5 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,18 +24,18 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-        <!--android:id="@+id/refreshLayout"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <!--android:id="@+id/refreshLayout"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-        <com.tobiasrohloff.view.NestedScrollWebView
-            android:id="@+id/web_news"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"/>
+    <com.tobiasrohloff.view.NestedScrollWebView
+        android:id="@+id/web_news"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 
@@ -48,5 +49,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ViewStub-->
+        <!--android:id="@+id/stub_fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:inflatedId="@+id/inflatedStart"-->
+        <!--android:layout="@layout/layout_fab"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--app:layout_behavior=".ui.ScrollFABBehavior"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

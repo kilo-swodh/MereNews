@@ -34,36 +34,36 @@ import androidnews.kiloproject.R;
  */
 public class WriteApkTask extends AsyncTask<Void, Void, Boolean> {
 
-    private Context mContext;
-    private AssetManager mAssetManager;
-    private Runnable mRunnable;
+  private Context mContext;
+  private AssetManager mAssetManager;
+  private Runnable mRunnable;
 
-    public WriteApkTask(Context context, Runnable runnable) {
-        this.mContext = context;
-        this.mAssetManager = context.getAssets();
-        this.mRunnable = runnable;
-    }
+  public WriteApkTask(Context context, Runnable runnable) {
+    this.mContext = context;
+    this.mAssetManager = context.getAssets();
+    this.mRunnable = runnable;
+  }
 
-    @Override
-    protected void onPostExecute(Boolean b) {
-        if (b) mRunnable.run();
-    }
+  @Override
+  protected void onPostExecute(Boolean b) {
+    if (b) mRunnable.run();
+  }
 
-    @Override
-    protected Boolean doInBackground(Void... voids) {
-        try {
-            InputStream input = mAssetManager.open( mContext.getResources().getString(R.string.apk_name));
-            File apk = new File(Environment.getExternalStorageDirectory(), mContext.getResources().getString(R.string.apk_name));
-            if (apk.exists()) return true;
-            OutputStream output = new FileOutputStream(apk);
-            byte[] buffer = new byte[input.available()];
-            int len = input.read(buffer);
-            output.write(buffer, 0, len);
-            output.flush();
-            output.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+  @Override
+  protected Boolean doInBackground(Void... voids) {
+    try {
+      InputStream input = mAssetManager.open( mContext.getResources().getString(R.string.apk_name));
+      File apk = new File(Environment.getExternalStorageDirectory(), mContext.getResources().getString(R.string.apk_name));
+      if (apk.exists()) return true;
+      OutputStream output = new FileOutputStream(apk);
+      byte[] buffer = new byte[input.available()];
+      int len = input.read(buffer);
+      output.write(buffer, 0, len);
+      output.flush();
+      output.close();
+      return true;
+    } catch (IOException e) {
+      return false;
     }
+  }
 }

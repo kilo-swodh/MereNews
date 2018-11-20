@@ -20,12 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.DragAdapter;
@@ -35,8 +34,8 @@ import androidnews.kiloproject.bean.data.IntArrayBean;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.widget.DragGrid;
 import androidnews.kiloproject.widget.OtherGridView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -48,11 +47,9 @@ import static androidnews.kiloproject.activity.MainActivity.DEFAULT_PAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 
 public class ChannelActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    @BindView(R.id.toolbar)
+
     Toolbar toolbar;
-    @BindView(R.id.my_category_text)
     TextView myCategoryText;
-    @BindView(R.id.more_category_text)
     TextView moreCategoryText;
     /**
      * 用户栏目对应的适配器，可以拖动
@@ -72,16 +69,21 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
      * 是否在移动，由于这边是动画结束后才进行的数据更替，设置这个限制为了避免操作太频繁造成的数据错乱。
      */
     boolean isMove = false;
-    @BindView(R.id.userGridView)
+
     DragGrid userGridView;
-    @BindView(R.id.otherGridView)
+
     OtherGridView otherGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        myCategoryText = (TextView) findViewById(R.id.my_category_text);
+        moreCategoryText = (TextView) findViewById(R.id.more_category_text);
+        userGridView = (DragGrid) findViewById(R.id.userGridView);
+        otherGridView = (OtherGridView) findViewById(R.id.otherGridView);
+
 
         initStateBar(R.color.main_background, true);
     }
@@ -106,19 +108,24 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                IntArrayBean intArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_TYPE_ARRAY, IntArrayBean.CREATOR);
-                if (intArrayBean == null || intArrayBean.getTypeArray() == null) {
-                    intArrayBean = new IntArrayBean();
-                    intArrayBean.setTypeArray(new ArrayList<>());
+                int[] channelArray = new int[DEFAULT_PAGE];
+                String arrayStr = SPUtils.getInstance().getString(CONFIG_TYPE_ARRAY);
+                if (TextUtils.isEmpty(arrayStr)) {
                     for (int i = 0; i < DEFAULT_PAGE; i++) {
-                        intArrayBean.getTypeArray().add(i);
+                        channelArray[i] = i;
                     }
-                    CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, intArrayBean);
+                } else {
+                    String[] channelStrArray = arrayStr.split("#");
+                    channelArray = new int[channelStrArray.length];
+                    for (int i = 0; i < channelStrArray.length; i++) {
+                        channelArray[i] = Integer.parseInt(channelStrArray[i]);
+                    }
                 }
+
                 tags = getResources().getStringArray(R.array.address_tag);
                 int userOrder = 1, otherOrder = 1;
 
-                for (Integer integer : intArrayBean.getTypeArray()) {
+                for (Integer integer : channelArray) {
                     int samePosition = -1;
                     for (int i = 0; i < tags.length; i++) {
                         if (i == integer)
@@ -133,7 +140,7 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
                 for (int i = 0; i < tags.length; i++) {
                     boolean isSame = false;
                     for (ChannelItem item : userChannelList) {
-                        if (TextUtils.equals(item.name,tags[i])){
+                        if (TextUtils.equals(item.name, tags[i])) {
                             isSame = true;
                         }
                     }
@@ -150,7 +157,7 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean){
+                        if (aBoolean) {
                             userAdapter = new DragAdapter(mActivity, userChannelList, userGridView);
                             userGridView.setAdapter(userAdapter);
                             otherAdapter = new OtherAdapter(mActivity, otherChannelList);
@@ -344,17 +351,38 @@ public class ChannelActivity extends BaseActivity implements AdapterView.OnItemC
      * 退出时候保存选择后数据库的设置
      */
     private void saveChannel() {
-        List<Integer> result = new ArrayList<Integer>();
-        if (userChannelList.size() < 1)
-            result.add(0);
-        else
-            for (ChannelItem item : userChannelList) {
-                result.add(item.getId());
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                int[] channelArray = null;
+                if (userChannelList.size() < 1)
+                    channelArray = new int[0];
+                else {
+                    channelArray = new int[userChannelList.size()];
+                    for (int i = 0; i < userChannelList.size(); i++) {
+                        channelArray[i] = userChannelList.get(i).getId();
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                for (Integer integer : channelArray) {
+                    sb.append(integer + "#");
+                }
+                SPUtils.getInstance().put(CONFIG_TYPE_ARRAY, sb.toString());
+                e.onNext(true);
+                e.onComplete();
             }
-        SnackbarUtils.with(moreCategoryText).setMessage(getString(R.string.successful)).show();
-        CacheDiskUtils.getInstance().put(CONFIG_TYPE_ARRAY, new IntArrayBean(result));
-        setResult(RESULT_OK);
-        finish();
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            SnackbarUtils.with(moreCategoryText).setMessage(getString(R.string.successful)).show();
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    }
+                });
     }
 
     @Override

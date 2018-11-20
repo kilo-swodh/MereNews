@@ -23,7 +23,6 @@ import java.util.Queue;
  */
 public class PinchImageView extends AppCompatImageView {
 
-
     ////////////////////////////////配置参数////////////////////////////////
 
     /**

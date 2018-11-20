@@ -1,4 +1,4 @@
-package androidnews.kiloproject.receiver;
+package androidnews.kiloproject.event;
 
 public class MessageEvent{
     private String message;

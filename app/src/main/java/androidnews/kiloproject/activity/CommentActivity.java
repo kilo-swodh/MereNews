@@ -25,8 +25,8 @@ import androidnews.kiloproject.adapter.CommentAdapter;
 import androidnews.kiloproject.bean.data.CommentLevel;
 import androidnews.kiloproject.bean.net.CommonFullData;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -41,15 +41,11 @@ import static androidnews.kiloproject.system.AppConfig.getNewsCommentA;
 import static androidnews.kiloproject.system.AppConfig.getNewsCommentB;
 
 public class CommentActivity extends BaseActivity {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.progress)
-    ProgressBar progress;
 
+    Toolbar toolbar;
+    ProgressBar progress;
     CommentAdapter commentAdapter;
-    @BindView(R.id.rv_content)
     RecyclerView rvContent;
-    @BindView(R.id.empty_view)
     ConstraintLayout emptyView;
 
     private List<CommentLevel> comments = new ArrayList<>();
@@ -58,7 +54,11 @@ public class CommentActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-        ButterKnife.bind(this);
+        toolbar = findViewById(R.id.toolbar);
+        progress = findViewById(R.id.progress);
+        rvContent = findViewById(R.id.rv_content);
+        emptyView = findViewById(R.id.empty_view);
+
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.action_comment);
         initStateBar(R.color.main_background, true);
@@ -178,7 +178,7 @@ public class CommentActivity extends BaseActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        commentAdapter = new CommentAdapter(mActivity,Glide.with(mActivity), comments);
+                        commentAdapter = new CommentAdapter(mActivity, Glide.with(mActivity), comments);
                         rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
                         rvContent.setAdapter(commentAdapter);
                     }

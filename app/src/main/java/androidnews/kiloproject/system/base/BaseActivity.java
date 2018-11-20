@@ -50,6 +50,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ImmersionBar mImmersionBar;
     protected Gson gson = new Gson();
 
+    public static final int SELECT_RESULT = 999;
+    public static final int SETTING_RESULT = 998;
+    public static final int BLOCK_RESULT = 997;
+    public static final int CACHE_RESULT = 996;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (isNightMode)
@@ -115,11 +120,16 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .init();   //所有子类都将继承这些相同的属性
         } else {
             if (isBlackFront) {
+                if (ImmersionBar.isSupportNavigationIconDark()){
+                    mImmersionBar.navigationBarColor(R.color.main_background)
+                            .navigationBarDarkIcon(true);
+                }else {
+                    mImmersionBar.navigationBarColor(R.color.divider);
+                }
                 mImmersionBar.statusBarDarkFont(true, 0.2f)
                         //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，
                         // 如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                         .statusBarColor(colorRes)
-                        .navigationBarColor(R.color.divider)
                         .fitsSystemWindows(true)
                         .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
                         .init();
@@ -132,6 +142,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
 //        ScreenUtils.restoreAdaptScreen();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // 如果你的app可以横竖屏切换，并且适配4.4或者emui3手机请务必在onConfigurationChanged方法里添加这句话
+        ImmersionBar.with(this).init();
     }
 
     @Override

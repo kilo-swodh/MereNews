@@ -67,8 +67,12 @@
     <string name="swipe_back_detail">从左向右滑动页面返回</string>
     <string name="back_exit">首页返回键退出</string>
     <string name="back_exit_detail">双击返回键直接退出应用</string>
-    <string name="random_header_server">封面滑动切换</string>
-    <string name="random_header_server_detail">从自动改为随频道而改变</string>
+    <string name="random_header_server">封面设置</string>
+    <string name="random_header_server_detail">首页顶部显示内容</string>
+    <string name="random_header_pic_per">滑动轮播</string>
+    <string name="random_header_pic_auto">自动轮播</string>
+    <string name="random_header_color_gradual">渐变色</string>
+    <string name="random_header_color_pure">纯色</string>
 
     <string name="click_to_exit">再按一次退出应用</string>
     <string name="start_after_exit">退出界面后生效</string>

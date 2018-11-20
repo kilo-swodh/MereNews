@@ -1,5 +1,6 @@
 package androidnews.kiloproject.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -106,6 +107,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         }
                         break;
                     case R.id.action_comment:
+//                        ObjectAnimator animator = ObjectAnimator.ofInt(webView,"scrollY",webView.getScrollY(),0);
+//                        animator.setDuration(300).start();
                         if (currentData == null || TextUtils.isEmpty(currentData.getReplyBoard()) || TextUtils.isEmpty(currentData.getDocid())) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.no_comment)).showError();
                             break;
@@ -210,7 +213,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                     html = getIntent().getStringExtra("htmlText");
                     if (isNightMode)
-                        html.replace("<body>", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
+                        html.replace("<body text=\"#333\">", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
                     if (!StringUtils.isEmpty(html)) {
                         e.onNext(true);
                     } else {
@@ -253,12 +256,12 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-                String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body>";
+                String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body text=\"#333\">";
                 html = "<!DOCTYPE html>" +
                         "<html lang=\"zh\">" +
                         "<head>" +
                         "<meta charset=\"UTF-8\" />" +
-                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
+                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />" +
                         "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
                         "<title>Document</title>" +
                         "<style>" +
@@ -270,7 +273,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         "width: 100%;" +
                         "height: 100%;" +
                         "}" +
-                        "p{margin: 25px auto}" +
+                        "p{margin: 30px auto}" +
                         "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
                         "</style>" +
                         "</head>" +
@@ -373,6 +376,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
                         }.getType());
                         SPUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
+                        setResult(RESULT_OK);
                     }
                     return true;
                 }

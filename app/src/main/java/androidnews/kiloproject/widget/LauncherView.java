@@ -28,36 +28,36 @@ import androidnews.kiloproject.R;
  */
 public class LauncherView extends RelativeLayout implements View.OnClickListener {
 
-    private OnClickListener mCancelClickListener;
+  private OnClickListener mCancelClickListener;
 
-    public LauncherView(Context context) {
-        this(context, null, 0);
-    }
+  public LauncherView(Context context) {
+    this(context, null, 0);
+  }
 
-    public LauncherView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+  public LauncherView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
 
-    public LauncherView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        inflate(context, R.layout.window_launcher, this);
-        findViewById(R.id.btn_cancel).setOnClickListener(this);
-    }
+  public LauncherView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    inflate(context, R.layout.window_launcher, this);
+    findViewById(R.id.btn_cancel).setOnClickListener(this);
+  }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btn_cancel: {
-                if (mCancelClickListener != null) {
-                    mCancelClickListener.onClick(v);
-                }
-                break;
-            }
+  @Override
+  public void onClick(View v) {
+    int id = v.getId();
+    switch (id) {
+      case R.id.btn_cancel: {
+        if (mCancelClickListener != null) {
+          mCancelClickListener.onClick(v);
         }
+        break;
+      }
     }
+  }
 
-    public void setCancelClickListener(OnClickListener cancelClickListener) {
-        this.mCancelClickListener = cancelClickListener;
-    }
+  public void setCancelClickListener(OnClickListener cancelClickListener) {
+    this.mCancelClickListener = cancelClickListener;
+  }
 }

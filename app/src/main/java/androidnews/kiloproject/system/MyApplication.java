@@ -23,6 +23,7 @@ import com.yanzhenjie.permission.PermissionActivity;
 import com.zhouyou.http.EasyHttp;
 
 import org.greenrobot.eventbus.EventBus;
+import org.litepal.LitePal;
 
 import androidnews.kiloproject.widget.AlertWindow;
 import androidnews.kiloproject.widget.LauncherView;
@@ -65,7 +66,7 @@ public class MyApplication extends Application {
         ;
 
         //数据库
-//        LitePal.initialize(this);
+        LitePal.initialize(this);
 
         //Util工具包
         Utils.init(this);

@@ -1,6 +1,5 @@
 package androidnews.kiloproject.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.WindowManager;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +21,13 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HAVE_CHECK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static androidnews.kiloproject.util.TransformationUtils.hasCheckEvent173;
+import static androidnews.kiloproject.util.TransformationUtils.transferBlockData;
+import static androidnews.kiloproject.util.TransformationUtils.transferChannel;
 
 public class SplashActivity extends AppCompatActivity {
     @Override
@@ -38,6 +40,12 @@ public class SplashActivity extends AppCompatActivity {
         AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
             initShortsCut();
+        if (!hasCheckEvent173()) {
+            transferBlockData();
+            transferChannel();
+            SPUtils.getInstance().put(CONFIG_HAVE_CHECK, true);
+        }
+
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
@@ -69,11 +77,5 @@ public class SplashActivity extends AppCompatActivity {
 
             mSystemService.setDynamicShortcuts(dynamicShortcuts);//设置动态shortcut
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ImmersionBar.with(this).destroy();
     }
 }

@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_playlist_add_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_vertical_align_top_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="8a8a8a" />
-                            <entry key="outputName" value="ic_list_add" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_fab_scroll_top" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="D:\收藏full.svg" />
                           </map>

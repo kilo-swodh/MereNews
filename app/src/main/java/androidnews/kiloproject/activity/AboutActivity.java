@@ -21,31 +21,28 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.web.MWebChromeClient;
 import androidnews.kiloproject.web.MWebViewClient;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 自定义实现的H5Activity类，主要用于在页面中展示H5页面，整个Activity只有一个Fragment控件
  */
 public class AboutActivity extends BaseActivity {
 
-    @BindView(R.id.progress)
     public ProgressBar progressBar;
-    @BindView(R.id.web_view)
-    WebView webView;
-    @BindView(R.id.iv_error)
+    public WebView webView;
     public ImageView ivError;
+    public Toolbar toolbar;
 
     public static String WEBVIEW_URL = "web_url";
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     private String loadURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        webView = findViewById(R.id.web_view);
+        progressBar = findViewById(R.id.progress);
+        ivError = findViewById(R.id.iv_error);
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.about);

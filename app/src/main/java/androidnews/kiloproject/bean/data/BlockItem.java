@@ -3,7 +3,9 @@ package androidnews.kiloproject.bean.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class BlockItem implements Parcelable {
+import org.litepal.crud.LitePalSupport;
+
+public class BlockItem extends LitePalSupport implements Parcelable {
     int type;
     String text;
 

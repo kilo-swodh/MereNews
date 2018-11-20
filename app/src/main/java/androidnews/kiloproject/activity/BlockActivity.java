@@ -21,11 +21,12 @@ import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,8 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.BlockArrayBean;
 import androidnews.kiloproject.bean.data.BlockItem;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -49,27 +50,26 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_BLOCK_LIST;
 
 public class BlockActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rv_content)
     RecyclerView rvContent;
-    @BindView(R.id.progress)
     ProgressBar progress;
-    @BindView(R.id.view)
     View view;
-    @BindView(R.id.empty_view)
     ConstraintLayout emptyView;
-    @BindView(R.id.root_view)
     ConstraintLayout rootView;
-
     BlockAdapter adapter;
-    BlockArrayBean blockArrayBean;
+    List<BlockItem> blockList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        rvContent = (RecyclerView) findViewById(R.id.rv_content);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        view = (View) findViewById(R.id.view);
+        emptyView = (ConstraintLayout) findViewById(R.id.empty_view);
+        rootView = (ConstraintLayout) findViewById(R.id.root_view);
+
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(getString(R.string.block_rule));
 
@@ -86,11 +86,11 @@ public class BlockActivity extends BaseActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         try {
-                                            blockArrayBean.setTypeArray(new ArrayList<>());
-                                            CacheDiskUtils.getInstance().put(CONFIG_BLOCK_LIST, blockArrayBean);
+                                            blockList.clear();
+                                            LitePal.deleteAllAsync(BlockItem.class);
                                             setResult(RESULT_OK);
                                             finish();
-                                        }catch (Exception e){
+                                        } catch (Exception e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -118,23 +118,23 @@ public class BlockActivity extends BaseActivity {
                                             @Override
                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                 try {
-                                                    if (blockArrayBean == null)
-                                                        blockArrayBean = new BlockArrayBean();
+                                                    if (blockList == null)
+                                                        blockList = new ArrayList<>();
 
                                                     String keywords = editText.getText().toString();
                                                     boolean isAdd = true;
-                                                    if (blockArrayBean.getTypeArray().size() > 0) {
-                                                        for (BlockItem blockItem : blockArrayBean.getTypeArray()) {
+                                                    if (blockList.size() > 0) {
+                                                        for (BlockItem blockItem : blockList) {
                                                             if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
                                                                 isAdd = false;
                                                         }
                                                     }
                                                     if (isAdd) {
-                                                        blockArrayBean.getTypeArray().add(
-                                                                new BlockItem(TYPE_KEYWORDS,keywords));
-                                                        CacheDiskUtils.getInstance().put(CONFIG_BLOCK_LIST, blockArrayBean);
+                                                        BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
+                                                        blockList.add(newItem);
                                                         e.onNext(1);
-                                                    }else {
+                                                        newItem.save();
+                                                    } else {
                                                         e.onNext(2);
                                                     }
                                                 } catch (Exception e1) {
@@ -144,12 +144,12 @@ public class BlockActivity extends BaseActivity {
                                                     e.onComplete();
                                                 }
                                             }
-                                        }).subscribeOn(Schedulers.computation())
+                                        }).subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(new Consumer<Integer>() {
                                                     @Override
                                                     public void accept(Integer i) throws Exception {
-                                                        switch (i){
+                                                        switch (i) {
                                                             case 0:
                                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_block_keywords)
                                                                         + " " + getString(R.string.fail)).showSuccess();
@@ -159,7 +159,8 @@ public class BlockActivity extends BaseActivity {
                                                                         .setMessage(getString(R.string.start_after_restart_list))
                                                                         .showSuccess();
                                                                 setResult(RESULT_OK);
-                                                                adapter.notifyDataSetChanged();
+                                                                if (adapter != null)
+                                                                    adapter.notifyDataSetChanged();
                                                                 break;
                                                             case 2:
                                                                 SnackbarUtils.with(toolbar)
@@ -193,8 +194,8 @@ public class BlockActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                blockArrayBean = CacheDiskUtils.getInstance().getParcelable(CONFIG_BLOCK_LIST, BlockArrayBean.CREATOR);
-                if (blockArrayBean != null && blockArrayBean.getTypeArray() != null && blockArrayBean.getTypeArray().size() > 0) {
+                blockList = LitePal.findAll(BlockItem.class);
+                if (blockList != null && blockList.size() > 0) {
                     e.onNext(true);
                 } else {
                     e.onNext(false);
@@ -208,7 +209,7 @@ public class BlockActivity extends BaseActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         progress.setVisibility(View.GONE);
                         if (aBoolean) {
-                            adapter = new BlockAdapter(blockArrayBean.getTypeArray());
+                            adapter = new BlockAdapter(blockList);
                             rvContent.setAdapter(adapter);
                             rvContent.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL));
                             rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -268,8 +269,8 @@ public class BlockActivity extends BaseActivity {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 try {
-                    blockArrayBean.getTypeArray().remove(item);
-                    CacheDiskUtils.getInstance().put(CONFIG_BLOCK_LIST, blockArrayBean);
+                    blockList.remove(item);
+                    item.delete();
                     e.onNext(true);
                 } catch (Exception e1) {
                     e1.printStackTrace();

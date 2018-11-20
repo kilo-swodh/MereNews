@@ -67,8 +67,12 @@
     <string name="swipe_back_detail">Sliding back from left to right</string>
     <string name="back_exit">Press the back button to exit(HomePage)</string>
     <string name="back_exit_detail">Double click the back button to exit the app</string>
-    <string name="random_header_server">Cover slide switch</string>
-    <string name="random_header_server_detail">Change from automatic to channel.</string>
+    <string name="random_header_server">Cover setting</string>
+    <string name="random_header_server_detail">Display the contents at the top of the home</string>
+    <string name="random_header_pic_per">Manual transmission</string>
+    <string name="random_header_pic_auto">Automatic transmission</string>
+    <string name="random_header_color_gradual">Gradual color</string>
+    <string name="random_header_color_pure">Pure color</string>
 
     <string name="click_to_exit">Press again to exit the app</string>
     <string name="start_after_exit">Start after exit</string>

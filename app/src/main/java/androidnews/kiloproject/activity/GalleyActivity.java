@@ -3,34 +3,35 @@ package androidnews.kiloproject.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.UriUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.gyf.barlibrary.ImmersionBar;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.yanzhenjie.permission.Action;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
-import java.io.File;
-import java.security.Permission;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,23 +39,16 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.net.GalleyData;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.widget.PinchImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
+import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 
 public class GalleyActivity extends BaseActivity {
 
-    @BindView(R.id.galley_viewpager)
     ViewPager galleyViewpager;
-    @BindView(R.id.tv_galley_title)
     TextView tvGalleyTitle;
-    @BindView(R.id.tv_galley_text)
     TextView tvGalleyText;
-    @BindView(R.id.tv_galley_page)
     TextView tvGalleyPage;
-    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-    @BindView(R.id.btn_galley_download)
     View btnGalleyDownload;
 
     private GalleyData galleyContent;
@@ -64,10 +58,30 @@ public class GalleyActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galley);
-        ButterKnife.bind(this);
+        galleyViewpager = (ViewPager) findViewById(R.id.galley_viewpager);
+        tvGalleyTitle = (TextView) findViewById(R.id.tv_galley_title);
+        tvGalleyText = (TextView) findViewById(R.id.tv_galley_text);
+        tvGalleyPage = (TextView) findViewById(R.id.tv_galley_page);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        btnGalleyDownload = (View) findViewById(R.id.btn_galley_download);
+
 //        ViewCompat.setTransitionName(galleyViewpager, "banner_pic");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-        ImmersionBar.with(this).navigationBarColor(R.color.black).init();
+        if (ImmersionBar.hasNavigationBar(mActivity)) {
+            ImmersionBar.with(this).transparentNavigationBar().init();
+            if (ImmersionBar.isNavigationAtBottom(mActivity)) {
+                int navHeight = ImmersionBar.getNavigationBarHeight(mActivity);
+                Resources res = getResources();
+                int dimNor = res.getDimensionPixelSize(R.dimen.margin_normal);
+                int dimLarge = res.getDimensionPixelSize(R.dimen.margin_large);
+                ConstraintLayout.LayoutParams lpPage = (ConstraintLayout.LayoutParams) tvGalleyPage.getLayoutParams();
+                lpPage.setMargins(dimNor, 0, 0, dimLarge + navHeight);
+
+                ConstraintLayout.LayoutParams lpDownLoad = (ConstraintLayout.LayoutParams) btnGalleyDownload.getLayoutParams();
+                lpDownLoad.setMargins(0, 0, dimNor, dimLarge + navHeight);
+            }
+        }
+        SwipeBackHelper.getCurrentPage(mActivity).setDisallowInterceptTouchEvent(false);
     }
 
     @Override
@@ -163,6 +177,8 @@ public class GalleyActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // 滚动的时候改变自定义控件的动画
                 currentImg = galleyContent.getPhotos().get(position).getImgurl();
+                if (isSwipeBack)
+                    SwipeBackHelper.getCurrentPage(mActivity).setDisallowInterceptTouchEvent(position != 0);
             }
 
             @Override
@@ -180,34 +196,34 @@ public class GalleyActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.btn_galley_download)
-    public void onViewClicked() {
-        requestPermission(new Action() {
-            @Override
-            public void onAction(Object data) {
-                String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
-                EasyHttp.downLoad(currentImg)
-                        .savePath("/sdcard/Download")
-                        .saveName(fileName)//不设置默认名字是时间戳生成的
-                        .execute(new DownloadProgressCallBack<String>() {
-                            @Override
-                            public void update(long bytesRead, long contentLength, boolean done) {
-                                int progress = (int) (bytesRead * 100 / contentLength);
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_galley_download:
+                requestPermission(new Action() {
+                    @Override
+                    public void onAction(Object data) {
+                        String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
+                        EasyHttp.downLoad(currentImg)
+                                .savePath("/sdcard/Download")
+                                .saveName(fileName)//不设置默认名字是时间戳生成的
+                                .execute(new DownloadProgressCallBack<String>() {
+                                    @Override
+                                    public void update(long bytesRead, long contentLength, boolean done) {
+//                                int progress = (int) (bytesRead * 100 / contentLength);
+//                                if (done) {//下载完成
+//                                }
+                                    }
 
-                                if (done) {//下载完成
-                                }
-                            }
+                                    @Override
+                                    public void onStart() {
+                                        //开始下载
+                                    }
 
-                            @Override
-                            public void onStart() {
-                                //开始下载
-                            }
-
-                            @Override
-                            public void onComplete(String path) {
-                                //下载完成，path：下载文件保存的完整路径
-                                SnackbarUtils.with(tvGalleyTitle)
-                                        .setMessage(getString(R.string.download_success))
+                                    @Override
+                                    public void onComplete(String path) {
+                                        //下载完成，path：下载文件保存的完整路径
+                                        SnackbarUtils.with(tvGalleyTitle)
+                                                .setMessage(getString(R.string.download_success))
 //                                        .setAction(getString(R.string.check), new View.OnClickListener() {
 //                                            @Override
 //                                            public void onClick(View v) {
@@ -216,19 +232,21 @@ public class GalleyActivity extends BaseActivity {
 //                                                startActivity(intent);
 //                                            }
 //                                        })
-                                        .showSuccess();
-                            }
+                                                .showSuccess();
+                                    }
 
-                            @Override
-                            public void onError(ApiException e) {
-                                //下载失败
-                                SnackbarUtils.with(tvGalleyTitle)
-                                        .setMessage(getString(R.string.download_fail) + e.getMessage())
-                                        .showError();
-                            }
-                        });
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                    @Override
+                                    public void onError(ApiException e) {
+                                        //下载失败
+                                        SnackbarUtils.with(tvGalleyTitle)
+                                                .setMessage(getString(R.string.download_fail) + e.getMessage())
+                                                .showError();
+                                    }
+                                });
+                    }
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                break;
+        }
     }
 }
 

@@ -15,7 +15,7 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;

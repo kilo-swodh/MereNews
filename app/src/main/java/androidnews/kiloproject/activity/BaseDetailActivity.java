@@ -5,30 +5,31 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewStub;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tobiasrohloff.view.NestedScrollWebView;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 
 public class BaseDetailActivity extends BaseActivity {
-    @BindView(R.id.toolbar)
+
     Toolbar toolbar;
-    @BindView(R.id.appbar)
     AppBarLayout appbar;
-    @BindView(R.id.progress)
     ProgressBar progress;
-    @BindView(R.id.web_news)
     NestedScrollWebView webView;
-//    @BindView(R.id.refreshLayout)
+//    ViewStub mStub;
+
 //    SmartRefreshLayout refreshLayout;
 
     public static final int MAX_HISTORY = 512;
@@ -37,7 +38,14 @@ public class BaseDetailActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        webView = (NestedScrollWebView) findViewById(R.id.web_news);
+
+//        mStub = findViewById(R.id.stub_fab);
+//        mStub.setVisibility(View.VISIBLE);
+
         initView();
         initStateBar(R.color.main_background, true);
     }

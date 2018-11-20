@@ -35,9 +35,6 @@ import com.zhouyou.http.exception.ApiException;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
@@ -51,99 +48,54 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity{
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.textView)
     TextView textView;
-    @BindView(R.id.group_language)
     Group groupLanguage;
-    @BindView(R.id.tv_language)
     TextView tvLanguage;
-    @BindView(R.id.tv_language_detail)
     TextView tvLanguageDetail;
-    @BindView(R.id.view_language)
     View viewLanguage;
-    @BindView(R.id.group_clear_cache)
     Group groupClearCache;
-    @BindView(R.id.tv_clear_cache)
     TextView tvClearCache;
-    @BindView(R.id.tv_clear_cache_detail)
     TextView tvClearCacheDetail;
-    @BindView(R.id.view_auto_refresh)
     View viewAutoRefresh;
-    @BindView(R.id.group_auto_refresh)
     Group groupAutoRefresh;
-    @BindView(R.id.tv_auto_refresh)
     TextView tvAutoRefresh;
-    @BindView(R.id.tv_auto_refresh_detail)
     TextView tvAutoRefreshDetail;
-    @BindView(R.id.sw_auto_refresh)
     Switch swAutoRefresh;
-    @BindView(R.id.view_auto_loadmore)
     View viewAutoLoadmore;
-    @BindView(R.id.group_auto_loadmore)
     Group groupAutoLoadmore;
-    @BindView(R.id.tv_auto_loadmore)
     TextView tvAutoLoadmore;
-    @BindView(R.id.tv_auto_loadmore_detail)
     TextView tvAutoLoadmoreDetail;
-    @BindView(R.id.sw_auto_loadmore)
     Switch swAutoLoadmore;
-    @BindView(R.id.view_back_exit)
     View viewBackExit;
-    @BindView(R.id.group_back_exit)
     Group groupBackExit;
-    @BindView(R.id.tv_back_exit)
     TextView tvBackExit;
-    @BindView(R.id.tv_back_exit_detail)
     TextView tvBackExitDetail;
-    @BindView(R.id.sw_back_exit)
     Switch swBackExit;
-    @BindView(R.id.view_swipe_back)
     View viewSwipeBack;
-    @BindView(R.id.group_swipe_back)
     Group groupSwipeBack;
-    @BindView(R.id.tv_swipe_back)
     TextView tvSwipeBack;
-    @BindView(R.id.tv_swipe_back_detail)
     TextView tvSwipeBackDetail;
-    @BindView(R.id.sw_swipe_back)
     Switch swSwipeBack;
-    @BindView(R.id.card_view_language)
     CardView cardViewLanguage;
-    @BindView(R.id.textauto_refresh)
     TextView textautoRefresh;
-    @BindView(R.id.group_check_update)
     Group checkUpdate;
-    @BindView(R.id.tv_check_update)
     TextView tvCheckUpdate;
-    @BindView(R.id.tv_check_update_detail)
     TextView tvCheckUpdateDetail;
-    @BindView(R.id.view_random_header)
     View viewRandomHeader;
-    @BindView(R.id.group_random_header)
     Group groupRandomHeader;
-    @BindView(R.id.tv_random_header)
     TextView tvRandomHeader;
-    @BindView(R.id.tv_random_header_detail)
     TextView tvRandomHeaderDetail;
-    @BindView(R.id.sw_random_header)
-    Switch swRandomHeader;
-    @BindView(R.id.group_join_us)
     Group groupJoinUs;
-    @BindView(R.id.tv_join_us)
     TextView tvJoinUs;
-    @BindView(R.id.tv_join_us_detail)
     TextView tvJoinUsDetail;
-    @BindView(R.id.view_check_update)
     View viewCheckUpdate;
 
     private int currentLanguage = 0;
     private boolean isAutoRefresh = false;
     private boolean isBackExit = false;
-    private boolean isRandomHeader = false;
     private boolean isAutoLoadMore = false;
     SPUtils spUtils;
 
@@ -151,7 +103,49 @@ public class SettingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        textView = (TextView) findViewById(R.id.textView);
+        groupLanguage = (Group) findViewById(R.id.group_language);
+        tvLanguage = (TextView) findViewById(R.id.tv_language);
+        tvLanguageDetail = (TextView) findViewById(R.id.tv_language_detail);
+        viewLanguage = (View) findViewById(R.id.view_language);
+        groupClearCache = (Group) findViewById(R.id.group_clear_cache);
+        tvClearCache = (TextView) findViewById(R.id.tv_clear_cache);
+        tvClearCacheDetail = (TextView) findViewById(R.id.tv_clear_cache_detail);
+        viewAutoRefresh = (View) findViewById(R.id.view_auto_refresh);
+        groupAutoRefresh = (Group) findViewById(R.id.group_auto_refresh);
+        tvAutoRefresh = (TextView) findViewById(R.id.tv_auto_refresh);
+        tvAutoRefreshDetail = (TextView) findViewById(R.id.tv_auto_refresh_detail);
+        swAutoRefresh = (Switch) findViewById(R.id.sw_auto_refresh);
+        viewAutoLoadmore = (View) findViewById(R.id.view_auto_loadmore);
+        groupAutoLoadmore = (Group) findViewById(R.id.group_auto_loadmore);
+        tvAutoLoadmore = (TextView) findViewById(R.id.tv_auto_loadmore);
+        tvAutoLoadmoreDetail = (TextView) findViewById(R.id.tv_auto_loadmore_detail);
+        swAutoLoadmore = (Switch) findViewById(R.id.sw_auto_loadmore);
+        viewBackExit = (View) findViewById(R.id.view_back_exit);
+        groupBackExit = (Group) findViewById(R.id.group_back_exit);
+        tvBackExit = (TextView) findViewById(R.id.tv_back_exit);
+        tvBackExitDetail = (TextView) findViewById(R.id.tv_back_exit_detail);
+        swBackExit = (Switch) findViewById(R.id.sw_back_exit);
+        viewSwipeBack = (View) findViewById(R.id.view_swipe_back);
+        groupSwipeBack = (Group) findViewById(R.id.group_swipe_back);
+        tvSwipeBack = (TextView) findViewById(R.id.tv_swipe_back);
+        tvSwipeBackDetail = (TextView) findViewById(R.id.tv_swipe_back_detail);
+        swSwipeBack = (Switch) findViewById(R.id.sw_swipe_back);
+        cardViewLanguage = (CardView) findViewById(R.id.card_view_language);
+        textautoRefresh = (TextView) findViewById(R.id.textauto_refresh);
+        checkUpdate = (Group) findViewById(R.id.group_check_update);
+        tvCheckUpdate = (TextView) findViewById(R.id.tv_check_update);
+        tvCheckUpdateDetail = (TextView) findViewById(R.id.tv_check_update_detail);
+        viewRandomHeader = (View) findViewById(R.id.view_random_header);
+        groupRandomHeader = (Group) findViewById(R.id.group_random_header);
+        tvRandomHeader = (TextView) findViewById(R.id.tv_random_header);
+        tvRandomHeaderDetail = (TextView) findViewById(R.id.tv_random_header_detail);
+        groupJoinUs = (Group) findViewById(R.id.group_join_us);
+        tvJoinUs = (TextView) findViewById(R.id.tv_join_us);
+        tvJoinUsDetail = (TextView) findViewById(R.id.tv_join_us_detail);
+        viewCheckUpdate = (View) findViewById(R.id.view_check_update);
+
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
         spUtils = SPUtils.getInstance();
@@ -206,17 +200,6 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        isRandomHeader = spUtils.getBoolean(CONFIG_RANDOM_HEADER);
-        swRandomHeader.setChecked(isRandomHeader);
-        swRandomHeader.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isRandomHeader = isChecked;
-                spUtils.put(CONFIG_RANDOM_HEADER, isRandomHeader);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).showSuccess();
-            }
-        });
-
         isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         swSwipeBack.setChecked(isSwipeBack);
         swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -231,19 +214,72 @@ public class SettingActivity extends BaseActivity {
         tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
     }
 
+    private void restartWithAnime() {
+        animateRevealShow(toolbar, false, new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                swAutoRefresh.setEnabled(false);
+                groupAutoRefresh.setClickable(false);
+                swAutoLoadmore.setEnabled(false);
+                groupAutoLoadmore.setClickable(false);
+                swBackExit.setEnabled(false);
+                groupRandomHeader.setClickable(false);
+                groupBackExit.setClickable(false);
+                swSwipeBack.setEnabled(false);
+                groupSwipeBack.setClickable(false);
+            }
 
-    @OnClick({R.id.tv_language, R.id.tv_language_detail,
-            R.id.tv_back_exit, R.id.tv_back_exit_detail,
-            R.id.tv_random_header, R.id.tv_random_header_detail,
-            R.id.tv_auto_refresh, R.id.tv_auto_refresh_detail,
-            R.id.tv_auto_loadmore, R.id.tv_auto_loadmore_detail,
-            R.id.tv_clear_cache, R.id.tv_clear_cache_detail,
-            R.id.tv_swipe_back, R.id.tv_swipe_back_detail,
-            R.id.tv_check_update, R.id.tv_check_update_detail,
-            R.id.tv_join_us, R.id.tv_join_us_detail,
-    })
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                relaunchApp();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                swAutoRefresh.setEnabled(true);
+                groupAutoRefresh.setClickable(true);
+                swAutoLoadmore.setEnabled(true);
+                groupAutoLoadmore.setClickable(true);
+                swBackExit.setEnabled(true);
+                groupRandomHeader.setClickable(false);
+                groupBackExit.setClickable(true);
+                swSwipeBack.setEnabled(true);
+                groupSwipeBack.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void animateRevealShow(final View view, final boolean isReverse, @Nullable Animator.AnimatorListener listener) {
+        if (!isLollipop())
+            return;
+        int cx = ScreenUtils.getScreenWidth() / 2;
+        int cy = ScreenUtils.getScreenHeight() / 2;
+        int finalRadius = Math.min(view.getWidth(), view.getHeight());
+        Animator anim;
+        if (isReverse) {
+            //关闭
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
+            anim.setInterpolator(new DecelerateInterpolator());
+            anim.setDuration(450);
+        } else {
+            //开屏
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+            anim.setDuration(450);
+        }
+
+
+        anim.start();
+        if (listener != null)
+            anim.addListener(listener);
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.tv_language:
             case R.id.tv_language_detail:
                 new AlertDialog.Builder(this)
@@ -334,15 +370,21 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_random_header:
             case R.id.tv_random_header_detail:
-                if (isRandomHeader) {
-                    swRandomHeader.setChecked(false);
-                    isRandomHeader = false;
-                } else {
-                    swRandomHeader.setChecked(true);
-                    isRandomHeader = true;
-                }
-                spUtils.put(CONFIG_RANDOM_HEADER, isRandomHeader);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).showSuccess();
+                final String[] items = {
+                        getResources().getString(R.string.random_header_pic_auto)
+                        , getResources().getString(R.string.random_header_pic_per)
+                        , getResources().getString(R.string.random_header_color_gradual)
+                        , getResources().getString(R.string.random_header_color_pure)
+                };
+                new android.support.v7.app.AlertDialog.Builder(mActivity).setItems(
+                        items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                spUtils.put(CONFIG_RANDOM_HEADER, which);
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).showSuccess();
+                            }
+                        }
+                ).show();
                 break;
 
             case R.id.tv_swipe_back:
@@ -360,6 +402,8 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_check_update:
             case R.id.tv_check_update_detail:
+                SnackbarUtils.with(toolbar).setMessage(getResources()
+                        .getString(R.string.loading)).show();
                 EasyHttp.get(CHECK_UPADTE_ADDRESS)
                         .readTimeOut(30 * 1000)//局部定义读超时
                         .writeTimeOut(30 * 1000)
@@ -425,7 +469,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_join_us_detail:
                 Intent intent = new Intent();
                 intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" +
-                "dfXHsJjgt5dX_ma5KylHFi60LZmFsuLv"));
+                        "dfXHsJjgt5dX_ma5KylHFi60LZmFsuLv"));
                 // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 try {
                     startActivity(intent);
@@ -437,71 +481,5 @@ public class SettingActivity extends BaseActivity {
                 }
                 break;
         }
-    }
-
-    private void restartWithAnime() {
-        animateRevealShow(toolbar, false, new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                swAutoRefresh.setEnabled(false);
-                groupAutoRefresh.setClickable(false);
-                swAutoLoadmore.setEnabled(false);
-                groupAutoLoadmore.setClickable(false);
-                swBackExit.setEnabled(false);
-                groupRandomHeader.setClickable(false);
-                swRandomHeader.setEnabled(false);
-                groupBackExit.setClickable(false);
-                swSwipeBack.setEnabled(false);
-                groupSwipeBack.setClickable(false);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                relaunchApp();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                swAutoRefresh.setEnabled(true);
-                groupAutoRefresh.setClickable(true);
-                swAutoLoadmore.setEnabled(true);
-                groupAutoLoadmore.setClickable(true);
-                swBackExit.setEnabled(true);
-                groupRandomHeader.setClickable(false);
-                swRandomHeader.setEnabled(false);
-                groupBackExit.setClickable(true);
-                swSwipeBack.setEnabled(true);
-                groupSwipeBack.setClickable(true);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void animateRevealShow(final View view, final boolean isReverse, @Nullable Animator.AnimatorListener listener) {
-        if (!isLollipop())
-            return;
-        int cx = ScreenUtils.getScreenWidth() / 2;
-        int cy = ScreenUtils.getScreenHeight() / 2;
-        int finalRadius = Math.min(view.getWidth(), view.getHeight());
-        Animator anim;
-        if (isReverse) {
-            //关闭
-            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-            anim.setInterpolator(new DecelerateInterpolator());
-            anim.setDuration(450);
-        } else {
-            //开屏
-            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-            anim.setDuration(450);
-        }
-
-
-        anim.start();
-        if (listener != null)
-            anim.addListener(listener);
     }
 }

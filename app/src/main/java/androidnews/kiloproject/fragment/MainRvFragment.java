@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,14 +20,14 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.util.CacheDiskUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -38,6 +37,8 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,6 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.adapter.MainRvAdapter;
-import androidnews.kiloproject.bean.data.BlockArrayBean;
 import androidnews.kiloproject.bean.data.BlockItem;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.GalleyData;
@@ -63,7 +63,6 @@ import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_BLOCK_LIST;
 import static androidnews.kiloproject.system.AppConfig.getMainDataA;
 import static androidnews.kiloproject.system.AppConfig.getMainDataB;
 
@@ -73,6 +72,8 @@ public class MainRvFragment extends BaseRvFragment {
     //    MainListData contents;
     List<NewMainListData> contents;
 
+    String[] goodTags;
+
     private static final boolean GRID_LAYOUT = false;
 
     private String CACHE_LIST_DATA;
@@ -80,9 +81,10 @@ public class MainRvFragment extends BaseRvFragment {
     private int currentPage = 0;
     private int questPage = 20;
 
-    BlockArrayBean blockArray;
-    CacheDiskUtils cacheUtil;
+    private int adSize = 0;
+    private int realPicCount = 0;
 
+    List<BlockItem> blockList;
     String typeStr;
 
     public static MainRvFragment newInstance(int type) {
@@ -111,8 +113,12 @@ public class MainRvFragment extends BaseRvFragment {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                cacheUtil = CacheDiskUtils.getInstance();
-                blockArray = cacheUtil.getParcelable(CONFIG_BLOCK_LIST, BlockArrayBean.CREATOR);
+                try {
+                    blockList = LitePal.findAll(BlockItem.class);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
 
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
@@ -120,8 +126,9 @@ public class MainRvFragment extends BaseRvFragment {
                     }.getType());
                     if (contents != null && contents.size() > 0) {
                         try {
-                            contents.get(0)
-                                    .setItemType(HEADER);
+                            NewMainListData first = contents.get(0);
+                            first.setItemType(HEADER);
+                            requestRealPic(first);
                             final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
                             List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
                             }.getType());
@@ -137,10 +144,10 @@ public class MainRvFragment extends BaseRvFragment {
                                             break;
                                         }
                                     }
-                                    if (blockArray != null && blockArray.getTypeArray().size() > 0
+                                    if (blockList != null && blockList.size() > 0
                                             && dataItem.getAds() == null) {
                                         boolean isBlockBingo = false;
-                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                        for (BlockItem blockItem : blockList) {
                                             if (isBlockBingo)
                                                 break;
                                             switch (blockItem.getType()) {
@@ -148,14 +155,14 @@ public class MainRvFragment extends BaseRvFragment {
                                                     if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
                                                         dataItem.setBlocked(true);
                                                         isBlockBingo = true;
-                                                    }else
+                                                    } else
                                                         dataItem.setBlocked(false);
                                                     break;
                                                 case TYPE_KEYWORDS:
                                                     if (dataItem.getTitle().contains(blockItem.getText())) {
                                                         dataItem.setBlocked(true);
                                                         isBlockBingo = true;
-                                                    }else
+                                                    } else
                                                         dataItem.setBlocked(false);
                                                     break;
                                             }
@@ -268,19 +275,7 @@ public class MainRvFragment extends BaseRvFragment {
                                         if (type == TYPE_REFRESH) {
                                             NewMainListData first = retMap.get(typeStr).get(0);
                                             first.setItemType(HEADER);
-                                            if (first.getAds() != null) {
-                                                for (int i = 0; i < first.getAds().size(); i++) {
-                                                    NewMainListData.AdsBean bean =
-                                                            first.getAds().get(i);
-                                                    if (!bean.getSkipID().contains("|")) {
-                                                        first.getAds().remove(i);
-                                                        continue;
-                                                    }
-                                                    if (bean.getImgsrc().equals("bigimg")) {
-                                                        requestRealPic(i, bean.getSkipID());
-                                                    }
-                                                }
-                                            }
+                                            requestRealPic(first);
                                         }
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
@@ -303,19 +298,8 @@ public class MainRvFragment extends BaseRvFragment {
                                                 loadFailed(type);
                                             }
                                             for (NewMainListData dataItem : newList) {
-                                                String mTag = dataItem.getTAGS();
-                                                String[] goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
-                                                if (TextUtils.isEmpty(mTag))
-//                                                if (!TextUtils.isEmpty(content.getSource()) && TextUtils.isEmpty(content.getTAG()))
+                                                if (isGoodItem(dataItem))
                                                     contents.add(dataItem);
-                                                else {
-                                                    for (String gTag : goodTags) {
-                                                        if (TextUtils.equals(gTag, mTag)) {
-                                                            contents.add(dataItem);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
                                                 if (cacheNews != null && cacheNews.size() > 0) {
                                                     boolean isHisBingo = false;
                                                     for (CacheNews cacheNew : cacheNews) {
@@ -328,9 +312,9 @@ public class MainRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                if (blockArray != null && blockArray.getTypeArray().size() > 0) {
+                                                if (blockList != null && blockList.size() > 0) {
                                                     boolean isBlockBingo = false;
-                                                    for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                    for (BlockItem blockItem : blockList) {
                                                         if (isBlockBingo)
                                                             break;
                                                         switch (blockItem.getType()) {
@@ -338,14 +322,14 @@ public class MainRvFragment extends BaseRvFragment {
                                                                 if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
                                                                     dataItem.setBlocked(true);
                                                                     isBlockBingo = true;
-                                                                }else
+                                                                } else
                                                                     dataItem.setBlocked(false);
                                                                 break;
                                                             case TYPE_KEYWORDS:
                                                                 if (dataItem.getTitle().contains(blockItem.getText())) {
                                                                     dataItem.setBlocked(true);
                                                                     isBlockBingo = true;
-                                                                }else
+                                                                } else
                                                                     dataItem.setBlocked(false);
                                                                 break;
                                                         }
@@ -370,7 +354,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                 for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!TextUtils.isEmpty(dataItem.getTAGS())) {
+                                                    if (!isGoodItem(dataItem)) {
                                                         continue;
                                                     }
                                                     for (NewMainListData myBean : contents) {
@@ -388,9 +372,9 @@ public class MainRvFragment extends BaseRvFragment {
                                                                 }
                                                             }
                                                         }
-                                                        if (blockArray != null && blockArray.getTypeArray().size() > 0) {
+                                                        if (blockList != null && blockList.size() > 0) {
                                                             boolean isBlockBingo = false;
-                                                            for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                            for (BlockItem blockItem : blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -398,14 +382,14 @@ public class MainRvFragment extends BaseRvFragment {
                                                                         if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
                                                                             dataItem.setBlocked(true);
                                                                             isBlockBingo = true;
-                                                                        }else
+                                                                        } else
                                                                             dataItem.setBlocked(false);
                                                                         break;
                                                                     case TYPE_KEYWORDS:
                                                                         if (dataItem.getTitle().contains(blockItem.getText())) {
                                                                             dataItem.setBlocked(true);
                                                                             isBlockBingo = true;
-                                                                        }else
+                                                                        } else
                                                                             dataItem.setBlocked(false);
                                                                         break;
                                                                 }
@@ -482,7 +466,13 @@ public class MainRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
-        mainAdapter = new MainRvAdapter(mActivity,Glide.with(this), contents);
+        realPicCount = 0;
+        if (contents.get(0).getAds() != null) {
+            adSize = contents.get(0).getAds().size();
+        } else {
+            adSize = 0;
+        }
+        mainAdapter = new MainRvAdapter(mActivity, Glide.with(this), contents);
         mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -528,8 +518,7 @@ public class MainRvFragment extends BaseRvFragment {
                         , getResources().getString(R.string.action_block_source)
                         , getResources().getString(R.string.action_block_keywords)
                 };
-                AlertDialog.Builder listDialog = new AlertDialog.Builder(mActivity);
-                listDialog.setItems(items,
+                new AlertDialog.Builder(mActivity).setItems(items,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -547,21 +536,21 @@ public class MainRvFragment extends BaseRvFragment {
                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                 try {
                                                     String newSource = contents.get(position).getSource();
-                                                    if (blockArray == null)
-                                                        blockArray = new BlockArrayBean();
+                                                    if (blockList == null)
+                                                        blockList = new ArrayList<>();
                                                     boolean isAdd = true;
-                                                    if (blockArray.getTypeArray().size() > 0) {
-                                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                    if (blockList.size() > 0) {
+                                                        for (BlockItem blockItem : blockList) {
                                                             if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
                                                                 isAdd = false;
                                                         }
                                                     }
                                                     if (isAdd) {
-                                                        blockArray.getTypeArray().add(
-                                                                new BlockItem(TYPE_SOURCE, newSource));
-                                                        cacheUtil.put(CONFIG_BLOCK_LIST, blockArray);
+                                                        BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
+                                                        blockList.add(newItem);
                                                         e.onNext(1);
-                                                    }else {
+                                                        newItem.save();
+                                                    } else {
                                                         e.onNext(2);
                                                     }
                                                 } catch (Exception e1) {
@@ -576,7 +565,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                 .subscribe(new Consumer<Integer>() {
                                                     @Override
                                                     public void accept(Integer i) throws Exception {
-                                                        switch (i){
+                                                        switch (i) {
                                                             case 0:
                                                                 SnackbarUtils.with(refreshLayout)
                                                                         .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
@@ -614,23 +603,23 @@ public class MainRvFragment extends BaseRvFragment {
                                                             @Override
                                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                                 try {
-                                                                    if (blockArray == null)
-                                                                        blockArray = new BlockArrayBean();
+                                                                    if (blockList == null)
+                                                                        blockList = new ArrayList<>();
 
                                                                     String keywords = editText.getText().toString();
                                                                     boolean isAdd = true;
-                                                                    if (blockArray.getTypeArray().size() > 0) {
-                                                                        for (BlockItem blockItem : blockArray.getTypeArray()) {
+                                                                    if (blockList.size() > 0) {
+                                                                        for (BlockItem blockItem : blockList) {
                                                                             if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
                                                                                 isAdd = false;
                                                                         }
                                                                     }
                                                                     if (isAdd) {
-                                                                        blockArray.getTypeArray().add(
-                                                                                new BlockItem(TYPE_KEYWORDS,keywords));
-                                                                        cacheUtil.put(CONFIG_BLOCK_LIST, blockArray);
+                                                                        BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
+                                                                        blockList.add(newItem);
                                                                         e.onNext(1);
-                                                                    }else {
+                                                                        newItem.save();
+                                                                    } else {
                                                                         e.onNext(2);
                                                                     }
                                                                 } catch (Exception e1) {
@@ -645,7 +634,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                                 .subscribe(new Consumer<Integer>() {
                                                                     @Override
                                                                     public void accept(Integer i) throws Exception {
-                                                                        switch (i){
+                                                                        switch (i) {
                                                                             case 0:
                                                                                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
                                                                                         + " " + getString(R.string.fail)).showSuccess();
@@ -677,8 +666,7 @@ public class MainRvFragment extends BaseRvFragment {
                                         break;
                                 }
                             }
-                        });
-                listDialog.show();
+                        }).show();
                 return true;
             }
         });
@@ -698,44 +686,78 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestRealPic(final int position, String rawId) {
-        String skipID = rawId.split("000")[1];
-        EasyHttp.get("/photo/api/set/" + "000" + skipID.replace("|", "/") + ".json")
-                .readTimeOut(30 * 1000)//局部定义读超时
-                .writeTimeOut(30 * 1000)
-                .connectTimeout(30 * 1000)
-                .timeStamp(true)
-                .execute(new SimpleCallBack<String>() {
-                    @Override
-                    public void onError(ApiException e) {
-                        if (refreshLayout != null)
-                            SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                    }
-
-                    @Override
-                    public void onSuccess(String response) {
-                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                            GalleyData galleyContent;
-                            try {
-                                galleyContent = gson.fromJson(response, GalleyData.class);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return;
-                            }
-                            if (contents != null && contents.size() > 0) {
-                                NewMainListData bean = contents.get(0);
-                                try {
-                                    bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getSquareimgurl());
-                                    if (mainAdapter != null)
-                                        mainAdapter.notifyItemChanged(0);
-                                    String json = gson.toJson(contents);
-                                    SPUtils.getInstance().put(CACHE_LIST_DATA, json);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+    private void requestRealPic(NewMainListData first) {
+        if (first.getAds() != null)
+            for (int i = 0; i < first.getAds().size(); i++) {
+                final int position = i;
+                NewMainListData.AdsBean bean =
+                        first.getAds().get(i);
+                if (!bean.getSkipID().contains("|") ||
+                        TextUtils.equals(bean.getTitle(), (first.getTitle()))) {
+                    first.getAds().remove(i);
+                    continue;
+                }
+                if (TextUtils.equals(bean.getImgsrc(), "bigimg")) {
+                    String skipID = bean.getSkipID().split("000")[1];
+                    EasyHttp.get("/photo/api/set/" + "000" + skipID.replace("|", "/") + ".json")
+                            .readTimeOut(30 * 1000)//局部定义读超时
+                            .writeTimeOut(30 * 1000)
+                            .connectTimeout(30 * 1000)
+                            .timeStamp(true)
+                            .execute(new SimpleCallBack<String>() {
+                                @Override
+                                public void onError(ApiException e) {
+                                    if (refreshLayout != null)
+                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
                                 }
-                            }
-                        }
-                    }
-                });
+
+                                @Override
+                                public void onSuccess(String response) {
+                                    if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                                        GalleyData galleyContent;
+                                        try {
+                                            galleyContent = gson.fromJson(response, GalleyData.class);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            return;
+                                        }
+                                        if (contents != null && contents.size() > 0) {
+                                            NewMainListData bean = contents.get(0);
+                                            try {
+                                                bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getImgurl());
+                                                if (mainAdapter != null)
+                                                    mainAdapter.notifyItemChanged(0);
+                                                realPicCount++;
+                                                if (adSize > 0 && realPicCount == adSize) {
+                                                    String json = gson.toJson(contents);
+                                                    SPUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                }
+            }
+    }
+
+    private boolean isGoodItem(NewMainListData data) {
+        if (data.getAds() != null && data.getAds().size() > 0)
+            return true;
+        String mTag = data.getTAGS();
+        if (TextUtils.isEmpty(data.getUrl_3w())) {       //老新闻
+            return false;
+        } else if (TextUtils.isEmpty(mTag))
+            return true;
+        else {
+            for (String gTag : goodTags) {
+                if (TextUtils.equals(gTag, mTag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
 
-    <dbname value="demo" />
+    <dbname value="setting" />
 
     <version value="1" />
 
-
     <list>
-        <mapping class="org.litepal.litepalsample.model.Album" />
+        <mapping class="androidnews.kiloproject.bean.data.BlockItem" />
     </list>
-
 
     <!--
         数据库会被存储在外部存储卡 guolin/database 路径下
          务必先请求权限
     -->
-    <storage value="guolinDatabase" />
+    <!--<storage value="guolinDatabase" />-->
 
 </litepal>

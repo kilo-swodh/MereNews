@@ -12,4 +12,9 @@
     <dimen name="elevation_toolbar">4dp</dimen>
 
     <dimen name="avatar_width">40dp</dimen>
+
+    <dimen name="cardMarginHorizontal">10dp</dimen>
+    <dimen name="cardMarginVertical">8dp</dimen>
+
+    <dimen name="materialviewpager_logoHeight">35dp</dimen>
 </resources>

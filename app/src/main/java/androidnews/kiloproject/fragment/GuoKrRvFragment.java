@@ -17,7 +17,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -33,7 +33,7 @@ import com.zhouyou.http.exception.ApiException;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidnews.kiloproject.GlideImageLoader;
+import androidnews.kiloproject.ui.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GuoKrDetailActivity;
 import androidnews.kiloproject.adapter.GuoKrAdapter;

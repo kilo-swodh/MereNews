@@ -9,6 +9,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="fuck" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
@@ -19,6 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa42d13d-cfe4-454d-b4b8-4ca23ad7c64f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_scwang_smartrefresh_SmartRefreshHeader_1_1_0_alpha_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_scwang_smartrefresh_SmartRefreshLayout_1_1_0_alpha_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_yanzhenjie_permission_2_0_0_rc12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_litepal_android_core_3_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_litepal_android_java_3_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/ui/ScrollFABBehavior.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/util/TransformationUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_fab_refresh.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_fab_scroll_top.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_fab.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/navigation_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
@@ -31,59 +44,111 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/AndroidNews.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AndroidNews.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_blankj_utilcode_1_20_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_gyf_immersionbar_immersionbar_2_3_2_beta01.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_2_2_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_2_2_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_2_2_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_2_2_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_exposed_instrumentation_api_publish_0_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_exposed_instrumentation_api_publish_0_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_rules_0_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_rules_0_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_runner_0_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_runner_0_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_CymChad_BaseRecyclerViewAdapterHelper_2_9_42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_CymChad_BaseRecyclerViewAdapterHelper_2_9_42.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_annotations_4_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_disklrucache_4_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_gifdecoder_4_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_glide_4_0_0_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_florent37_materialviewpager_1_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_gyf_immersionbar_immersionbar_2_3_2_beta03.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_gyf_immersionbar_immersionbar_2_3_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jakewharton_butterknife_8_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jakewharton_butterknife_annotations_8_8_1_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jpardogo_materialtabstrip_library_1_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jpardogo_materialtabstrip_library_1_1_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jude_swipebackhelper_3_1_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jude_swipebackhelper_3_1_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_scwang_smartrefresh_SmartRefreshHeader_1_1_0_alpha_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_scwang_smartrefresh_SmartRefreshLayout_1_1_0_alpha_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_analyzer_1_5_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_analyzer_1_5_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_android_1_5_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_leakcanary_leakcanary_android_1_5_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_tencent_bugly_crashreport_2_6_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_tencent_bugly_crashreport_2_6_6_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_yanzhenjie_permission_2_0_0_rc6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_youth_banner_banner_1_4_10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_youth_banner_banner_1_4_10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_zhouyou_rxeasyhttp_2_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_zhouyou_rxeasyhttp_2_1_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_zhy_base_adapter_3_0_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__de_hdodenhof_circleimageview_2_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__de_hdodenhof_circleimageview_2_2_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_reactivex_rxjava2_rxandroid_2_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__io_reactivex_rxjava2_rxandroid_2_0_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/app-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app-release.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/app-release.apk" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/output.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/output.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/GlideImageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/GlideImageLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/litepal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/litepal.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/ic_launcher-web.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/GlideImageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/ui/GlideImageLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CommentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/GuoKrAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/GuoKrAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/VideoRvAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/VideoRvAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ZhihuAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ZhihuAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/TypeArrayBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/IntArrayBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/CommentLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/CommentLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/CommonFullData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/CommonFullData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/GalleyData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/GalleyData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/PhotoCenterData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/PhotoCenterData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/db/Album.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/db/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/ChangeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/ChangeEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/LanguageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/LanguageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/RestartEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/RestartEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/ZhihuRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/ZhihuRvFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/InstallRationale.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/InstallRationale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/OverlayRationale.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/OverlayRationale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/RuntimeRationale.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/RuntimeRationale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/network/GoodsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/network/GoodsData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/WriteApkTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/WriteApkTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/receiver/MessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/MessageEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseLazyFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseLazyFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/MyJzvdStd.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/MyJzvdStd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/drawer_header_bg.webp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/drawer_header_bg.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/AlertWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/AlertWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/LauncherView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/LauncherView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/MyWebView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/MyWebView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/OtherGridView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/OtherGridView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/PinchImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/PinchImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_about.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_about.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_collections.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_collections.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_comment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_comment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_error.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_error.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_file_download.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_file_download.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_open_in_browser.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_open_in_browser.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/channel_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/channel_items.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/main_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/main_items.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/navigation_items.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_block_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_block_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -106,87 +171,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="NewsDetailActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3850">
-              <caret line="191" column="49" selection-start-line="191" selection-start-column="49" selection-end-line="191" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="about.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/assets/about.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="drawer_header.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="25">
+              <caret line="106" column="57" selection-start-line="106" selection-start-column="57" selection-end-line="106" selection-end-column="57" />
               <folding>
-                <element signature="e#642#663#0" expanded="true" />
-                <element signature="e#698#719#0" expanded="true" />
-                <element signature="e#756#777#0" expanded="true" />
-                <element signature="e#880#900#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#7316#7317#0" expanded="true" />
+                <element signature="e#7414#7415#0" expanded="true" />
+                <element signature="e#8519#8520#0" expanded="true" />
+                <element signature="e#8626#8627#0" expanded="true" />
               </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer2">
+        </entry>
+      </file>
+      <file leaf-file-name="MainRvFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="300" column="60" selection-start-line="300" selection-start-column="60" selection-end-line="300" selection-end-column="60" />
+              <folding>
+                <element signature="e#10151#10152#0" expanded="true" />
+                <element signature="e#10208#10209#0" expanded="true" />
+                <element signature="e#10379#10380#0" expanded="true" />
+                <element signature="e#10437#10438#0" expanded="true" />
+                <element signature="e#30356#30410#0" expanded="true" />
+                <element signature="e#43379#43380#0" expanded="true" />
+                <element signature="e#43445#43446#0" expanded="true" />
+                <element signature="e#44906#44935#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_setting.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="10300">
+              <caret line="412" column="65" selection-start-line="412" selection-start-column="65" selection-end-line="412" selection-end-column="65" />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZhiHuDetailActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3375">
-              <caret line="177" column="96" selection-start-line="177" selection-start-column="96" selection-end-line="177" selection-end-column="96" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GuoKrDetailActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4525">
-              <caret line="220" column="51" selection-start-line="220" selection-start-column="51" selection-end-line="220" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="detail_items.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="24" column="38" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="38" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseDetailActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
-            </state>
           </provider>
         </entry>
       </file>
@@ -195,44 +232,44 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="resourceFile" />
         <option value="layoutResourceFile" />
         <option value="Class" />
-        <option value="resourceFile" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onnext</find>
-      <find>onne</find>
-      <find>SPUtils.getInstance().getString(</find>
-      <find>block_list</find>
-      <find>setad</find>
-      <find>md</find>
-      <find>dialog</find>
-      <find>mater</find>
-      <find>material</find>
-      <find>CacheDiskUtils.getInstance().put(CONFIG_BLOCK_LIST, blockArrayBean);</find>
-      <find>set</find>
-      <find>result</find>
-      <find>setResult</find>
+      <find>_refresh</find>
+      <find>setAda</find>
+      <find>R.layout.</find>
+      <find>PinchImageView</find>
+      <find>showImg</find>
+      <find>start</find>
+      <find>startActivityForResult</find>
       <find>notif</find>
-      <find>block</find>
-      <find>setblock</find>
-      <find>subs</find>
-      <find>onNext</find>
-      <find>load</find>
-      <find>fuck</find>
-      <find>subscribe(</find>
-      <find>html</find>
-      <find>html =</find>
-      <find>loadUrl</find>
-      <find>case R.id.action_star:</find>
-      <find>toolbar</find>
-      <find>menu</find>
-      <find>toolbar.getMenu().getItem</find>
-      <find>.subscribeOn(</find>
-      <find>isStar = true;</find>
+      <find>.sub</find>
+      <find>empty</find>
+      <find>create</find>
+      <find>mainAdapter</find>
+      <find>CACHE_LIST_DATA</find>
+      <find>333</find>
+      <find>bgcolor=\&quot;#212121\&quot;</find>
+      <find>8dp</find>
+      <find>auto</find>
+      <find>accent_color</find>
+      <find>com.github.florent37.materialviewpager.</find>
+      <find>com.github.florent37</find>
+      <find>Imm</find>
+      <find>imgsrc</find>
+      <find>dest</find>
+      <find>SAVE_MD_VIEWPAGER</find>
+      <find>result_ok</find>
+      <find>finish</find>
+      <find>viewpager_parallaxHeaderFactor</find>
+      <find>longclick</find>
+      <find>listDialog</find>
+      <find>request</find>
     </findStrings>
     <replaceStrings>
       <replace>auto_clear</replace>
@@ -251,6 +288,7 @@
       <replace>BlockItem</replace>
       <replace>mActivity</replace>
       <replace>blockArray</replace>
+      <replace>androidnews.kiloproject.widget</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\Kilo Lab\Android\AndroidNews\app</dir>
@@ -2519,63 +2557,62 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/IntArrayBean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/StringArrayBean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockArrayBean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_edit.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_delete.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/channel_items.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/main_items.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_block_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/SpacesItemDecoration.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_small.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/shortcuts.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_shortcut_star.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/GlideImageLoader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/CommonFullData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/GalleyData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/PhotoCenterData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/db/User.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/ChangeEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/LanguageEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/RestartEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/network/ItemData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/permission/WriteApkTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/receiver/MessageEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/MessageEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/AlertWindow.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/LauncherView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/MyWebView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/network/GoodsData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CommentAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/GuoKrAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ZhihuAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/VideoRvAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/ZhihuRvFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewsDetailData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_delete_all.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/block_items.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseLazyFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_block_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_about.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_collections.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_comment.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_error.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_file_download.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_history.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_open_in_browser.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_settings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/item_delecte_shape.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/web_progress.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/material_view_pager_moving_header.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/material_view_pager_placeholder.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/assets/about.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
     <option name="width" value="1466" />
     <option name="height" value="921" />
   </component>
@@ -2585,8 +2622,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -2627,6 +2664,25 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AndroidNews" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AndroidNews" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="kiloproject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AndroidNews" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AndroidNews" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="kiloproject" type="462c0819:PsiDirectoryNode" />
+              <item name="activity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AndroidNews" type="b2602c69:ProjectViewProjectNode" />
@@ -2695,17 +2751,7 @@
             <path>
               <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="generatedJava" type="edd41e36:AndroidSourceTypeNode" />
             </path>
             <path>
               <item name="AndroidNews" type="1abcf292:AndroidViewProjectNode" />
@@ -2726,7 +2772,7 @@
     <property name="ExportApk.SignV1" value="true" />
     <property name="ExportApk.SignV2" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="guok&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java&#10;zhihu&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java&#10;deta&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java&#10;Main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;base&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java&#10;mainfr&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;bloa&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;det&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;mainf&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;spl&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;gall&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_galley.xml&#10;Base&#9;PSI&#9;JAVA://androidnews.kiloproject.system.base.BaseActivity&#10;splas&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;string&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values-zh-rCN/strings.xml&#10;blo&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;Spl&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SplashActivity&#10;item&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_small.xml&#10;maina&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;str&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values-zh-rCN/strings.xml&#10;blockac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;chann&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;setti&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SettingActivity&#10;ada&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;small&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_small.xml&#10;cac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java&#10;video&#9;PSI&#9;JAVA://androidnews.kiloproject.adapter.VideoRvAdapter&#10;bl&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;appco&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/AppConfig.java&#10;mainac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;MainRvAdapter&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;NewsDetailActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;MainRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;detai&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;item_vi&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_video.xml&#10;restoreScroll&#9;PSI&#9;JAVA://com.github.florent37.materialviewpager.MaterialViewPagerAnimator#restoreScroll&#10;color&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values/colors.xml&#10;mys&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/widget/MyJzvdStd.java&#10;activity_m&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/activity_main.xml&#10;level&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/comment_level_two.xml&#10;app&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/AppConfig.java&#10;VideoRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java&#10;my&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/widget/MyJzvdStd.java&#10;newd&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;zhihufr&#9;PSI&#9;JAVA://androidnews.kiloproject.fragment.ZhihuRvFragment&#10;guokr&#9;PSI&#9;JAVA://androidnews.kiloproject.adapter.GuoKrAdapter&#10;GuoKrRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java&#10;toolbar&#9;PSI&#9;JAVA://android.widget.Toolbar&#10;vide&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java&#10;arr&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values-zh-rCN/array.xml" />
+    <property name="SearchEverywhereHistoryKey" value="mainfr&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;mainad&#9;PSI&#9;JAVA://androidnews.kiloproject.adapter.MainRvAdapter&#10;sett&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;CommentActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CommentActivity&#10;main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;setting&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;Main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;channe&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;base&#9;PSI&#9;JAVA://androidnews.kiloproject.system.base.BaseActivity&#10;Gall&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;based&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java&#10;newsd&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;deta&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/bean/net/NewsDetailData.java&#10;MainRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;cache&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CacheActivity&#10;cac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;zhihu&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java&#10;newde&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;block&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;ChannelItem&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java&#10;gal&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;ga&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;spl&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;spla&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;gall&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;newsde&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;BlockActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;isSupportStatusBarDarkFont&#9;PSI&#9;JAVA://com.gyf.barlibrary.ImmersionBar#isSupportStatusBarDarkFont&#10;baseac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java&#10;guok&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java&#10;bloa&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;det&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;mainf&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;Base&#9;PSI&#9;JAVA://androidnews.kiloproject.system.base.BaseActivity&#10;splas&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;string&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values-zh-rCN/strings.xml&#10;blo&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;Spl&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SplashActivity&#10;item&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_small.xml&#10;maina&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;str&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/values-zh-rCN/strings.xml&#10;blockac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;chann&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;setti&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SettingActivity&#10;ada&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;small&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/res/layout/list_item_card_small.xml&#10;video&#9;PSI&#9;JAVA://androidnews.kiloproject.adapter.VideoRvAdapter&#10;bl&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java&#10;appco&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" />
     <property name="android.profiler.active" value="true" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -2916,22 +2962,23 @@
       <window_info id="Image Layers" order="2" />
       <window_info id="Build Variants" order="2" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.16738197" side_tool="true" weight="0.17792793" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.19742489" side_tool="true" weight="0.4042793" />
       <window_info anchor="right" id="Preview" order="3" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946353" weight="0.32995495" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49892703" weight="0.5292793" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49195278" weight="0.3524775" />
-      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.8197425" weight="0.35585585" />
+      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.8412017" weight="0.40269965" />
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19688842" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" sideWeight="0.6689914" visible="true" weight="0.03490991" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19688842" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.8025751" weight="0.3018018" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.6814921" visible="true" weight="0.25112614" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.72746783" weight="0.2894144" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7226395" weight="0.21621622" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Inspection Results" order="8" sideWeight="0.49570817" weight="0.3322072" />
@@ -2941,7 +2988,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" id="Assistant" order="4" weight="0.3299356" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49034336" weight="0.26576576" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Build" order="10" sideWeight="0.49785408" weight="0.2988764" />
@@ -2986,391 +3032,396 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="214" />
+      <option name="time" value="260" />
     </breakpoint-manager>
   </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="setValue">
+      <expression>
+        <expression-string>&quot;{\&quot;T1348647909107\&quot;:[{\&quot;template\&quot;:\&quot;normal1\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:17:44\&quot;,\&quot;postid\&quot;:\&quot;PHOT263V6000100A\&quot;,\&quot;source\&quot;:\&quot;视觉中国\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;title\&quot;:\&quot;印尼狮航遇难者未婚妻独自办婚礼\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:17:44\&quot;,\&quot;hasImg\&quot;:1,\&quot;topic_background\&quot;:\&quot;http://img2.cache.netease.com/m/newsapp/reading/cover1/C1348646712614.jpg\&quot;,\&quot;digest\&quot;:\&quot;\&quot;,\&quot;photosetID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;boardid\&quot;:\&quot;photoview_bbs\&quot;,\&quot;alias\&quot;:\&quot;Top News\&quot;,\&quot;hasAD\&quot;:1,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/d0ed712208a6470fb7914c7d4e559c1d.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 17:43:46\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;,\&quot;hasHead\&quot;:1,\&quot;imgType\&quot;:1,\&quot;order\&quot;:1,\&quot;editor\&quot;:[],\&quot;votecount\&quot;:156,\&quot;hasCover\&quot;:false,\&quot;docid\&quot;:\&quot;9IG74V5H00963VRO_E0OIRNF4bjzhaoyapingupdateDoc\&quot;,\&quot;tname\&quot;:\&quot;头条\&quot;,\&quot;priority\&quot;:666,\&quot;ads\&quot;:[{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;印尼狮航遇难者未婚妻独自办婚礼\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AO0001|2297830\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297810\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;艺术家去世 妻子花8万美元剥皮保存纹身\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297810\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297809\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;金沙江堰塞湖泄流致交通设施损毁\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297809\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297806\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;美副总统会晤时迟到 文在寅等到打盹\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AO0001|2297806\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297800\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;\\\&quot;双十一\\\&quot;快递高峰:物流公司连夜工作\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297800\&quot;}],\&quot;ename\&quot;:\&quot;androidnews\&quot;,\&quot;replyCount\&quot;:186,\&quot;imgsum\&quot;:3,\&quot;hasIcon\&quot;:false,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;cid\&quot;:\&quot;C1348646712614\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P00UES000189FH\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:35:56\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P00UES000189FH.html\&quot;,\&quot;source\&quot;:\&quot;新华社\&quot;,\&quot;postid\&quot;:\&quot;E0P00UES000189FH\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:521,\&quot;title\&quot;:\&quot;习近平同建交太平洋岛国领导人举行会晤\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:35:56\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P00UES000189FH.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;习近平同建交太平洋岛国领导人举行会晤\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新华社莫尔兹比港11月16日电（记者李忠发骆珺孙浩）国家主席习近平16日在莫尔兹比港同巴布亚新几内亚总理奥尼尔、密克罗尼西亚联邦总统克里斯琴、萨摩亚总理图伊拉埃\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:33:49\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0OC9FKO000189FH\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 17:30:09\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/15/E0OC9FKO000189FH.html\&quot;,\&quot;source\&quot;:\&quot;新华网$\&quot;,\&quot;postid\&quot;:\&quot;E0OC9FKO000189FH\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:520,\&quot;title\&quot;:\&quot;习近平出席巴新独立大道移交启用仪式\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 17:30:09\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/15/E0OC9FKO000189FH.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;习近平出席巴新独立大道移交启用仪式\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新华社莫尔兹比港11月16日电（记者霍小光骆珺）国家主席习近平16日在莫尔兹比港和巴布亚新几内亚总理奥尼尔共同出席中国援建的独立大道移交启用仪式。习近平抵达独立\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 15:48:57\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:15953,\&quot;docid\&quot;:\&quot;E0OG7JFI0001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:43:55\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/16/E0OG7JFI0001875N.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0OG7JFI0001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:131,\&quot;title\&quot;:\&quot;这位头发已白80后官员火了 因显老被质疑年龄造假\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:34\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/16/E0OG7JFI0001875N.html\&quot;,\&quot;replyCount\&quot;:3088,\&quot;ltitle\&quot;:\&quot;这位头发已白80后官员火了 因显老被质疑年龄造假\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;15日，云南省楚雄州委组织部发布一批干部任期公示引发社会关注。其中，出生于1980年8月、现任大姚县湾碧乡党委书记的李忠凯，拟任提名为大姚县政协副主席候选人。公\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/f74d3b5f8fbd4d639c7278ca3b88fa8b.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 16:57:50\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1586,\&quot;docid\&quot;:\&quot;E0OMUHR30001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:57:53\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/18/E0OMUHR30001899N.html\&quot;,\&quot;source\&quot;:\&quot;外交部网站\&quot;,\&quot;postid\&quot;:\&quot;E0OMUHR30001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:129,\&quot;title\&quot;:\&quot;美国副总统称南海不属于任何一个国家 外交部回应\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:57:53\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/18/E0OMUHR30001899N.html\&quot;,\&quot;replyCount\&quot;:1608,\&quot;ltitle\&quot;:\&quot;美国副总统称南海不属于任何一个国家 外交部回应\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;问：14日，李克强总理在新加坡出席第21次中国—东盟领导人会议时表示，中方愿同东盟国家共同努力，争取未来3年内完成“南海行为准则”磋商。中方提出这样的愿景有何考\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/6110850cc91047359e0efd4affa8b809.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 18:55:13\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:4546,\&quot;docid\&quot;:\&quot;E0OFJ9Q600258105\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:25:05\&quot;,\&quot;url_3w\&quot;:\&quot;http://money.163.com/18/1116/16/E0OFJ9Q600258105.html\&quot;,\&quot;source\&quot;:\&quot;央视新闻\&quot;,\&quot;postid\&quot;:\&quot;E0OFJ9Q600258105\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:129,\&quot;title\&quot;:\&quot;油价大降创近4年之最 这次省的钱是以往3倍\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:40\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/money/18/1116/16/E0OFJ9Q600258105.html\&quot;,\&quot;replyCount\&quot;:417,\&quot;ltitle\&quot;:\&quot;油价大降创近4年之最 这次省的钱是以往3倍\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;根据国家发改委消息，新一轮成品油调价窗口将于今天（11月16日）24时开启。据国家发改委价格监测中心监测，本轮成品油调价周期内（11月2日—11月15日），国际\&quot;,\&quot;boardid\&quot;:\&quot;money_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/a1528fbf9200409cba92adc5ab584e6b.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 16:46:44\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:18755,\&quot;docid\&quot;:\&quot;E0O8C6B20001899O\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:26:22\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/14/E0O8C6B20001899O.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0O8C6B20001899O\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:128,\&quot;title\&quot;:\&quot;副局长因洗澡错过电话被党内警告 官方:撤销处分\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:45\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/14/E0O8C6B20001899O.html\&quot;,\&quot;replyCount\&quot;:9620,\&quot;ltitle\&quot;:\&quot;副局长因洗澡错过电话被党内警告 官方:撤销处分\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;16日，安徽省滁州市全椒县委针对备受关注的“副局长晚间洗澡未接巡查组电话被处分”做出回应。通报称，近日，相关媒体报道了“全椒县农村公路局扶贫干部张伟在省脱贫攻坚\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/0277e47f07494d87bc5030bf1e0c8e9c.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 14:40:31\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:513,\&quot;docid\&quot;:\&quot;E0P0FMKM00038FO9\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:47:32\&quot;,\&quot;url_3w\&quot;:\&quot;http://ent.163.com/18/1116/21/E0P0FMKM00038FO9.html\&quot;,\&quot;source\&quot;:\&quot;网易娱乐\&quot;,\&quot;postid\&quot;:\&quot;E0P0FMKM00038FO9\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:125,\&quot;title\&quot;:\&quot;马蓉发怒再怼王宝强：看看到底谁是真孙子 \&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:47:32\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/ent/18/1116/21/E0P0FMKM00038FO9.html\&quot;,\&quot;replyCount\&quot;:607,\&quot;ltitle\&quot;:\&quot;马蓉发怒再怼王宝强：看看到底谁是真孙子 \&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;网易娱乐11月16日报道16日晚，马蓉爆粗口再发文怼王宝强：您也可以选择继续当“老实人”装孙子，近期我会不定时更新微博，看看到底谁是真孙子?全文：先知情人爆料，\&quot;,\&quot;boardid\&quot;:\&quot;ent2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/b5642acd675a43b1b91f97dea16d0f5b.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:41:52\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P232L10001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/22/E0P232L10001875N.html\&quot;,\&quot;source\&quot;:\&quot;政知圈\&quot;,\&quot;postid\&quot;:\&quot;E0P232L10001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;丈夫获无期13年后 外逃女贪官被没收23套上海房产\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/22/E0P232L10001875N.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;丈夫获无期13年后 外逃女贪官被没收23套上海房产\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;今天的话题，来说一个外逃女贪官。11月15日，黄艳兰案一审宣判，这个案子的特别之处在于，黄艳兰是外逃十几年的女贪官，至今仍未归案；其二，该案一审开庭和宣判时，黄\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/c38d00f2d0174fd1bd8ff05b0cfd74fa.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 22:09:56\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:23,\&quot;docid\&quot;:\&quot;E0P1KPKB0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/22/E0P1KPKB0001899N.html\&quot;,\&quot;source\&quot;:\&quot;北青网-北京青年报\&quot;,\&quot;postid\&quot;:\&quot;E0P1KPKB0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;白血病男童被父亲放弃 医生:若化疗顺利费用约10万\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/22/E0P1KPKB0001899N.html\&quot;,\&quot;replyCount\&quot;:29,\&quot;ltitle\&quot;:\&quot;白血病男童被父亲放弃 医生:若化疗顺利费用约10万\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;近日，有媒体报道江苏省淮安市一8岁男童强强（化名）患有白血病，其父因担心“人财两空”放弃治疗，孩子母亲和当地村委会多次调解无果。今日，在爱心人士的帮助下，强强已\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/cf0b269d26024812846e4960abd47cd6.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 22:02:08\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:9,\&quot;docid\&quot;:\&quot;E0P159EA0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P159EA0001899N.html\&quot;,\&quot;source\&quot;:\&quot;中国交通广播电视台\&quot;,\&quot;postid\&quot;:\&quot;E0P159EA0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;老大爷碰瓷演技堪称专业:假装被碰 再踉跄几步跌倒\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P159EA0001899N.html\&quot;,\&quot;replyCount\&quot;:13,\&quot;ltitle\&quot;:\&quot;老大爷碰瓷演技堪称专业:假装被碰 再踉跄几步跌倒\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;11月14日,网友爆料,上海某路口,一辆红色宝马车正在正常行驶,突然,旁边的一位老大爷胳膊触碰宝马车后视镜,然后假装摔倒在地,通过调取监控发现,这名老人多次作案\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/395a5911689040ff8bb3046d58e6b407.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:53:40\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P07DT60001875P\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P07DT60001875P.html\&quot;,\&quot;source\&quot;:\&quot;中国纪检监察报\&quot;,\&quot;postid\&quot;:\&quot;E0P07DT60001875P\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;147户村民苦等产权证8年 只因5个村干部忙于竞选\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P07DT60001875P.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;147户村民苦等产权证8年 只因5个村干部忙于竞选\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;“这个房本我盼了8年了，终于要发下来啦！”近日，在重庆市綦江区永新镇建设村村务公示栏上，一份关于建设村147户宅基地及房屋申请登记情况的公示表特别醒目，村民们围\&quot;,\&quot;boardid\&quot;:\&quot;news_shehui7_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/61f4eac40cc84e709423f52194fc680e.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:37:21\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1832,\&quot;docid\&quot;:\&quot;E0OQIT9V0001875O\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:11:49\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/19/E0OQIT9V0001875O.html\&quot;,\&quot;source\&quot;:\&quot;环球时报-环球网\&quot;,\&quot;postid\&quot;:\&quot;E0OQIT9V0001875O\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;普京在新加坡参会时走过安检门 报警器突然响了\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:11:49\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/19/E0OQIT9V0001875O.html\&quot;,\&quot;replyCount\&quot;:2024,\&quot;ltitle\&quot;:\&quot;普京在新加坡参会时走过安检门 报警器突然响了\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;@环球网【普京在新加坡参会时走过安检门，报警器突然响了...】当地时间11月14日，俄罗斯总统普京在新加坡出席俄罗斯-东盟峰会。在进入会场时，会场工作人员引导普\&quot;,\&quot;boardid\&quot;:\&quot;news_guoji2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/ca05737e00774fb19e595ed5067ec5a9.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 19:58:46\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:10260,\&quot;docid\&quot;:\&quot;E0O4E1HU0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:11:07\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/13/E0O4E1HU0001899N.html\&quot;,\&quot;source\&quot;:\&quot;都市快报\&quot;,\&quot;postid\&quot;:\&quot;E0O4E1HU0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;历时22年的浙江“第一悬案”告破 幕后英雄曝光\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:11:07\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/13/E0O4E1HU0001899N.html\&quot;,\&quot;replyCount\&quot;:8579,\&quot;ltitle\&quot;:\&quot;历时22年的浙江“第一悬案”告破 幕后英雄曝光\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;今天，我们要给大家介绍历时22年之久、浙江“第一悬案”告破的幕后英雄之一——绍兴市公安局刑事科学技术研究所，在“第一悬案”中，有三起案件涉及绍兴，绍兴市公安局刑\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/cec3c396c76e40e9a22f58c754cae78a.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 13:31:38\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:5,\&quot;docid\&quot;:\&quot;E0OVVC5A0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0OVVC5A0001899N.html\&quot;,\&quot;source\&quot;:\&quot;澎湃新闻\&quot;,\&quot;postid\&quot;:\&quot;E0OVVC5A0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;女子遭狗咬住院被人办出院手续 狗主人称其想敲诈\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0OVVC5A0001899N.html\&quot;,\&quot;replyCount\&quot;:10,\&quot;ltitle\&quot;:\&quot;女子遭狗咬住院被人办出院手续 狗主人称其想敲诈\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;黄建华的诊断病历。被一条拉布拉多犬咬伤住院近1月后，狗主人在未有沟通、也未告知病人及家属的情况下，单方面赴医院给伤者办理了出院手续。日前，南京市民黄女士向澎湃新\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/2e3654dfd90345a08d515a20069bff83.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:32:57\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P0L83S000187VE\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P0L83S000187VE.html\&quot;,\&quot;source\&quot;:\&quot;澎湃新闻\&quot;,\&quot;postid\&quot;:\&quot;E0P0L83S000187VE\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;说好集赞免费吃大餐酒店不认账 400名大学生维权\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P0L83S000187VE.html\&quot;,\&quot;replyCount\&quot;:1,\&quot;ltitle\&quot;:\&quot;说好集赞免费吃大餐酒店不认账 400名大学生维权\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;11月15日，@中南财经政法大学旁一酒店发布集赞换代金券免费吃大餐活动，约400位学生前来兑换时，酒店却不予兑换。现场很多都是中南财经政法大学法学院的学生，积极\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/0204167ae2084d3fbd7b7b5db1109a82.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:28:00\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1676,\&quot;docid\&quot;:\&quot;BTIPOV8G051485AA\&quot;,\&quot;lmodify\&quot;:\&quot;2016-08-04 19:40:43\&quot;,\&quot;url_3w\&quot;:\&quot;\&quot;,\&quot;source\&quot;:\&quot;军报记者\&quot;,\&quot;postid\&quot;:\&quot;BTIPOV8G051485AA\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:80,\&quot;title\&quot;:\&quot;盘点里约奥运会代表团里的中国军人\&quot;,\&quot;mtime\&quot;:\&quot;2016-08-04 19:40:43\&quot;,\&quot;url\&quot;:\&quot;http://mp.weixin.qq.com/s?timestamp=1470224428&amp;src=3&amp;ver=1&amp;signature=pp6dsHPvtd9ryjzdCH-v9IC27c*IVWTf0P0-L8wWpgaezGH17dXey4C1XASANmEuPogEC2W-aN6dtKpVF3z874VKeeADFzbhfTV*ofcmGFdAhdP6os*fOpav4fQQOv6aXvNmQh2iJrIoUYW2Zf8iIkze570kvDH8SN0h2LJmpSs=\&quot;,\&quot;replyCount\&quot;:1892,\&quot;ltitle\&quot;:\&quot;盘点里约奥运会代表团里的中国军人\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;里约奥运会就要开幕啦！全世界人民都在翘首以盼。7月18日，里约奥运会中国代表团在北京正式成立。在往年的奥运会中，中国军人队员的赛场表现可圈可点，从军人集体里也走\&quot;,\&quot;boardid\&quot;:\&quot;dy_wemedia_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/3dfd1faf09834848abbf7a4c8a824b3b20160804114238.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2016-08-03 20:17:23\&quot;,\&quot;daynum\&quot;:\&quot;17016\&quot;},{\&quot;votecount\&quot;:4,\&quot;docid\&quot;:\&quot;E0OU6U9I0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:21:00\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0OU6U9I0001899N.html\&quot;,\&quot;source\&quot;:\&quot;国是直通车\&quot;,\&quot;postid\&quot;:\&quot;E0OU6U9I0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;民办教育出新政 因虐童案而\\\&quot;凉\\\&quot;的红黄蓝股价暴跌\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:21:00\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0OU6U9I0001899N.html\&quot;,\&quot;replyCount\&quot;:2,\&quot;ltitle\&quot;:\&quot;民办教育出新政 因虐童案而\\\&quot;凉\\\&quot;的红黄蓝股价暴跌\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;毫无征兆的政策冲击。一份文件，让红黄蓝“凉了半截”。15日，国务院式发布《关于学前教育深化改革规范发展的若干意见》。其中规定，民办园一律不准单独或作为一部分资产\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/ed8317161e234f0481b1585d7680b537.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:02:08\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:8672,\&quot;docid\&quot;:\&quot;E0OQR0BA0001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:47:03\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/20/E0OQR0BA0001875N.html\&quot;,\&quot;source\&quot;:\&quot;人民网-人民日报\&quot;,\&quot;postid\&quot;:\&quot;E0OQR0BA0001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;80后干部竟头发花白 官方:慎重起见 深入核查过了\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:11:29\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/20/E0OQR0BA0001875N.html\&quot;,\&quot;replyCount\&quot;:9464,\&quot;ltitle\&quot;:\&quot;80后干部竟头发花白 官方:慎重起见 深入核查过了\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;2018年11月15日，《中共楚雄州委组织部州管干部任前公示公告》楚组干任公示[2018]第6号发布后，部分网友认为李忠凯同志照片和年龄差距较大，置疑其年龄不真\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/c7507747eece4e7f854757516fb77c1f.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 20:03:11\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1072,\&quot;docid\&quot;:\&quot;E0ONETFK0001875P\&quot;,\&quot;skipID\&quot;:\&quot;S1542367712196\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:54:29\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/19/E0ONETFK0001875P.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0ONETFK0001875P\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;歌手卢庚戌现身北大第一医院 向郑成月捐款2万元\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:54:29\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/19/E0ONETFK0001875P.html\&quot;,\&quot;specialID\&quot;:\&quot;S1542367712196\&quot;,\&quot;replyCount\&quot;:1121,\&quot;ltitle\&quot;:\&quot;歌手卢庚戌现身北大第一医院 向郑成月捐款2万元\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新京报讯今日（16日）下午，歌手卢庚戌现身北京大学第一医院，探望郑成月，现场捐赠2万元。在经纪人的陪同下，水木年华卢庚戌穿着黑色羽绒服，来到北京大学第一医院。其\&quot;,\&quot;skipType\&quot;:\&quot;special\&quot;,\&quot;boardid\&quot;:\&quot;news_shehui7_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/2f85f2a879424c268781e8957bb60d6c.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 19:04:09\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:820,\&quot;docid\&quot;:\&quot;E0OML5M30001899N\&quot;,\&quot;skipID\&quot;:\&quot;S1539754809952\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 19:59:32\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/18/E0OML5M30001899N.html\&quot;,\&quot;source\&quot;:\&quot;环球时报-环球网\&quot;,\&quot;postid\&quot;:\&quot;E0OML5M30001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;土耳其方面爆出卡舒吉案新证据 包括另一段录音\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 19:29:01\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/18/E0OML5M30001899N.html\&quot;,\&quot;specialID\&quot;:\&quot;S1539754809952\&quot;,\&quot;replyCount\&quot;:891,\&quot;ltitle\&quot;:\&quot;土耳其方面爆出卡舒吉案新证据 包括另一段录音\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;[环球网综合报道]据法新社11月16日报道，土耳其一家报纸周五报道说，土耳其有更多的证据反驳沙特关于卡舒吉遇害案的说法，其中包括有第二段录音。法新社援引土耳其《\&quot;,\&quot;skipType\&quot;:\&quot;special\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/37d68dad6b9f4531864f000eded9be39.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 18:50:06\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;}]}&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_shortcut_star.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="53" column="51" selection-start-line="53" selection-start-column="51" selection-end-line="53" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawer_header_bg.webp">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/GlideImageLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CymChad/BaseRecyclerViewAdapterHelper/2.9.42/99d59ced21aeeb95e3cd57c29d3378842ceebfa5/BaseRecyclerViewAdapterHelper-2.9.42-sources.jar!/com/chad/library/adapter/base/BaseQuickAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="126" column="22" selection-start-line="126" selection-start-column="22" selection-end-line="126" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CommentAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/GuoKrAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="43" column="17" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ZhihuAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="43" column="35" lean-forward="true" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="44" column="20" lean-forward="true" selection-start-line="44" selection-start-column="20" selection-end-line="45" selection-end-column="27" />
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/VideoRvAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="180" column="90" selection-start-line="180" selection-start-column="90" selection-end-line="180" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="51" column="8" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/window_launcher.xml">
-      <provider editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ZhihuAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="4" column="42" lean-forward="true" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="69" column="73" selection-start-line="69" selection-start-column="73" selection-end-line="69" selection-end-column="73" />
+        <state relative-caret-position="100">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/network/GoodsData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1101">
-          <caret line="141" column="8" selection-start-line="141" selection-start-column="8" selection-end-line="141" selection-end-column="47" />
+        <state relative-caret-position="100">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/event/LanguageEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="38" column="63" lean-forward="true" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="63" />
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="36" />
+        <state relative-caret-position="100">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/ZhihuRvFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="81" column="82" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
+        <state relative-caret-position="175">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/VideoRvFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7273">
-          <caret line="343" column="68" selection-start-line="343" selection-start-column="68" selection-end-line="343" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7596">
-          <caret line="375" column="63" selection-start-line="375" selection-start-column="63" selection-end-line="375" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CacheActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_about.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
-          <caret line="79" column="40" lean-forward="true" selection-start-line="79" selection-start-column="40" selection-end-line="79" selection-end-column="40" />
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_cache.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_collections.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_items.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_comment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_file_download.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_fullscreen.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_error.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_edit.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_delete_all.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="26" selection-start-column="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/block_items.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="42" />
-          <folding>
-            <element signature="e#229#260#0" expanded="true" />
-            <element signature="e#460#487#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_delete.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_history.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_library_add.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="875">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="28" />
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/data/BlockArrayBean.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_open_in_browser.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/item_delecte_shape.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <caret line="4" column="30" lean-forward="true" selection-end-line="6" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BlockActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/subscribe_item_bg.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2900">
-          <caret line="161" column="95" selection-start-line="161" selection-start-column="95" selection-end-line="161" selection-end-column="95" />
+        <state relative-caret-position="72">
+          <caret line="28" column="59" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseLazyFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/web_progress.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+        <state relative-caret-position="547">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/array.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/array.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/animation_constants.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/ic_launcher_background.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-night/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#1386#1426#0" expanded="true" />
-          </folding>
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-232">
+          <caret line="74" column="51" selection-start-line="74" selection-start-column="51" selection-end-line="74" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/material_view_pager_moving_header.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="89" selection-start-line="5" selection-start-column="89" selection-end-line="5" selection-end-column="89" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/bean/net/NewMainListData.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/material_view_pager_placeholder.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="408" column="103" lean-forward="true" selection-start-line="408" selection-start-column="103" selection-end-line="408" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3050">
-          <caret line="185" column="52" selection-start-line="185" selection-start-column="52" selection-end-line="185" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.1.1/6112a58432d62645eca9d0aa77bf6bc7ad75b66a/rxjava-2.1.1-sources.jar!/io/reactivex/ObservableOnSubscribe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="38" />
+        <state relative-caret-position="125">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/AlertWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3375">
-          <caret line="177" column="96" selection-start-line="177" selection-start-column="96" selection-end-line="177" selection-end-column="96" />
+        <state relative-caret-position="13">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1862">
+          <caret line="69" column="75" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="186" column="40" selection-start-line="186" selection-start-column="40" selection-end-line="186" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3850">
-          <caret line="191" column="49" selection-start-line="191" selection-start-column="49" selection-end-line="191" selection-end-column="49" />
+        <state relative-caret-position="-701">
+          <caret line="320" selection-start-line="320" selection-end-line="320" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GuoKrDetailActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4525">
-          <caret line="220" column="51" selection-start-line="220" selection-start-column="51" selection-end-line="220" selection-end-column="51" />
+        <state relative-caret-position="25">
+          <caret line="380" column="49" selection-start-line="380" selection-start-column="49" selection-end-line="380" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding>
-            <element signature="e#642#663#0" expanded="true" />
-            <element signature="e#698#719#0" expanded="true" />
-            <element signature="e#756#777#0" expanded="true" />
-            <element signature="e#880#900#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="334">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        <state relative-caret-position="700">
+          <caret line="180" column="76" selection-start-line="180" selection-start-column="71" selection-end-line="180" selection-end-column="76" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/about.html">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="25">
+          <caret line="103" column="92" selection-start-line="103" selection-start-column="92" selection-end-line="103" selection-end-column="92" />
+          <folding>
+            <element signature="e#4908#4928#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="55" column="43" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="58" column="26" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="71" column="39" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-zh-rCN/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="74" column="42" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="382" column="53" selection-start-line="382" selection-start-column="53" selection-end-line="382" selection-end-column="53" />
+          <folding>
+            <element signature="e#16260#16317#0" expanded="true" />
+            <element signature="e#16344#16400#0" expanded="true" />
+            <element signature="e#16427#16489#0" expanded="true" />
+            <element signature="e#16516#16575#0" expanded="true" />
+            <element signature="e#16922#16965#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="10300">
+          <caret line="412" column="65" selection-start-line="412" selection-start-column="65" selection-end-line="412" selection-end-column="65" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="106" column="57" selection-start-line="106" selection-start-column="57" selection-end-line="106" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7316#7317#0" expanded="true" />
+            <element signature="e#7414#7415#0" expanded="true" />
+            <element signature="e#8519#8520#0" expanded="true" />
+            <element signature="e#8626#8627#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="300" column="60" selection-start-line="300" selection-start-column="60" selection-end-line="300" selection-end-column="60" />
+          <folding>
+            <element signature="e#10151#10152#0" expanded="true" />
+            <element signature="e#10208#10209#0" expanded="true" />
+            <element signature="e#10379#10380#0" expanded="true" />
+            <element signature="e#10437#10438#0" expanded="true" />
+            <element signature="e#30356#30410#0" expanded="true" />
+            <element signature="e#43379#43380#0" expanded="true" />
+            <element signature="e#43445#43446#0" expanded="true" />
+            <element signature="e#44906#44935#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
         </state>
       </provider>
     </entry>

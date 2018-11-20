@@ -38,7 +38,7 @@ public class AppConfig {
     public static final String getGuoKrDetail = "/pick/v2/";
 
     //更新
-    public static final String CHECK_UPADTE_ADDRESS = "http://osyuohm14.bkt.clouddn.com/update";
+    public static final String CHECK_UPADTE_ADDRESS = "https://raw.githubusercontent.com/kilo-swodh/MereNews/master/update.txt";
 
     //常量
     public static final String CONFIG_LANGUAGE = "config_language";
@@ -57,7 +57,10 @@ public class AppConfig {
 
     public static final String CONFIG_TYPE_ARRAY = "config_type_array";
 
-    public static final String CONFIG_BLOCK_LIST = "config_block_list";
+    public static final String CONFIG_BLOCK_LIST = "config_block_list"; //未来废弃
+
+    public static final String CONFIG_HAVE_CHECK = "config_event_173";  //设置转移
+
 
     public static boolean isSwipeBack = false;
 

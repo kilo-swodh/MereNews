@@ -31,8 +31,8 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.CacheNewsAdapter;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.system.base.BaseActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -47,27 +47,28 @@ import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 
 public class CacheActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rv_content)
     RecyclerView rvContent;
+    ProgressBar progress;
+    ConstraintLayout rootView;
+    ConstraintLayout emptyView;
 
     CacheNewsAdapter cacheNewsAdapter;
     List<CacheNews> currentData;
     int type;
     boolean isChange;
-    @BindView(R.id.progress)
-    ProgressBar progress;
-    @BindView(R.id.root_view)
-    ConstraintLayout rootView;
-    @BindView(R.id.empty_view)
-    ConstraintLayout emptyView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        rvContent = (RecyclerView) findViewById(R.id.rv_content);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        rootView = (ConstraintLayout) findViewById(R.id.root_view);
+        emptyView = (ConstraintLayout) findViewById(R.id.empty_view);
+
 
         initToolbar(toolbar, true);
         type = getIntent().getIntExtra("type", 0);
@@ -111,7 +112,7 @@ public class CacheActivity extends BaseActivity {
                         @Override
                         public void accept(Integer i) throws Exception {
                             progress.setVisibility(View.GONE);
-                            cacheNewsAdapter = new CacheNewsAdapter(mActivity,Glide.with(mActivity), currentData);
+                            cacheNewsAdapter = new CacheNewsAdapter(mActivity, Glide.with(mActivity), currentData);
                             if (i == 0)
                                 setEmptyView();
                             cacheNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -155,7 +156,7 @@ public class CacheActivity extends BaseActivity {
                                             break;
                                     }
                                     if (intent != null)
-                                        startActivity(intent);
+                                        startActivityForResult(intent, CACHE_RESULT);
                                 }
                             });
                             cacheNewsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
@@ -193,6 +194,37 @@ public class CacheActivity extends BaseActivity {
     private void setEmptyView() {
         progress.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                @Override
+                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                    String cacheJson = SPUtils.getInstance().getString(type + "", "");
+                    if (!TextUtils.isEmpty(cacheJson)) {
+                        currentData.clear();
+                        currentData.addAll(gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
+                        }.getType()));
+                        e.onNext(true);
+                    }
+                    e.onComplete();
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean aBoolean) throws Exception {
+                            if (aBoolean) {
+                                cacheNewsAdapter.notifyDataSetChanged();
+                                if (currentData.size() < 1)
+                                    setEmptyView();
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
