@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/cardMarginVertical"
     android:layout_marginBottom="@dimen/cardMarginVertical"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="4dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
@@ -48,7 +48,7 @@
             android:layout_marginRight="@dimen/margin_normal"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/main_text_color_drak"
+            android:textColor="@color/main_text_color_dark"
             android:textSize="@dimen/text_small"
             app:layout_constraintBottom_toBottomOf="@+id/item_card_img"
             app:layout_constraintEnd_toStartOf="@+id/item_card_times"

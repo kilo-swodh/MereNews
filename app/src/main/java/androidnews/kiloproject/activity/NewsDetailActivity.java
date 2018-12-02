@@ -1,6 +1,5 @@
 package androidnews.kiloproject.activity;
 
-import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -11,15 +10,15 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,8 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.getNewsDetailA;
-import static androidnews.kiloproject.system.AppConfig.getNewsDetailB;
+import static androidnews.kiloproject.system.AppConfig.GET_NEWS_DETAIL;
+import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class NewsDetailActivity extends BaseDetailActivity {
@@ -94,7 +93,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                             if (aBoolean) {
                                                 item.setIcon(R.drawable.ic_star_no);
                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
-                                            }else
+                                            } else
                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
                                         }
                                     });
@@ -126,6 +125,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                 + " " + getString(R.string.successful)).showSuccess();
                         break;
                     case R.id.action_browser:
+                        if (currentData == null)
+                            break;
                         Uri uri = Uri.parse(currentData.getShareLink());
                         intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
@@ -146,7 +147,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
     protected void initSlowly() {
         String docid = getIntent().getStringExtra("docid");
         if (!TextUtils.isEmpty(docid)) {
-            EasyHttp.get(getNewsDetailA + docid + getNewsDetailB)
+            EasyHttp.get(GET_NEWS_DETAIL.replace("{docid}", docid))
                     .readTimeOut(30 * 1000)//局部定义读超时
                     .writeTimeOut(30 * 1000)
                     .connectTimeout(30 * 1000)
@@ -191,7 +192,10 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                             public void accept(Boolean aBoolean) throws Exception {
                                                 if (aBoolean) {
                                                     isStar = true;
-                                                    toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
+                                                    try {
+                                                        toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
+                                                    } catch (Exception e) {
+                                                    }
                                                 }
 //                                                refreshLayout.finishRefresh();
                                             }
@@ -230,7 +234,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);
                                 webView.loadData(html, "text/html; charset=UTF-8", null);
-                            }else
+                            } else
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             progress.setVisibility(View.GONE);
                         }
@@ -250,7 +254,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     return;
                 try {
                     title = currentData.getTitle();
-                    source = currentData.getSource();
+                    if (!currentData.getSource().equals("null"))
+                        source = currentData.getSource();
                     pTime = currentData.getPtime();
                     body = currentData.getBody();
                 } catch (Exception e1) {
@@ -264,7 +269,12 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />" +
                         "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
                         "<title>Document</title>" +
-                        "<style>" +
+                        "<style type=\"text/css\">" +
+                        "body{\n" +
+                        "margin-left:18px;\n" +
+                        "margin-right:18px;\n" +
+                        "}" +
+                        "p {line-height:36px;}" +
                         "body img{" +
                         "width: 100%;" +
                         "height: 100%;" +
@@ -273,7 +283,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         "width: 100%;" +
                         "height: 100%;" +
                         "}" +
-                        "p{margin: 30px auto}" +
+                        "p{margin: 25px auto}" +
                         "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
                         "</style>" +
                         "</head>" +
@@ -317,7 +327,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     @Override
                     public void accept(Boolean b) throws Exception {
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
-                        if (b) {
+                        if (b && webView != null) {
                             webView.loadData(html, "text/html; charset=UTF-8", null);
                             saveCacheAsyn(CACHE_HISTORY);
                         }
@@ -329,53 +339,43 @@ public class NewsDetailActivity extends BaseDetailActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String cacheJson = SPUtils.getInstance().getString(type + "", "");
-                List<CacheNews> list;
-                if (TextUtils.isEmpty(cacheJson)) {
-                    list = new ArrayList<>();
-                } else {
-                    list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                    }.getType());
+                if (currentData == null)
+                    return;
+                List<CacheNews> list = new ArrayList<>();
+                try {
+                    list = LitePal.where("docid = ?", currentData.getDocid()).find(CacheNews.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (list != null && list.size() > 0)
                     for (CacheNews cacheNews : list) {
-                        if (cacheNews.getDocid().equals(currentData.getDocid()))
+                        if (cacheNews.getType() == type)
                             return;
                     }
-                }
-
                 CacheNews cacheNews = new CacheNews(currentData.getTitle(),
                         currentData.getRecImgsrc(),
                         currentData.getSource(),
                         currentData.getDocid(),
-                        html);
-                list.add(0, cacheNews);
-
-                if (list.size() > MAX_HISTORY) {
-                    list.remove(list.size() - 1);
-                }
-                try {
-                    String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                    }.getType());
-                    SPUtils.getInstance().put(type + "", saveJson);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        html,
+                        type,
+                        TYPE_NETEASE_START);
+                cacheNews.save();
             }
         }).start();
     }
 
     private boolean checkStar(boolean isClear) {
-        String hisJson = SPUtils.getInstance().getString(CACHE_COLLECTION + "", "");
-        List<CacheNews> list;
-        if (!TextUtils.isEmpty(hisJson)) {
-            list = gson.fromJson(hisJson, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            for (CacheNews cache : list) {
-                if (TextUtils.equals(cache.getDocid(), currentData.getDocid())) {
+        List<CacheNews> list = null;
+        try {
+            list = LitePal.where("docid = ?", currentData.getDocid()).find(CacheNews.class);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        if (list != null && list.size() > 0) {
+            for (CacheNews cacheNews : list) {
+                if (cacheNews.getType() == CACHE_COLLECTION) {
                     if (isClear) {
-                        list.remove(cache);
-                        String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                        }.getType());
-                        SPUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
+                        LitePal.delete(CacheNews.class, cacheNews.getId());
                         setResult(RESULT_OK);
                     }
                     return true;

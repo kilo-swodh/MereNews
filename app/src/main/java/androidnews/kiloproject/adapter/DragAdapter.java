@@ -1,6 +1,7 @@
 package androidnews.kiloproject.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.List;
 
@@ -19,7 +22,6 @@ public class DragAdapter extends BaseAdapter {
     /**
      * TAG
      */
-    private final static String TAG = "DragAdapter";
     /**
      * 是否显示底部的ITEM
      */
@@ -88,16 +90,20 @@ public class DragAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.channel_category_item, null);
+        ChannelItem channel = getItem(position);
+        if (TextUtils.equals(channel.getName(),"fake")){
+            view.setVisibility(View.GONE);
+            return view;
+        }
         item_text = (TextView) view.findViewById(R.id.text_item);
         ri_delete = (RelativeLayout) view.findViewById(R.id.ri_delete);
         TextView icon_news = (TextView) view.findViewById(R.id.icon_new);
-        ChannelItem channel = getItem(position);
         item_text.setText(channel.getName());
 
-        if ((position == 0)) {
+//        if ((position == 0)) {
 //			item_text.setTextColor(context.getResources().getColor(R.color.black));
-            item_text.setEnabled(false);
-        }
+//            item_text.setEnabled(false);
+//        }
         if (isChanged && (position == holdPosition) && !isItemShow) {
             item_text.setText("");
             item_text.setSelected(true);
@@ -121,7 +127,7 @@ public class DragAdapter extends BaseAdapter {
             item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
         }
         //TODO 展示删除按钮
-        if (isDeleteIcon && position != 0) {
+        if (isDeleteIcon) {
             if (!isVisible && (position == -1 + channelList.size())
                     || (remove_position == position) && isDeleteing
                     || (position == dragGrid.getShowing()) && !isItemShow) {
@@ -171,18 +177,22 @@ public class DragAdapter extends BaseAdapter {
      * 拖动变更频道排序
      */
     public void exchange(int dragPostion, int dropPostion) {
-        holdPosition = dropPostion;
-        ChannelItem dragItem = getItem(dragPostion);
-        Log.d(TAG, "startPostion=" + dragPostion + ";endPosition=" + dropPostion);
-        if (dragPostion < dropPostion) {
-            channelList.add(dropPostion + 1, dragItem);
-            channelList.remove(dragPostion);
-        } else {
-            channelList.add(dropPostion, dragItem);
-            channelList.remove(dragPostion + 1);
+        try {
+            holdPosition = dropPostion;
+            ChannelItem dragItem = getItem(dragPostion);
+            LogUtils.d("startPostion=" + dragPostion + ";endPosition=" + dropPostion);
+            if (dragPostion < dropPostion) {
+                channelList.add(dropPostion + 1, dragItem);
+                channelList.remove(dragPostion);
+            } else {
+                channelList.add(dropPostion, dragItem);
+                channelList.remove(dragPostion + 1);
+            }
+            isChanged = true;
+            notifyDataSetChanged();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        isChanged = true;
-        notifyDataSetChanged();
     }
 
     /**
@@ -247,7 +257,6 @@ public class DragAdapter extends BaseAdapter {
 
     //隐藏删除键
     public void hideDeleteIcon(boolean hideDeleteIcon) {
-
         this.hideDeleteIcon = hideDeleteIcon;
     }
 
@@ -256,7 +265,6 @@ public class DragAdapter extends BaseAdapter {
     }
 
     public void setOnDelecteItemListener(OnDelecteItemListener listener) {
-
         this.listener = listener;
     }
 
@@ -266,7 +274,6 @@ public class DragAdapter extends BaseAdapter {
      * @param isDeleteing
      */
     public void setIsDeleteing(boolean isDeleteing) {
-
         this.isDeleteing = isDeleteing;
     }
 

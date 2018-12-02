@@ -19,14 +19,14 @@ android {
 //            enabled true
 //        }
 
-        versionCode 1091
-        versionName "1.0.9-beta1"
+        versionCode 1104
+        versionName "1.1.0-alpha04"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             //混淆
-            minifyEnabled false
+            minifyEnabled false  //设为false即可断点调试
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -67,7 +67,7 @@ dependencies {
 
     //权限
     // https://github.com/yanzhenjie/AndPermission
-    api 'com.yanzhenjie:permission:2.0.0-rc12'
+//    api 'com.yanzhenjie:permission:2.0.0-rc12'
 
     //下拉刷新的外层布局
     // https://github.com/scwang90/SmartRefreshLayout
@@ -85,22 +85,22 @@ dependencies {
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //Glide
-    api 'com.github.bumptech.glide:glide:4.7.1'
+    api 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    api 'com.blankj:utilcode:1.21.2'
+    api 'com.blankj:utilcode:1.22.0'
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.2'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta04'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
     api 'org.greenrobot:eventbus:3.1.1'
 
-    //RecyclerView
+    //RecyclerView的Adapter
     //https://www.jianshu.com/p/b343fcff51b0
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
 
@@ -126,12 +126,15 @@ dependencies {
     //bugly
     api 'com.tencent.bugly:crashreport:2.6.6.1'
 
-    //NestedScrollWebView
-    api 'com.github.rhlff:NestedScrollWebView:v1.0.2'
-
     //播放器
     api 'cn.jzvd:jiaozivideoplayer:6.3.1'
 
     //dialog
     api 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+
+    //选色
+    api 'com.github.QuadFlask:colorpicker:0.0.13'
+
+    //NestedScrollWebView
+    api 'com.github.rhlff:NestedScrollWebView:v1.0.2'
 }

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.target.Target;
 
 import android.os.Handler;
 
+import androidnews.kiloproject.util.GlideUtil;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 
 /**
@@ -46,31 +47,33 @@ public class MaterialViewPagerImageHelper {
                 super.onAnimationEnd(view);
 
                 //change the image when alpha=0
-                Glide.with(imageView.getContext()).load(urlImage)
-                    .apply(new RequestOptions().centerCrop())
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            return false;
-                        }
+                if (GlideUtil.isValidContextForGlide(imageView.getContext()))
+                    Glide.with(imageView.getContext()).load(urlImage)
+                            .apply(new RequestOptions().centerCrop())
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            //then fade to alpha=1
-                            new Handler(Looper.getMainLooper()) {}.post(new Runnable(){
-                               @Override
-                                public void run(){
-                                   fadeIn(viewToAnimate, alpha, fadeDuration, new ViewPropertyAnimatorListenerAdapter());
-                                   if (imageLoadListener != null) {
-                                       imageLoadListener.OnImageLoad(imageView, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-                                   }
-                               }
-                            });
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    //then fade to alpha=1
+                                    new Handler(Looper.getMainLooper()) {
+                                    }.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            fadeIn(viewToAnimate, alpha, fadeDuration, new ViewPropertyAnimatorListenerAdapter());
+                                            if (imageLoadListener != null) {
+                                                imageLoadListener.OnImageLoad(imageView, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                            }
+                                        }
+                                    });
 
-                            return false;
-                        }
-                    })
-                    .into(viewToAnimate);
+                                    return false;
+                                }
+                            })
+                            .into(viewToAnimate);
             }
         });
     }
@@ -78,21 +81,21 @@ public class MaterialViewPagerImageHelper {
     public static void fadeOut(View view, int fadeDuration, ViewPropertyAnimatorListenerAdapter listener) {
         //fade to alpha=0
         ViewCompat.animate(view)
-            .alpha(0)
-            .setDuration(fadeDuration)
-            .withLayer()
-            .setInterpolator(new DecelerateInterpolator())
-            .setListener(listener);
+                .alpha(0)
+                .setDuration(fadeDuration)
+                .withLayer()
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(listener);
     }
 
     public static void fadeIn(View view, float alpha, int fadeDuration, ViewPropertyAnimatorListenerAdapter listener) {
         //fade to alpha=0
         ViewCompat.animate(view)
-            .alpha(alpha)
-            .setDuration(fadeDuration)
-            .withLayer()
-            .setInterpolator(new AccelerateInterpolator())
-            .setListener(listener);
+                .alpha(alpha)
+                .setDuration(fadeDuration)
+                .withLayer()
+                .setInterpolator(new AccelerateInterpolator())
+                .setListener(listener);
     }
 
     /**

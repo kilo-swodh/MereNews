@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
@@ -41,6 +39,7 @@ import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import androidnews.kiloproject.R;
@@ -63,8 +62,8 @@ import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.getMainDataA;
-import static androidnews.kiloproject.system.AppConfig.getMainDataB;
+import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
+import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_LEFT;
 
 public class MainRvFragment extends BaseRvFragment {
 
@@ -73,8 +72,6 @@ public class MainRvFragment extends BaseRvFragment {
     List<NewMainListData> contents;
 
     String[] goodTags;
-
-    private static final boolean GRID_LAYOUT = false;
 
     private String CACHE_LIST_DATA;
 
@@ -117,6 +114,7 @@ public class MainRvFragment extends BaseRvFragment {
                     blockList = LitePal.findAll(BlockItem.class);
                 } catch (Exception e1) {
                     e1.printStackTrace();
+                    e.onComplete();
                 }
                 goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
 
@@ -129,16 +127,21 @@ public class MainRvFragment extends BaseRvFragment {
                             NewMainListData first = contents.get(0);
                             first.setItemType(HEADER);
                             requestRealPic(first);
-                            final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                            List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                            }.getType());
-                            if (cacheNews != null && cacheNews.size() > 0)
-                                for (NewMainListData dataItem : contents) {
+                            List<CacheNews> cacheNews = null;
+                            try {
+                                cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
+                            if (cacheNews != null && cacheNews.size() > 0) {
+                                for (Iterator<NewMainListData> it = contents.iterator(); it.hasNext(); ) {
+                                    NewMainListData dataItem = it.next();
+//                                for (NewMainListData dataItem : contents) {
                                     boolean isHisBingo = false;
                                     for (CacheNews cacheNew : cacheNews) {
                                         if (isHisBingo)
                                             break;
-                                        if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                        if (dataItem.getDocid().contains(cacheNew.getDocid())) {
                                             dataItem.setReaded(true);
                                             isHisBingo = true;
                                             break;
@@ -153,22 +156,21 @@ public class MainRvFragment extends BaseRvFragment {
                                             switch (blockItem.getType()) {
                                                 case TYPE_SOURCE:
                                                     if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                        dataItem.setBlocked(true);
+                                                        it.remove();
                                                         isBlockBingo = true;
-                                                    } else
-                                                        dataItem.setBlocked(false);
+                                                    }
                                                     break;
                                                 case TYPE_KEYWORDS:
                                                     if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                        dataItem.setBlocked(true);
+                                                        it.remove();
                                                         isBlockBingo = true;
-                                                    } else
-                                                        dataItem.setBlocked(false);
+                                                    }
                                                     break;
                                             }
                                         }
                                     }
                                 }
+                            }
                             e.onNext(true);
                         } catch (Exception e1) {
                             e1.printStackTrace();
@@ -189,11 +191,9 @@ public class MainRvFragment extends BaseRvFragment {
                         MainRvFragment.super.onViewCreated(view, savedInstanceState);
                     }
                 });
-        if (GRID_LAYOUT) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        } else {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        }
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+
         mRecyclerView.setHasFixedSize(true);
 
         //Use this now
@@ -225,13 +225,14 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestData(int type) {
+    @Override
+    public void requestData(int type) {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
                 currentPage = 0;
             case TYPE_LOADMORE:
-                dataUrl = getMainDataA + typeStr + "/" + currentPage + getMainDataB;
+                dataUrl = GET_MAIN_DATA.replace("{typeStr}",typeStr).replace("{currentPage}",String.valueOf(currentPage));
                 break;
         }
         EasyHttp.get(dataUrl)
@@ -254,9 +255,13 @@ public class MainRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            SnackbarUtils.with(refreshLayout).
-                                    setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                    showError();
+                            try {
+                                SnackbarUtils.with(refreshLayout).
+                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
+                                        showError();
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
                         }
                     }
 
@@ -283,9 +288,12 @@ public class MainRvFragment extends BaseRvFragment {
                                     }
                                     List<NewMainListData> newList = new ArrayList<>();
 
-                                    final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                                    List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                                    }.getType());
+                                    List<CacheNews> cacheNews = null;
+                                    try {
+                                        cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
+                                    }catch (Exception e1){
+                                        e1.printStackTrace();
+                                    }
 
                                     switch (type) {
                                         case TYPE_REFRESH:
@@ -297,44 +305,44 @@ public class MainRvFragment extends BaseRvFragment {
                                                 e1.printStackTrace();
                                                 loadFailed(type);
                                             }
-                                            for (NewMainListData dataItem : newList) {
-                                                if (isGoodItem(dataItem))
-                                                    contents.add(dataItem);
+                                            for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
+                                                NewMainListData dataItem = it.next();
+//                                            for (NewMainListData dataItem : newList) {
                                                 if (cacheNews != null && cacheNews.size() > 0) {
                                                     boolean isHisBingo = false;
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (isHisBingo)
                                                             break;
-                                                        if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                                        if (dataItem.getDocid().contains(cacheNew.getDocid())) {
                                                             dataItem.setReaded(true);
                                                             isHisBingo = true;
                                                             break;
                                                         }
                                                     }
                                                 }
+                                                boolean isBlockBingo = false;
                                                 if (blockList != null && blockList.size() > 0) {
-                                                    boolean isBlockBingo = false;
                                                     for (BlockItem blockItem : blockList) {
                                                         if (isBlockBingo)
                                                             break;
                                                         switch (blockItem.getType()) {
                                                             case TYPE_SOURCE:
                                                                 if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                                    dataItem.setBlocked(true);
+                                                                    it.remove();
                                                                     isBlockBingo = true;
-                                                                } else
-                                                                    dataItem.setBlocked(false);
+                                                                }
                                                                 break;
                                                             case TYPE_KEYWORDS:
                                                                 if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                                    dataItem.setBlocked(true);
+                                                                    it.remove();
                                                                     isBlockBingo = true;
-                                                                } else
-                                                                    dataItem.setBlocked(false);
+                                                                }
                                                                 break;
                                                         }
                                                     }
                                                 }
+                                                if (isGoodItem(dataItem) && !isBlockBingo)
+                                                    contents.add(dataItem);
                                             }
                                             try {
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
@@ -351,7 +359,9 @@ public class MainRvFragment extends BaseRvFragment {
                                             }
                                             boolean isAllSame = true;
                                             try {
-                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
+                                                for (Iterator<NewMainListData> it = retMap.get(typeStr).iterator(); it.hasNext(); ) {
+                                                    NewMainListData dataItem = it.next();
+//                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
                                                     if (!isGoodItem(dataItem)) {
@@ -366,36 +376,35 @@ public class MainRvFragment extends BaseRvFragment {
                                                     if (!isSame) {
                                                         if (cacheNews != null && cacheNews.size() > 0) {
                                                             for (CacheNews cacheNew : cacheNews) {
-                                                                if (TextUtils.equals(dataItem.getDocid(), cacheNew.getDocid())) {
+                                                                if (dataItem.getDocid().contains(cacheNew.getDocid())) {
                                                                     dataItem.setReaded(true);
                                                                     break;
                                                                 }
                                                             }
                                                         }
+                                                        boolean isBlockBingo = false;
                                                         if (blockList != null && blockList.size() > 0) {
-                                                            boolean isBlockBingo = false;
                                                             for (BlockItem blockItem : blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
                                                                     case TYPE_SOURCE:
                                                                         if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                                            dataItem.setBlocked(true);
+                                                                            it.remove();
                                                                             isBlockBingo = true;
-                                                                        } else
-                                                                            dataItem.setBlocked(false);
+                                                                        }
                                                                         break;
                                                                     case TYPE_KEYWORDS:
                                                                         if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                                            dataItem.setBlocked(true);
+                                                                            it.remove();
                                                                             isBlockBingo = true;
-                                                                        } else
-                                                                            dataItem.setBlocked(false);
+                                                                        }
                                                                         break;
                                                                 }
                                                             }
                                                         }
-                                                        newList.add(dataItem);
+                                                        if (!isBlockBingo)
+                                                            newList.add(dataItem);
                                                         isAllSame = false;
                                                     }
                                                 }
@@ -456,9 +465,10 @@ public class MainRvFragment extends BaseRvFragment {
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;
             case TYPE_LOADMORE:
-                if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
-                    mainAdapter.loadMoreFail();
-                else
+                if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
+                    if (mainAdapter != null)
+                        mainAdapter.loadMoreFail();
+                } else
                     refreshLayout.finishLoadMore(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;
@@ -466,13 +476,16 @@ public class MainRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
+        if (contents == null || contents.size() < 1)
+            return;
         realPicCount = 0;
         if (contents.get(0).getAds() != null) {
             adSize = contents.get(0).getAds().size();
         } else {
             adSize = 0;
         }
-        mainAdapter = new MainRvAdapter(mActivity, Glide.with(this), contents);
+        mainAdapter = new MainRvAdapter(mActivity, contents);
+        mainAdapter.openLoadAnimation(SLIDEIN_LEFT);
         mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -487,7 +500,6 @@ public class MainRvFragment extends BaseRvFragment {
                             if (!TextUtils.isEmpty(rawId)) {
                                 int index = rawId.lastIndexOf("|");
                                 if (index != -1) {
-
                                     skipID = rawId.substring(index - 4, rawId.length());
                                     intent = new Intent(mActivity, GalleyActivity.class);
                                     intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
@@ -499,7 +511,7 @@ public class MainRvFragment extends BaseRvFragment {
                             }
                             break;
                         } else {
-                            intent = new Intent(getActivity(), NewsDetailActivity.class);
+                            intent = new Intent(mActivity, NewsDetailActivity.class);
                             intent.putExtra("docid", item.getDocid().replace("_special", "").trim());
                             startActivity(intent);
                             if (!item.isReaded()) {

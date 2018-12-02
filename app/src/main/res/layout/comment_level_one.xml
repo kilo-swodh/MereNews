@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_normal"
-        android:textColor="@color/main_text_color_drak"
+        android:textColor="@color/main_text_color_dark"
         android:textSize="@dimen/text_small"
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintStart_toStartOf="@+id/iv_avatar"

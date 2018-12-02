@@ -26,7 +26,6 @@ import androidnews.kiloproject.adapter.DragAdapter;
 
 public class DragGrid extends GridView {
 
-
     /**
      * 点击时候的X位置
      */
@@ -243,9 +242,9 @@ public class DragGrid extends GridView {
 
                 startPosition = position;// 第一次点击的postion
                 dragPosition = position;
-                if (startPosition <= 0) {//TODO 原来是1
-                    return false;
-                }
+//                if (startPosition <= 0) {//TODO 原来是1
+//                    return false;
+//                }
                 View dragViewGroup = getChildAt(dragPosition - getFirstVisiblePosition());
                 TextView dragTextView = (TextView) dragViewGroup.findViewById(R.id.text_item);
                 RelativeLayout ri_delete = (RelativeLayout) dragViewGroup.findViewById(R.id.ri_delete);

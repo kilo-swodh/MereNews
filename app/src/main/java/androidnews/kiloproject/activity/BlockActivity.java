@@ -2,7 +2,6 @@ package androidnews.kiloproject.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.BlockArrayBean;
 import androidnews.kiloproject.bean.data.BlockItem;
 import androidnews.kiloproject.system.base.BaseActivity;
 
@@ -46,7 +44,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.BlockItem.TYPE_KEYWORDS;
 import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_BLOCK_LIST;
 
 public class BlockActivity extends BaseActivity {
 
@@ -87,7 +84,7 @@ public class BlockActivity extends BaseActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         try {
                                             blockList.clear();
-                                            LitePal.deleteAllAsync(BlockItem.class);
+                                            LitePal.deleteAll(BlockItem.class);
                                             setResult(RESULT_OK);
                                             finish();
                                         } catch (Exception e) {
@@ -161,6 +158,10 @@ public class BlockActivity extends BaseActivity {
                                                                 setResult(RESULT_OK);
                                                                 if (adapter != null)
                                                                     adapter.notifyDataSetChanged();
+                                                                else {
+                                                                    emptyView.setVisibility(View.GONE);
+                                                                    initSlowly();
+                                                                }
                                                                 break;
                                                             case 2:
                                                                 SnackbarUtils.with(toolbar)
@@ -185,7 +186,6 @@ public class BlockActivity extends BaseActivity {
                 return false;
             }
         });
-
         initStateBar(R.color.main_background, true);
     }
 
@@ -194,7 +194,11 @@ public class BlockActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                blockList = LitePal.findAll(BlockItem.class);
+                try {
+                    blockList = LitePal.findAll(BlockItem.class);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
                 if (blockList != null && blockList.size() > 0) {
                     e.onNext(true);
                 } else {
@@ -285,6 +289,8 @@ public class BlockActivity extends BaseActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
                             adapter.notifyDataSetChanged();
+                            if (blockList.size() < 1)
+                                setEmptyView();
                             setResult(RESULT_OK);
                         } else {
                             SnackbarUtils.with(toolbar).setMessage(getResources().getString(R.string.fail)).show();

@@ -1,11 +1,9 @@
 package androidnews.kiloproject.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -14,15 +12,14 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.net.GuoKrListData;
+import androidnews.kiloproject.util.GlideUtil;
 
 public class GuoKrAdapter extends BaseQuickAdapter<GuoKrListData.ResultBean, BaseViewHolder> {
     RequestOptions options;
-    RequestManager glide;
     private Context mContext;
 
-    public GuoKrAdapter(Context Context, RequestManager glide, List<GuoKrListData.ResultBean> data) {
-        super(R.layout.list_item_card_small, data);
-        this.glide = glide;
+    public GuoKrAdapter(Context Context, List<GuoKrListData.ResultBean> data) {
+        super(R.layout.list_item_card_linear_lite, data);
         this.mContext = Context;
         options = new RequestOptions();
         options.centerCrop()
@@ -37,13 +34,14 @@ public class GuoKrAdapter extends BaseQuickAdapter<GuoKrListData.ResultBean, Bas
                     mContext.getResources().getColor(R.color.main_text_color_read));
         else
             helper.setTextColor(R.id.item_card_text,
-                    mContext.getResources().getColor(R.color.main_text_color_drak));
+                    mContext.getResources().getColor(R.color.main_text_color_dark));
 
         List<String> imgs = item.getImages();
-        if (imgs != null && imgs.size() > 0)
-            glide.load(imgs.get(0))
-                    .apply(options)
-                    .into((ImageView) helper.getView(R.id.item_card_img));
-        helper.setText(R.id.item_card_from, item.getSource_name());
+        if (imgs != null && imgs.size() > 0 && GlideUtil.isValidContextForGlide(mContext))
+                Glide.with(mContext)
+                        .load(imgs.get(0))
+                        .apply(options)
+                        .into((ImageView) helper.getView(R.id.item_card_img));
+        helper.setText(R.id.item_card_info, item.getSource_name());
     }
 }

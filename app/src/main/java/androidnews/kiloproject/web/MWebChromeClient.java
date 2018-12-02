@@ -19,8 +19,8 @@ import androidnews.kiloproject.activity.AboutActivity;
 public class MWebChromeClient extends WebChromeClient {
     AboutActivity aboutActivity = null;
 
-    public MWebChromeClient(Activity activity){
-        if (activity instanceof AboutActivity){
+    public MWebChromeClient(Activity activity) {
+        if (activity instanceof AboutActivity) {
             aboutActivity = (AboutActivity) activity;
         }
     }

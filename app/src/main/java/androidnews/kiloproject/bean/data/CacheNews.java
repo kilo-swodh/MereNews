@@ -1,34 +1,39 @@
 package androidnews.kiloproject.bean.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.litepal.crud.LitePalSupport;
 
-public class CacheNews{
+public class CacheNews extends LitePalSupport {
 
     public static final int CACHE_HISTORY = 1001;
     public static final int CACHE_COLLECTION = 1002;
 
-    String title;
-    String imgUrl;
-    String source;
-    String docid;
-    String htmlText;
-    int type;
+    private long id;
+    private String title;
+    private String imgUrl;
+    private String source;
+    private String docid;
+    private String htmlText;
+    private int type;
+    private int channel;
+    private String url;         //IT之家需要 连接
+    private String timeStr;     //IT之家需要 字符串时间
 
-    public CacheNews(String title, String imgUrl, String source, String docid, String htmlText) {
+    public CacheNews(String title, String imgUrl, String source, String docid, String htmlText, int type, int channel) {
         this.title = title;
         this.imgUrl = imgUrl;
         this.source = source;
         this.docid = docid;
         this.htmlText = htmlText;
+        this.type = type;
+        this.channel = channel;
     }
 
-    public static int getCacheHistory() {
-        return CACHE_HISTORY;
+    public long getId() {
+        return id;
     }
 
-    public static int getCacheCollection() {
-        return CACHE_COLLECTION;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -77,5 +82,29 @@ public class CacheNews{
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getChannel() {
+        return channel;
+    }
+
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTimeStr() {
+        return timeStr;
+    }
+
+    public void setTimeStr(String timeStr) {
+        this.timeStr = timeStr;
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,8 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
-import com.google.gson.reflect.TypeToken;
+
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -30,7 +27,10 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidnews.kiloproject.ui.GlideImageLoader;
@@ -39,6 +39,7 @@ import androidnews.kiloproject.activity.ZhiHuDetailActivity;
 import androidnews.kiloproject.adapter.ZhihuAdapter;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.ZhihuListData;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecoratorGrid;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -46,21 +47,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.activity.MainActivity.TYPE_ZHIHU;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.HOSTzhihu;
-import static androidnews.kiloproject.system.AppConfig.getZhihuLoadMore;
-import static androidnews.kiloproject.system.AppConfig.getZhihuRefresh;
+import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
+import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_LOAD_MORE;
+import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
+import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM;
 
 public class ZhihuRvFragment extends BaseRvFragment {
 
     ZhihuAdapter mAdapter;
     //    MainListData contents;
     ZhihuListData contents;
-
-    private static final boolean GRID_LAYOUT = false;
 
     private String CACHE_LIST_DATA;
 
@@ -84,18 +84,21 @@ public class ZhihuRvFragment extends BaseRvFragment {
                 if (!TextUtils.isEmpty(json)) {
                     contents = gson.fromJson(json, ZhihuListData.class);
                     if (contents != null && contents.getStories().size() > 0) {
-                        final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                        List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                        }.getType());
+                        List<CacheNews> cacheNews = null;
+                        try {
+                            cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
                         if (cacheNews != null && cacheNews.size() > 0)
-                        for (ZhihuListData.StoriesBean data : contents.getStories()) {
-                            for (CacheNews cacheNew : cacheNews) {
-                                if (TextUtils.equals(data.getId()+"", cacheNew.getDocid())) {
-                                    data.setReaded(true);
-                                    break;
+                            for (ZhihuListData.StoriesBean data : contents.getStories()) {
+                                for (CacheNews cacheNew : cacheNews) {
+                                    if (TextUtils.equals(data.getId() + "", cacheNew.getDocid())) {
+                                        data.setReaded(true);
+                                        break;
+                                    }
                                 }
                             }
-                        }
                         e.onNext(true);
                     } else
                         e.onNext(false);
@@ -113,15 +116,10 @@ public class ZhihuRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (GRID_LAYOUT) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        } else {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        }
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
 
         //Use this now
-        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecoratorGrid());
 
 //        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
 //        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
@@ -149,19 +147,20 @@ public class ZhihuRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestData(int type) {
+    @Override
+    public void requestData(int type) {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
-                dataUrl = getZhihuRefresh;
+                dataUrl = GET_ZHIHU_REFRESH;
                 break;
             case TYPE_LOADMORE:
                 if (TextUtils.isEmpty(loadMoreDate))
                     return;
-                dataUrl = getZhihuLoadMore + loadMoreDate;
+                dataUrl = GET_ZHIHU_LOAD_MORE + loadMoreDate;
                 break;
         }
-        EasyHttp.get(HOSTzhihu + dataUrl)
+        EasyHttp.get(HOST_ZHIHU + dataUrl)
                 .readTimeOut(30 * 1000)//局部定义读超时
                 .writeTimeOut(30 * 1000)
                 .connectTimeout(30 * 1000)
@@ -201,33 +200,63 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                         e1.printStackTrace();
                                         loadFailed(type);
                                     }
-                                    loadMoreDate = newData.getDate();
-                                    List<ZhihuListData> newList = new ArrayList<>();
-
-                                    final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                                    List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                                    }.getType());
+                                    try {
+                                        loadMoreDate = newData.getDate();
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    List<CacheNews> cacheNews = null;
+                                    try {
+                                        cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
+                                    }
 
                                     switch (type) {
                                         case TYPE_REFRESH:
                                             if (cacheNews != null && cacheNews.size() > 0)
-                                            for (ZhihuListData.StoriesBean data : newData.getStories()) {
-                                                for (CacheNews cacheNew : cacheNews) {
-                                                    if (TextUtils.equals(data.getId()+"", cacheNew.getDocid())) {
-                                                        data.setReaded(true);
-                                                        break;
+                                                for (Iterator<ZhihuListData.StoriesBean> it = newData.getStories().iterator(); it.hasNext(); ) {
+                                                    ZhihuListData.StoriesBean data = it.next();
+                                                    boolean isSame = false;
+                                                    if (contents != null && contents.getTop_stories() != null)
+                                                        for (ZhihuListData.TopStoriesBean topStoriesBean : contents.getTop_stories()) {
+                                                            if (topStoriesBean.getId() == data.getId()) {
+                                                                isSame = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    if (isSame) {
+                                                        it.remove();
+                                                        continue;
+                                                    }
+                                                    for (CacheNews cacheNew : cacheNews) {
+                                                        if (TextUtils.equals(data.getId() + "", cacheNew.getDocid())) {
+                                                            data.setReaded(true);
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                            }
                                             contents = newData;
                                             SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
                                                 if (cacheNews != null && cacheNews.size() > 0)
-                                                    for (ZhihuListData.StoriesBean data : newData.getStories()) {
+                                                    for (Iterator<ZhihuListData.StoriesBean> it = newData.getStories().iterator(); it.hasNext(); ) {
+                                                        ZhihuListData.StoriesBean data = it.next();
+                                                        boolean isSame = false;
+                                                        for (ZhihuListData.TopStoriesBean topStoriesBean : contents.getTop_stories()) {
+                                                            if (topStoriesBean.getId() == data.getId()) {
+                                                                isSame = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if (isSame) {
+                                                            it.remove();
+                                                            continue;
+                                                        }
                                                         for (CacheNews cacheNew : cacheNews) {
-                                                            if (TextUtils.equals(data.getId()+"", cacheNew.getDocid())) {
+                                                            if (TextUtils.equals(data.getId() + "", cacheNew.getDocid())) {
                                                                 data.setReaded(true);
                                                                 break;
                                                             }
@@ -299,7 +328,8 @@ public class ZhihuRvFragment extends BaseRvFragment {
 
     private void createAdapter() {
         loadMoreDate = contents.getDate();
-        mAdapter = new ZhihuAdapter(mActivity,Glide.with(this), contents.getStories());
+        mAdapter = new ZhihuAdapter(mActivity, contents.getStories());
+        mAdapter.openLoadAnimation(SLIDEIN_BOTTOM);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -322,11 +352,11 @@ public class ZhihuRvFragment extends BaseRvFragment {
                 imgs.add(bean.getImage());
                 titles.add(bean.getTitle());
             }
-            CardView header = (CardView) getLayoutInflater().inflate(R.layout.list_item_card_big,
+            CardView header = (CardView) getLayoutInflater().inflate(R.layout.list_item_card_banner,
                     (ViewGroup) refreshLayout.getParent(), false);
 
             Banner banner = header.findViewById(R.id.banner);
-            banner.setImageLoader(new GlideImageLoader(Glide.with(this)))
+            banner.setImageLoader(new GlideImageLoader())
                     .setBannerAnimation(Transformer.FlipHorizontal)
                     .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                     .setDelayTime(5 * 1000)
@@ -335,9 +365,13 @@ public class ZhihuRvFragment extends BaseRvFragment {
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
-                            Intent intent = new Intent(getActivity(), ZhiHuDetailActivity.class);
-                            intent.putExtra("id", contents.getStories().get(position).getId());
-                            startActivity(intent);
+                            try {
+                                Intent intent = new Intent(getActivity(), ZhiHuDetailActivity.class);
+                                intent.putExtra("id", contents.getTop_stories().get(position).getId());
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
             banner.start();

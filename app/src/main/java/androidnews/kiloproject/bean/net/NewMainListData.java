@@ -13,15 +13,6 @@ public class NewMainListData implements MultiItemEntity {
 
     private int itemType;
     private boolean isReaded;
-    private boolean isBlocked;
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
 
     public boolean isReaded() {
         return isReaded;

@@ -1,13 +1,8 @@
 package androidnews.kiloproject.system;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDelegate;
-import android.view.View;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -19,19 +14,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.yanzhenjie.permission.PermissionActivity;
 import com.zhouyou.http.EasyHttp;
 
-import org.greenrobot.eventbus.EventBus;
 import org.litepal.LitePal;
 
-import androidnews.kiloproject.widget.AlertWindow;
-import androidnews.kiloproject.widget.LauncherView;
-
-import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
-import static androidnews.kiloproject.system.AppConfig.HOST163;
-import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static androidnews.kiloproject.system.AppConfig.HOST_163;
 
 //import org.litepal.LitePal;
 
@@ -61,7 +48,7 @@ public class MyApplication extends Application {
         //网络框架
         EasyHttp.init(this);//默认初始化
         EasyHttp.getInstance()
-                .setBaseUrl(HOST163)
+                .setBaseUrl(HOST_163)
 //                .debug("网络DEBUG", true);
         ;
 
@@ -110,19 +97,6 @@ public class MyApplication extends Application {
 
     public static MyApplication getInstance() {
         return instance;
-    }
-
-    public void showLauncherView() {
-        final AlertWindow alertWindow = new AlertWindow(this);
-        LauncherView view = new LauncherView(this);
-        view.setCancelClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertWindow.dismiss();
-            }
-        });
-        alertWindow.setContentView(view);
-        alertWindow.show();
     }
 
     static {

@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,54 +28,65 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import org.litepal.LitePal;
+
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.util.AlipayUtil;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.system.AppConfig.BUGLY_KEY;
 import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
+import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
-public class SettingActivity extends BaseActivity{
+public class SettingActivity extends BaseActivity {
 
     Toolbar toolbar;
     TextView textView;
     Group groupLanguage;
     TextView tvLanguage;
     TextView tvLanguageDetail;
-    View viewLanguage;
     Group groupClearCache;
     TextView tvClearCache;
     TextView tvClearCacheDetail;
-    View viewAutoRefresh;
+    Group groupTextSize;
+    TextView tvTextSize;
+    TextView tvTextSizeDetail;
     Group groupAutoRefresh;
     TextView tvAutoRefresh;
     TextView tvAutoRefreshDetail;
     Switch swAutoRefresh;
-    View viewAutoLoadmore;
     Group groupAutoLoadmore;
     TextView tvAutoLoadmore;
     TextView tvAutoLoadmoreDetail;
     Switch swAutoLoadmore;
-    View viewBackExit;
     Group groupBackExit;
     TextView tvBackExit;
     TextView tvBackExitDetail;
     Switch swBackExit;
-    View viewSwipeBack;
     Group groupSwipeBack;
     TextView tvSwipeBack;
     TextView tvSwipeBackDetail;
@@ -84,20 +96,20 @@ public class SettingActivity extends BaseActivity{
     Group checkUpdate;
     TextView tvCheckUpdate;
     TextView tvCheckUpdateDetail;
-    View viewRandomHeader;
     Group groupRandomHeader;
     TextView tvRandomHeader;
     TextView tvRandomHeaderDetail;
-    Group groupJoinUs;
-    TextView tvJoinUs;
-    TextView tvJoinUsDetail;
-    View viewCheckUpdate;
 
     private int currentLanguage = 0;
+
     private boolean isAutoRefresh = false;
     private boolean isBackExit = false;
     private boolean isAutoLoadMore = false;
     SPUtils spUtils;
+
+    String[] languageItems;
+    String[] headerItems;
+    String[] sizeItems;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,26 +120,24 @@ public class SettingActivity extends BaseActivity{
         groupLanguage = (Group) findViewById(R.id.group_language);
         tvLanguage = (TextView) findViewById(R.id.tv_language);
         tvLanguageDetail = (TextView) findViewById(R.id.tv_language_detail);
-        viewLanguage = (View) findViewById(R.id.view_language);
         groupClearCache = (Group) findViewById(R.id.group_clear_cache);
         tvClearCache = (TextView) findViewById(R.id.tv_clear_cache);
         tvClearCacheDetail = (TextView) findViewById(R.id.tv_clear_cache_detail);
-        viewAutoRefresh = (View) findViewById(R.id.view_auto_refresh);
+        groupTextSize = (Group) findViewById(R.id.group_text_size);
+        tvTextSize = (TextView) findViewById(R.id.tv_text_size);
+        tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail);
         groupAutoRefresh = (Group) findViewById(R.id.group_auto_refresh);
         tvAutoRefresh = (TextView) findViewById(R.id.tv_auto_refresh);
         tvAutoRefreshDetail = (TextView) findViewById(R.id.tv_auto_refresh_detail);
         swAutoRefresh = (Switch) findViewById(R.id.sw_auto_refresh);
-        viewAutoLoadmore = (View) findViewById(R.id.view_auto_loadmore);
         groupAutoLoadmore = (Group) findViewById(R.id.group_auto_loadmore);
         tvAutoLoadmore = (TextView) findViewById(R.id.tv_auto_loadmore);
         tvAutoLoadmoreDetail = (TextView) findViewById(R.id.tv_auto_loadmore_detail);
         swAutoLoadmore = (Switch) findViewById(R.id.sw_auto_loadmore);
-        viewBackExit = (View) findViewById(R.id.view_back_exit);
         groupBackExit = (Group) findViewById(R.id.group_back_exit);
         tvBackExit = (TextView) findViewById(R.id.tv_back_exit);
         tvBackExitDetail = (TextView) findViewById(R.id.tv_back_exit_detail);
         swBackExit = (Switch) findViewById(R.id.sw_back_exit);
-        viewSwipeBack = (View) findViewById(R.id.view_swipe_back);
         groupSwipeBack = (Group) findViewById(R.id.group_swipe_back);
         tvSwipeBack = (TextView) findViewById(R.id.tv_swipe_back);
         tvSwipeBackDetail = (TextView) findViewById(R.id.tv_swipe_back_detail);
@@ -137,14 +147,9 @@ public class SettingActivity extends BaseActivity{
         checkUpdate = (Group) findViewById(R.id.group_check_update);
         tvCheckUpdate = (TextView) findViewById(R.id.tv_check_update);
         tvCheckUpdateDetail = (TextView) findViewById(R.id.tv_check_update_detail);
-        viewRandomHeader = (View) findViewById(R.id.view_random_header);
         groupRandomHeader = (Group) findViewById(R.id.group_random_header);
         tvRandomHeader = (TextView) findViewById(R.id.tv_random_header);
         tvRandomHeaderDetail = (TextView) findViewById(R.id.tv_random_header_detail);
-        groupJoinUs = (Group) findViewById(R.id.group_join_us);
-        tvJoinUs = (TextView) findViewById(R.id.tv_join_us);
-        tvJoinUsDetail = (TextView) findViewById(R.id.tv_join_us_detail);
-        viewCheckUpdate = (View) findViewById(R.id.view_check_update);
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
@@ -154,19 +159,18 @@ public class SettingActivity extends BaseActivity{
 
     @Override
     protected void initSlowly() {
-        currentLanguage = spUtils.getInt(CONFIG_LANGUAGE, 0);
+        headerItems = getResources().getStringArray(R.array.header_setting);
+        languageItems = getResources().getStringArray(R.array.language);
+        sizeItems = getResources().getStringArray(R.array.size);
 
-        switch (currentLanguage) {
-            case 0:
-                tvLanguageDetail.setText(R.string.auto);
-                break;
-            case 1:
-                tvLanguageDetail.setText(R.string.english);
-                break;
-            case 2:
-                tvLanguageDetail.setText(R.string.chinese);
-                break;
-        }
+        tvRandomHeaderDetail.setText(headerItems[spUtils.getInt(CONFIG_RANDOM_HEADER, 0)]);
+
+        AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
+        tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
+
+        currentLanguage = spUtils.getInt(CONFIG_LANGUAGE, 0);
+        tvLanguageDetail.setText(languageItems[currentLanguage]);
+
 
         isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
         swAutoRefresh.setChecked(isAutoRefresh);
@@ -296,17 +300,7 @@ public class SettingActivity extends BaseActivity{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 spUtils.put(CONFIG_LANGUAGE, currentLanguage);
-                                switch (currentLanguage) {
-                                    case 0:
-                                        tvLanguageDetail.setText(R.string.auto);
-                                        break;
-                                    case 1:
-                                        tvLanguageDetail.setText(R.string.english);
-                                        break;
-                                    case 2:
-                                        tvLanguageDetail.setText(R.string.chinese);
-                                        break;
-                                }
+                                tvLanguageDetail.setText(languageItems[currentLanguage]);
                                 restartWithAnime();
                             }
                         })
@@ -318,8 +312,7 @@ public class SettingActivity extends BaseActivity{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SPUtils.getInstance().put(CACHE_HISTORY + "", "");
-                        SPUtils.getInstance().put(CACHE_COLLECTION + "", "");
+                        LitePal.deleteDatabase("setting");
                         String[] address = getResources().getStringArray(R.array.address);
                         Glide.get(mActivity).clearDiskCache();
                         for (String typeStr : address) {
@@ -328,6 +321,31 @@ public class SettingActivity extends BaseActivity{
                     }
                 }).start();
                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).showSuccess();
+                break;
+
+            case R.id.tv_text_size:
+            case R.id.tv_text_size_detail:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.text_size)
+                        .setCancelable(true)
+                        .setSingleChoiceItems(getResources().getStringArray(R.array.size),
+                                AppConfig.TextSize, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        AppConfig.TextSize = which;
+                                    }
+                                })
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                spUtils.put(CONFIG_TEXT_SIZE, AppConfig.TextSize);
+                                tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
+                                SnackbarUtils.with(toolbar)
+                                        .setMessage(getResources().getString(R.string.successful))
+                                        .showSuccess();
+                            }
+                        })
+                        .create().show();
                 break;
 
             case R.id.tv_auto_refresh:
@@ -370,18 +388,19 @@ public class SettingActivity extends BaseActivity{
 
             case R.id.tv_random_header:
             case R.id.tv_random_header_detail:
-                final String[] items = {
-                        getResources().getString(R.string.random_header_pic_auto)
-                        , getResources().getString(R.string.random_header_pic_per)
-                        , getResources().getString(R.string.random_header_color_gradual)
-                        , getResources().getString(R.string.random_header_color_pure)
-                };
-                new android.support.v7.app.AlertDialog.Builder(mActivity).setItems(
-                        items, new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(mActivity).setItems(
+                        headerItems, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 spUtils.put(CONFIG_RANDOM_HEADER, which);
-                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).showSuccess();
+                                tvRandomHeaderDetail.setText(headerItems[which]);
+                                if (which > 3)
+                                    showColorPicker();
+                                else
+                                    SnackbarUtils.with(toolbar)
+                                            .setMessage(getString(R.string.start_after_restart_app))
+                                            .showSuccess();
+                                dialog.dismiss();
                             }
                         }
                 ).show();
@@ -423,39 +442,38 @@ public class SettingActivity extends BaseActivity{
                                     int newVersionCode;
                                     try {
                                         newVersionCode = Integer.parseInt(response.trim());
+                                        if (AppUtils.getAppVersionCode() < newVersionCode) {
+                                            new MaterialStyledDialog.Builder(mActivity)
+                                                    .setHeaderDrawable(R.drawable.ic_warning)
+                                                    .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                                    .setTitle(getResources().getString(R.string.update_title))
+                                                    .setDescription(getResources().getString(R.string.update_message))
+                                                    .setHeaderColor(R.color.colorPrimary)
+                                                    .setPositiveText(android.R.string.ok)
+                                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                        @Override
+                                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                            Uri uri = Uri.parse(DOWNLOAD_ADDRESS);
+                                                            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                                        }
+                                                    })
+                                                    .setNegativeText(getResources().getString(android.R.string.cancel))
+                                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                        @Override
+                                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
+                                        } else {
+                                            SnackbarUtils.with(toolbar)
+                                                    .setMessage(getString(R.string.update_title_no))
+                                                    .show();
+                                        }
                                     } catch (Exception e) {
                                         SnackbarUtils.with(toolbar)
                                                 .setMessage(getString(R.string.load_fail) + e.getMessage())
                                                 .showError();
-                                    }
-                                    if (AppUtils.getAppVersionCode() < Integer.parseInt(response.trim())) {
-
-                                        new MaterialStyledDialog.Builder(mActivity)
-                                                .setHeaderDrawable(R.drawable.ic_warning)
-                                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
-                                                .setTitle(getResources().getString(R.string.update_title))
-                                                .setDescription(getResources().getString(R.string.update_message))
-                                                .setHeaderColor(R.color.colorPrimary)
-                                                .setPositiveText(android.R.string.ok)
-                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        Uri uri = Uri.parse(getString(R.string.update_address));
-                                                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                                                    }
-                                                })
-                                                .setNegativeText(getResources().getString(android.R.string.cancel))
-                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .show();
-                                    } else {
-                                        SnackbarUtils.with(toolbar)
-                                                .setMessage(getString(R.string.update_title_no))
-                                                .show();
                                     }
                                 } else {
                                     SnackbarUtils.with(toolbar)
@@ -468,8 +486,7 @@ public class SettingActivity extends BaseActivity{
             case R.id.tv_join_us:
             case R.id.tv_join_us_detail:
                 Intent intent = new Intent();
-                intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" +
-                        "dfXHsJjgt5dX_ma5KylHFi60LZmFsuLv"));
+                intent.setData(Uri.parse(BUGLY_KEY));
                 // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 try {
                     startActivity(intent);
@@ -479,7 +496,44 @@ public class SettingActivity extends BaseActivity{
                             .setMessage(getString(R.string.join_us_error))
                             .showError();
                 }
+            case R.id.tv_donate:
+            case R.id.tv_donate_detail:
+                AlipayUtil.startAlipayClient(mActivity, AlipayUtil.PAY_ID);
                 break;
         }
+    }
+
+    private void showColorPicker() {
+        int color = spUtils.getInt(CONFIG_HEADER_COLOR, 9999);
+        if (color == 9999)
+            color = Color.parseColor("#FFA000");
+        ColorPickerDialogBuilder
+                .with(mActivity)
+                .setTitle("Choose color")
+                .initialColor(color)
+                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                .density(12)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int selectedColor) {
+//                        ToastUtils.showShort("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+                    }
+                })
+                .setPositiveButton("ok", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        spUtils.put(CONFIG_HEADER_COLOR, selectedColor);
+                        SnackbarUtils.with(toolbar)
+                                .setMessage(getString(R.string.start_after_restart_app))
+                                .showSuccess();
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .build()
+                .show();
     }
 }

@@ -14,7 +14,7 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.base.BaseLazyFragment;
 
 
-public class BaseRvFragment extends BaseLazyFragment {
+public abstract class BaseRvFragment extends BaseLazyFragment {
 
     RecyclerView mRecyclerView;
     SmartRefreshLayout refreshLayout;
@@ -39,4 +39,5 @@ public class BaseRvFragment extends BaseLazyFragment {
         return view;
     }
 
+    public abstract void requestData(int type);
 }

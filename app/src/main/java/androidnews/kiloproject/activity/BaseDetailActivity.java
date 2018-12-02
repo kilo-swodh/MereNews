@@ -2,6 +2,7 @@ package androidnews.kiloproject.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,12 +15,11 @@ import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tobiasrohloff.view.NestedScrollWebView;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
-
 
 
 public class BaseDetailActivity extends BaseActivity {
@@ -66,6 +66,17 @@ public class BaseDetailActivity extends BaseActivity {
         webSetting.setAppCacheEnabled(true);
         webSetting.setDatabaseEnabled(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        switch (AppConfig.TextSize){
+            case 0:
+                webSetting.setTextZoom(120);
+                break;
+            case 1:
+                webSetting.setTextZoom(100);
+                break;
+            case 2:
+                webSetting.setTextZoom(80);
+                break;
+        }
     }
 
     @Override

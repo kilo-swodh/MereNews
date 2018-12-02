@@ -5,9 +5,10 @@ import android.os.Parcelable;
 
 import org.litepal.crud.LitePalSupport;
 
-public class BlockItem extends LitePalSupport implements Parcelable {
-    int type;
-    String text;
+public class BlockItem extends LitePalSupport{
+    private long id;
+    private int type;
+    private String text;
 
     public static final int TYPE_SOURCE = 999;
     public static final int TYPE_KEYWORDS = 998;
@@ -15,6 +16,14 @@ public class BlockItem extends LitePalSupport implements Parcelable {
     public BlockItem(int type, String text) {
         this.type = type;
         this.text = text;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getType() {
@@ -32,32 +41,4 @@ public class BlockItem extends LitePalSupport implements Parcelable {
     public void setText(String text) {
         this.text = text;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.type);
-        dest.writeString(this.text);
-    }
-
-    protected BlockItem(Parcel in) {
-        this.type = in.readInt();
-        this.text = in.readString();
-    }
-
-    public static final Parcelable.Creator<BlockItem> CREATOR = new Parcelable.Creator<BlockItem>() {
-        @Override
-        public BlockItem createFromParcel(Parcel source) {
-            return new BlockItem(source);
-        }
-
-        @Override
-        public BlockItem[] newArray(int size) {
-            return new BlockItem[size];
-        }
-    };
 }

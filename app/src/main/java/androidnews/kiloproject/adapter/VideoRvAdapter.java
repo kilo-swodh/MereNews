@@ -1,13 +1,9 @@
 package androidnews.kiloproject.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,21 +12,19 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.net.VideoListData;
+import androidnews.kiloproject.util.GlideUtil;
 import androidnews.kiloproject.widget.MyJzvdStd;
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VideoRvAdapter extends BaseQuickAdapter<VideoListData, BaseViewHolder> {
     Context mContext;
     RequestOptions options;
-    private final RequestManager glide;
 //    ReceiverGroup receiverGroup;
 
-    public VideoRvAdapter(Context context, RequestManager glide, List data) {
+    public VideoRvAdapter(Context context, List data) {
         super(R.layout.list_item_card_video, data);
         this.mContext = context;
-        this.glide = glide;
         options = new RequestOptions();
         options.centerCrop()
                 .error(R.drawable.ic_error);
@@ -46,19 +40,18 @@ public class VideoRvAdapter extends BaseQuickAdapter<VideoListData, BaseViewHold
                     mContext.getResources().getColor(R.color.main_text_color_read));
         else
             helper.setTextColor(R.id.item_card_text,
-                    mContext.getResources().getColor(R.color.main_text_color_drak));
-        if (!TextUtils.isEmpty(item.getTopicImg())) {
-            glide.load(item.getTopicImg())
-                    .apply(options)
-                    .into((CircleImageView) helper.getView(R.id.item_card_img));
-        }
+                    mContext.getResources().getColor(R.color.main_text_color_dark));
+        if (!TextUtils.isEmpty(item.getTopicImg()) && GlideUtil.isValidContextForGlide(mContext))
+                Glide.with(mContext).load(item.getTopicImg())
+                        .apply(options)
+                        .into((CircleImageView) helper.getView(R.id.item_card_img));
 
         MyJzvdStd videoView = helper.getView(R.id.item_card_vid);
         videoView.setUp(item.getMp4_url(), item.getSectiontitle(), Jzvd.SCREEN_WINDOW_LIST);
-        if (!TextUtils.isEmpty(item.getCover())) {
-            glide.load(item.getCover())
-                    .apply(options)
-                    .into(videoView.thumbImageView);
-        }
+        if (!TextUtils.isEmpty(item.getCover()) && GlideUtil.isValidContextForGlide(mContext))
+                Glide.with(mContext)
+                        .load(item.getCover())
+                        .apply(options)
+                        .into(videoView.thumbImageView);
     }
 }

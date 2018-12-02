@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 
 import java.text.SimpleDateFormat;
@@ -264,7 +265,7 @@ public class MyJzvdStd extends Jzvd {
         int i = v.getId();
         if (i == cn.jzvd.R.id.thumb) {
             if (jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
-                Toast.makeText(getContext(), getResources().getString(cn.jzvd.R.string.no_url), Toast.LENGTH_SHORT).show();
+                ToastUtils.showShort(cn.jzvd.R.string.no_url);
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
@@ -333,7 +334,7 @@ public class MyJzvdStd extends Jzvd {
             clarityPopWindow.update(clarity, -offsetX, -offsetY, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         } else if (i == cn.jzvd.R.id.retry_btn) {
             if (jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
-                Toast.makeText(getContext(), getResources().getString(cn.jzvd.R.string.no_url), Toast.LENGTH_SHORT).show();
+                ToastUtils.showShort(getResources().getString(cn.jzvd.R.string.no_url));
                 return;
             }
             if (!jzDataSource.getCurrentUrl().toString().startsWith("file") && !

@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Nav Drawer Menu Items -->
-    <array name="language">
-        <item>@string/auto</item>
-        <item>@string/english</item>
-        <item>@string/chinese</item>
-    </array>
-
-    <!-- Nav Drawer List Item Icons -->
-    <!-- Keep them in order as the titles are in -->
-    <!--<array name="nav_drawer_icons">-->
-    <!--<item>@drawable/ic_drawer_home_pressed</item>-->
-    <!--<item>@drawable/ic_drawer_explore_pressed</item>-->
-    <!--<item>@drawable/ic_drawer_follow_pressed</item>-->
-    <!--<item>@drawable/ic_drawer_collect_pressed</item>-->
-    <!--<item>@drawable/ic_drawer_draft_pressed</item>-->
-    <!--<item>@drawable/ic_drawer_question_pressed</item>-->
-    <!--</array>-->
 
     <array name="address_tag">
         <item>热点</item>
@@ -27,7 +10,7 @@
         <item>游戏</item>
         <item>健康</item>
         <item>NBA</item>
-        <item>商业</item>
+        <item>财经</item>
         <item>教育</item>
         <item>笑话</item>
         <item>古玩</item>
@@ -53,15 +36,112 @@
         <item>电台</item>
         <item>家居</item>
         <item>亲子</item>
-        <item>新闻</item>
+        <item>快讯</item>
         <item>汽车</item>
         <item>社会</item>
         <item>论坛</item>
+        <item>房产</item>
+        <item>今日</item>
+        <item>公开课</item>
+        <item>营销</item>
+        <item>航空</item>
+        <item>音乐</item>
+        <item>双创</item>
+        <item>佛学</item>
+        <item>天猫</item>
+        <item>京东</item>
+        <item>改革</item>
+
+        <item>fake</item> //空
+
         <item>知乎</item>
         <item>果壳</item>
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
         <item>热点视频</item>
         <item>娱乐视频</item>
         <item>搞笑视频</item>
         <item>精品视频</item>
+
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>资讯</item>
+        <item>评测室</item>
+        <item>安卓</item>
+        <item>手机</item>
+        <item>数码</item>
+        <item>电脑</item>
+        <item>极客学院</item>
+        <item>VR</item>
+        <item>智能汽车</item>
+        <item>电竞</item>
+        <item>Windows</item>
+        <item>发布会</item>
+        <item>苹果</item>
+        <item>科普</item>
+        <item>网络焦点</item>
+        <item>行业前沿</item>
+        <item>OPPO</item>
+
+        <item>华为</item>
+        <item>VIVO</item>
+        <item>小米</item>
+
+        <item>锤子</item>
+        <item>三星</item>
+        <item>一加</item>
+        <item>魅族</item>
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
     </array>
 </resources>

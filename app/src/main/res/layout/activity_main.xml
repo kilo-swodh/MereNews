@@ -13,16 +13,15 @@
         android:layout_height="match_parent"
         app:viewpager_pagerTitleStrip="@layout/main_tabs"
         app:viewpager_headerHeight="125dp"
-        app:viewpager_headerAlpha="1.0"
+        app:viewpager_headerAlpha="0.8"
         app:viewpager_imageHeaderDarkLayerAlpha="0.2"
         app:viewpager_hideLogoWithFade="true"
         app:viewpager_hideToolbarAndTitle="true"
         app:viewpager_parallaxHeaderFactor="1.5"
-        app:viewpager_headerAdditionalHeight="40dp"
+        app:viewpager_headerAdditionalHeight="60dp"
         app:viewpager_displayToolbarWhenSwipe="true"
-        app:viewpager_transparentToolbar="false"
-        app:viewpager_animatedHeaderImage="true"
-        />
+        app:viewpager_transparentToolbar="true"
+        app:viewpager_animatedHeaderImage="false" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"

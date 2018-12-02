@@ -10,9 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.view.WindowManager;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +21,11 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_HAVE_CHECK;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HAVE_CHECK_1;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
-import static androidnews.kiloproject.util.TransformationUtils.hasCheckEvent173;
-import static androidnews.kiloproject.util.TransformationUtils.transferBlockData;
-import static androidnews.kiloproject.util.TransformationUtils.transferChannel;
 
 public class SplashActivity extends AppCompatActivity {
     @Override
@@ -40,11 +38,8 @@ public class SplashActivity extends AppCompatActivity {
         AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
             initShortsCut();
-        if (!hasCheckEvent173()) {
-            transferBlockData();
-            transferChannel();
-            SPUtils.getInstance().put(CONFIG_HAVE_CHECK, true);
-        }
+
+        AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE,1);
 
         startActivity(new Intent(this, MainActivity.class));
         finish();

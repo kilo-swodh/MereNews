@@ -15,14 +15,14 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
+
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,10 +39,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.activity.MainActivity.TYPE_ZHIHU;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.HOSTzhihu;
+import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class ZhiHuDetailActivity extends BaseDetailActivity {
@@ -138,7 +138,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
     protected void initSlowly() {
         int id = getIntent().getIntExtra("id", 0);
         if (id != 0) {
-            EasyHttp.get(HOSTzhihu + "/" + id)
+            EasyHttp.get(HOST_ZHIHU + "/" + id)
                     .readTimeOut(30 * 1000)//局部定义读超时
                     .writeTimeOut(30 * 1000)
                     .connectTimeout(30 * 1000)
@@ -209,51 +209,43 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String cacheJson = SPUtils.getInstance().getString(type + "", "");
-                List<CacheNews> list;
-                if (TextUtils.isEmpty(cacheJson)) {
-                    list = new ArrayList<>();
-                } else {
-                    list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                    }.getType());
-                    for (CacheNews cacheNews : list) {
-                        if (TextUtils.equals(cacheNews.getDocid(), currentData.getId() + ""))
-                            return;
-                    }
+                List<CacheNews> list = new ArrayList<>();
+                try {
+                    list = LitePal.where("docid = ?", String.valueOf(currentData.getId())).find(CacheNews.class);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+                if (list != null && list.size() > 0)
+                    for (CacheNews cacheNews : list) {
+                        if (cacheNews.getType() == type)
+                            return;
+                        }
 
                 CacheNews cacheNews = new CacheNews(currentData.getTitle(),
                         currentData.getImage(),
                         getString(R.string.zhihu),
                         currentData.getId() + "",
-                        currentData.getBody());
-                cacheNews.setType(TYPE_ZHIHU);
-                list.add(0, cacheNews);
-
-                if (list.size() > MAX_HISTORY) {
-                    list.remove(list.size() - 1);
-                }
-
-                String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                }.getType());
-                SPUtils.getInstance().put(type + "", saveJson);
+                        currentData.getBody(),
+                        type,
+                        TYPE_ZHIHU);
+                cacheNews.save();
             }
         }).start();
     }
 
     private boolean checkStar(boolean isClear) {
-        String hisJson = SPUtils.getInstance().getString(CACHE_COLLECTION + "", "");
-        List<CacheNews> list;
-        if (!TextUtils.isEmpty(hisJson)) {
-            list = gson.fromJson(hisJson, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            for (CacheNews cache : list) {
-                if (TextUtils.equals(cache.getDocid(), currentData.getId() + "")) {
+        List<CacheNews> list = null;
+        try {
+            list = LitePal.where("docid = ?", String.valueOf(currentData.getId())).find(CacheNews.class);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        if (list != null && list.size() > 0) {
+            for (CacheNews cacheNews : list) {
+                if (cacheNews.getType() == CACHE_COLLECTION) {
                     if (isClear) {
-                        list.remove(cache);
-                        String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                        }.getType());
-                        SPUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
+                        LitePal.delete(CacheNews.class, cacheNews.getId());
+                        setResult(RESULT_OK);
                     }
                     return true;
                 }
@@ -265,7 +257,11 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.getItem(0).setVisible(false);
+        try {
+            menu.getItem(0).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 

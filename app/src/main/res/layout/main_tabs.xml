@@ -10,7 +10,6 @@
     app:pstsIndicatorColor="#ccc"
     app:pstsIndicatorHeight="2dp"
     app:pstsShouldExpand="true"
-    app:pstsTabPaddingLeftRight="10dp"
+    app:pstsTabPaddingLeftRight="@dimen/margin_large"
     app:pstsTabTextAllCaps="true"
-    tools:background="#A333"
-    />
+    tools:background="#A333" />

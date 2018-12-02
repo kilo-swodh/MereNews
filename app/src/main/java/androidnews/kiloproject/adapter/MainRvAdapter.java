@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,6 +25,7 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.bean.net.NewMainListData;
+import androidnews.kiloproject.util.GlideUtil;
 
 import static androidnews.kiloproject.fragment.BaseRvFragment.CELL;
 import static androidnews.kiloproject.fragment.BaseRvFragment.HEADER;
@@ -35,15 +34,13 @@ import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, BaseViewHolder> {
     RequestOptions options;
-    private final RequestManager glide;
     private Context mContext;
 
-    public MainRvAdapter(Context Context,RequestManager glide, List data) {
+    public MainRvAdapter(Context Context, List data) {
         super(data);
-        this.glide = glide;
         this.mContext = Context;
-        addItemType(HEADER, R.layout.list_item_card_big);
-        addItemType(CELL, R.layout.list_item_card_small);
+        addItemType(HEADER, R.layout.list_item_card_banner);
+        addItemType(CELL, R.layout.list_item_card_linear);
         options = new RequestOptions();
         options.centerCrop()
                 .error(R.drawable.ic_error);
@@ -63,7 +60,7 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                         titles.add(bean.getTitle());
                         imgs.add(bean.getImgsrc());
                     }
-                banner.setImageLoader(new GlideImageLoader(glide))
+                banner.setImageLoader(new GlideImageLoader())
                         .setBannerAnimation(Transformer.FlipHorizontal)
                         .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                         .setDelayTime(5 * 1000)
@@ -110,37 +107,31 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                 banner.start();
                 break;
             case CELL:
-                if (item.isBlocked()){
-                    View rootView = helper.getView(R.id.card_view);
-                    rootView.getLayoutParams().height = 0;
-                    ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) rootView.getLayoutParams();
-                    p.setMargins(0, 0, 0, 0);
-                    rootView.requestLayout();
-                }else {
-                    try {
-                        helper.setText(R.id.item_card_text, item.getTitle());
-                        helper.setText(R.id.item_card_time, item.getPtime().substring(5, item.getPtime().length()));
-                        helper.setText(R.id.item_card_from, item.getSource().replace("$", ""));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (item.isReaded())
-                        helper.setTextColor(R.id.item_card_text,
-                                mContext.getResources().getColor(R.color.main_text_color_read));
-                    else
-                        helper.setTextColor(R.id.item_card_text,
-                                mContext.getResources().getColor(R.color.main_text_color_drak));
-                    if (TextUtils.isEmpty(item.getImgsrc())) {
-                        helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
-                        helper.setImageResource(R.id.item_card_img, R.color.white);
-                    } else {
-                            glide.load(item.getImgsrc())
-                                    .apply(options)
-                                    .into((ImageView) helper.getView(R.id.item_card_img));
-                        helper.setText(R.id.item_card_subtitle, "");
-                    }
-                    break;
+                try {
+                    helper.setText(R.id.item_card_text, item.getTitle());
+                    helper.setText(R.id.item_card_time, item.getPtime().substring(5, item.getPtime().length()));
+                    helper.setText(R.id.item_card_info, item.getSource().replace("$", ""));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                if (item.isReaded())
+                    helper.setTextColor(R.id.item_card_text,
+                            mContext.getResources().getColor(R.color.main_text_color_read));
+                else
+                    helper.setTextColor(R.id.item_card_text,
+                            mContext.getResources().getColor(R.color.main_text_color_dark));
+                if (TextUtils.isEmpty(item.getImgsrc())) {
+                    helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
+                    helper.setImageResource(R.id.item_card_img, R.color.white);
+                } else {
+                    if (GlideUtil.isValidContextForGlide(mContext))
+                        Glide.with(mContext).load(item.getImgsrc())
+                                .apply(options)
+                                .into((ImageView) helper.getView(R.id.item_card_img));
+                    helper.setText(R.id.item_card_subtitle, "");
+                }
+                break;
+
         }
     }
 }

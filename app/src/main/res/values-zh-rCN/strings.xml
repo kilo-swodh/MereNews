@@ -1,12 +1,29 @@
+<?xml version="1.0"?>
+
 <resources>
+
     <string name="app_name">Mere新闻</string>
 
     <string name="successful">成功</string>
+
     <string name="fail">失败</string>
+
     <string name="save">保存</string>
+
+    <string name="sort">排序</string>
+
+    <string name="big">大号</string>
+
+    <string name="normal">标准</string>
+
+    <string name="small">小号</string>
+
     <string name="setting">设置</string>
+
     <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
+
     <string name="message_permission_always_failed">请到设置中给予本App权限:\n\n%1$s</string>
+
     <string name="message_setting_comeback">从设置中回来了</string>
 
     <string name="message_install_failed">安装应用的权限被禁止了</string>
@@ -16,89 +33,159 @@
     <string name="apk_name">android.apk</string>
 
     <string name="action_comment">评论</string>
+
     <string name="action_link">复制链接</string>
+
     <string name="action_browser">浏览器中打开</string>
+
     <string name="action_star">收藏</string>
+
     <string name="action_share">分享</string>
+
     <string name="action_delete_all">全部删除</string>
 
     <string name="action_block_source">屏蔽该来源</string>
+
     <string name="action_block_keywords">屏蔽关键词</string>
 
     <string name="source">新闻源</string>
+
     <string name="keywords">关键词</string>
 
     <string name="star_no">已取消收藏</string>
+
     <string name="star_yes">已添加收藏</string>
 
     <string name="history">历史</string>
+
     <string name="about">关于</string>
+
     <string name="block_rule">屏蔽规则</string>
 
     <string name="loading">正在加载</string>
+
     <string name="load_success">加载成功</string>
+
     <string name="load_fail">加载失败</string>
+
     <string name="server_fail">服务器返回数据异常</string>
+
     <string name="download_success">下载成功</string>
+
     <string name="download_fail">下载失败</string>
 
     <string name="empty_content">什么也没有...</string>
+
     <string name="no_comment">未开放评论区</string>
 
     <string name="news">报道</string>
 
     <string name="setting_basic">基础</string>
+
     <string name="setting_other">其他</string>
 
     <string name="language">语言</string>
+
     <string name="clear_cache">清空缓存</string>
+
     <string name="clear_cache_detail">包含收藏/历史数据</string>
+
     <string name="auto_refresh">自动刷新</string>
+
     <string name="auto_refresh_detail">切换时自动刷新</string>
+
     <string name="auto_loadmore">预加载数据</string>
+
     <string name="auto_loadmore_detail">当快浏览到尽头时提前加载,避免等待,更耗费流量</string>
+
     <string name="night_theme">主题切换</string>
+
     <string name="check_update">检查更新</string>
+
     <string name="check_update_detail">当前版本为:</string>
+
     <string name="join_us">加用户群</string>
+
     <string name="join_us_detail">企鹅群号:938435700</string>
+
     <string name="join_us_error">没有找到手Q</string>
+
+    <string name="donate">捐赠</string>
+
+    <string name="donate_detail">顺便在备注中许个愿</string>
+
     <string name="swipe_back">滑动返回</string>
+
     <string name="swipe_back_detail">从左向右滑动页面返回</string>
+
     <string name="back_exit">首页返回键退出</string>
+
     <string name="back_exit_detail">双击返回键直接退出应用</string>
+
     <string name="random_header_server">封面设置</string>
-    <string name="random_header_server_detail">首页顶部显示内容</string>
+
+    <string name="text_size">文章字号</string>
+
     <string name="random_header_pic_per">滑动轮播</string>
+
     <string name="random_header_pic_auto">自动轮播</string>
-    <string name="random_header_color_gradual">渐变色</string>
-    <string name="random_header_color_pure">纯色</string>
+
+    <string name="random_header_color_gradual">渐变色轮播</string>
+
+    <string name="random_header_color_pure">纯色轮播</string>
+
+    <string name="custom_header_color_pure">自定义纯色</string>
 
     <string name="click_to_exit">再按一次退出应用</string>
+
     <string name="start_after_exit">退出界面后生效</string>
+
     <string name="start_after_restart_list">下拉刷新新闻后生效</string>
+
     <string name="start_after_restart_app">下次进入应用生效</string>
 
     <string name="tip_title">友情提示</string>
+
     <string name="update_title">发现一个新版本</string>
 
     <string name="update_message">您可到应用商店更新,或点击确认进行下载安装</string>
+
     <string name="update_title_no">恭喜,当前已是最新版本</string>
 
-    <string name="subscribe_my_category">切换栏目</string>
+    <string name="subscribe_my_category">已选栏目</string>
+
     <string name="subscribe_more_category">更多栏目</string>
 
     <string name="channel">频道</string>
+
+    <string name="channel_select">频道选择</string>
+
     <string name="channel_tip1">长按排序或者删除</string>
+
     <string name="channel_tip2">点击添加</string>
 
     <string name="delete">删除</string>
+
     <string name="delete_message">是否删除该条内容</string>
+
     <string name="repeated">这条重复了</string>
 
     <string name="zhihu">知乎</string>
+
     <string name="guokr">果壳精选</string>
 
     <string name="shortcut_star">收藏记录</string>
+
     <string name="shortcut_disabled">快捷方式已被禁用</string>
+
+    <string name="tab_netease">网易</string>
+
+    <string name="tab_other">其他</string>
+
+    <string name="tab_video">视频</string>
+
+    <string name="tab_ithome">IT之家</string>
+
+    <string name="sort_tip">长按并拖动改变分类顺序</string>
+
 </resources>

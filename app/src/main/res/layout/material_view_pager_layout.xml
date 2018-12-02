@@ -36,7 +36,6 @@
     </FrameLayout>
 
     <RelativeLayout
-        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -49,8 +48,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
             android:theme="@style/MVP_AppTheme.ActionBarTheme"
             app:navigationIcon="?attr/homeAsUpIndicator"
             tools:background="#3FFF" />

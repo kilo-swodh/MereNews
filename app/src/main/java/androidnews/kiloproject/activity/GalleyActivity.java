@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -26,18 +27,19 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
-import com.yanzhenjie.permission.Action;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.net.GalleyData;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.util.FileCompatUtil;
 import androidnews.kiloproject.widget.PinchImageView;
 
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
@@ -101,10 +103,11 @@ public class GalleyActivity extends BaseActivity {
 
                         @Override
                         public void onSuccess(String response) {
-                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                            try {
                                 galleyContent = gson.fromJson(response, GalleyData.class);
                                 initGalley();
-                            } else {
+                            } catch (Exception e) {
+                                e.printStackTrace();
                                 SnackbarUtils.with(galleyViewpager).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
@@ -199,52 +202,42 @@ public class GalleyActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_galley_download:
-                requestPermission(new Action() {
-                    @Override
-                    public void onAction(Object data) {
-                        String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
-                        EasyHttp.downLoad(currentImg)
-                                .savePath("/sdcard/Download")
-                                .saveName(fileName)//不设置默认名字是时间戳生成的
-                                .execute(new DownloadProgressCallBack<String>() {
-                                    @Override
-                                    public void update(long bytesRead, long contentLength, boolean done) {
-//                                int progress = (int) (bytesRead * 100 / contentLength);
-//                                if (done) {//下载完成
-//                                }
-                                    }
+                String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
+                String path = FileCompatUtil.getMediaDir(mActivity);
+                if (TextUtils.isEmpty(path))
+                    SnackbarUtils.with(tvGalleyTitle)
+                            .setMessage(getString(R.string.download_fail))
+                            .showError();
+                else
+                    EasyHttp.downLoad(currentImg)
+                            .savePath(path)
+                            .saveName(fileName)//不设置默认名字是时间戳生成的
+                            .execute(new DownloadProgressCallBack<String>() {
+                                @Override
+                                public void update(long bytesRead, long contentLength, boolean done) {
+                                }
 
-                                    @Override
-                                    public void onStart() {
-                                        //开始下载
-                                    }
+                                @Override
+                                public void onStart() {
+                                    //开始下载
+                                }
 
-                                    @Override
-                                    public void onComplete(String path) {
-                                        //下载完成，path：下载文件保存的完整路径
-                                        SnackbarUtils.with(tvGalleyTitle)
-                                                .setMessage(getString(R.string.download_success))
-//                                        .setAction(getString(R.string.check), new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                                                        UriUtils.file2Uri(new File("/mnt/sdcard/Download/" + fileName)));
-//                                                startActivity(intent);
-//                                            }
-//                                        })
-                                                .showSuccess();
-                                    }
+                                @Override
+                                public void onComplete(String path) {
+                                    //下载完成，path：下载文件保存的完整路径
+                                    SnackbarUtils.with(tvGalleyTitle)
+                                            .setMessage(getString(R.string.download_success))
+                                            .showSuccess();
+                                }
 
-                                    @Override
-                                    public void onError(ApiException e) {
-                                        //下载失败
-                                        SnackbarUtils.with(tvGalleyTitle)
-                                                .setMessage(getString(R.string.download_fail) + e.getMessage())
-                                                .showError();
-                                    }
-                                });
-                    }
-                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                @Override
+                                public void onError(ApiException e) {
+                                    //下载失败
+                                    SnackbarUtils.with(tvGalleyTitle)
+                                            .setMessage(getString(R.string.download_fail) + e.getMessage())
+                                            .showError();
+                                }
+                            });
                 break;
         }
     }

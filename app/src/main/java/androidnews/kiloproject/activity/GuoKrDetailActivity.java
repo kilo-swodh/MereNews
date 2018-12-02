@@ -14,16 +14,15 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
-import com.google.gson.reflect.TypeToken;
+
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.CacheNews;
@@ -34,11 +33,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.activity.MainActivity.TYPE_GUOKR;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
-import static androidnews.kiloproject.system.AppConfig.HOSTguoKrDetail;
-import static androidnews.kiloproject.system.AppConfig.getGuoKrDetail;
+import static androidnews.kiloproject.system.AppConfig.HOST_GUO_KR_DETAIL;
+import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_DETAIL;
+import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class GuoKrDetailActivity extends BaseDetailActivity {
@@ -92,7 +91,11 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                                         @Override
                                         public void accept(Boolean aBoolean) throws Exception {
                                             if (aBoolean) {
-                                                item.setIcon(R.drawable.ic_star_no);
+                                                try {
+                                                    item.setIcon(R.drawable.ic_star_no);
+                                                }catch (Exception e){
+                                                    e.printStackTrace();
+                                                }
                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
                                             } else
                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
@@ -100,7 +103,11 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                                     });
                             isStar = false;
                         } else {
-                            item.setIcon(R.drawable.ic_star_ok);
+                            try {
+                                item.setIcon(R.drawable.ic_star_ok);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                             saveCacheAsyn(CACHE_COLLECTION);
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
                             isStar = true;
@@ -136,7 +143,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
     @Override
     protected void initSlowly() {
         detailId = getIntent().getIntExtra("id", 0);
-        currentUrl = HOSTguoKrDetail + getGuoKrDetail + detailId + "/";
+        currentUrl = HOST_GUO_KR_DETAIL + GET_GUO_KR_DETAIL.replace("{newsId}",String.valueOf(detailId));
         currentTitle = getIntent().getStringExtra("title");
         currentImg = getIntent().getStringExtra("img");
 
@@ -164,51 +171,43 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String cacheJson = SPUtils.getInstance().getString(type + "", "");
-                List<CacheNews> list;
-                if (TextUtils.isEmpty(cacheJson)) {
-                    list = new ArrayList<>();
-                } else {
-                    list = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                    }.getType());
+                List<CacheNews> list = new ArrayList<>();
+                try {
+                    list = LitePal.where("docid = ?", String.valueOf(detailId)).find(CacheNews.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (list != null && list.size() > 0)
                     for (CacheNews cacheNews : list) {
-                        if (TextUtils.equals(cacheNews.getDocid(), detailId + ""))
+                        if (cacheNews.getType() == type)
                             return;
                     }
-                }
 
                 CacheNews cacheNews = new CacheNews(currentTitle,
                         currentImg,
                         getString(R.string.guokr),
                         detailId + "",
-                        null);
-                cacheNews.setType(TYPE_GUOKR);
-                list.add(0, cacheNews);
-
-                if (list.size() > MAX_HISTORY) {
-                    list.remove(list.size() - 1);
-                }
-
-                String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                }.getType());
-                SPUtils.getInstance().put(type + "", saveJson);
+                        null,
+                        type,
+                        TYPE_GUOKR);
+                cacheNews.save();
             }
         }).start();
     }
 
     private boolean checkStar(boolean isClear) {
-        String hisJson = SPUtils.getInstance().getString(CACHE_COLLECTION + "", "");
-        List<CacheNews> list;
-        if (!TextUtils.isEmpty(hisJson)) {
-            list = gson.fromJson(hisJson, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            for (CacheNews cache : list) {
-                if (TextUtils.equals(cache.getDocid(), detailId + "")) {
+        List<CacheNews> list = null;
+        try {
+            list = LitePal.where("docid = ?", String.valueOf(detailId)).find(CacheNews.class);
+        }catch (Exception e1){
+            e1.printStackTrace();
+        }
+        if (list != null && list.size() > 0){
+            for (CacheNews cacheNews : list) {
+                if (cacheNews.getType() == CACHE_COLLECTION) {
                     if (isClear) {
-                        list.remove(cache);
-                        String saveJson = gson.toJson(list, new TypeToken<List<CacheNews>>() {
-                        }.getType());
-                        SPUtils.getInstance().put(CACHE_COLLECTION + "", saveJson);
+                        LitePal.delete(CacheNews.class, cacheNews.getId());
+                        setResult(RESULT_OK);
                     }
                     return true;
                 }
@@ -220,7 +219,11 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.getItem(0).setVisible(false);
+        try {
+            menu.getItem(0).setVisible(false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override

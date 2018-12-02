@@ -111,8 +111,12 @@ public class MaterialViewPager extends FrameLayout implements ViewPager.OnPageCh
         MaterialViewPagerAnimator animator = MaterialViewPagerHelper.getAnimator(this.getContext());
 
         //-1*ss.yOffset restore to 0
-        animator.restoreScroll(-1 * ss.yOffset, ss.settings);
-        MaterialViewPagerHelper.register(getContext(), animator);
+        try {
+            animator.restoreScroll(-1 * ss.yOffset, ss.settings);
+            MaterialViewPagerHelper.register(getContext(), animator);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

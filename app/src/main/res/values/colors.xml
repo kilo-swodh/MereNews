@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#FFC107</color>
     <color name="colorPrimaryDark">#FFA000</color>
-    <color name="colorAccent">#333</color>
+    <color name="colorAccent">#333333</color>
 
     <color name="main_text_colorful">@color/colorPrimaryDark</color>
-    <color name="main_text_color_drak">#212121</color>
+    <color name="main_text_color_dark">#212121</color>
     <color name="main_text_color">#757575</color>
     <color name="main_text_color_read">#bbb</color>
     <color name="divider">#BDBDBD</color>
@@ -19,15 +19,9 @@
     <color name="comment_name">@color/dodgerblue</color>
     <color name="comment_bg_level_two">@color/floralwhite</color>
 
-    <color name="default_text">@color/main_text_color</color>
-    <color name="subscribe_bg">@color/main_background</color>
-
     <color name="mask">#66000000</color><!--半透明遮罩 -->
     accent_color
-    <color name="statusBarColor">@color/blue</color>
-    <color name="navigationBarColor">@android:color/black</color>
     <color name="drawerArrowColor">@android:color/white</color>
-
 
     <color name="transparent">#00000000</color><!--透明色 -->   
     <color name="white">#FFFFFF</color><!--白色 -->   

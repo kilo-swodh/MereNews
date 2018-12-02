@@ -3,7 +3,6 @@ package androidnews.kiloproject.fragment;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,9 +12,10 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -30,7 +30,6 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.VideoRvAdapter;
-import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.VideoListData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -39,12 +38,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.getVideosA;
-import static androidnews.kiloproject.system.AppConfig.getVideosB;
-import static androidnews.kiloproject.system.AppConfig.getVideosC;
+import static androidnews.kiloproject.system.AppConfig.GET_VIDEOS;
+import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 
 public class VideoRvFragment extends BaseRvFragment {
 
@@ -52,12 +49,10 @@ public class VideoRvFragment extends BaseRvFragment {
     //    MainListData contents;
     List<VideoListData> contents;
 
-    private static final boolean GRID_LAYOUT = false;
-
     private String CACHE_LIST_DATA;
 
     private int currentPage = 0;
-    private int questPage = 20;
+    private static final int questPage = 20;
 
     String typeStr;
 
@@ -92,28 +87,10 @@ public class VideoRvFragment extends BaseRvFragment {
                     contents = gson.fromJson(json, new TypeToken<List<VideoListData>>() {
                     }.getType());
                     if (contents != null && contents.size() > 0) {
-                        try {
-                            final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                            List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                            }.getType());
-                            if (cacheNews != null && cacheNews.size() > 0)
-                                for (VideoListData data : contents) {
-                                    for (CacheNews cacheNew : cacheNews) {
-                                        if (TextUtils.equals(data.getVid(), cacheNew.getDocid())) {
-                                            data.setReaded(true);
-                                            break;
-                                        }
-                                    }
-                                }
-
-                            e.onNext(true);
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                            e.onNext(false);
-                        }
-                    } else
-                        e.onNext(false);
-                } else e.onNext(false);
+                        e.onNext(true);
+                    }
+                }
+                e.onNext(false);
                 e.onComplete();
             }
         }).subscribeOn(Schedulers.io())
@@ -126,11 +103,9 @@ public class VideoRvFragment extends BaseRvFragment {
                         VideoRvFragment.super.onViewCreated(view, savedInstanceState);
                     }
                 });
-        if (GRID_LAYOUT) {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        } else {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        }
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+
         mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
@@ -169,13 +144,14 @@ public class VideoRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestData(int type) {
+    @Override
+    public void requestData(int type) {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
                 currentPage = 0;
             case TYPE_LOADMORE:
-                dataUrl = getVideosA + typeStr + getVideosB + currentPage + getVideosC;
+                dataUrl = GET_VIDEOS.replace("{typeStr}",typeStr).replace("{currentPage}",String.valueOf(currentPage));
                 break;
         }
         EasyHttp.get(dataUrl)
@@ -221,10 +197,6 @@ public class VideoRvFragment extends BaseRvFragment {
                                     }
                                     List<VideoListData> newList = new ArrayList<>();
 
-                                    final String cacheJson = SPUtils.getInstance().getString(CACHE_HISTORY + "", "");
-                                    List<CacheNews> cacheNews = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                                    }.getType());
-
                                     switch (type) {
                                         case TYPE_REFRESH:
                                             currentPage = 0;
@@ -262,14 +234,6 @@ public class VideoRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                     if (!isSame) {
-                                                        if (cacheNews != null && cacheNews.size() > 0)
-                                                            for (CacheNews cacheNew : cacheNews) {
-                                                                if (TextUtils.equals(newBean.getVid(), cacheNew.getDocid())) {
-                                                                    newBean.setReaded(true);
-                                                                    break;
-                                                                }
-                                                            }
-
                                                         newList.add(newBean);
                                                         isAllSame = false;
                                                     }
@@ -341,7 +305,7 @@ public class VideoRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
-        mainAdapter = new VideoRvAdapter(mActivity,Glide.with(this), contents);
+        mainAdapter = new VideoRvAdapter(mActivity, contents);
 //        mainAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -359,6 +323,7 @@ public class VideoRvFragment extends BaseRvFragment {
         if (mRecyclerView == null)
             return;
         mRecyclerView.setAdapter(mainAdapter);
+        mainAdapter.openLoadAnimation(SCALEIN);
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
             mainAdapter.setPreLoadNumber(5);
             mainAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

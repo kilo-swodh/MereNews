@@ -1,40 +1,24 @@
 package androidnews.kiloproject.system.base;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.bumptech.glide.RequestManager;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
-import com.yanzhenjie.permission.Setting;
 
-import java.util.List;
 import java.util.Locale;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.permission.RuntimeRationale;
-import androidnews.kiloproject.system.MyApplication;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
@@ -159,143 +143,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ImmersionBar.with(mActivity).destroy();
         SwipeBackHelper.onDestroy(this);
     }
-
-    /**
-     * 权限相关
-     *
-     * @param grantedAction
-     * @param permissions
-     */
-    protected void requestPermission(Action grantedAction, String... permissions) {
-        AndPermission.with(mActivity)
-                .runtime()
-                .permission(permissions)
-                .rationale(new RuntimeRationale())
-                .onGranted(grantedAction)
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(@NonNull List<String> permissions) {
-                        if (AndPermission.hasAlwaysDeniedPermission(mActivity, permissions)) {
-                            showSettingDialog(mActivity, permissions);
-                        }
-                    }
-                })
-                .start();
-    }
-
-    public void showSettingDialog(Context context, final List<String> permissions) {
-        List<String> permissionNames = Permission.transformText(context, permissions);
-        String message = context.getString(R.string.message_permission_always_failed, TextUtils.join("\n", permissionNames));
-
-        new AlertDialog.Builder(context)
-                .setCancelable(false)
-                .setTitle(R.string.tip_title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setPermission();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
-    }
-
-    protected void setPermission() {
-        AndPermission.with(this)
-                .runtime()
-                .setting()
-                .onComeback(new Setting.Action() {
-                    @Override
-                    public void onAction() {
-                        Toast.makeText(mActivity, R.string.message_setting_comeback, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .start();
-    }
-
-    /**
-     * Request to read and write external storage permissions.
-     */
-//    protected void requestPermissionForInstallPackage() {
-//        AndPermission.with(this)
-//                .runtime()
-//                .permission(Permission.Group.STORAGE)
-//                .rationale(new RuntimeRationale())
-//                .onGranted(new Action<List<String>>() {
-//                    @Override
-//                    public void onAction(List<String> data) {
-//                        new WriteApkTask(mActivity, new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                installPackage();
-//                            }
-//                        }).execute();
-//                    }
-//                })
-//                .onDenied(new Action<List<String>>() {
-//                    @Override
-//                    public void onAction(List<String> data) {
-//                        ToastUtils.showShort(R.string.message_install_failed);
-//                    }
-//                })
-//                .start();
-//    }
-
-    /**
-     * Install package.
-     */
-//    protected void installPackage() {
-//        AndPermission.with(this)
-//                .install()
-//                .file(new File(Environment.getExternalStorageDirectory(), getResources().getString(R.string.apk_name)))
-//                .rationale(new InstallRationale())
-//                .onGranted(new Action<File>() {
-//                    @Override
-//                    public void onAction(File data) {
-//                        // Installing.
-//                    }
-//                })
-//                .onDenied(new Action<File>() {
-//                    @Override
-//                    public void onAction(File data) {
-//                        // The user refused to install.
-//                    }
-//                })
-//                .start();
-//    }
-//
-//    protected void requestPermissionForAlertWindow() {
-//        AndPermission.with(this)
-//                .overlay()
-//                .rationale(new OverlayRationale())
-//                .onGranted(new Action<Void>() {
-//                    @Override
-//                    public void onAction(Void data) {
-//                        showAlertWindow();
-//                    }
-//                })
-//                .onDenied(new Action<Void>() {
-//                    @Override
-//                    public void onAction(Void data) {
-//                        ToastUtils.showShort(R.string.message_overlay_failed);
-//                    }
-//                })
-//                .start();
-//    }
-    protected void showAlertWindow() {
-        MyApplication.getInstance().showLauncherView();
-
-        Intent backHome = new Intent(Intent.ACTION_MAIN);
-        backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        backHome.addCategory(Intent.CATEGORY_HOME);
-        startActivity(backHome);
-    }
-
 
     private void applyAppLanguage() {
         int type = SPUtils.getInstance().getInt(CONFIG_LANGUAGE);

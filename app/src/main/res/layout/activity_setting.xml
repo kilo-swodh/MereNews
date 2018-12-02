@@ -7,8 +7,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0.0dip"
-        android:layout_height="?actionBarSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
         android:background="@color/main_background"
         android:elevation="@dimen/elevation_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/setting_basic"
                 android:textColor="@color/main_text_colorful"
@@ -42,7 +43,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_language"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
@@ -53,7 +54,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <android.support.constraint.ConstraintLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/awesome_background">
 
@@ -71,7 +72,7 @@
                         android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/language"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +87,7 @@
                         android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="Auto"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +120,7 @@
                         android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/clear_cache"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -134,12 +135,60 @@
                         android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/clear_cache_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache" />
+
+                    <View
+                        android:id="@+id/view_text_size"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache_detail" />
+
+                    <android.support.constraint.Group
+                        android:id="@+id/group_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_text_size,tv_text_size_detail,view_text_size" />
+
+                    <TextView
+                        android:id="@+id/tv_text_size"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/text_size"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_text_size" />
+
+                    <TextView
+                        android:id="@+id/tv_text_size_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/normal"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_text_size" />
 
                     <View
                         android:id="@+id/view_auto_refresh"
@@ -151,7 +200,7 @@
                         android:background="@color/divider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache_detail" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_text_size_detail" />
 
                     <android.support.constraint.Group
                         android:id="@+id/group_auto_refresh"
@@ -166,7 +215,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/auto_refresh"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
@@ -181,7 +230,7 @@
                         android:paddingTop="@dimen/margin_normal"
                         android:layout_marginRight="@dimen/margin_normal"
                         android:text="@string/auto_refresh_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
@@ -222,7 +271,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_loadmore"
@@ -237,7 +286,7 @@
                         android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_loadmore"
@@ -278,7 +327,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/back_exit"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_back_exit"
@@ -293,7 +342,7 @@
                         android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/back_exit_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_back_exit"
@@ -334,7 +383,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/swipe_back"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
@@ -349,7 +398,7 @@
                         android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/swipe_back_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
@@ -390,7 +439,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/random_header_server"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -405,8 +454,7 @@
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginRight="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
-                        android:text="@string/random_header_server_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -420,7 +468,7 @@
                 android:id="@+id/textauto_refresh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/setting_other"
                 android:textColor="@color/main_text_colorful"
@@ -429,7 +477,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_view_language" />
 
             <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_normal"
                 android:layout_marginLeft="@dimen/margin_normal"
@@ -443,11 +491,57 @@
                 app:layout_constraintTop_toBottomOf="@+id/textauto_refresh">
 
                 <android.support.constraint.ConstraintLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <android.support.constraint.Group
-                        android:id="@+id/group_join_us"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_donate, tv_donate_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_donate"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/donate"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_donate_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/donate_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_donate" />
+
+                    <View
+                        android:id="@+id/view_join_us"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_donate_detail" />
+
+                    <android.support.constraint.Group
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
@@ -456,26 +550,26 @@
                         android:id="@+id/tv_join_us"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/join_us"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/view_join_us" />
 
                     <TextView
                         android:id="@+id/tv_join_us_detail"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/join_us_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -504,11 +598,11 @@
                         android:id="@+id/tv_check_update"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/check_update"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
                         android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -520,11 +614,11 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_normal"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/check_update_detail"
-                        android:textColor="@color/main_text_color_drak"
+                        android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
                         android:onClick="onClick"
                         app:layout_constraintBottom_toBottomOf="parent"

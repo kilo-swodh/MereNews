@@ -2,8 +2,14 @@ package androidnews.kiloproject.activity;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,12 +21,25 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.bumptech.glide.Glide;
+
+import androidnews.kiloproject.fragment.BaseRvFragment;
+import androidnews.kiloproject.fragment.ITHomeRvFragment;
+import androidnews.kiloproject.util.FileCompatUtil;
+import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.util.ITHomeUtils;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
+
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -30,6 +49,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,10 +75,17 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.fragment.BaseRvFragment.TYPE_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
+import static androidnews.kiloproject.system.AppConfig.NEWS_PHOTO_URL;
+import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
+import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
+import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,28 +94,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     NavigationView navigation;
+    FragmentStatePagerAdapter mPagerAdapter;
 
     PhotoCenterData photoData;
     int bgPosition = 0;
     int[] channelArray = new int[DEFAULT_PAGE];
+    List<BaseRvFragment> fragments = new ArrayList<>();
 
     public static final int DEFAULT_PAGE = 4;
 
-    public static final String NEWS_PHOTO_URL = "http://pic.news.163.com/photocenter/api/list/0001/00AN0001,00AO0001,00AP0001/0/10/cacheMoreData.json";
-
-    public static final int TYPE_ZHIHU = 38;
-    public static final int TYPE_GUOKR = 39;
-    public static final int TYPE_V_HOT = 40;
-    public static final int TYPE_V_ENTERTAINMENT = 41;
-    public static final int TYPE_V_FUNNY = 42;
-    public static final int TYPE_V_EXCELLENT = 43;
-
     private SPUtils spUtils;
 
-    public static final int colors1[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
-    public static final int colors2[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
-    public static final int colors3[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
-    public static final int colors4[] = { 0xff255779 , 0xff3e7492, 0xffa6c0cd };//分别为开始颜色，中间夜色，结束颜色
+    //分别为开始颜色，中间夜色，结束颜色
+    public static final int colors1[] = {Color.parseColor("#a48ce0"),
+            Color.parseColor("#8eadfd"),
+            Color.parseColor("#6eead2")};
+    public static final int colors2[] = {Color.parseColor("#16194c"),
+            Color.parseColor("#214599"),
+            Color.parseColor("#2386a5")};
+    public static final int colors3[] = {Color.parseColor("#83ccd2"),
+            Color.parseColor("#c3e7e7"),
+            Color.parseColor("#ffffff")};
+    public static final int colors4[] = {Color.parseColor("#a13dff"),
+            Color.parseColor("#5f86fd"),
+            Color.parseColor("#0578f9")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +144,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return false;
             }
         });
+
+        mViewPager.getPagerTitleStrip().setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
+            @Override
+            public void onTabReselected(int position) {
+                BaseRvFragment fragment = fragments.get(position);
+                if ( fragment != null)
+                    fragment.requestData(TYPE_REFRESH);
+            }
+        });
+        navigation.setNavigationItemSelectedListener(this);
+        ColorStateList csl = getBaseContext().getResources().getColorStateList(R.color.navigation_menu_item_color);
+        navigation.setItemTextColor(csl);
+
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         EventBus.getDefault().register(this);
     }
@@ -123,12 +167,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 String arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
-                if (TextUtils.isEmpty(arrayStr)){
+                if (TextUtils.isEmpty(arrayStr)) {
+                    channelArray = new int[DEFAULT_PAGE];
                     for (int i = 0; i < DEFAULT_PAGE; i++) {
                         channelArray[i] = i;
                     }
                     e.onNext(true);
-                }else {
+                } else {
                     String[] channelStrArray = arrayStr.split("#");
                     channelArray = new int[channelStrArray.length];
                     for (int i = 0; i < channelStrArray.length; i++) {
@@ -144,101 +189,80 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean){
-                            mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-                                @Override
-                                public Fragment getItem(int position) {
-                                    int type = channelArray[position];
-                                    if (type >= TYPE_ZHIHU)
-                                        switch (type) {
-                                            case TYPE_ZHIHU:
-                                                return new ZhihuRvFragment();
-                                            case TYPE_GUOKR:
-                                                return new GuoKrRvFragment();
-                                            case TYPE_V_HOT:
-                                            case TYPE_V_ENTERTAINMENT:
-                                            case TYPE_V_FUNNY:
-                                            case TYPE_V_EXCELLENT:
-                                                return VideoRvFragment.newInstance(channelArray[position]);
-                                        }
-                                    return MainRvFragment.newInstance(channelArray[position]);
-                                }
+                        if (aBoolean) {
+                            if (mPagerAdapter == null) {
+                                mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                                    @Override
+                                    public Fragment getItem(int position) {
+                                        BaseRvFragment fragment = createFragment(position);
+                                        fragments.add(fragment);
+                                        return fragment;
+                                    }
 
-                                @Override
-                                public int getCount() {
-                                    return channelArray.length;
-                                }
+                                    @Override
+                                    public int getCount() {
+                                        return channelArray.length;
+                                    }
 
-                                @Override
-                                public CharSequence getPageTitle(int position) {
-                                    String[] tags = getResources().getStringArray(R.array.address_tag);
-                                    return tags[channelArray[position]];
-                                }
-                            });
+                                    @Override
+                                    public CharSequence getPageTitle(int position) {
+                                        String[] tags = getResources().getStringArray(R.array.address_tag);
+                                        return tags[channelArray[position]];
+                                    }
+                                };
+                                mViewPager.getViewPager().setAdapter(mPagerAdapter);
 
-                            mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
-                            mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+                                mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+                                mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-                            EasyHttp.get(NEWS_PHOTO_URL)
-                                    .readTimeOut(30 * 1000)//局部定义读超时
-                                    .writeTimeOut(30 * 1000)
-                                    .connectTimeout(30 * 1000)
-                                    .timeStamp(true)
-                                    .execute(new SimpleCallBack<String>() {
-                                        @Override
-                                        public void onError(ApiException e) {
-                                            e.printStackTrace();
-                                        }
+                                EasyHttp.get(NEWS_PHOTO_URL)
+                                        .readTimeOut(30 * 1000)//局部定义读超时
+                                        .writeTimeOut(30 * 1000)
+                                        .connectTimeout(30 * 1000)
+                                        .timeStamp(true)
+                                        .execute(new SimpleCallBack<String>() {
+                                            @Override
+                                            public void onError(ApiException e) {
+                                                e.printStackTrace();
+                                            }
 
-                                        @Override
-                                        public void onSuccess(final String s) {
-                                            Observable.create(new ObservableOnSubscribe<Boolean>() {
-                                                @Override
-                                                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                                    String temp = s.replace(")", "}");
-                                                    String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
-                                                    if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                                                        try {
-                                                            photoData = gson.fromJson(response, PhotoCenterData.class);
-                                                            e.onNext(true);
-                                                        } catch (Exception e1) {
-                                                            e1.printStackTrace();
-                                                            e.onNext(false);
-                                                        }
-                                                    } else e.onNext(false);
-                                                    e.onComplete();
-                                                }
-                                            }).subscribeOn(Schedulers.computation())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(new Consumer<Boolean>() {
-                                                        @Override
-                                                        public void accept(Boolean aBoolean) throws Exception {
-                                                            if (aBoolean)
-                                                                startBgAnimate();
-                                                            else
-                                                                SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
-                                                        }
-                                                    });
-                                        }
-                                    });
+                                            @Override
+                                            public void onSuccess(final String s) {
+                                                Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                                    @Override
+                                                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                                        String temp = s.replace(")", "}");
+                                                        String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
+                                                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                                                            try {
+                                                                photoData = gson.fromJson(response, PhotoCenterData.class);
+                                                                e.onNext(true);
+                                                            } catch (Exception e1) {
+                                                                e1.printStackTrace();
+                                                                e.onNext(false);
+                                                            }
+                                                        } else e.onNext(false);
+                                                        e.onComplete();
+                                                    }
+                                                }).subscribeOn(Schedulers.computation())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(new Consumer<Boolean>() {
+                                                            @Override
+                                                            public void accept(Boolean aBoolean) throws Exception {
+                                                                if (aBoolean)
+                                                                    startBgAnimate();
+                                                                else
+                                                                    SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
+                                                            }
+                                                        });
+                                            }
+                                        });
+                            } else {
+                                mPagerAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
                 });
-
-        navigation.setNavigationItemSelectedListener(this);
-        ColorStateList csl = getBaseContext().getResources().getColorStateList(R.color.navigation_menu_item_color);
-        navigation.setItemTextColor(csl);
-
-//        final View logo = findViewById(R.id.logo_white);
-//        if (logo != null) {
-//            logo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mViewPager.notifyHeaderChanged();
-//                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
     }
 
     @Override
@@ -336,6 +360,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SELECT_RESULT:
+                if (resultCode == RESULT_OK) {
+                    data = getIntent();
+                    finish();
+                    startActivity(data);
+                }
+                break;
             case SETTING_RESULT:
                 if (resultCode == RESULT_OK)
                     initSlowly();
@@ -350,11 +380,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    private BaseRvFragment createFragment(int position){
+        int type = channelArray[position];
+        if (type >= TYPE_ZHIHU) {
+            switch (type) {
+                case TYPE_ZHIHU:
+                    return new ZhihuRvFragment();
+                case TYPE_GUOKR:
+                    return new GuoKrRvFragment();
+            }
+            if (type >= TYPE_VIDEO_START && type <= TYPE_VIDEO_END)
+                return VideoRvFragment.newInstance(channelArray[position]);
+            else
+                return ITHomeRvFragment.newInstance(channelArray[position]);
+        }
+        return MainRvFragment.newInstance(channelArray[position]);
+    }
+
     Timer timer;
     TimerTask timerTask;
 
     private void startBgAnimate() {
-        switch (spUtils.getInt(CONFIG_RANDOM_HEADER)){
+        switch (spUtils.getInt(CONFIG_RANDOM_HEADER, 0)) {
             case 0:
                 timer = new Timer();
                 timerTask = new TimerTask() {
@@ -363,16 +410,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (mViewPager != null && photoData != null) {
-                                    if (bgPosition == photoData.getCacheMoreData().size()) {
-                                        bgPosition = 0;
-                                    }
-                                    try {
+                                try {
+                                    if (mViewPager != null && photoData != null) {
+                                        if (bgPosition == photoData.getCacheMoreData().size()) {
+                                            bgPosition = 0;
+                                        }
                                         mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
                                         bgPosition++;
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
                                     }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });
@@ -420,7 +467,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                     //execute others actions if needed (ex : modify your header logo)
                 });
-                mViewPager.setImageDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors4),200);
+                mViewPager.setImageDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors1), 200);
                 break;
             case 3:
                 mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
@@ -429,30 +476,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         switch (page % 5) {
                             case 0:
                                 return HeaderDesign.fromColorResAndDrawable(
-                                        R.color.cyan,
-                                        getResources().getDrawable(R.color.paleturquoise));
+                                        R.color.slateblue,
+                                        getResources().getDrawable(R.color.mediumslateblue));
                             case 1:
                                 return HeaderDesign.fromColorResAndDrawable(
-                                        R.color.gold,
-                                        getResources().getDrawable(R.color.paleturquoise));
+                                        R.color.goldenrod,
+                                        getResources().getDrawable(R.color.gold));
                             case 2:
                                 return HeaderDesign.fromColorResAndDrawable(
-                                        R.color.lime,
-                                        getResources().getDrawable(R.color.paleturquoise));
+                                        R.color.palegreen,
+                                        getResources().getDrawable(R.color.mediumseagreen));
                             case 3:
                                 return HeaderDesign.fromColorResAndDrawable(
-                                        R.color.orangered,
-                                        getResources().getDrawable(R.color.paleturquoise));
+                                        R.color.firebrick,
+                                        getResources().getDrawable(R.color.orangered));
                             case 4:
                                 return HeaderDesign.fromColorResAndDrawable(
-                                        R.color.deepskyblue,
-                                        getResources().getDrawable(R.color.paleturquoise));
+                                        R.color.steelblue,
+                                        getResources().getDrawable(R.color.deepskyblue));
                         }
                         return null;
                     }
                     //execute others actions if needed (ex : modify your header logo)
                 });
-                mViewPager.setImageDrawable(getResources().getDrawable(R.color.paleturquoise),200);
+                mViewPager.setImageDrawable(getResources().getDrawable(R.color.deepskyblue), 200);
+                break;
+            case 4:
+                int color = spUtils.getInt(CONFIG_HEADER_COLOR, 9999);
+                if (color == 9999){
+                    color = Color.parseColor("#FFA000");
+                }
+                mViewPager.setColor(color,200);
                 break;
         }
     }
@@ -468,14 +522,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public static boolean saveChannel(int[] channelArray){
+    public static boolean saveChannel(int[] channelArray) {
         StringBuilder sb = new StringBuilder();
         try {
             for (Integer integer : channelArray) {
                 sb.append(integer + "#");
             }
-            SPUtils.getInstance().put(CONFIG_TYPE_ARRAY,sb.toString());
-        }catch (Exception e){
+            SPUtils.getInstance().put(CONFIG_TYPE_ARRAY, sb.toString());
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -495,7 +549,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (spUtils.getInt(CONFIG_RANDOM_HEADER) == 0
+        if (spUtils.getInt(CONFIG_RANDOM_HEADER, 0) == 0
                 && timer != null
                 && timerTask != null)
             cancelTimer();

@@ -32,9 +32,6 @@ public class AboutActivity extends BaseActivity {
     public ImageView ivError;
     public Toolbar toolbar;
 
-    public static String WEBVIEW_URL = "web_url";
-    private String loadURL;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

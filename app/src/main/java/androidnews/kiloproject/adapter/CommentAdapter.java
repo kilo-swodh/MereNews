@@ -12,18 +12,17 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.bean.data.CommentLevel;
+import androidnews.kiloproject.util.GlideUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, BaseViewHolder> {
     RequestOptions options;
-    private final RequestManager glide;
     private Context mContext;
     public static final int LEVEL_ONE = 0;
     public static final int LEVEL_TWO = 1;
 
-    public CommentAdapter(Context Context,RequestManager glide, List<CommentLevel> data) {
+    public CommentAdapter(Context Context, List<CommentLevel> data) {
         super(data);
-        this.glide = glide;
         this.mContext = Context;
         addItemType(LEVEL_ONE, R.layout.comment_level_one);
         addItemType(LEVEL_TWO, R.layout.comment_level_two);
@@ -40,7 +39,11 @@ public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, Bas
                 helper.setText(R.id.tv_text, data.getText());
                 helper.setText(R.id.tv_time, data.getTime());
                 helper.setText(R.id.tv_name, data.getName().replace("&nbsp"," "));
-                glide.load(data.getImgUrl()).apply(options).into((CircleImageView)helper.getView(R.id.iv_avatar));
+                if (GlideUtil.isValidContextForGlide(mContext))
+                    Glide.with(mContext)
+                            .load(data.getImgUrl())
+                            .apply(options)
+                            .into((CircleImageView)helper.getView(R.id.iv_avatar));
                 break;
         }
     }

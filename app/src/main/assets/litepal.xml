@@ -3,10 +3,11 @@
 
     <dbname value="setting" />
 
-    <version value="1" />
+    <version value="3" />
 
     <list>
         <mapping class="androidnews.kiloproject.bean.data.BlockItem" />
+        <mapping class="androidnews.kiloproject.bean.data.CacheNews"/>
     </list>
 
     <!--

@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -36,9 +34,8 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.adapter.CommentAdapter.LEVEL_ONE;
 import static androidnews.kiloproject.adapter.CommentAdapter.LEVEL_TWO;
-import static androidnews.kiloproject.system.AppConfig.HOST163COMMENT;
-import static androidnews.kiloproject.system.AppConfig.getNewsCommentA;
-import static androidnews.kiloproject.system.AppConfig.getNewsCommentB;
+import static androidnews.kiloproject.system.AppConfig.GET_NEWS_COMMENT;
+import static androidnews.kiloproject.system.AppConfig.HOST_163_COMMENT;
 
 public class CommentActivity extends BaseActivity {
 
@@ -68,8 +65,8 @@ public class CommentActivity extends BaseActivity {
     protected void initSlowly() {
         String docid = getIntent().getStringExtra("docid");
         String board = getIntent().getStringExtra("board");
-        EasyHttp.get(getNewsCommentA + board + "/" + docid + getNewsCommentB)
-                .baseUrl(HOST163COMMENT)
+        EasyHttp.get(GET_NEWS_COMMENT.replace("{board}",board).replace("{docid}",docid))
+                .baseUrl(HOST_163_COMMENT)
                 .readTimeOut(30 * 1000)//局部定义读超时
                 .writeTimeOut(30 * 1000)
                 .connectTimeout(30 * 1000)
@@ -86,8 +83,13 @@ public class CommentActivity extends BaseActivity {
                     public void onSuccess(String response) {
                         progress.setVisibility(View.GONE);
                         if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                            CommonFullData data = gson.fromJson(response, CommonFullData.class);
-                            if (data.getNewPosts() != null && data.getNewPosts().size() > 0)
+                            CommonFullData data = null;
+                            try {
+                                data = gson.fromJson(response, CommonFullData.class);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            if (data != null && data.getNewPosts() != null && data.getNewPosts().size() > 0)
                                 analysisData(data);
                             else
                                 emptyView.setVisibility(View.VISIBLE);
@@ -178,7 +180,7 @@ public class CommentActivity extends BaseActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        commentAdapter = new CommentAdapter(mActivity, Glide.with(mActivity), comments);
+                        commentAdapter = new CommentAdapter(mActivity, comments);
                         rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
                         rvContent.setAdapter(commentAdapter);
                     }

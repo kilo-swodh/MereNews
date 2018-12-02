@@ -5,7 +5,7 @@
     <color name="colorAccent">#212121</color>
 
     <color name="main_text_colorful">@color/paleturquoise</color>
-    <color name="main_text_color_drak">#ccc</color>
+    <color name="main_text_color_dark">#ccc</color>
     <color name="main_text_color">#FFFAF0</color>
     <color name="main_text_color_read">#999</color>
     <color name="divider">#FFFAFA</color>

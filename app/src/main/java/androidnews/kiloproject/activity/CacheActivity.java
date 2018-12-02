@@ -16,8 +16,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
@@ -25,6 +23,10 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.reflect.TypeToken;
 
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidnews.kiloproject.R;
@@ -40,10 +42,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.activity.MainActivity.TYPE_GUOKR;
-import static androidnews.kiloproject.activity.MainActivity.TYPE_ZHIHU;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 
 public class CacheActivity extends BaseActivity {
 
@@ -54,7 +58,7 @@ public class CacheActivity extends BaseActivity {
     ConstraintLayout emptyView;
 
     CacheNewsAdapter cacheNewsAdapter;
-    List<CacheNews> currentData;
+    List<CacheNews> currentData = new ArrayList<>();
     int type;
     boolean isChange;
 
@@ -92,17 +96,19 @@ public class CacheActivity extends BaseActivity {
             Observable.create(new ObservableOnSubscribe<Integer>() {
                 @Override
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                    String cacheJson = SPUtils.getInstance().getString(type + "", "");
-
-                    if (TextUtils.isEmpty(cacheJson) || TextUtils.equals(cacheJson, "[]")) {
+                    try {
+                        currentData = LitePal.where("type = ?", String.valueOf(type)).find(CacheNews.class);
+                        if (currentData == null || currentData.size() < 1)
+                            e.onNext(0);
+                        else {
+                            if (NetworkUtils.isConnected())
+                                e.onNext(1);
+                            else
+                                e.onNext(2);
+                        }
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                         e.onNext(0);
-                    } else {
-                        currentData = gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                        }.getType());
-                        if (NetworkUtils.isConnected())
-                            e.onNext(1);
-                        else
-                            e.onNext(2);
                     }
                     e.onComplete();
                 }
@@ -112,15 +118,15 @@ public class CacheActivity extends BaseActivity {
                         @Override
                         public void accept(Integer i) throws Exception {
                             progress.setVisibility(View.GONE);
-                            cacheNewsAdapter = new CacheNewsAdapter(mActivity, Glide.with(mActivity), currentData);
+                            cacheNewsAdapter = new CacheNewsAdapter(mActivity, currentData);
                             if (i == 0)
                                 setEmptyView();
                             cacheNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                     CacheNews cacheNews = currentData.get(position);
-                                    Intent intent;
-                                    switch (cacheNews.getType()) {
+                                    Intent intent = null;
+                                    switch (cacheNews.getChannel()) {
                                         case TYPE_ZHIHU:
                                             if (i == 0)
                                                 return;
@@ -143,7 +149,7 @@ public class CacheActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             break;
-                                        default:
+                                        case TYPE_NETEASE_START:
                                             intent = new Intent(mActivity, NewsDetailActivity.class);
                                             switch (i) {
                                                 case 1:
@@ -153,6 +159,14 @@ public class CacheActivity extends BaseActivity {
                                                     intent.putExtra("htmlText", cacheNews.getHtmlText());
                                                     break;
                                             }
+                                            break;
+                                        case TYPE_ITHOME_START:
+                                            intent.putExtra("title",cacheNews.getTitle());
+                                            intent.putExtra("url", cacheNews.getUrl());
+                                            intent.putExtra("id", cacheNews.getDocid());
+                                            intent.putExtra("time",cacheNews.getTimeStr());
+                                            intent.putExtra("img", cacheNews.getImgUrl());
+                                            startActivity(intent);
                                             break;
                                     }
                                     if (intent != null)
@@ -170,6 +184,7 @@ public class CacheActivity extends BaseActivity {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     isChange = true;
+                                                    LitePal.delete(CacheNews.class, currentData.get(position).getId());
                                                     currentData.remove(position);
                                                     cacheNewsAdapter.notifyDataSetChanged();
                                                 }
@@ -200,40 +215,7 @@ public class CacheActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Observable.create(new ObservableOnSubscribe<Boolean>() {
-                @Override
-                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                    String cacheJson = SPUtils.getInstance().getString(type + "", "");
-                    if (!TextUtils.isEmpty(cacheJson)) {
-                        currentData.clear();
-                        currentData.addAll(gson.fromJson(cacheJson, new TypeToken<List<CacheNews>>() {
-                        }.getType()));
-                        e.onNext(true);
-                    }
-                    e.onComplete();
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Boolean>() {
-                        @Override
-                        public void accept(Boolean aBoolean) throws Exception {
-                            if (aBoolean) {
-                                cacheNewsAdapter.notifyDataSetChanged();
-                                if (currentData.size() < 1)
-                                    setEmptyView();
-                            }
-                        }
-                    });
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (isChange) {
-            String saveJson = gson.toJson(currentData, new TypeToken<List<CacheNews>>() {
-            }.getType());
-            SPUtils.getInstance().put(type + "", saveJson);
+            initSlowly();
         }
     }
 }

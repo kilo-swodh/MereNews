@@ -5,19 +5,19 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_marginBottom="@dimen/cardMarginVertical"
-    android:layout_marginLeft="@dimen/cardMarginHorizontal"
-    android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="@dimen/cardMarginVertical"
+    android:layout_marginBottom="@dimen/margin_normal"
+    android:layout_marginLeft="@dimen/margin_normal"
+    android:layout_marginRight="@dimen/margin_normal"
+    android:layout_marginTop="@dimen/margin_normal"
     android:transitionName="big_card"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="4dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+  <com.youth.banner.Banner
+      android:id="@+id/banner"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
 
 </android.support.v7.widget.CardView>

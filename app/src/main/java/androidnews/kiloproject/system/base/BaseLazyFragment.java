@@ -19,8 +19,6 @@ import com.blankj.utilcode.util.LogUtils;
  */
 public abstract class BaseLazyFragment extends BaseFragment {
 
-    private static final String TAG = BaseFragment.class.getSimpleName();
-
     private boolean isFragmentVisible;
     private boolean isReuseView;
     private boolean isFirstVisible;
