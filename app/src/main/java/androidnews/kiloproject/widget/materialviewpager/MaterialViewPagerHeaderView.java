@@ -37,8 +37,12 @@ public class MaterialViewPagerHeaderView extends View {
         //get the MaterialViewPagerAnimator attached to this activity
         //to retrieve the declared header height
         //and set it as current view height (+10dp margin)
-
-        MaterialViewPagerAnimator animator = MaterialViewPagerHelper.getAnimator(getContext());
+        MaterialViewPagerAnimator animator = null;
+        try {
+            animator = MaterialViewPagerHelper.getAnimator(getContext());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         if (animator != null) {
             ViewGroup.LayoutParams params = getLayoutParams();
             params.height = Math.round(Utils.dpToPx(animator.getHeaderHeight() + 10, getContext()));

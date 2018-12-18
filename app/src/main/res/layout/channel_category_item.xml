@@ -35,7 +35,7 @@
         android:layout_width="@dimen/margin_normal"
         android:layout_height="@dimen/margin_normal"
         android:layout_centerInParent="true"
-        android:background="@drawable/a9x" />
+        android:background="@drawable/ic_clear" />
   </RelativeLayout>
 
   <TextView

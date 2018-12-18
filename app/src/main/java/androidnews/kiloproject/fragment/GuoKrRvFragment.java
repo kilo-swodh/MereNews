@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,7 +36,7 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidnews.kiloproject.ui.GlideImageLoader;
+import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GuoKrDetailActivity;
 import androidnews.kiloproject.adapter.GuoKrAdapter;
@@ -42,6 +44,7 @@ import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.data.GuoKrCacheData;
 import androidnews.kiloproject.bean.net.GuoKrListData;
 import androidnews.kiloproject.bean.net.GuoKrTopData;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecoratorGrid;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -55,12 +58,13 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_GUO_KR;
 import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_LIST;
 import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_TOP;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
-import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_LEFT;
 
 public class GuoKrRvFragment extends BaseRvFragment {
 
     GuoKrAdapter mAdapter;
+    Banner banner;
     //    MainListData contents;
     GuoKrCacheData contents;
 
@@ -71,8 +75,6 @@ public class GuoKrRvFragment extends BaseRvFragment {
     String typeStr;
 
     private int currentPage = 0;
-
-    private boolean isNoAdapter = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,7 +98,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                             List<CacheNews> cacheNews = null;
                             try {
                                 cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
-                            }catch (Exception e1){
+                            } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                             if (cacheNews != null && cacheNews.size() > 0)
@@ -139,12 +141,14 @@ public class GuoKrRvFragment extends BaseRvFragment {
                     }
                 });
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-
+        if (AppConfig.type_list == LIST_TYPE_MULTI){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+            mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecoratorGrid());
+        } else {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+            mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+        }
         mRecyclerView.setHasFixedSize(true);
-
-        //Use this now
-        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
 
 //        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
 //        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
@@ -152,7 +156,6 @@ public class GuoKrRvFragment extends BaseRvFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 requestData(TYPE_REFRESH);
-                requestBanner();
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -209,9 +212,13 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            SnackbarUtils.with(refreshLayout).
-                                    setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                    showError();
+                            try {
+                                SnackbarUtils.with(refreshLayout).
+                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
+                                        showError();
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
                         }
                     }
 
@@ -222,19 +229,13 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                 @Override
                                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                                     GuoKrListData newData = null;
-                                    try {
-                                        newData = gson.fromJson(response, GuoKrListData.class);
-                                    } catch (Exception e1) {
-                                        e1.printStackTrace();
-                                        loadFailed(type);
-                                    }
                                     List<CacheNews> cacheNews = null;
                                     try {
+                                        newData = gson.fromJson(response, GuoKrListData.class);
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
-                                    }catch (Exception e1){
+                                    } catch (Exception e1) {
                                         e1.printStackTrace();
                                     }
-
                                     switch (type) {
                                         case TYPE_REFRESH:
                                             if (cacheNews != null && cacheNews.size() > 0 && newData != null) {
@@ -267,7 +268,6 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 }
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
-                                                loadFailed(type);
                                             }
                                             break;
                                     }
@@ -283,11 +283,12 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                             if (mAdapter == null || type == TYPE_REFRESH) {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 createAdapter();
+                                                requestBanner();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
                                                     SnackbarUtils.with(refreshLayout)
                                                             .setMessage(getString(R.string.load_success))
-                                                            .showSuccess();
+                                                            .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -377,7 +378,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
         if (contents == null || contents.getListData() == null || contents.getListData().getResult() == null)
             return;
         mAdapter = new GuoKrAdapter(mActivity, contents.getListData().getResult());
-        mAdapter.openLoadAnimation(SLIDEIN_LEFT);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -390,21 +391,20 @@ public class GuoKrRvFragment extends BaseRvFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                if (!bean.isReaded()) {
+                    bean.setReaded(true);
+                    mAdapter.notifyDataSetChanged();
+                }
                 startActivity(intent);
                 bean.setReaded(true);
-                mAdapter.notifyDataSetChanged();
             }
         });
 
         if (mRecyclerView == null)
             return;
-        if (isNoAdapter && header != null) {
-            mAdapter.addHeaderView(header);
-            isNoAdapter = false;
-        }
         mRecyclerView.setAdapter(mAdapter);
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
-            mAdapter.setPreLoadNumber(3);
+            mAdapter.setPreLoadNumber(PRE_LOAD_ITEM);
             mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                 @Override
                 public void onLoadMoreRequested() {
@@ -426,10 +426,10 @@ public class GuoKrRvFragment extends BaseRvFragment {
                     titles.add(bean.getCustom_title());
                 }
             }
-            header = (CardView) getLayoutInflater().inflate(R.layout.list_item_card_banner,
+            header = (CardView) LayoutInflater.from(mActivity).inflate(R.layout.list_item_card_banner,
                     (ViewGroup) refreshLayout.getParent(), false);
 
-            Banner banner = header.findViewById(R.id.banner);
+            banner = header.findViewById(R.id.banner);
             banner.setImageLoader(new GlideImageLoader())
                     .setBannerAnimation(Transformer.FlipHorizontal)
                     .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -447,13 +447,32 @@ public class GuoKrRvFragment extends BaseRvFragment {
                         }
                     });
             banner.start();
-            isNoAdapter = true;
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ConvertUtils.dp2px(200));
             params.setMargins(ConvertUtils.dp2px(10), ConvertUtils.dp2px(8),
                     ConvertUtils.dp2px(10), ConvertUtils.dp2px(8));
             header.setLayoutParams(params);
+            try {
+                mAdapter.setHeaderView(header);
+                mRecyclerView.smoothScrollToPosition(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (banner != null)
+            banner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (banner != null)
+            banner.stopAutoPlay();
     }
 }

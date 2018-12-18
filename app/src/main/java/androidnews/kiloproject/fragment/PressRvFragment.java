@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
-import androidnews.kiloproject.system.AppConfig;
-import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
-
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -47,11 +44,13 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
-import androidnews.kiloproject.adapter.MainRvAdapter;
+import androidnews.kiloproject.adapter.PressRvAdapter;
 import androidnews.kiloproject.bean.data.BlockItem;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.GalleyData;
-import androidnews.kiloproject.bean.net.NewMainListData;
+import androidnews.kiloproject.bean.net.PressListData;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -67,11 +66,11 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
-public class MainRvFragment extends BaseRvFragment {
+public class PressRvFragment extends BaseRvFragment {
 
-    MainRvAdapter mAdapter;
+    PressRvAdapter mAdapter;
     //    MainListData contents;
-    List<NewMainListData> contents;
+    List<PressListData> contents;
 
     String[] goodTags;
 
@@ -80,14 +79,11 @@ public class MainRvFragment extends BaseRvFragment {
     private int currentPage = 0;
     private int questPage = 20;
 
-    private int adSize = 0;
-    private int realPicCount = 0;
-
     List<BlockItem> blockList;
     String typeStr;
 
-    public static MainRvFragment newInstance(int type) {
-        MainRvFragment f = new MainRvFragment();
+    public static PressRvFragment newInstance(int type) {
+        PressRvFragment f = new PressRvFragment();
         Bundle b = new Bundle();
         b.putInt("type", type);
         f.setArguments(b);
@@ -122,13 +118,10 @@ public class MainRvFragment extends BaseRvFragment {
 
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
-                    contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
+                    contents = gson.fromJson(json, new TypeToken<List<PressListData>>() {
                     }.getType());
                     if (contents != null && contents.size() > 0) {
                         try {
-                            NewMainListData first = contents.get(0);
-                            first.setItemType(HEADER);
-                            requestRealPic(first);
                             List<CacheNews> cacheNews = null;
                             try {
                                 cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
@@ -136,48 +129,33 @@ public class MainRvFragment extends BaseRvFragment {
                                 e1.printStackTrace();
                             }
                             if (cacheNews != null && cacheNews.size() > 0) {
-                                for (Iterator<NewMainListData> it = contents.iterator(); it.hasNext(); ) {
-                                    NewMainListData dataItem = it.next();
-//                                for (NewMainListData dataItem : contents) {
+                                for (Iterator<PressListData> it = contents.iterator(); it.hasNext(); ) {
+                                    PressListData dataItem = it.next();
+//                                for (PressListData dataItem : contents) {
                                     for (CacheNews cacheNew : cacheNews) {
                                         if (dataItem.getDocid().contains(cacheNew.getDocid())) {
                                             dataItem.setReaded(true);
                                             break;
                                         }
                                     }
-                                    boolean isBlockBingo = false;
                                     if (blockList != null && blockList.size() > 0) {
-                                        if (dataItem.getAds() == null) {
-                                            for (BlockItem blockItem : blockList) {
-                                                if (isBlockBingo)
-                                                    break;
-                                                switch (blockItem.getType()) {
-                                                    case TYPE_SOURCE:
-                                                        if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                            it.remove();
-                                                            isBlockBingo = true;
-                                                        }
-                                                        break;
-                                                    case TYPE_KEYWORDS:
-                                                        if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                            it.remove();
-                                                            isBlockBingo = true;
-                                                        }
-                                                        break;
-                                                }
-                                            }
-                                        } else if (dataItem.getAds().size() > 0) {
-                                            for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
-                                                NewMainListData.AdsBean adItem = adIt.next();
-                                                boolean isAdBlockBingo = false;
-                                                for (BlockItem blockItem : blockList) {
-                                                    if (isAdBlockBingo)
-                                                        break;
-                                                    if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
-                                                        adIt.remove();
-                                                        isAdBlockBingo = true;
+                                        boolean isBlockBingo = false;
+                                        for (BlockItem blockItem : blockList) {
+                                            if (isBlockBingo)
+                                                break;
+                                            switch (blockItem.getType()) {
+                                                case TYPE_SOURCE:
+                                                    if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                        it.remove();
+                                                        isBlockBingo = true;
                                                     }
-                                                }
+                                                    break;
+                                                case TYPE_KEYWORDS:
+                                                    if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                        it.remove();
+                                                        isBlockBingo = true;
+                                                    }
+                                                    break;
                                             }
                                         }
                                     }
@@ -200,7 +178,7 @@ public class MainRvFragment extends BaseRvFragment {
                     public void accept(Boolean s) throws Exception {
                         if (s)
                             createAdapter();
-                        MainRvFragment.super.onViewCreated(view, savedInstanceState);
+                        PressRvFragment.super.onViewCreated(view, savedInstanceState);
                     }
                 });
 
@@ -283,19 +261,14 @@ public class MainRvFragment extends BaseRvFragment {
                             Observable.create(new ObservableOnSubscribe<Boolean>() {
                                 @Override
                                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                    HashMap<String, List<NewMainListData>> retMap = null;
-                                    List<NewMainListData> newList = new ArrayList<>();
+                                    HashMap<String, List<PressListData>> retMap = null;
+                                    List<PressListData> newList = new ArrayList<>();
                                     List<CacheNews> cacheNews = null;
                                     try {
                                         retMap = gson.fromJson(response,
-                                                new TypeToken<HashMap<String, List<NewMainListData>>>() {
+                                                new TypeToken<HashMap<String, List<PressListData>>>() {
                                                 }.getType());
                                         //设置头部轮播
-                                        if (type == TYPE_REFRESH) {
-                                            NewMainListData first = retMap.get(typeStr).get(0);
-                                            first.setItemType(HEADER);
-                                            requestRealPic(first);
-                                        }
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
@@ -310,8 +283,8 @@ public class MainRvFragment extends BaseRvFragment {
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
-                                            for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
-                                                NewMainListData dataItem = it.next();
+                                            for (Iterator<PressListData> it = newList.iterator(); it.hasNext(); ) {
+                                                PressListData dataItem = it.next();
                                                 if (dataItem == null)
                                                     it.remove();
                                                 if (cacheNews != null && cacheNews.size() > 0) {
@@ -323,44 +296,27 @@ public class MainRvFragment extends BaseRvFragment {
                                                     }
                                                 }
                                                 boolean isBlockBingo = false;
-                                                boolean isHasAd = false;        //防止有ad的item因为ad而被屏蔽视为普通条目
                                                 if (blockList != null && blockList.size() > 0) {
-                                                    if (dataItem.getAds() == null) {
-                                                        for (BlockItem blockItem : blockList) {
-                                                            if (isBlockBingo)
-                                                                break;
-                                                            switch (blockItem.getType()) {
-                                                                case TYPE_SOURCE:
-                                                                    if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                                        it.remove();
-                                                                        isBlockBingo = true;
-                                                                    }
-                                                                    break;
-                                                                case TYPE_KEYWORDS:
-                                                                    if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                                        it.remove();
-                                                                        isBlockBingo = true;
-                                                                    }
-                                                                    break;
-                                                            }
-                                                        }
-                                                    } else if (dataItem.getAds().size() > 0) {
-                                                        isHasAd = true;
-                                                        for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
-                                                            NewMainListData.AdsBean adItem = adIt.next();
-                                                            boolean isAdBlockBingo = false;
-                                                            for (BlockItem blockItem : blockList) {
-                                                                if (isAdBlockBingo)
-                                                                    break;
-                                                                if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
-                                                                    adIt.remove();
-                                                                    isAdBlockBingo = true;
+                                                    for (BlockItem blockItem : blockList) {
+                                                        if (isBlockBingo)
+                                                            break;
+                                                        switch (blockItem.getType()) {
+                                                            case TYPE_SOURCE:
+                                                                if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                                    it.remove();
+                                                                    isBlockBingo = true;
                                                                 }
-                                                            }
+                                                                break;
+                                                            case TYPE_KEYWORDS:
+                                                                if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                                    it.remove();
+                                                                    isBlockBingo = true;
+                                                                }
+                                                                break;
                                                         }
                                                     }
                                                 }
-                                                if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo))
+                                                if (!isBlockBingo)
                                                     contents.add(dataItem);
                                             }
                                             try {
@@ -378,15 +334,13 @@ public class MainRvFragment extends BaseRvFragment {
                                             }
                                             boolean isAllSame = true;
                                             try {
-                                                for (Iterator<NewMainListData> it = retMap.get(typeStr).iterator(); it.hasNext(); ) {
-                                                    NewMainListData dataItem = it.next();
-//                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
+                                                for (Iterator<PressListData> it = retMap.get(typeStr).iterator(); it.hasNext(); ) {
+                                                    PressListData dataItem = it.next();
+//                                                for (PressListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!isGoodItem(dataItem)) {
-                                                        continue;
-                                                    }
-                                                    for (NewMainListData myBean : contents) {
+
+                                                    for (PressListData myBean : contents) {
                                                         if (TextUtils.equals(myBean.getDocid(), dataItem.getDocid())) {
                                                             isSame = true;
                                                             break;
@@ -496,54 +450,21 @@ public class MainRvFragment extends BaseRvFragment {
     private void createAdapter() {
         if (contents == null || contents.size() < 1)
             return;
-        realPicCount = 0;
-        if (contents.get(0).getAds() != null) {
-            adSize = contents.get(0).getAds().size();
-        } else {
-            adSize = 0;
-        }
-        mAdapter = new MainRvAdapter(mActivity, contents);
+        mAdapter = new PressRvAdapter(mActivity, contents);
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (contents == null || contents.size() < 1)
-                    return;
-                NewMainListData item = contents.get(position);
+                PressListData item = contents.get(position);
                 Intent intent = null;
-                switch (item.getItemType()) {
-                    case CELL:
-                        if (!TextUtils.isEmpty(item.getSkipID()) && TextUtils.equals(item.getSkipType(), "photoset")) {
-                            String skipID = "";
-                            String rawId;
-                            rawId = item.getSkipID();
-                            if (!TextUtils.isEmpty(rawId)) {
-                                int index = rawId.lastIndexOf("|");
-                                if (index != -1) {
-                                    skipID = rawId.substring(index - 4, rawId.length());
-                                    intent = new Intent(mActivity, GalleyActivity.class);
-                                    intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
-                                    if (!item.isReaded()) {
-                                        item.setReaded(true);
-                                        mAdapter.notifyItemChanged(position);
-                                    }
-                                    startActivity(intent);
-                                } else {
-                                    SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
-                                    return;
-                                }
-                            }
-                            break;
-                        } else {
-                            intent = new Intent(mActivity, NewsDetailActivity.class);
-                            intent.putExtra("docid", item.getDocid().replace("_special", "").trim());
-                            if (!item.isReaded()) {
-                                item.setReaded(true);
-                                mAdapter.notifyItemChanged(position);
-                            }
-                            startActivity(intent);
-                        }
+
+                intent = new Intent(mActivity, NewsDetailActivity.class);
+                intent.putExtra("docid", item.getDocid());
+                if (!item.isReaded()) {
+                    item.setReaded(true);
+                    mAdapter.notifyItemChanged(position);
                 }
+                startActivity(intent);
             }
         });
         mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
@@ -641,6 +562,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                                 try {
                                                                     if (blockList == null)
                                                                         blockList = new ArrayList<>();
+
                                                                     String keywords = editText.getText().toString();
                                                                     boolean isAdd = true;
                                                                     if (blockList.size() > 0) {
@@ -721,82 +643,4 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestRealPic(NewMainListData first) {
-        if (first.getAds() != null)
-            for (int i = 0; i < first.getAds().size(); i++) {
-                final int position = i;
-                NewMainListData.AdsBean bean =
-                        first.getAds().get(i);
-                if (!bean.getSkipID().contains("|") ||
-                        TextUtils.equals(bean.getTitle(), (first.getTitle()))) {
-                    first.getAds().remove(i);
-                    continue;
-                }
-                if (TextUtils.equals(bean.getImgsrc(), "bigimg")) {
-                    String skipID = bean.getSkipID().split("000")[1];
-                    EasyHttp.get("/photo/api/set/" + "000" + skipID.replace("|", "/") + ".json")
-                            .readTimeOut(30 * 1000)//局部定义读超时
-                            .writeTimeOut(30 * 1000)
-                            .connectTimeout(30 * 1000)
-                            .timeStamp(true)
-                            .execute(new SimpleCallBack<String>() {
-                                @Override
-                                public void onError(ApiException e) {
-                                    if (refreshLayout != null)
-                                        try {
-                                            SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                                        } catch (Exception e1) {
-                                            e1.printStackTrace();
-                                        }
-                                }
-
-                                @Override
-                                public void onSuccess(String response) {
-                                    if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                                        GalleyData galleyContent;
-                                        try {
-                                            galleyContent = gson.fromJson(response, GalleyData.class);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            return;
-                                        }
-                                        if (contents != null && contents.size() > 0) {
-                                            NewMainListData bean = contents.get(0);
-                                            try {
-                                                bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getImgurl());
-                                                if (mAdapter != null)
-                                                    mAdapter.notifyItemChanged(0);
-                                                realPicCount++;
-                                                if (adSize > 0 && realPicCount == adSize) {
-                                                    String json = gson.toJson(contents);
-                                                    SPUtils.getInstance().put(CACHE_LIST_DATA, json);
-                                                }
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                }
-            }
-    }
-
-    private boolean isGoodItem(NewMainListData data) {
-        if (data.getAds() != null && data.getAds().size() > 0)
-            return true;
-        String mTag = data.getTAGS();
-        if (TextUtils.isEmpty(data.getUrl_3w())) {       //老新闻
-            return false;
-        } else if (TextUtils.isEmpty(mTag))
-            return true;
-        else {
-            for (String gTag : goodTags) {
-                if (TextUtils.equals(gTag, mTag)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
 }

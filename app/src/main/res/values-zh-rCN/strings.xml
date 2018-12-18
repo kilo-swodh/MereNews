@@ -44,6 +44,8 @@
 
     <string name="action_delete_all">全部删除</string>
 
+    <string name="action_list_number">统计</string>
+
     <string name="action_block_source">屏蔽该来源</string>
 
     <string name="action_block_keywords">屏蔽关键词</string>
@@ -98,7 +100,9 @@
 
     <string name="auto_loadmore_detail">当快浏览到尽头时提前加载,避免等待,更耗费流量</string>
 
-    <string name="night_theme">主题切换</string>
+    <string name="night_theme">亮暗切换</string>
+
+    <string name="list_type">列表式样</string>
 
     <string name="check_update">检查更新</string>
 
@@ -186,6 +190,23 @@
 
     <string name="tab_ithome">IT之家</string>
 
+    <string name="tab_press">报刊</string>
+    
+    <string name="type_phone">手机</string>
+
+    <string name="type_tablet">平板</string>
+    
+    <string name="color_choose">选择颜色</string>
+
     <string name="sort_tip">长按并拖动改变分类顺序</string>
 
+    <string name="reading_record">阅读记录</string>
+
+    <string name="shared_reading_record">我已经在"Mere新闻"中{type}{num}篇新闻</string>
+
+    <string name="collected">收藏了</string>
+
+    <string name="read">阅读了</string>
+
+    <string name="message_reading_record">您目前已在"Mere新闻"中{type}{num}篇新闻</string>
 </resources>

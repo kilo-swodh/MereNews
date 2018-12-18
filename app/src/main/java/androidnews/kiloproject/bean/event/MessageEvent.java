@@ -1,4 +1,4 @@
-package androidnews.kiloproject.event;
+package androidnews.kiloproject.bean.event;
 
 public class MessageEvent{
     private String message;

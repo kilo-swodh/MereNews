@@ -19,14 +19,17 @@ android {
 //            enabled true
 //        }
 
-        versionCode 1104
-        versionName "1.1.0-alpha04"
+//        ndk{abiFilters "armeabi"}
+
+        versionCode 1124
+        versionName "1.1.2-beta4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             //混淆
-            minifyEnabled false  //设为false即可断点调试
+            minifyEnabled true  //设为false即可断点调试
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -90,11 +93,11 @@ dependencies {
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    api 'com.blankj:utilcode:1.22.0'
+    api 'com.blankj:utilcode:1.22.1'
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta04'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
@@ -102,7 +105,7 @@ dependencies {
 
     //RecyclerView的Adapter
     //https://www.jianshu.com/p/b343fcff51b0
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
 
     //内存泄露检测神器
     // https://github.com/square/leakcanary
@@ -118,6 +121,8 @@ dependencies {
     //轮播图
     //https://github.com/youth5201314/banner
     api 'com.youth.banner:banner:1.4.10'
+
+    //椭圆图标
     api 'de.hdodenhof:circleimageview:2.2.0'
 
     //侧滑返回
@@ -135,6 +140,6 @@ dependencies {
     //选色
     api 'com.github.QuadFlask:colorpicker:0.0.13'
 
-    //NestedScrollWebView
-    api 'com.github.rhlff:NestedScrollWebView:v1.0.2'
+    //混淆
+    api "com.blankj:free-proguard:0.0.10"
 }

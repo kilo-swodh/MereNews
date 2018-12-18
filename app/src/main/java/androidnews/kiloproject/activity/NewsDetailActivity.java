@@ -71,7 +71,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         intent.setType("text/plain");//设置分享内容的类型
                         if (!TextUtils.isEmpty(title))
                             intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
-                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】 "
+                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
                                 + currentData.getShareLink());//添加分享内容
                         //创建分享的Dialog
                         intent = Intent.createChooser(intent, getString(R.string.action_share));
@@ -92,16 +92,16 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                         public void accept(Boolean aBoolean) throws Exception {
                                             if (aBoolean) {
                                                 item.setIcon(R.drawable.ic_star_no);
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).show();
                                             } else
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showError();
                                         }
                                     });
                             isStar = false;
                         } else {
                             item.setIcon(R.drawable.ic_star_ok);
                             saveCacheAsyn(CACHE_COLLECTION);
-                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).show();
                             isStar = true;
                         }
                         break;
@@ -122,14 +122,16 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShareLink()));
                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).showSuccess();
+                                + " " + getString(R.string.successful)).show();
                         break;
                     case R.id.action_browser:
-                        if (currentData == null)
-                            break;
-                        Uri uri = Uri.parse(currentData.getShareLink());
-                        intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(currentData.getShareLink());
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 return false;
@@ -206,7 +208,6 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                 }
                             } else {
 //                                refreshLayout.finishRefresh();
-                                progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
@@ -230,13 +231,15 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
+                            progress.setVisibility(View.GONE);
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);
-                                webView.loadData(html, "text/html; charset=UTF-8", null);
+                                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
+//                                webView.loadData(html, "text/html; charset=UTF-8", null);
                             } else
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
-                            progress.setVisibility(View.GONE);
+
                         }
                     });
         }
@@ -254,10 +257,10 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     return;
                 try {
                     title = currentData.getTitle();
-                    if (!currentData.getSource().equals("null"))
-                        source = currentData.getSource();
                     pTime = currentData.getPtime();
                     body = currentData.getBody();
+                    if (!TextUtils.isEmpty(currentData.getSource()) && !currentData.getSource().equals("null"))
+                        source = currentData.getSource();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -328,7 +331,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     public void accept(Boolean b) throws Exception {
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
                         if (b && webView != null) {
-                            webView.loadData(html, "text/html; charset=UTF-8", null);
+                            webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
+//                            webView.loadData(html, "text/html; charset=UTF-8", null);
                             saveCacheAsyn(CACHE_HISTORY);
                         }
                     }

@@ -71,7 +71,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                         intent.setType("text/plain");//设置分享内容的类型
                         if (!TextUtils.isEmpty(title))
                             intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
-                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】 "
+                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
                                 + currentUrl);//添加分享内容
                         //创建分享的Dialog
                         intent = Intent.createChooser(intent, getString(R.string.action_share));
@@ -93,23 +93,23 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                                             if (aBoolean) {
                                                 try {
                                                     item.setIcon(R.drawable.ic_star_no);
-                                                }catch (Exception e){
+                                                } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).show();
                                             } else
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showError();
                                         }
                                     });
                             isStar = false;
                         } else {
                             try {
                                 item.setIcon(R.drawable.ic_star_ok);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             saveCacheAsyn(CACHE_COLLECTION);
-                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).show();
                             isStar = true;
                         }
                         break;
@@ -120,12 +120,16 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", currentUrl));
                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).showSuccess();
+                                + " " + getString(R.string.successful)).show();
                         break;
                     case R.id.action_browser:
-                        Uri uri = Uri.parse(currentUrl);
-                        intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(currentUrl);
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 return false;
@@ -143,7 +147,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
     @Override
     protected void initSlowly() {
         detailId = getIntent().getIntExtra("id", 0);
-        currentUrl = HOST_GUO_KR_DETAIL + GET_GUO_KR_DETAIL.replace("{newsId}",String.valueOf(detailId));
+        currentUrl = HOST_GUO_KR_DETAIL + GET_GUO_KR_DETAIL.replace("{newsId}", String.valueOf(detailId));
         currentTitle = getIntent().getStringExtra("title");
         currentImg = getIntent().getStringExtra("img");
 
@@ -160,10 +164,8 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
 
     private void loadUrl() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        webView.loadData(currentData.getBody(), "text/html; charset=UTF-8", null);
         progress.setVisibility(View.GONE);
         webView.loadUrl(currentUrl);
-
         saveCacheAsyn(CACHE_HISTORY);
     }
 
@@ -174,7 +176,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                 List<CacheNews> list = new ArrayList<>();
                 try {
                     list = LitePal.where("docid = ?", String.valueOf(detailId)).find(CacheNews.class);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if (list != null && list.size() > 0)
@@ -199,10 +201,10 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
         List<CacheNews> list = null;
         try {
             list = LitePal.where("docid = ?", String.valueOf(detailId)).find(CacheNews.class);
-        }catch (Exception e1){
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
-        if (list != null && list.size() > 0){
+        if (list != null && list.size() > 0) {
             for (CacheNews cacheNews : list) {
                 if (cacheNews.getType() == CACHE_COLLECTION) {
                     if (isClear) {
@@ -221,7 +223,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
         super.onCreateOptionsMenu(menu);
         try {
             menu.getItem(0).setVisible(false);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

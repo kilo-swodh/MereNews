@@ -69,7 +69,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         intent.setType("text/plain");//设置分享内容的类型
                         if (!TextUtils.isEmpty(title))
                             intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
-                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】 "
+                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
                                 + url);//添加分享内容
                         //创建分享的Dialog
                         intent = Intent.createChooser(intent, getString(R.string.action_share));
@@ -90,16 +90,16 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                                         public void accept(Boolean aBoolean) throws Exception {
                                             if (aBoolean) {
                                                 item.setIcon(R.drawable.ic_star_no);
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_no)).show();
                                             } else
-                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showSuccess();
+                                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).showError();
                                         }
                                     });
                             isStar = false;
                         } else {
                             item.setIcon(R.drawable.ic_star_ok);
                             saveCacheAsyn(CACHE_COLLECTION);
-                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).showSuccess();
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.star_yes)).show();
                             isStar = true;
                         }
                         break;
@@ -108,14 +108,16 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         //noinspection ConstantConditions
                         cm.setPrimaryClip(ClipData.newPlainText("link", url));
                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).showSuccess();
+                                + " " + getString(R.string.successful)).show();
                         break;
                     case R.id.action_browser:
-                        if (TextUtils.isEmpty(url))
-                            break;
-                        Uri uri = Uri.parse(url);
-                        intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(url);
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 return false;
@@ -157,12 +159,18 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onSuccess(String response) {
                             progress.setVisibility(View.GONE);
-                            if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                            if (!TextUtils.isEmpty(response)) {
                                 currentData = new IThomeDetailData();
                                 try {
                                     currentData.setNewssource(XmlParseUtil.getXmlElement("newssource",response));
                                     currentData.setNewsauthor(XmlParseUtil.getXmlElement("newsauthor",response));
-                                    currentData.setDetail(XmlParseUtil.getXmlElement("detail",response).replace("&lt;","<").replace("&gt;",">"));
+                                    currentData.setDetail(XmlParseUtil.getXmlElement("detail",response)
+                                            .replace("&amp;","&")
+                                            .replace("&lt;","<")
+                                            .replace("&gt;",">")
+                                            .replace("&nbsp;"," ")
+                                            .replace("&#8226;","•")
+                                    );
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
@@ -195,7 +203,6 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                                 }
                             } else {
 //                                refreshLayout.finishRefresh();
-                                progress.setVisibility(View.GONE);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
                             }
                         }
@@ -219,13 +226,14 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
+                            progress.setVisibility(View.GONE);
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);
-                                webView.loadData(html, "text/html; charset=UTF-8", null);
+                                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
+//                                webView.loadData(html, "text/html; charset=UTF-8", null);
                             } else
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
-                            progress.setVisibility(View.GONE);
                         }
                     });
         }
@@ -288,7 +296,8 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                     public void accept(Boolean b) throws Exception {
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
                         if (b) {
-                            webView.loadData(html, "text/html; charset=UTF-8", null);
+                            webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
+//                            webView.loadData(html, "text/html; charset=UTF-8", null);
                             saveCacheAsyn(CACHE_HISTORY);
                         }
                     }

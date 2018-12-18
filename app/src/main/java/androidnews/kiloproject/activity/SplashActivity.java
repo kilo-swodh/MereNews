@@ -12,42 +12,65 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_HAVE_CHECK_1;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
+import static androidnews.kiloproject.system.AppConfig.type_list;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SPUtils spUtils = SPUtils.getInstance();
-        AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
-        if (isNightMode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-            initShortsCut();
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                SPUtils spUtils = SPUtils.getInstance();
+                AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
 
-        AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE,1);
+                AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                    initShortsCut();
 
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+                AppConfig.type_list = spUtils.getInt(CONFIG_LIST_TYPE,-1);
+                if (type_list == -1)
+                    type_list = ScreenUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
+
+                AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
+                e.onNext(true);
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (isNightMode)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
+                });
     }
 
     ShortcutManager mSystemService;
-
-    List<String> mTitle = new ArrayList<>();
 
     @RequiresApi(25)
     private void initShortsCut() {

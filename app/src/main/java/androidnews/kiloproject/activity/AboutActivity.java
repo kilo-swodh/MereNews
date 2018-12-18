@@ -2,7 +2,6 @@ package androidnews.kiloproject.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -43,7 +42,7 @@ public class AboutActivity extends BaseActivity {
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.about);
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override

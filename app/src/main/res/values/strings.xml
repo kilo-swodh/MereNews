@@ -44,6 +44,8 @@
 
     <string name="action_delete_all">Delete All</string>
 
+    <string name="action_list_number">Statistical</string>
+
     <string name="action_block_source">Shielded News source</string>
 
     <string name="action_block_keywords">Shielded keywords</string>
@@ -100,6 +102,8 @@
 
     <string name="night_theme">Theme Switch</string>
 
+    <string name="list_type">List style</string>
+
     <string name="check_update">Check the update</string>
 
     <string name="check_update_detail">The current version is:</string>
@@ -154,7 +158,7 @@
 
     <string name="update_title">There are newer versions</string>
 
-    <string name="update_message">You can go to the app store to update, or click ok to download and install</string>
+    <string name="update_message">You can go to the app store to update, or click Ok to download and install</string>
 
     <string name="update_title_no">Congratulations, this is the latest version</string>
 
@@ -192,6 +196,24 @@
 
     <string name="tab_ithome">IT Home</string>
 
+    <string name="tab_press">Press</string>
+
+    <string name="type_phone">Phone</string>
+
+    <string name="type_tablet">Tablet</string>
+
+    <string name="color_choose">Choose color</string>
+
     <string name="sort_tip">Long press and drag to change the classification order</string>
+
+    <string name="reading_record">Reading record</string>
+
+    <string name="shared_reading_record">I\'ve {type} {num} stories in "Mere News"</string>
+
+    <string name="collected">collected</string>
+
+    <string name="read">read</string>
+
+    <string name="message_reading_record">You have {type} {num} news articles in Mere News.</string>
 
 </resources>

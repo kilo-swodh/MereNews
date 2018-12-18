@@ -20,7 +20,7 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidnews.kiloproject.ui.GlideImageLoader;
+import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
@@ -131,7 +131,6 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                     helper.setText(R.id.item_card_subtitle, "");
                 }
                 break;
-
         }
     }
 }

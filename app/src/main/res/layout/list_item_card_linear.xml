@@ -68,11 +68,16 @@
 
         <TextView
             android:id="@+id/item_card_info"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_small"
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/text_mini"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/item_card_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_card_text" />
 

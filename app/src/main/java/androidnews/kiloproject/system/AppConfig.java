@@ -1,7 +1,5 @@
 package androidnews.kiloproject.system;
 
-import java.util.HashMap;
-
 /**
  * Created by ct_OS on 2018-1-1.
  */
@@ -11,6 +9,8 @@ public class AppConfig {
     public static boolean isSwipeBack = false;
 
     public static boolean isNightMode = false;
+
+    public static int type_list;
 
     public static int TextSize = 1;
 
@@ -28,8 +28,12 @@ public class AppConfig {
     public static final int TYPE_VIDEO_END_USED = 73;
 
     public static final int TYPE_ITHOME_START = 90;
-    public static final int TYPE_ITHOME_END = 125;
+    public static final int TYPE_ITHOME_END = 124;
     public static final int TYPE_ITHOME_END_USED = 116;
+
+    public static final int TYPE_PRESS_START = 125;
+    public static final int TYPE_PRESS_END = 224;
+    public static final int TYPE_PRESS_END_USED = 176;
 
     //网易
     public static final String HOST_163 = "http://c.m.163.com";
@@ -66,6 +70,11 @@ public class AppConfig {
     public static final String GET_IT_HOME_LOAD_MORE = "/xml/newslist/{typeStr}_{lastItemId}.xml";
     public static final String GET_IT_HOME_DETAIL = "/xml/newscontent/{newsId}.xml";
 
+    //锤子阅读
+    public static final String HOST_SMARTISAN = "http://reader.smartisan.com";
+    public static final String HOST_SMARTISAN_REFRESH = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id=&page_size=20";
+    public static final String HOST_SMARTISAN_LOAD_MORE = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id={id}&page_size=20";
+
     //更新
     public static final String CHECK_UPADTE_ADDRESS = "https://raw.githubusercontent.com/kilo-swodh/MereNews/master/update.txt";
 
@@ -97,5 +106,11 @@ public class AppConfig {
 
     public static final String CONFIG_HEADER_COLOR = "config_header_color";
 
+    public static final String CONFIG_LIST_TYPE = "config_list_type";
+
     public static final String CONFIG_HAVE_CHECK_1 = "config_event_1";  //设置重置
+
+    public static final int LIST_TYPE_SINGLE = 0;
+
+    public static final int LIST_TYPE_MULTI = 1;
 }

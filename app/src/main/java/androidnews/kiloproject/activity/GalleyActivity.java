@@ -202,13 +202,9 @@ public class GalleyActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_galley_download:
-                String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
-                String path = FileCompatUtil.getMediaDir(mActivity);
-                if (TextUtils.isEmpty(path))
-                    SnackbarUtils.with(tvGalleyTitle)
-                            .setMessage(getString(R.string.download_fail))
-                            .showError();
-                else
+                try {
+                    String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
+                    String path = FileCompatUtil.getMediaDir(mActivity);
                     EasyHttp.downLoad(currentImg)
                             .savePath(path)
                             .saveName(fileName)//不设置默认名字是时间戳生成的
@@ -227,7 +223,7 @@ public class GalleyActivity extends BaseActivity {
                                     //下载完成，path：下载文件保存的完整路径
                                     SnackbarUtils.with(tvGalleyTitle)
                                             .setMessage(getString(R.string.download_success))
-                                            .showSuccess();
+                                            .show();
                                 }
 
                                 @Override
@@ -238,6 +234,12 @@ public class GalleyActivity extends BaseActivity {
                                             .showError();
                                 }
                             });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    SnackbarUtils.with(tvGalleyTitle)
+                            .setMessage(getString(R.string.download_fail))
+                            .showError();
+                }
                 break;
         }
     }

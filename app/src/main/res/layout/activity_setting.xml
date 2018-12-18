@@ -450,6 +450,52 @@
                         android:id="@+id/tv_random_header_detail"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_random_header" />
+
+                    <View
+                        android:id="@+id/view_list_type"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_random_header_detail" />
+
+                    <android.support.constraint.Group
+                        android:id="@+id/group_list_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="tv_list_type,tv_list_type_detail,view_list_type" />
+
+                    <TextView
+                        android:id="@+id/tv_list_type"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/list_type"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_list_type" />
+
+                    <TextView
+                        android:id="@+id/tv_list_type_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_normal"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginRight="@dimen/margin_normal"
@@ -460,7 +506,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_random_header" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_list_type" />
+
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 

@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import androidnews.kiloproject.ui.GlideImageLoader;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.ZhiHuDetailActivity;
 import androidnews.kiloproject.adapter.ZhihuAdapter;
@@ -53,12 +54,13 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_LOAD_MORE;
 import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
-import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM;
 
 public class ZhihuRvFragment extends BaseRvFragment {
 
     ZhihuAdapter mAdapter;
+    Banner banner;
     //    MainListData contents;
     ZhihuListData contents;
 
@@ -116,9 +118,11 @@ public class ZhihuRvFragment extends BaseRvFragment {
                     }
                 });
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-
-        //Use this now
+        if (AppConfig.type_list == LIST_TYPE_MULTI)
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 3));
+        else
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecoratorGrid());
 
 //        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
@@ -193,20 +197,11 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                 @Override
                                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                                     ZhihuListData newData = null;
+                                    List<CacheNews> cacheNews = null;
                                     try {
                                         newData = gson.fromJson(response, ZhihuListData.class);
                                         //设置头部轮播
-                                    } catch (Exception e1) {
-                                        e1.printStackTrace();
-                                        loadFailed(type);
-                                    }
-                                    try {
                                         loadMoreDate = newData.getDate();
-                                    } catch (Exception e1) {
-                                        e1.printStackTrace();
-                                    }
-                                    List<CacheNews> cacheNews = null;
-                                    try {
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
@@ -240,6 +235,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                             SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
                                             break;
                                         case TYPE_LOADMORE:
+                                            if (contents == null) return;
                                             try {
                                                 if (cacheNews != null && cacheNews.size() > 0)
                                                     for (Iterator<ZhihuListData.StoriesBean> it = newData.getStories().iterator(); it.hasNext(); ) {
@@ -265,7 +261,6 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                 contents.getStories().addAll(newData.getStories());
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
-                                                loadFailed(type);
                                             }
                                             contents.setDate(newData.getDate());
                                             break;
@@ -285,7 +280,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                     refreshLayout.finishRefresh(true);
                                                     SnackbarUtils.with(refreshLayout)
                                                             .setMessage(getString(R.string.load_success))
-                                                            .showSuccess();
+                                                            .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -327,18 +322,23 @@ public class ZhihuRvFragment extends BaseRvFragment {
     }
 
     private void createAdapter() {
+        if (contents == null)
+            return;
         loadMoreDate = contents.getDate();
         mAdapter = new ZhihuAdapter(mActivity, contents.getStories());
-        mAdapter.openLoadAnimation(SLIDEIN_BOTTOM);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ZhihuListData.StoriesBean bean = contents.getStories().get(position);
                 Intent intent = new Intent(getActivity(), ZhiHuDetailActivity.class);
                 intent.putExtra("id", bean.getId());
+                if (!bean.isReaded()) {
+                    bean.setReaded(true);
+                    mAdapter.notifyItemChanged(position + 1);
+                }
                 startActivity(intent);
-                bean.setReaded(true);
-                mAdapter.notifyItemChanged(position + 1);
+
             }
         });
 
@@ -352,10 +352,10 @@ public class ZhihuRvFragment extends BaseRvFragment {
                 imgs.add(bean.getImage());
                 titles.add(bean.getTitle());
             }
-            CardView header = (CardView) getLayoutInflater().inflate(R.layout.list_item_card_banner,
+            CardView header = (CardView) LayoutInflater.from(mActivity).inflate(R.layout.list_item_card_banner,
                     (ViewGroup) refreshLayout.getParent(), false);
 
-            Banner banner = header.findViewById(R.id.banner);
+            banner = header.findViewById(R.id.banner);
             banner.setImageLoader(new GlideImageLoader())
                     .setBannerAnimation(Transformer.FlipHorizontal)
                     .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -383,7 +383,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
             header.setLayoutParams(params);
         }
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
-            mAdapter.setPreLoadNumber(3);
+            mAdapter.setPreLoadNumber(PRE_LOAD_ITEM);
             mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                 @Override
                 public void onLoadMoreRequested() {
@@ -393,5 +393,19 @@ public class ZhihuRvFragment extends BaseRvFragment {
             mAdapter.disableLoadMoreIfNotFullPage();
             refreshLayout.setEnableLoadMore(false);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (banner != null)
+            banner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (banner != null)
+            banner.stopAutoPlay();
     }
 }

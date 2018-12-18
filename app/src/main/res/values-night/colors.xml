@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#484848</color>
-    <color name="colorPrimaryDark">#263238</color>
-    <color name="colorAccent">#212121</color>
+    <color name="colorPrimary">#383838</color>
+    <color name="colorPrimaryDark">#213131</color>
+    <color name="colorAccent">#111111</color>
 
     <color name="main_text_colorful">@color/paleturquoise</color>
     <color name="main_text_color_dark">#ccc</color>
     <color name="main_text_color">#FFFAF0</color>
     <color name="main_text_color_read">#999</color>
     <color name="divider">#FFFAFA</color>
-    <color name="main_background">#212121</color>
+    <color name="main_background">@color/colorAccent</color>
     <color name="awesome_background">#424242</color>
 
     <color name="colorful_theme">@color/main_text_color</color>

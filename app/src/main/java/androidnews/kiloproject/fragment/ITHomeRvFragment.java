@@ -29,9 +29,10 @@ import androidnews.kiloproject.activity.ITHomeDetailActivity;
 import androidnews.kiloproject.adapter.ITHomeAdapter;
 import androidnews.kiloproject.bean.data.CacheNews;
 import androidnews.kiloproject.bean.net.ITHomeListData;
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.util.ITHomeUtils;
 import androidnews.kiloproject.util.XmlParseUtil;
-import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecoratorGrid;
+import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -45,7 +46,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_LOAD_MORE;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_IT_HOME;
-import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_LEFT;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
 public class ITHomeRvFragment extends BaseRvFragment {
 
@@ -121,12 +122,12 @@ public class ITHomeRvFragment extends BaseRvFragment {
                     }
                 });
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-
+        if (AppConfig.type_list == LIST_TYPE_MULTI)
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        else
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.setHasFixedSize(true);
-
-        //Use this now
-        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecoratorGrid());
+        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
 
 //        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
 //        refreshLayout.setRefreshFooter(new ClassicsFooter(mActivity));
@@ -193,9 +194,13 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            SnackbarUtils.with(refreshLayout).
-                                    setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                    showError();
+                            try {
+                                SnackbarUtils.with(refreshLayout).
+                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
+                                        showError();
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
                         }
                     }
 
@@ -206,14 +211,9 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                 @Override
                                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                                     ITHomeListData newData = null;
-                                    try {
-                                        newData = XmlParseUtil.getITHomeListData(response);
-                                    } catch (Exception e1) {
-                                        e1.printStackTrace();
-                                        loadFailed(type);
-                                    }
                                     List<CacheNews> cacheNews = null;
                                     try {
+                                        newData = XmlParseUtil.getITHomeListData(response);
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
@@ -249,7 +249,6 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                 contents.getChannel().addAll(newData.getChannel());
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
-                                                loadFailed(type);
                                             }
                                             break;
                                     }
@@ -270,7 +269,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                     refreshLayout.finishRefresh(true);
                                                     SnackbarUtils.with(refreshLayout)
                                                             .setMessage(getString(R.string.load_success))
-                                                            .showSuccess();
+                                                            .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -314,7 +313,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
         if (contents == null || contents.getChannel() == null || contents.getChannel().size() < 1)
             return;
         mAdapter = new ITHomeAdapter(mActivity, contents.getChannel());
-        mAdapter.openLoadAnimation(SLIDEIN_LEFT);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -326,9 +325,11 @@ public class ITHomeRvFragment extends BaseRvFragment {
                     intent.putExtra("id", bean.getNewsid());
                     intent.putExtra("time", bean.getPostdate());
                     intent.putExtra("img", bean.getImage());
+                    if (!bean.isReaded()) {
+                        bean.setReaded(true);
+                        mAdapter.notifyDataSetChanged();
+                    }
                     startActivity(intent);
-                    bean.setReaded(true);
-                    mAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -339,7 +340,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
             return;
         mRecyclerView.setAdapter(mAdapter);
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
-            mAdapter.setPreLoadNumber(3);
+            mAdapter.setPreLoadNumber(PRE_LOAD_ITEM);
             mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                 @Override
                 public void onLoadMoreRequested() {

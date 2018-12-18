@@ -14,9 +14,9 @@
         <item name="android:navigationBarColor" tools:targetApi="21">@color/colorAccent</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
 
-        //背景透明，不设滑动关闭时背景就是黑的。
+        <!-- 背景透明，不设滑动关闭时背景就是黑的。-->
         <item name="android:windowIsTranslucent">true</item>
-        //Activity右滑进出的动画，觉得这个不好看随便换成自己的
+        <!-- Activity右滑进出的动画，觉得这个不好看随便换成自己的 -->
         <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
     </style>
 
@@ -46,7 +46,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 欢迎页背景引用刚才写好的 -->
+        <!-- 欢迎页背景 -->
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
         <!-- <item name="android:windowIsTranslucent">true</item> --> <!-- 透明背景不要了 -->

@@ -45,7 +45,6 @@ public class MaterialViewPagerImageHelper {
             @Override
             public void onAnimationEnd(View view) {
                 super.onAnimationEnd(view);
-
                 //change the image when alpha=0
                 if (GlideUtil.isValidContextForGlide(imageView.getContext()))
                     Glide.with(imageView.getContext()).load(urlImage)

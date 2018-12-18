@@ -2,37 +2,29 @@ package androidnews.kiloproject.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.ViewStub;
 import android.webkit.WebSettings;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.tobiasrohloff.view.NestedScrollWebView;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.widget.NestedScrollWebView;
 
 
 public class BaseDetailActivity extends BaseActivity {
 
     Toolbar toolbar;
     AppBarLayout appbar;
-    ProgressBar progress;
     NestedScrollWebView webView;
-//    ViewStub mStub;
-
+    ProgressBar progress;
 //    SmartRefreshLayout refreshLayout;
-
-    public static final int MAX_HISTORY = 512;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,14 +32,14 @@ public class BaseDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         appbar = (AppBarLayout) findViewById(R.id.appbar);
-        progress = (ProgressBar) findViewById(R.id.progress);
         webView = (NestedScrollWebView) findViewById(R.id.web_news);
+        progress = (ProgressBar) findViewById(R.id.progress);
 
-//        mStub = findViewById(R.id.stub_fab);
-//        mStub.setVisibility(View.VISIBLE);
+        webView.setBackgroundColor(0);
+        webView.getBackground().setAlpha(0);
 
         initView();
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override

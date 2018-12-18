@@ -1,32 +1,30 @@
 package androidnews.kiloproject.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SnackbarUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.reflect.TypeToken;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidnews.kiloproject.R;
@@ -47,6 +45,7 @@ import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 
 public class CacheActivity extends BaseActivity {
@@ -60,8 +59,8 @@ public class CacheActivity extends BaseActivity {
     CacheNewsAdapter cacheNewsAdapter;
     List<CacheNews> currentData = new ArrayList<>();
     int type;
+    String typeStr = "";
     boolean isChange;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +86,49 @@ public class CacheActivity extends BaseActivity {
             default:
                 break;
         }
-        initStateBar(R.color.main_background, true);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_list_number:
+                        new MaterialStyledDialog.Builder(mActivity)
+                                .setHeaderDrawable(R.drawable.ic_phone)
+                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                .setTitle(R.string.action_list_number)
+                                .setDescription(getString(R.string.message_reading_record).replace("{type}",typeStr)
+                                        .replace("{num}",String.valueOf(currentData.size())))
+                                .setHeaderColor(R.color.colorAccent)
+                                .setPositiveText(R.string.action_share)
+                                .setNegativeText(android.R.string.ok)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_SEND);//设置分享行为
+                                        intent.setType("text/plain");//设置分享内容的类型
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.reading_record));//添加分享内容标题
+                                        intent.putExtra(Intent.EXTRA_TEXT, "【" + getString(R.string.reading_record) + "】"
+                                                + getString(R.string.shared_reading_record)
+                                                .replace("{type}",typeStr)
+                                                .replace("{num}",String.valueOf(currentData.size())));//添加分享内容
+                                        //创建分享的Dialog
+                                        intent = Intent.createChooser(intent, getString(R.string.action_share));
+                                        startActivity(intent);
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        break;
+                }
+                return false;
+            }
+        });
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override
@@ -109,6 +150,15 @@ public class CacheActivity extends BaseActivity {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                         e.onNext(0);
+                    }
+
+                    switch (type){
+                        case CACHE_HISTORY:
+                            typeStr = getString(R.string.read);
+                            break;
+                        case CACHE_COLLECTION:
+                            typeStr = getString(R.string.collected);
+                            break;
                     }
                     e.onComplete();
                 }
@@ -149,7 +199,7 @@ public class CacheActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             break;
-                                        case TYPE_NETEASE_START:
+                                        case TYPE_NETEASE_START://包含网易报刊
                                             intent = new Intent(mActivity, NewsDetailActivity.class);
                                             switch (i) {
                                                 case 1:
@@ -161,12 +211,12 @@ public class CacheActivity extends BaseActivity {
                                             }
                                             break;
                                         case TYPE_ITHOME_START:
-                                            intent.putExtra("title",cacheNews.getTitle());
+                                            intent = new Intent(mActivity, ITHomeDetailActivity.class);
+                                            intent.putExtra("title", cacheNews.getTitle());
                                             intent.putExtra("url", cacheNews.getUrl());
                                             intent.putExtra("id", cacheNews.getDocid());
-                                            intent.putExtra("time",cacheNews.getTimeStr());
+                                            intent.putExtra("time", cacheNews.getTimeStr());
                                             intent.putExtra("img", cacheNews.getImgUrl());
-                                            startActivity(intent);
                                             break;
                                     }
                                     if (intent != null)
@@ -217,5 +267,11 @@ public class CacheActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             initSlowly();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cache_items, menu);//加载menu布局
+        return true;
     }
 }

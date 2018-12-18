@@ -1,6 +1,4 @@
-package androidnews.kiloproject.event;
-
-import android.os.Message;
+package androidnews.kiloproject.bean.event;
 
 public class RestartEvent {
   private String message;

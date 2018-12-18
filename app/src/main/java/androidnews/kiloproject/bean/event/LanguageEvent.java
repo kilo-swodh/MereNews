@@ -1,7 +1,11 @@
-package androidnews.kiloproject.event;
+package androidnews.kiloproject.bean.event;
 
-public class ChangeEvent {
+public class LanguageEvent {
   private int laguageType;
+
+  public LanguageEvent(int laguageType) {
+    this.laguageType = laguageType;
+  }
 
   public int getLaguageType() {
     return laguageType;

@@ -23,6 +23,7 @@ public abstract class BaseRvFragment extends BaseLazyFragment {
 
     protected long lastAutoRefreshTime = 0;
     public static final long dividerAutoRefresh = 3 * 60 * 1000;
+    public static final int PRE_LOAD_ITEM = 5;
 
     public static final int TYPE_LOADMORE = 1000;
     public static final int TYPE_REFRESH = 1001;

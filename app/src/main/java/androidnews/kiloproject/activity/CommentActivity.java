@@ -58,7 +58,7 @@ public class CommentActivity extends BaseActivity {
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.action_comment);
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override

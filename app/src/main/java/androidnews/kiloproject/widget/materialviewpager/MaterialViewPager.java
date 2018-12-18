@@ -126,7 +126,11 @@ public class MaterialViewPager extends FrameLayout implements ViewPager.OnPageCh
         SavedState ss = new SavedState(superState);
         //end
         ss.settings = this.settings;
-        ss.yOffset = MaterialViewPagerHelper.getAnimator(getContext()).lastYOffset;
+        try {
+            ss.yOffset = MaterialViewPagerHelper.getAnimator(getContext()).lastYOffset;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return ss;
     }
@@ -288,7 +292,11 @@ public class MaterialViewPager extends FrameLayout implements ViewPager.OnPageCh
     public void onPageScrollStateChanged(int state) {
         currentPagerState = state;
         if (settings.displayToolbarWhenSwipe) {
-            MaterialViewPagerHelper.getAnimator(getContext()).onViewPagerPageChanged();
+            try {
+                MaterialViewPagerHelper.getAnimator(getContext()).onViewPagerPageChanged();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

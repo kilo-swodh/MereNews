@@ -100,7 +100,7 @@ public class BlockActivity extends BaseActivity {
                         break;
                     case R.id.action_list_add:
                         final EditText editText = new EditText(mActivity);
-                        editText.setHint(R.string.block_rule);
+                        editText.setHint(R.string.keywords);
                         editText.setTextColor(getResources().getColor(R.color.black));
                         new MaterialStyledDialog.Builder(mActivity)
                                 .setHeaderDrawable(R.drawable.ic_edit)
@@ -149,12 +149,12 @@ public class BlockActivity extends BaseActivity {
                                                         switch (i) {
                                                             case 0:
                                                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_block_keywords)
-                                                                        + " " + getString(R.string.fail)).showSuccess();
+                                                                        + " " + getString(R.string.fail)).showError();
                                                                 break;
                                                             case 1:
                                                                 SnackbarUtils.with(toolbar)
                                                                         .setMessage(getString(R.string.start_after_restart_list))
-                                                                        .showSuccess();
+                                                                        .show();
                                                                 setResult(RESULT_OK);
                                                                 if (adapter != null)
                                                                     adapter.notifyDataSetChanged();
@@ -166,7 +166,7 @@ public class BlockActivity extends BaseActivity {
                                                             case 2:
                                                                 SnackbarUtils.with(toolbar)
                                                                         .setMessage(getString(R.string.repeated))
-                                                                        .showSuccess();
+                                                                        .show();
                                                                 break;
                                                         }
                                                     }
@@ -186,7 +186,7 @@ public class BlockActivity extends BaseActivity {
                 return false;
             }
         });
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override

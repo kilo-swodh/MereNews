@@ -1,7 +1,6 @@
 package androidnews.kiloproject.activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 
@@ -35,7 +31,6 @@ import androidnews.kiloproject.system.base.BaseActivity;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -47,6 +42,9 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_OTHER_END_USED;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END_USED;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
@@ -70,7 +68,7 @@ public class ChannelActivity extends BaseActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_channel);
         mViewpager = (ViewPager) findViewById(R.id.vp_channel);
 
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(getString(R.string.channel_select));
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -123,48 +121,61 @@ public class ChannelActivity extends BaseActivity {
 
     @Override
     protected void initSlowly() {
-        spUtils = SPUtils.getInstance();
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                spUtils = SPUtils.getInstance();
 
-        channnelTabs = getResources().getStringArray(R.array.channel_tab);
-        sortArray = new int[channnelTabs.length];
-        String sortStr = spUtils.getString(CONFIG_TYPE_SORT);
+                channnelTabs = getResources().getStringArray(R.array.channel_tab);
+                sortArray = new int[channnelTabs.length];
+                String sortStr = spUtils.getString(CONFIG_TYPE_SORT);
 
-        if (TextUtils.isEmpty(sortStr)) {
-            StringBuilder sb = new StringBuilder();
-            sortArray = new int[channnelTabs.length];
-            for (int i = 0; i < channnelTabs.length; i++) {
-                sortArray[i] = i;
-                sb.append(i + "-");
+                if (TextUtils.isEmpty(sortStr)) {
+                    StringBuilder sb = new StringBuilder();
+                    sortArray = new int[channnelTabs.length];
+                    for (int i = 0; i < channnelTabs.length; i++) {
+                        sortArray[i] = i;
+                        sb.append(i + "-");
+                    }
+                    spUtils.put(CONFIG_TYPE_SORT, sb.toString());
+                } else {
+                    String[] channelStrArray = sortStr.split("-");
+                    if (channelStrArray.length == channnelTabs.length) {
+                        for (int i = 0; i < channelStrArray.length; i++) {
+                            sortArray[i] = Integer.parseInt(channelStrArray[i]);
+                        }
+                    } else {
+                        for (int i = 0; i < channelStrArray.length; i++) {
+                            sortArray[i] = Integer.parseInt(channelStrArray[i]);
+                        }
+                        for (int i = channelStrArray.length; i < channnelTabs.length; i++) {
+                            sortArray[i] = i;
+                        }
+                    }
+                }
+                e.onNext(true);
+                e.onComplete();
             }
-            spUtils.put(CONFIG_TYPE_SORT, sb.toString());
-        } else {
-            String[] channelStrArray = sortStr.split("-");
-            if (channelStrArray.length == channnelTabs.length) {
-                for (int i = 0; i < channelStrArray.length; i++) {
-                    sortArray[i] = Integer.parseInt(channelStrArray[i]);
-                }
-            } else {
-                for (int i = 0; i < channelStrArray.length; i++) {
-                    sortArray[i] = Integer.parseInt(channelStrArray[i]);
-                }
-                for (int i = channelStrArray.length; i < channnelTabs.length; i++) {
-                    sortArray[i] = i;
-                }
-            }
-        }
-
-        tabLayout.setupWithViewPager(mViewpager);
-        fragmentList.add(ChannelFragment.newInstance(TYPE_NETEASE_START, TYPE_NETEASE_END_USED));
-        fragmentList.add(ChannelFragment.newInstance(TYPE_ZHIHU, TYPE_OTHER_END_USED));
-        fragmentList.add(ChannelFragment.newInstance(TYPE_VIDEO_START, TYPE_VIDEO_END_USED));
-        fragmentList.add(ChannelFragment.newInstance(TYPE_ITHOME_START, TYPE_ITHOME_END_USED));
-        adapter = new ChannelPagerAdapter(getSupportFragmentManager(), fragmentList);
-        mViewpager.setOffscreenPageLimit(fragmentList.size());      //静态页面,就都保存在内存里了
-        mViewpager.setAdapter(adapter);
-        for (int i : sortArray) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setText(channnelTabs[i]);
-        }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        tabLayout.setupWithViewPager(mViewpager);
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_NETEASE_START, TYPE_NETEASE_END_USED));
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_ZHIHU, TYPE_OTHER_END_USED));
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_VIDEO_START, TYPE_VIDEO_END_USED));
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_ITHOME_START, TYPE_ITHOME_END_USED));
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_PRESS_START, TYPE_PRESS_END_USED));
+                        adapter = new ChannelPagerAdapter(getSupportFragmentManager(), fragmentList);
+                        mViewpager.setOffscreenPageLimit(fragmentList.size());      //静态页面,就都保存在内存里了
+                        mViewpager.setAdapter(adapter);
+                        for (int i : sortArray) {
+                            TabLayout.Tab tab = tabLayout.getTabAt(i);
+                            tab.setText(channnelTabs[i]);
+                        }
+                    }
+                });
     }
 
     @Override

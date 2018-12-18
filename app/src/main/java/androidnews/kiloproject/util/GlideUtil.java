@@ -3,6 +3,7 @@ package androidnews.kiloproject.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 
 public class GlideUtil {
     @TargetApi(17)
@@ -12,7 +13,7 @@ public class GlideUtil {
         }
         if (context instanceof Activity) {
             final Activity activity = (Activity) context;
-            if (activity.isDestroyed() || activity.isFinishing()) {
+            if ((Build.VERSION.SDK_INT > 16 && activity.isDestroyed()) || activity.isFinishing()) {
                 return false;
             }
         }

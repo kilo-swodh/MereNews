@@ -19,7 +19,7 @@ public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder
     private Context mContext;
 
     public CacheNewsAdapter(Context Context, List data) {
-        super(R.layout.list_item_card_linear, data);
+        super(R.layout.list_item_card_cache, data);
         this.mContext = Context;
         options = new RequestOptions();
         options.centerCrop()

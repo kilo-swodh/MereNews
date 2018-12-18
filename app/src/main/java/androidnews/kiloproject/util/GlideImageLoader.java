@@ -1,4 +1,4 @@
-package androidnews.kiloproject.ui;
+package androidnews.kiloproject.util;
 
 import android.content.Context;
 import android.widget.ImageView;

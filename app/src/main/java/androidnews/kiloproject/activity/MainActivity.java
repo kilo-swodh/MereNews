@@ -2,17 +2,12 @@ package androidnews.kiloproject.activity;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,22 +16,15 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.UriUtils;
 import com.bumptech.glide.Glide;
 
 import androidnews.kiloproject.fragment.BaseRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
-import androidnews.kiloproject.util.FileCompatUtil;
-import androidnews.kiloproject.util.GlideUtil;
-import androidnews.kiloproject.util.ITHomeUtils;
+import androidnews.kiloproject.fragment.PressRvFragment;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
@@ -49,7 +37,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -61,7 +48,7 @@ import androidnews.kiloproject.fragment.GuoKrRvFragment;
 import androidnews.kiloproject.fragment.VideoRvFragment;
 import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
-import androidnews.kiloproject.event.MessageEvent;
+import androidnews.kiloproject.bean.event.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -83,6 +70,10 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.NEWS_PHOTO_URL;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_END;
+import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END;
+import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
@@ -94,12 +85,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     NavigationView navigation;
-    FragmentStatePagerAdapter mPagerAdapter;
+    FragmentPagerAdapter mPagerAdapter;
 
     PhotoCenterData photoData;
     int bgPosition = 0;
     int[] channelArray = new int[DEFAULT_PAGE];
     List<BaseRvFragment> fragments = new ArrayList<>();
+    String[] tagNames;
 
     public static final int DEFAULT_PAGE = 4;
 
@@ -127,7 +119,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigation = (NavigationView) findViewById(R.id.navigation);
 
-        spUtils = SPUtils.getInstance();
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
         drawerLayout.addDrawerListener(mDrawerToggle);
         final Toolbar toolbar = mViewPager.getToolbar();
@@ -148,8 +139,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mViewPager.getPagerTitleStrip().setOnTabReselectedListener(new PagerSlidingTabStrip.OnTabReselectedListener() {
             @Override
             public void onTabReselected(int position) {
-                BaseRvFragment fragment = fragments.get(position);
-                if ( fragment != null)
+                BaseRvFragment fragment = null;
+                try {
+                    fragment = fragments.get(position);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (fragment != null)
                     fragment.requestData(TYPE_REFRESH);
             }
         });
@@ -166,6 +162,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                if (spUtils == null)
+                    spUtils = SPUtils.getInstance();
+
+                tagNames = getResources().getStringArray(R.array.address_tag);
+
                 String arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
                 if (TextUtils.isEmpty(arrayStr)) {
                     channelArray = new int[DEFAULT_PAGE];
@@ -175,9 +176,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     e.onNext(true);
                 } else {
                     String[] channelStrArray = arrayStr.split("#");
-                    channelArray = new int[channelStrArray.length];
+                    List<Integer> channelList = new ArrayList<>();
                     for (int i = 0; i < channelStrArray.length; i++) {
-                        channelArray[i] = Integer.parseInt(channelStrArray[i]);
+                        int index = Integer.parseInt(channelStrArray[i]);
+                        if (!TextUtils.equals(tagNames[index],"fake")) {
+                            channelList.add(index);
+                        }
+                    }
+                    channelArray = new int[channelList.size()];
+                    for (int i = 0; i < channelList.size(); i++) {
+                        channelArray[i] = channelList.get(i);
                     }
                     e.onNext(true);
                 }
@@ -191,7 +199,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
                             if (mPagerAdapter == null) {
-                                mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                                mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                                     @Override
                                     public Fragment getItem(int position) {
                                         BaseRvFragment fragment = createFragment(position);
@@ -206,13 +214,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                                     @Override
                                     public CharSequence getPageTitle(int position) {
-                                        String[] tags = getResources().getStringArray(R.array.address_tag);
-                                        return tags[channelArray[position]];
+                                        return tagNames[channelArray[position]];
                                     }
                                 };
                                 mViewPager.getViewPager().setAdapter(mPagerAdapter);
 
-                                mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+                                mViewPager.getViewPager().setOffscreenPageLimit(2);
                                 mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
                                 EasyHttp.get(NEWS_PHOTO_URL)
@@ -380,7 +387,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private BaseRvFragment createFragment(int position){
+    private BaseRvFragment createFragment(int position) {
         int type = channelArray[position];
         if (type >= TYPE_ZHIHU) {
             switch (type) {
@@ -391,8 +398,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             if (type >= TYPE_VIDEO_START && type <= TYPE_VIDEO_END)
                 return VideoRvFragment.newInstance(channelArray[position]);
-            else
+            else if(type >= TYPE_ITHOME_START && type <= TYPE_ITHOME_END)
                 return ITHomeRvFragment.newInstance(channelArray[position]);
+            else if (type >= TYPE_PRESS_START && type <= TYPE_PRESS_END)
+                return PressRvFragment.newInstance(channelArray[position]);
         }
         return MainRvFragment.newInstance(channelArray[position]);
     }
@@ -503,10 +512,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case 4:
                 int color = spUtils.getInt(CONFIG_HEADER_COLOR, 9999);
-                if (color == 9999){
+                if (color == 9999) {
                     color = Color.parseColor("#FFA000");
                 }
-                mViewPager.setColor(color,200);
+                mViewPager.setColor(color, 200);
                 break;
         }
     }
@@ -524,6 +533,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public static boolean saveChannel(int[] channelArray) {
         StringBuilder sb = new StringBuilder();
+
         try {
             for (Integer integer : channelArray) {
                 sb.append(integer + "#");

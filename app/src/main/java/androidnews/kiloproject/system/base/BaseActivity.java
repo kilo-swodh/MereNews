@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     //状态栏沉浸(颜色资源)
-    protected void initStateBar(int colorRes, boolean isBlackFront) {
+    protected void initStatusBar(int colorRes, boolean isBlackFront) {
 //        ScreenUtils.cancelAdaptScreen(this);
         mImmersionBar = ImmersionBar.with(this);
         if (isNightMode) {

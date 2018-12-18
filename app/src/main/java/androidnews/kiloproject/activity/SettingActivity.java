@@ -28,7 +28,6 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
@@ -45,20 +44,26 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.util.AlipayUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.BUGLY_KEY;
 import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_ADDRESS;
+import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
@@ -99,9 +104,12 @@ public class SettingActivity extends BaseActivity {
     Group groupRandomHeader;
     TextView tvRandomHeader;
     TextView tvRandomHeaderDetail;
+    Group groupListType;
+    TextView tvListType;
+    TextView tvListTypeDetail;
 
-    private int currentLanguage = 0;
-
+    private int currentLanguage;
+    private int currentRandomHeader;
     private boolean isAutoRefresh = false;
     private boolean isBackExit = false;
     private boolean isAutoLoadMore = false;
@@ -109,6 +117,7 @@ public class SettingActivity extends BaseActivity {
 
     String[] languageItems;
     String[] headerItems;
+    String[] listItems;
     String[] sizeItems;
 
     @Override
@@ -150,72 +159,96 @@ public class SettingActivity extends BaseActivity {
         groupRandomHeader = (Group) findViewById(R.id.group_random_header);
         tvRandomHeader = (TextView) findViewById(R.id.tv_random_header);
         tvRandomHeaderDetail = (TextView) findViewById(R.id.tv_random_header_detail);
+        groupListType = (Group) findViewById(R.id.group_list_type);
+        tvListType = (TextView) findViewById(R.id.tv_list_type);
+        tvListTypeDetail = (TextView) findViewById(R.id.tv_list_type_detail);
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
-        spUtils = SPUtils.getInstance();
-        initStateBar(R.color.main_background, true);
+        initStatusBar(R.color.main_background, true);
     }
 
     @Override
     protected void initSlowly() {
-        headerItems = getResources().getStringArray(R.array.header_setting);
-        languageItems = getResources().getStringArray(R.array.language);
-        sizeItems = getResources().getStringArray(R.array.size);
-
-        tvRandomHeaderDetail.setText(headerItems[spUtils.getInt(CONFIG_RANDOM_HEADER, 0)]);
-
-        AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
-        tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
-
-        currentLanguage = spUtils.getInt(CONFIG_LANGUAGE, 0);
-        tvLanguageDetail.setText(languageItems[currentLanguage]);
-
-
-        isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
-        swAutoRefresh.setChecked(isAutoRefresh);
-        swAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isAutoRefresh = isChecked;
-                spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
-            }
-        });
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                spUtils = SPUtils.getInstance();
 
-        isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
-        swAutoLoadmore.setChecked(isAutoLoadMore);
-        swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isAutoLoadMore = isChecked;
-                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
-                setResult(RESULT_OK);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).showSuccess();
-            }
-        });
+                headerItems = getResources().getStringArray(R.array.header_setting);
+                listItems = getResources().getStringArray(R.array.list_type);
+                languageItems = getResources().getStringArray(R.array.language);
+                sizeItems = getResources().getStringArray(R.array.size);
 
-        isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
-        swBackExit.setChecked(isBackExit);
-        swBackExit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isBackExit = isChecked;
-                spUtils.put(CONFIG_BACK_EXIT, isBackExit);
-            }
-        });
+                AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
 
-        isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
-        swSwipeBack.setChecked(isSwipeBack);
-        swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isSwipeBack = isChecked;
-                spUtils.put(CONFIG_SWIPE_BACK, isSwipeBack);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).showSuccess();
-            }
-        });
+                currentRandomHeader = spUtils.getInt(CONFIG_RANDOM_HEADER, 0);
 
-        tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
+                currentLanguage = spUtils.getInt(CONFIG_LANGUAGE, 0);
+
+                isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
+
+                isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
+
+                isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
+
+                isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
+
+                e.onNext(true);
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        tvRandomHeaderDetail.setText(headerItems[currentRandomHeader]);
+                        tvListTypeDetail.setText(listItems[spUtils.getInt(CONFIG_LIST_TYPE, LIST_TYPE_SINGLE)]);
+                        tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
+                        tvLanguageDetail.setText(languageItems[currentLanguage]);
+
+                        swAutoRefresh.setChecked(isAutoRefresh);
+                        swAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                isAutoRefresh = isChecked;
+                                spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
+                            }
+                        });
+
+                        swAutoLoadmore.setChecked(isAutoLoadMore);
+                        swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                isAutoLoadMore = isChecked;
+                                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
+                                setResult(RESULT_OK);
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
+                            }
+                        });
+
+                        swBackExit.setChecked(isBackExit);
+                        swBackExit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                isBackExit = isChecked;
+                                spUtils.put(CONFIG_BACK_EXIT, isBackExit);
+                            }
+                        });
+
+                        swSwipeBack.setChecked(isSwipeBack);
+                        swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                isSwipeBack = isChecked;
+                                spUtils.put(CONFIG_SWIPE_BACK, isSwipeBack);
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                            }
+                        });
+
+                        tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
+                    }
+                });
     }
 
     private void restartWithAnime() {
@@ -228,6 +261,7 @@ public class SettingActivity extends BaseActivity {
                 groupAutoLoadmore.setClickable(false);
                 swBackExit.setEnabled(false);
                 groupRandomHeader.setClickable(false);
+                groupListType.setClickable(false);
                 groupBackExit.setClickable(false);
                 swSwipeBack.setEnabled(false);
                 groupSwipeBack.setClickable(false);
@@ -289,19 +323,19 @@ public class SettingActivity extends BaseActivity {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.language)
                         .setCancelable(true)
-                        .setSingleChoiceItems(getResources().getStringArray(R.array.language),
+                        .setSingleChoiceItems(languageItems,
                                 currentLanguage, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         currentLanguage = which;
+                                        spUtils.put(CONFIG_LANGUAGE, currentLanguage);
+                                        tvLanguageDetail.setText(languageItems[currentLanguage]);
+                                        restartWithAnime();
                                     }
                                 })
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                spUtils.put(CONFIG_LANGUAGE, currentLanguage);
-                                tvLanguageDetail.setText(languageItems[currentLanguage]);
-                                restartWithAnime();
                             }
                         })
                         .create().show();
@@ -320,7 +354,7 @@ public class SettingActivity extends BaseActivity {
                         }
                     }
                 }).start();
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).showSuccess();
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
                 break;
 
             case R.id.tv_text_size:
@@ -333,16 +367,16 @@ public class SettingActivity extends BaseActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         AppConfig.TextSize = which;
+                                        spUtils.put(CONFIG_TEXT_SIZE, which);
+                                        tvTextSizeDetail.setText(sizeItems[which]);
+                                        SnackbarUtils.with(toolbar)
+                                                .setMessage(getResources().getString(R.string.successful))
+                                                .show();
                                     }
                                 })
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                spUtils.put(CONFIG_TEXT_SIZE, AppConfig.TextSize);
-                                tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
-                                SnackbarUtils.with(toolbar)
-                                        .setMessage(getResources().getString(R.string.successful))
-                                        .showSuccess();
                             }
                         })
                         .create().show();
@@ -371,7 +405,7 @@ public class SettingActivity extends BaseActivity {
                 }
                 spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
                 setResult(RESULT_OK);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).showSuccess();
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
                 break;
 
             case R.id.tv_back_exit:
@@ -388,22 +422,53 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_random_header:
             case R.id.tv_random_header_detail:
-                new AlertDialog.Builder(mActivity).setItems(
-                        headerItems, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                spUtils.put(CONFIG_RANDOM_HEADER, which);
-                                tvRandomHeaderDetail.setText(headerItems[which]);
-                                if (which > 3)
-                                    showColorPicker();
-                                else
-                                    SnackbarUtils.with(toolbar)
-                                            .setMessage(getString(R.string.start_after_restart_app))
-                                            .showSuccess();
-                                dialog.dismiss();
-                            }
-                        }
-                ).show();
+                new AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.random_header_server)
+                        .setCancelable(true)
+                        .setSingleChoiceItems(
+                                headerItems, currentRandomHeader, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        spUtils.put(CONFIG_RANDOM_HEADER, which);
+                                        tvRandomHeaderDetail.setText(headerItems[which]);
+                                        if (which > 3)
+                                            showColorPicker();
+                                        else
+                                            SnackbarUtils.with(toolbar)
+                                                    .setMessage(getString(R.string.start_after_restart_app))
+                                                    .show();
+                                        dialog.dismiss();
+                                    }
+                                }
+                        ).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+                break;
+
+            case R.id.tv_list_type:
+            case R.id.tv_list_type_detail:
+                new AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.list_type)
+                        .setCancelable(true)
+                        .setSingleChoiceItems(listItems, AppConfig.type_list, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        spUtils.put(CONFIG_LIST_TYPE, which);
+                                        tvListTypeDetail.setText(listItems[which]);
+                                        AppConfig.type_list = which;
+                                        SnackbarUtils.with(toolbar)
+                                                .setMessage(getString(R.string.start_after_restart_app))
+                                                .show();
+                                        dialog.dismiss();
+                                    }
+                                }
+                        ).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
                 break;
 
             case R.id.tv_swipe_back:
@@ -416,7 +481,7 @@ public class SettingActivity extends BaseActivity {
                     isSwipeBack = true;
                 }
                 spUtils.put(CONFIG_SWIPE_BACK, isSwipeBack);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).showSuccess();
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
                 break;
 
             case R.id.tv_check_update:
@@ -509,7 +574,7 @@ public class SettingActivity extends BaseActivity {
             color = Color.parseColor("#FFA000");
         ColorPickerDialogBuilder
                 .with(mActivity)
-                .setTitle("Choose color")
+                .setTitle(R.string.color_choose)
                 .initialColor(color)
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                 .density(12)
@@ -519,16 +584,16 @@ public class SettingActivity extends BaseActivity {
 //                        ToastUtils.showShort("onColorSelected: 0x" + Integer.toHexString(selectedColor));
                     }
                 })
-                .setPositiveButton("ok", new ColorPickerClickListener() {
+                .setPositiveButton(android.R.string.ok, new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                         spUtils.put(CONFIG_HEADER_COLOR, selectedColor);
                         SnackbarUtils.with(toolbar)
                                 .setMessage(getString(R.string.start_after_restart_app))
-                                .showSuccess();
+                                .show();
                     }
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
