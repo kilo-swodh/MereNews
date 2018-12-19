@@ -222,48 +222,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 mViewPager.getViewPager().setOffscreenPageLimit(2);
                                 mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-                                EasyHttp.get(NEWS_PHOTO_URL)
-                                        .readTimeOut(30 * 1000)//局部定义读超时
-                                        .writeTimeOut(30 * 1000)
-                                        .connectTimeout(30 * 1000)
-                                        .timeStamp(true)
-                                        .execute(new SimpleCallBack<String>() {
-                                            @Override
-                                            public void onError(ApiException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                            @Override
-                                            public void onSuccess(final String s) {
-                                                Observable.create(new ObservableOnSubscribe<Boolean>() {
-                                                    @Override
-                                                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                                        String temp = s.replace(")", "}");
-                                                        String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
-                                                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                                                            try {
-                                                                photoData = gson.fromJson(response, PhotoCenterData.class);
-                                                                e.onNext(true);
-                                                            } catch (Exception e1) {
-                                                                e1.printStackTrace();
-                                                                e.onNext(false);
-                                                            }
-                                                        } else e.onNext(false);
-                                                        e.onComplete();
-                                                    }
-                                                }).subscribeOn(Schedulers.computation())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(new Consumer<Boolean>() {
-                                                            @Override
-                                                            public void accept(Boolean aBoolean) throws Exception {
-                                                                if (aBoolean)
-                                                                    startBgAnimate();
-                                                                else
-                                                                    SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
-                                                            }
-                                                        });
-                                            }
-                                        });
+                              startBgAnimate();
                             } else {
                                 mPagerAdapter.notifyDataSetChanged();
                             }
@@ -412,43 +371,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void startBgAnimate() {
         switch (spUtils.getInt(CONFIG_RANDOM_HEADER, 0)) {
             case 0:
-                timer = new Timer();
-                timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    if (mViewPager != null && photoData != null) {
-                                        if (bgPosition == photoData.getCacheMoreData().size()) {
-                                            bgPosition = 0;
-                                        }
-                                        mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
-                                        bgPosition++;
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    }
-                };
-                timer.schedule(timerTask, 0, 10 * 1000);
+           requestBgData(0);
                 break;
             case 1:
-                mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-                    @Override
-                    public HeaderDesign getHeaderDesign(int page) {
-                        int postion = page % photoData.getCacheMoreData().size();
-
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.deepskyblue,
-                                photoData.getCacheMoreData().get(postion).getCover());
-                    }
-                    //execute others actions if needed (ex : modify your header logo)
-                });
-                mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
+          requestBgData(1);
                 break;
             case 2:
                 mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
@@ -518,6 +444,91 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mViewPager.setColor(color, 200);
                 break;
         }
+    }
+
+    private void requestBgData(final int type){
+        EasyHttp.get(NEWS_PHOTO_URL)
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .connectTimeout(30 * 1000)
+                .timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onSuccess(final String s) {
+                        Observable.create(new ObservableOnSubscribe<Boolean>() {
+                            @Override
+                            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                String temp = s.replace(")", "}");
+                                String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
+                                if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                                    try {
+                                        photoData = gson.fromJson(response, PhotoCenterData.class);
+                                        e.onNext(true);
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
+                                        e.onNext(false);
+                                    }
+                                } else e.onNext(false);
+                                e.onComplete();
+                            }
+                        }).subscribeOn(Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<Boolean>() {
+                                    @Override
+                                    public void accept(Boolean aBoolean) throws Exception {
+                                        if (aBoolean){
+                                          switch (type){
+                                              case 0:
+                                                  timer = new Timer();
+                                                  timerTask = new TimerTask() {
+                                                      @Override
+                                                      public void run() {
+                                                          runOnUiThread(new Runnable() {
+                                                              @Override
+                                                              public void run() {
+                                                                  try {
+                                                                      if (mViewPager != null && photoData != null) {
+                                                                          if (bgPosition == photoData.getCacheMoreData().size()) {
+                                                                              bgPosition = 0;
+                                                                          }
+                                                                          mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
+                                                                          bgPosition++;
+                                                                      }
+                                                                  } catch (Exception e) {
+                                                                      e.printStackTrace();
+                                                                  }
+                                                              }
+                                                          });
+                                                      }
+                                                  };
+                                                  timer.schedule(timerTask, 0, 10 * 1000);
+                                                  break;
+                                              case 1:
+                                                  mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                                                      @Override
+                                                      public HeaderDesign getHeaderDesign(int page) {
+                                                          int postion = page % photoData.getCacheMoreData().size();
+
+                                                          return HeaderDesign.fromColorResAndUrl(
+                                                                  R.color.deepskyblue,
+                                                                  photoData.getCacheMoreData().get(postion).getCover());
+                                                      }
+                                                      //execute others actions if needed (ex : modify your header logo)
+                                                  });
+                                                  mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
+                                                  break;
+                                          }
+                                        } else
+                                            SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
+                                    }
+                                });
+                    }
+                });
     }
 
     private void cancelTimer() {

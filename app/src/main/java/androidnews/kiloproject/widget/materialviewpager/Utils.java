@@ -9,11 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.ListView;
 import android.widget.ScrollView;
-
-import android.support.v4.view.ViewCompat;
 
 import java.util.List;
 
