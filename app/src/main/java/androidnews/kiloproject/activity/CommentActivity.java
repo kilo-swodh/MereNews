@@ -20,8 +20,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.CommentAdapter;
-import androidnews.kiloproject.bean.data.CommentLevel;
-import androidnews.kiloproject.bean.net.CommonFullData;
+import androidnews.kiloproject.entity.data.CommentLevel;
+import androidnews.kiloproject.entity.net.CommonFullData;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 

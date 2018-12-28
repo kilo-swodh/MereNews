@@ -1,11 +1,7 @@
 package androidnews.kiloproject.activity;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -15,11 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -32,12 +26,11 @@ import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.GalleyData;
+import androidnews.kiloproject.entity.net.GalleyData;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.util.FileCompatUtil;
 import androidnews.kiloproject.widget.PinchImageView;

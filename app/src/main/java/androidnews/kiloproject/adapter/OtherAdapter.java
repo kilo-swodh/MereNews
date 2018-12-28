@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.ChannelItem;
+import androidnews.kiloproject.entity.data.ChannelItem;
 
 public class OtherAdapter extends BaseAdapter {
     private Context context;

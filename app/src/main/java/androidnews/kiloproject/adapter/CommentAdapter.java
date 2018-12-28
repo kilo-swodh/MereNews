@@ -3,7 +3,6 @@ package androidnews.kiloproject.adapter;
 import android.content.Context;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,7 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CommentLevel;
+import androidnews.kiloproject.entity.data.CommentLevel;
 import androidnews.kiloproject.util.GlideUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 

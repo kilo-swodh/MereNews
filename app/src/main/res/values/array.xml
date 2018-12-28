@@ -27,6 +27,7 @@
         <item>@string/tab_video</item>
         <item>@string/tab_ithome</item>
         <item>@string/tab_press</item>
+        <item>@string/tab_smartisan</item>
     </array>
 
     <array name="list_type">
@@ -34,8 +35,8 @@
         <item>@string/type_tablet</item>
     </array>
 
-    <array name="address">
-        <!-- 0到49为网易 -->
+    <string-array name="address">
+        <!-- 网易 -->
         <item>T1348647909107</item> //头条
         <item>T1348649580692</item> //科技
         <item>T1348648517839</item> //娱乐
@@ -70,7 +71,6 @@
         <item>T1379038288239</item> //电台
         <item>T1348654105308</item> //家居
         <item>T1397116135282</item> //亲子
-        <item>T1371543208049</item> //快讯
         <item>T1348654060988</item> //汽车
         <item>T1348648037603</item> //社会
         <item>T1349837670307</item> //论坛
@@ -87,9 +87,11 @@
         <item>T1533779729713</item> //改革
 
         <item>fake</item> //空
+        <item>fake</item> //空
 
         <!--<item>T1401272877187</item> //读书        //屏蔽精选图书-->
         <!--<item>T1385429690972</item> //酒香-->
+        <!--<item>T1371543208049</item> //快讯-->
         <!--<item>T1427334690133</item> //糖果库-->
         <!--<item>T1524118019401</item> //公开课2-->
         <!--<item>T1502955728035</item> //星座-->
@@ -99,7 +101,7 @@
         <!--<item>T1491816738487</item> //易城-->
         <!--<item>T1486979691117</item> //冬奥-->
 
-        <!-- 50到69为知乎果壳 -->
+        <!-- 其他分类 -->
         <item>zhihu</item> //知乎
         <item>guoke</item> //果壳
 
@@ -125,7 +127,7 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
-        <!-- 70到79为视频 -->
+        <!-- 视频 -->
         <item>V9LG4B3A0</item> //热点视频
         <item>V9LG4CHOR</item> //娱乐视频
         <item>V9LG4E6VR</item> //搞笑视频
@@ -151,6 +153,7 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
+        <!-- IT之家 -->
         <item>news</item>   //资讯
         <item>labs</item>   //评测室
         <item>android</item>//安卓
@@ -191,6 +194,7 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
+        <!-- 报刊 -->
         <item>T1419835304565</item> //世界博览
         <item>T1425636171225</item> //周末画报
         <item>T1427357998621</item> //环球人物
@@ -320,10 +324,17 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
+        <!-- 锤子 -->
+        <item>999</item>    //精选
+        <item>10</item>     //文艺
+        <item>11</item>     //生活
+        <item>15</item>     //科技
+        <item>16</item>     //社会
+        <item>34</item>     //商业
+        <item>43</item>     //科学
+        <item>44</item>     //非虚构
+        <item>45</item>     //视频
+
         <item>fake</item> //空
 
         <item>fake</item> //空
@@ -332,24 +343,7 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-    </array>
+    </string-array>
 
     <array name="good_tag">
         <item>独家</item>
@@ -395,23 +389,21 @@
         <item>Radio Station</item>
         <item>Home Furnishing</item>
         <item>Parenting</item>
-        <item>News</item>
         <item>Auto</item>
         <item>Sociology</item>
         <item>Forum</item>
+        <item>House property</item>
+        <item>Today</item>
+        <item>Open class</item>
+        <item>Marketing</item>
+        <item>Aviation</item>
+        <item>Music</item>
+        <item>Double creation</item>
+        <item>Buddhism</item>
+        <item>Tmall</item>
+        <item>JD.COM</item>
+        <item>Reform</item>
 
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
 
@@ -590,28 +582,16 @@
         <item>fake</item> //空
         <item>fake</item> //空
 
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
+        <item>Selected</item>
+        <item>Literature</item>
+        <item>Life</item>
+        <item>Science and technology</item>
+        <item>Sociology</item>
+        <item>Business</item>
+        <item>Science</item>
+        <item>Nonfiction</item>
+        <item>Video</item>
 
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
-        <item>fake</item> //空
         <item>fake</item> //空
 
         <item>fake</item> //空

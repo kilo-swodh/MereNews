@@ -38,8 +38,8 @@ import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.ZhiHuDetailActivity;
 import androidnews.kiloproject.adapter.ZhihuAdapter;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.ZhihuListData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.ZhihuListData;
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecoratorGrid;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -48,7 +48,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
@@ -184,9 +184,13 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            SnackbarUtils.with(refreshLayout).
-                                    setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                    showError();
+                            try {
+                                SnackbarUtils.with(refreshLayout).
+                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
+                                        showError();
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
                         }
                     }
 
@@ -330,15 +334,16 @@ public class ZhihuRvFragment extends BaseRvFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(contents == null)
+                    return;
                 ZhihuListData.StoriesBean bean = contents.getStories().get(position);
                 Intent intent = new Intent(getActivity(), ZhiHuDetailActivity.class);
                 intent.putExtra("id", bean.getId());
                 if (!bean.isReaded()) {
                     bean.setReaded(true);
-                    mAdapter.notifyItemChanged(position + 1);
+                    mAdapter.notifyItemChanged(position + 1); //因为有个header,所以+1
                 }
                 startActivity(intent);
-
             }
         });
 

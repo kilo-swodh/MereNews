@@ -24,7 +24,7 @@ import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
-import androidnews.kiloproject.bean.net.NewMainListData;
+import androidnews.kiloproject.entity.net.NewMainListData;
 import androidnews.kiloproject.util.GlideUtil;
 
 import static androidnews.kiloproject.fragment.BaseRvFragment.CELL;

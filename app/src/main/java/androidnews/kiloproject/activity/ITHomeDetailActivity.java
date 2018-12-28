@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.IThomeDetailData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.IThomeDetailData;
 import androidnews.kiloproject.util.XmlParseUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -35,8 +35,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_DETAIL;
 import static androidnews.kiloproject.system.AppConfig.HOST_IT_HOME;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;

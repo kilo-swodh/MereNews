@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import androidnews.kiloproject.fragment.BaseRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
 import androidnews.kiloproject.fragment.PressRvFragment;
+import androidnews.kiloproject.fragment.SmartisanRvFragment;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
@@ -43,12 +44,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.PhotoCenterData;
+import androidnews.kiloproject.entity.net.PhotoCenterData;
 import androidnews.kiloproject.fragment.GuoKrRvFragment;
 import androidnews.kiloproject.fragment.VideoRvFragment;
 import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
-import androidnews.kiloproject.bean.event.MessageEvent;
+import androidnews.kiloproject.entity.event.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -60,8 +61,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.fragment.BaseRvFragment.TYPE_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
@@ -74,6 +75,8 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_END;
+import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
@@ -179,7 +182,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     List<Integer> channelList = new ArrayList<>();
                     for (int i = 0; i < channelStrArray.length; i++) {
                         int index = Integer.parseInt(channelStrArray[i]);
-                        if (!TextUtils.equals(tagNames[index],"fake")) {
+                        if (!TextUtils.equals(tagNames[index], "fake")) {
                             channelList.add(index);
                         }
                     }
@@ -218,11 +221,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     }
                                 };
                                 mViewPager.getViewPager().setAdapter(mPagerAdapter);
-
                                 mViewPager.getViewPager().setOffscreenPageLimit(2);
                                 mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-                              startBgAnimate();
+                               startBgAnimate();
                             } else {
                                 mPagerAdapter.notifyDataSetChanged();
                             }
@@ -357,10 +359,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             if (type >= TYPE_VIDEO_START && type <= TYPE_VIDEO_END)
                 return VideoRvFragment.newInstance(channelArray[position]);
-            else if(type >= TYPE_ITHOME_START && type <= TYPE_ITHOME_END)
+            else if (type >= TYPE_ITHOME_START && type <= TYPE_ITHOME_END)
                 return ITHomeRvFragment.newInstance(channelArray[position]);
             else if (type >= TYPE_PRESS_START && type <= TYPE_PRESS_END)
                 return PressRvFragment.newInstance(channelArray[position]);
+            else if (type >= TYPE_SMARTISAN_START && type <= TYPE_SMARTISAN_END)
+                return SmartisanRvFragment.newInstance(channelArray[position]);
         }
         return MainRvFragment.newInstance(channelArray[position]);
     }
@@ -371,10 +375,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void startBgAnimate() {
         switch (spUtils.getInt(CONFIG_RANDOM_HEADER, 0)) {
             case 0:
-           requestBgData(0);
+                requestBgData(0);
                 break;
             case 1:
-          requestBgData(1);
+                requestBgData(1);
                 break;
             case 2:
                 mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {

@@ -180,13 +180,13 @@
 
     <string name="repeated">This one is repeated.</string>
 
-    <string name="zhihu">Zhihu</string>
-
-    <string name="guokr">GuoKr</string>
-
     <string name="shortcut_star">Collection record</string>
 
     <string name="shortcut_disabled">Shortcuts have been disabled.</string>
+
+    <string name="zhihu">Zhihu</string>
+
+    <string name="guokr">GuoKr</string>
 
     <string name="tab_netease">Netease</string>
 
@@ -197,6 +197,8 @@
     <string name="tab_ithome">IT Home</string>
 
     <string name="tab_press">Press</string>
+
+    <string name="tab_smartisan">Smartisan</string>
 
     <string name="type_phone">Phone</string>
 

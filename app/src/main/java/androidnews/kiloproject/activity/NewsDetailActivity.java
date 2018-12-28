@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.NewsDetailData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.NewsDetailData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -33,8 +33,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.GET_NEWS_DETAIL;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
@@ -118,11 +118,13 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         startActivity(intent);
                         break;
                     case R.id.action_link:
-                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                        //noinspection ConstantConditions
-                        cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShareLink()));
-                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).show();
+                        if (currentData != null) {
+                            ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                            //noinspection ConstantConditions
+                            cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShareLink()));
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
+                                    + " " + getString(R.string.successful)).show();
+                        }
                         break;
                     case R.id.action_browser:
                         try {

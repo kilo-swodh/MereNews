@@ -40,10 +40,10 @@ import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GuoKrDetailActivity;
 import androidnews.kiloproject.adapter.GuoKrAdapter;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.data.GuoKrCacheData;
-import androidnews.kiloproject.bean.net.GuoKrListData;
-import androidnews.kiloproject.bean.net.GuoKrTopData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.data.GuoKrCacheData;
+import androidnews.kiloproject.entity.net.GuoKrListData;
+import androidnews.kiloproject.entity.net.GuoKrTopData;
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecoratorGrid;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -52,7 +52,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_GUO_KR;
@@ -393,7 +393,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                 }
                 if (!bean.isReaded()) {
                     bean.setReaded(true);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged(position + 1);   //因为有个header,所以+1
                 }
                 startActivity(intent);
                 bean.setReaded(true);

@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.PressListData;
+import androidnews.kiloproject.entity.net.PressListData;
 import androidnews.kiloproject.util.GlideUtil;
 
 public class PressRvAdapter extends BaseQuickAdapter<PressListData, BaseViewHolder> {

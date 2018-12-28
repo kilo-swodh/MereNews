@@ -1,7 +1,6 @@
 package androidnews.kiloproject.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -12,8 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.ITHomeListData;
-import androidnews.kiloproject.bean.net.ITHomeListData.ItemBean;
+import androidnews.kiloproject.entity.net.ITHomeListData;
 import androidnews.kiloproject.util.GlideUtil;
 
 public class ITHomeAdapter extends BaseQuickAdapter<ITHomeListData.ItemBean, BaseViewHolder> {

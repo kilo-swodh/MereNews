@@ -17,19 +17,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.activity.ChannelActivity;
 import androidnews.kiloproject.adapter.DragAdapter;
 import androidnews.kiloproject.adapter.OtherAdapter;
-import androidnews.kiloproject.bean.data.ChannelItem;
+import androidnews.kiloproject.entity.data.ChannelItem;
 import androidnews.kiloproject.system.base.BaseFragment;
 import androidnews.kiloproject.widget.DragGrid;
 import androidnews.kiloproject.widget.OtherGridView;

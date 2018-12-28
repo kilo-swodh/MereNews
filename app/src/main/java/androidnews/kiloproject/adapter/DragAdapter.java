@@ -2,7 +2,6 @@ package androidnews.kiloproject.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.blankj.utilcode.util.LogUtils;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.ChannelItem;
+import androidnews.kiloproject.entity.data.ChannelItem;
 import androidnews.kiloproject.widget.DragGrid;
 
 public class DragAdapter extends BaseAdapter {
@@ -282,7 +281,6 @@ public class DragAdapter extends BaseAdapter {
     }
 
     public void setOnStartDragingListener(OnStartDragingListener startDragingListener){
-
         this.startDragingListener = startDragingListener;
     }
 }

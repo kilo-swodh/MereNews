@@ -29,7 +29,7 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.CacheNewsAdapter;
-import androidnews.kiloproject.bean.data.CacheNews;
+import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -40,12 +40,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
-import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 
 public class CacheActivity extends BaseActivity {
@@ -138,7 +138,9 @@ public class CacheActivity extends BaseActivity {
                 @Override
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                     try {
-                        currentData = LitePal.where("type = ?", String.valueOf(type)).find(CacheNews.class);
+                        currentData = LitePal.where("type = ?", String.valueOf(type))
+                                .order("id desc")
+                                .find(CacheNews.class);
                         if (currentData == null || currentData.size() < 1)
                             e.onNext(0);
                         else {
@@ -217,6 +219,15 @@ public class CacheActivity extends BaseActivity {
                                             intent.putExtra("id", cacheNews.getDocid());
                                             intent.putExtra("time", cacheNews.getTimeStr());
                                             intent.putExtra("img", cacheNews.getImgUrl());
+                                            break;
+                                        case TYPE_SMARTISAN_START:
+                                            intent = new Intent(mActivity, SmartisanDetailActivity.class);
+                                            intent.putExtra("title", cacheNews.getTitle());
+                                            intent.putExtra("url", cacheNews.getUrl());
+                                            intent.putExtra("id", cacheNews.getDocid());
+                                            intent.putExtra("time", cacheNews.getTimeStr());
+                                            intent.putExtra("img", cacheNews.getImgUrl());
+                                            intent.putExtra("source",cacheNews.getSource());
                                             break;
                                     }
                                     if (intent != null)

@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.VideoListData;
+import androidnews.kiloproject.entity.net.VideoListData;
 import androidnews.kiloproject.util.GlideUtil;
 import androidnews.kiloproject.widget.MyJzvdStd;
 import cn.jzvd.Jzvd;

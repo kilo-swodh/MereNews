@@ -2,7 +2,7 @@ package androidnews.kiloproject.util;
 
 import android.text.TextUtils;
 
-import androidnews.kiloproject.bean.net.ITHomeListData;
+import androidnews.kiloproject.entity.net.ITHomeListData;
 
 import static androidnews.kiloproject.system.AppConfig.HOST_IT_HOME_URL;
 

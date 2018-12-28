@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.ZhihuDetailData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.ZhihuDetailData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -39,8 +39,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
@@ -179,7 +179,11 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                                             public void accept(Boolean aBoolean) throws Exception {
                                                 if (aBoolean) {
                                                     isStar = true;
-                                                    toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
+                                                    try {
+                                                        toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
+                                                    }catch (Exception e){
+                                                        e.printStackTrace();
+                                                    }
                                                 }
 //                                                refreshLayout.finishRefresh();
                                             }
@@ -212,6 +216,8 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(currentData == null)
+                    return;
                 List<CacheNews> list = new ArrayList<>();
                 try {
                     list = LitePal.where("docid = ?", String.valueOf(currentData.getId())).find(CacheNews.class);

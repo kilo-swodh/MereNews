@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.BlockItem;
+import androidnews.kiloproject.entity.data.BlockItem;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -42,8 +42,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.BlockItem.TYPE_KEYWORDS;
-import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
+import static androidnews.kiloproject.entity.data.BlockItem.TYPE_KEYWORDS;
+import static androidnews.kiloproject.entity.data.BlockItem.TYPE_SOURCE;
 
 public class BlockActivity extends BaseActivity {
 

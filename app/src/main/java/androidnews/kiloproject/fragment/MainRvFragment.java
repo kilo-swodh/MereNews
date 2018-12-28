@@ -48,10 +48,10 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.adapter.MainRvAdapter;
-import androidnews.kiloproject.bean.data.BlockItem;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.GalleyData;
-import androidnews.kiloproject.bean.net.NewMainListData;
+import androidnews.kiloproject.entity.data.BlockItem;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.GalleyData;
+import androidnews.kiloproject.entity.net.NewMainListData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -59,9 +59,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.BlockItem.TYPE_KEYWORDS;
-import static androidnews.kiloproject.bean.data.BlockItem.TYPE_SOURCE;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.BlockItem.TYPE_KEYWORDS;
+import static androidnews.kiloproject.entity.data.BlockItem.TYPE_SOURCE;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
@@ -455,7 +455,6 @@ public class MainRvFragment extends BaseRvFragment {
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
-
                                             } else if (type == TYPE_LOADMORE) {
                                                 mAdapter.notifyDataSetChanged();
                                                 if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
@@ -786,6 +785,8 @@ public class MainRvFragment extends BaseRvFragment {
         if (data.getAds() != null && data.getAds().size() > 0)
             return true;
         String mTag = data.getTAGS();
+        if (data.getPriority() > 500)       //某些霸屏的新闻
+            return false;
         if (TextUtils.isEmpty(data.getUrl_3w())) {       //老新闻
             return false;
         } else if (TextUtils.isEmpty(mTag))

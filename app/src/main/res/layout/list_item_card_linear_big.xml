@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -55,13 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
             android:textColor="@color/main_text_color_dark"
             android:textSize="@dimen/text_mini"
             app:layout_constraintBottom_toTopOf="@+id/item_card_time"
-            app:layout_constraintStart_toStartOf="@+id/item_card_text"
             app:layout_constraintEnd_toEndOf="@+id/item_card_text"
+            app:layout_constraintStart_toStartOf="@+id/item_card_text"
             app:layout_constraintTop_toBottomOf="@+id/item_card_text" />
 
         <TextView

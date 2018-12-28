@@ -174,13 +174,13 @@
 
     <string name="repeated">这条重复了</string>
 
-    <string name="zhihu">知乎</string>
-
-    <string name="guokr">果壳精选</string>
-
     <string name="shortcut_star">收藏记录</string>
 
     <string name="shortcut_disabled">快捷方式已被禁用</string>
+
+    <string name="zhihu">知乎日报</string>
+
+    <string name="guokr">果壳精选</string>
 
     <string name="tab_netease">网易</string>
 
@@ -191,6 +191,8 @@
     <string name="tab_ithome">IT之家</string>
 
     <string name="tab_press">报刊</string>
+
+    <string name="tab_smartisan">锤子</string>
     
     <string name="type_phone">手机</string>
 

@@ -27,8 +27,8 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.ITHomeDetailActivity;
 import androidnews.kiloproject.adapter.ITHomeAdapter;
-import androidnews.kiloproject.bean.data.CacheNews;
-import androidnews.kiloproject.bean.net.ITHomeListData;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.net.ITHomeListData;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.util.ITHomeUtils;
 import androidnews.kiloproject.util.XmlParseUtil;
@@ -40,7 +40,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_LOAD_MORE;
@@ -263,8 +263,8 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                             if (o)
                                                 lastItemId = contents.getChannel().get(contents.getChannel().size() - 1).getNewsid();
                                             if (mAdapter == null || type == TYPE_REFRESH) {
-                                                lastAutoRefreshTime = System.currentTimeMillis();
                                                 createAdapter();
+                                                lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
                                                     SnackbarUtils.with(refreshLayout)
@@ -327,7 +327,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                     intent.putExtra("img", bean.getImage());
                     if (!bean.isReaded()) {
                         bean.setReaded(true);
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyItemChanged(position);
                     }
                     startActivity(intent);
                 } catch (Exception e) {

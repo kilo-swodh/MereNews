@@ -32,7 +32,7 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.VideoRvAdapter;
-import androidnews.kiloproject.bean.net.VideoListData;
+import androidnews.kiloproject.entity.net.VideoListData;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CacheNews;
+import androidnews.kiloproject.entity.data.CacheNews;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -33,8 +33,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.HOST_GUO_KR_DETAIL;
 import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_DETAIL;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
@@ -255,9 +255,6 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                view.loadUrl("javascript:function setTop(){document.querySelector('.header-for-mobile').style.display=\"none\";}setTop();");
-                view.loadUrl("javascript:function setTop(){document.querySelector('.bottom-wrap').style.display=\"none\";}setTop();");
-                view.loadUrl("javascript:function setTop(){document.querySelector('.footer').style.display=\"none\";}setTop();");
                 if (isNightMode) {
                     InputStream is = getResources().openRawResource(R.raw.night);
                     byte[] buffer = new byte[0];

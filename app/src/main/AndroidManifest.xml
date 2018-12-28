@@ -72,5 +72,7 @@
         <activity android:name=".activity.BlockActivity"/>
 
         <activity android:name=".activity.ITHomeDetailActivity"/>
+
+        <activity android:name=".activity.SmartisanDetailActivity"/>
     </application>
 </manifest>

@@ -32,8 +32,12 @@ public class AppConfig {
     public static final int TYPE_ITHOME_END_USED = 116;
 
     public static final int TYPE_PRESS_START = 125;
-    public static final int TYPE_PRESS_END = 224;
+    public static final int TYPE_PRESS_END = 199;
     public static final int TYPE_PRESS_END_USED = 176;
+
+    public static final int TYPE_SMARTISAN_START = 200;
+    public static final int TYPE_SMARTISAN_END = 208;
+    public static final int TYPE_SMARTISAN_END_USED = 214;
 
     //网易
     public static final String HOST_163 = "http://c.m.163.com";
@@ -73,7 +77,7 @@ public class AppConfig {
     //锤子阅读
     public static final String HOST_SMARTISAN = "http://reader.smartisan.com";
     public static final String HOST_SMARTISAN_REFRESH = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id=&page_size=20";
-    public static final String HOST_SMARTISAN_LOAD_MORE = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id={id}&page_size=20";
+    public static final String HOST_SMARTISAN_LOAD_MORE = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id={last_id}&page_size=20";
 
     //更新
     public static final String CHECK_UPADTE_ADDRESS = "https://raw.githubusercontent.com/kilo-swodh/MereNews/master/update.txt";

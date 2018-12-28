@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.data.CacheNews;
+import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.util.GlideUtil;
 
 public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder> {

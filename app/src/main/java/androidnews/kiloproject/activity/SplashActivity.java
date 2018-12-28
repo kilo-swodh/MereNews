@@ -25,7 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.bean.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;

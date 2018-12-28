@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.bean.net.GuoKrListData;
+import androidnews.kiloproject.entity.net.GuoKrListData;
 import androidnews.kiloproject.util.GlideUtil;
 
 public class GuoKrAdapter extends BaseQuickAdapter<GuoKrListData.ResultBean, BaseViewHolder> {

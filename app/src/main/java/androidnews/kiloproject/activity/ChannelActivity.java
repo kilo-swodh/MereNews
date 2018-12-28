@@ -45,6 +45,8 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_OTHER_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
+import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_END_USED;
+import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
@@ -167,6 +169,7 @@ public class ChannelActivity extends BaseActivity {
                         fragmentList.add(ChannelFragment.newInstance(TYPE_VIDEO_START, TYPE_VIDEO_END_USED));
                         fragmentList.add(ChannelFragment.newInstance(TYPE_ITHOME_START, TYPE_ITHOME_END_USED));
                         fragmentList.add(ChannelFragment.newInstance(TYPE_PRESS_START, TYPE_PRESS_END_USED));
+                        fragmentList.add(ChannelFragment.newInstance(TYPE_SMARTISAN_START,TYPE_SMARTISAN_END_USED));
                         adapter = new ChannelPagerAdapter(getSupportFragmentManager(), fragmentList);
                         mViewpager.setOffscreenPageLimit(fragmentList.size());      //静态页面,就都保存在内存里了
                         mViewpager.setAdapter(adapter);
