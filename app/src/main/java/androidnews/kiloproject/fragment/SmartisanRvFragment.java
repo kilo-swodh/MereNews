@@ -237,9 +237,10 @@ public class SmartisanRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
+                                                contents.setList(newData.getList());
+                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
+                                                e.onNext(true);
                                             }
-                                            contents.setList(newData.getList());
-                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
@@ -256,12 +257,12 @@ public class SmartisanRvFragment extends BaseRvFragment {
                                                 for (SmartisanListData.DataBean.ListBean data : newData.getList()) {
                                                     contents.getList().addAll(newData.getList());
                                                 }
+                                                e.onNext(true);
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())

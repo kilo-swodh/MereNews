@@ -213,7 +213,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
 
                                     switch (type) {
                                         case TYPE_REFRESH:
-                                            if (cacheNews != null && cacheNews.size() > 0)
+                                            if (cacheNews != null && cacheNews.size() > 0) {
                                                 for (Iterator<ZhihuListData.StoriesBean> it = newData.getStories().iterator(); it.hasNext(); ) {
                                                     ZhihuListData.StoriesBean data = it.next();
                                                     boolean isSame = false;
@@ -235,8 +235,10 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                            contents = newData;
-                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
+                                                contents = newData;
+                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
+                                                e.onNext(true);
+                                            }
                                             break;
                                         case TYPE_LOADMORE:
                                             if (contents == null) return;
@@ -267,9 +269,9 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                 e1.printStackTrace();
                                             }
                                             contents.setDate(newData.getDate());
+                                            e.onNext(true);
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())

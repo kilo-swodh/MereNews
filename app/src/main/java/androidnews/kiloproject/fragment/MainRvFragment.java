@@ -368,6 +368,7 @@ public class MainRvFragment extends BaseRvFragment {
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
+                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;
@@ -434,9 +435,9 @@ public class MainRvFragment extends BaseRvFragment {
                                                 contents.clear();
                                                 contents.addAll(newList);
                                             }
+                                            e.onNext(true);
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())

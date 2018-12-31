@@ -230,9 +230,10 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
+                                                contents = newData;
+                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
+                                                e.onNext(true);
                                             }
-                                            contents = newData;
-                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
@@ -247,12 +248,12 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                     }
                                                 }
                                                 contents.getChannel().addAll(newData.getChannel());
+                                                e.onNext(true);
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())
@@ -260,7 +261,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                     .subscribe(new Consumer<Boolean>() {
                                         @Override
                                         public void accept(Boolean o) throws Exception {
-                                            if (o)
+                                            if (o && contents.getChannel().size() > 0)
                                                 lastItemId = contents.getChannel().get(contents.getChannel().size() - 1).getNewsid();
                                             if (mAdapter == null || type == TYPE_REFRESH) {
                                                 createAdapter();

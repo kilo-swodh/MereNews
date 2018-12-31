@@ -247,9 +247,10 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
+                                                contents.setListData(newData);
+                                                lastAutoRefreshTime = System.currentTimeMillis();
+                                                e.onNext(true);
                                             }
-                                            contents.setListData(newData);
-                                            lastAutoRefreshTime = System.currentTimeMillis();
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
@@ -266,12 +267,12 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 for (GuoKrListData.ResultBean bean : newData.getResult()) {
                                                     contents.getListData().getResult().addAll(newData.getResult());
                                                 }
+                                                e.onNext(true);
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())
@@ -337,7 +338,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
                                     }
-                                    if (newData.isOk()) {
+                                    if (newData != null && newData.isOk()) {
                                         contents.setTopData(newData);
                                         e.onNext(true);
                                     }

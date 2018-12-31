@@ -182,6 +182,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     List<Integer> channelList = new ArrayList<>();
                     for (int i = 0; i < channelStrArray.length; i++) {
                         int index = Integer.parseInt(channelStrArray[i]);
+                        if(index > tagNames.length - 1)
+                            continue;
                         if (!TextUtils.equals(tagNames[index], "fake")) {
                             channelList.add(index);
                         }

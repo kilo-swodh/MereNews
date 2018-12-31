@@ -211,6 +211,7 @@ public class VideoRvFragment extends BaseRvFragment {
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
+                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;
@@ -243,9 +244,9 @@ public class VideoRvFragment extends BaseRvFragment {
                                                 contents.clear();
                                                 contents.addAll(newList);
                                             }
+                                            e.onNext(true);
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())

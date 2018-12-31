@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1138
-        versionName "1.1.3"
+        versionCode 1139
+        versionName "1.1.3-fixed"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
