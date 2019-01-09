@@ -3,6 +3,9 @@ package androidnews.kiloproject.activity;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,11 +17,14 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -28,25 +34,34 @@ import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.gson.Gson;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.entity.data.BlockItem;
+import androidnews.kiloproject.entity.data.CacheNews;
+import androidnews.kiloproject.entity.data.ExportBean;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.util.AlipayUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -57,62 +72,55 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
-import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 public class SettingActivity extends BaseActivity {
 
     Toolbar toolbar;
-    TextView textView;
-    Group groupLanguage;
     TextView tvLanguage;
     TextView tvLanguageDetail;
-    Group groupClearCache;
     TextView tvClearCache;
     TextView tvClearCacheDetail;
-    Group groupTextSize;
     TextView tvTextSize;
     TextView tvTextSizeDetail;
-    Group groupAutoRefresh;
     TextView tvAutoRefresh;
     TextView tvAutoRefreshDetail;
     Switch swAutoRefresh;
-    Group groupAutoLoadmore;
     TextView tvAutoLoadmore;
     TextView tvAutoLoadmoreDetail;
     Switch swAutoLoadmore;
-    Group groupBackExit;
     TextView tvBackExit;
     TextView tvBackExitDetail;
     Switch swBackExit;
-    Group groupSwipeBack;
     TextView tvSwipeBack;
     TextView tvSwipeBackDetail;
     Switch swSwipeBack;
-    CardView cardViewLanguage;
-    TextView textautoRefresh;
-    Group checkUpdate;
+    TextView tvHighRam;
+    TextView tvHighRamDetail;
+    Switch swHighRam;
+    TextView tvInput;
+    TextView tvInputDetail;
+    TextView tvExport;
+    TextView tvExportDetail;
     TextView tvCheckUpdate;
     TextView tvCheckUpdateDetail;
-    Group groupRandomHeader;
     TextView tvRandomHeader;
     TextView tvRandomHeaderDetail;
-    Group groupListType;
     TextView tvListType;
     TextView tvListTypeDetail;
 
     private int currentLanguage;
     private int currentRandomHeader;
-    private boolean isAutoRefresh = false;
-    private boolean isBackExit = false;
-    private boolean isAutoLoadMore = false;
     SPUtils spUtils;
 
     String[] languageItems;
@@ -125,41 +133,35 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        textView = (TextView) findViewById(R.id.textView);
-        groupLanguage = (Group) findViewById(R.id.group_language);
         tvLanguage = (TextView) findViewById(R.id.tv_language);
         tvLanguageDetail = (TextView) findViewById(R.id.tv_language_detail);
-        groupClearCache = (Group) findViewById(R.id.group_clear_cache);
         tvClearCache = (TextView) findViewById(R.id.tv_clear_cache);
         tvClearCacheDetail = (TextView) findViewById(R.id.tv_clear_cache_detail);
-        groupTextSize = (Group) findViewById(R.id.group_text_size);
         tvTextSize = (TextView) findViewById(R.id.tv_text_size);
         tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail);
-        groupAutoRefresh = (Group) findViewById(R.id.group_auto_refresh);
         tvAutoRefresh = (TextView) findViewById(R.id.tv_auto_refresh);
         tvAutoRefreshDetail = (TextView) findViewById(R.id.tv_auto_refresh_detail);
         swAutoRefresh = (Switch) findViewById(R.id.sw_auto_refresh);
-        groupAutoLoadmore = (Group) findViewById(R.id.group_auto_loadmore);
         tvAutoLoadmore = (TextView) findViewById(R.id.tv_auto_loadmore);
         tvAutoLoadmoreDetail = (TextView) findViewById(R.id.tv_auto_loadmore_detail);
         swAutoLoadmore = (Switch) findViewById(R.id.sw_auto_loadmore);
-        groupBackExit = (Group) findViewById(R.id.group_back_exit);
         tvBackExit = (TextView) findViewById(R.id.tv_back_exit);
         tvBackExitDetail = (TextView) findViewById(R.id.tv_back_exit_detail);
         swBackExit = (Switch) findViewById(R.id.sw_back_exit);
-        groupSwipeBack = (Group) findViewById(R.id.group_swipe_back);
         tvSwipeBack = (TextView) findViewById(R.id.tv_swipe_back);
         tvSwipeBackDetail = (TextView) findViewById(R.id.tv_swipe_back_detail);
         swSwipeBack = (Switch) findViewById(R.id.sw_swipe_back);
-        cardViewLanguage = (CardView) findViewById(R.id.card_view_language);
-        textautoRefresh = (TextView) findViewById(R.id.textauto_refresh);
-        checkUpdate = (Group) findViewById(R.id.group_check_update);
+        tvHighRam = (TextView) findViewById(R.id.tv_high_ram);
+        tvHighRamDetail = (TextView) findViewById(R.id.tv_high_ram_detail);
+        swHighRam = (Switch) findViewById(R.id.sw_high_ram);
+        tvInput = (TextView) findViewById(R.id.tv_input);
+        tvInputDetail = (TextView) findViewById(R.id.tv_input_detail);
+        tvExport = (TextView) findViewById(R.id.tv_export);
+        tvExportDetail = (TextView) findViewById(R.id.tv_export_detail);
         tvCheckUpdate = (TextView) findViewById(R.id.tv_check_update);
         tvCheckUpdateDetail = (TextView) findViewById(R.id.tv_check_update_detail);
-        groupRandomHeader = (Group) findViewById(R.id.group_random_header);
         tvRandomHeader = (TextView) findViewById(R.id.tv_random_header);
         tvRandomHeaderDetail = (TextView) findViewById(R.id.tv_random_header_detail);
-        groupListType = (Group) findViewById(R.id.group_list_type);
         tvListType = (TextView) findViewById(R.id.tv_list_type);
         tvListTypeDetail = (TextView) findViewById(R.id.tv_list_type_detail);
 
@@ -180,19 +182,13 @@ public class SettingActivity extends BaseActivity {
                 languageItems = getResources().getStringArray(R.array.language);
                 sizeItems = getResources().getStringArray(R.array.size);
 
-                AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
+                AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
 
                 currentRandomHeader = spUtils.getInt(CONFIG_RANDOM_HEADER, 0);
 
                 currentLanguage = spUtils.getInt(CONFIG_LANGUAGE, 0);
 
-                isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
-
-                isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
-
-                isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
-
-                isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
+                AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
 
                 e.onNext(true);
                 e.onComplete();
@@ -204,44 +200,54 @@ public class SettingActivity extends BaseActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         tvRandomHeaderDetail.setText(headerItems[currentRandomHeader]);
                         tvListTypeDetail.setText(listItems[spUtils.getInt(CONFIG_LIST_TYPE, LIST_TYPE_SINGLE)]);
-                        tvTextSizeDetail.setText(sizeItems[AppConfig.TextSize]);
+                        tvTextSizeDetail.setText(sizeItems[AppConfig.mTextSize]);
                         tvLanguageDetail.setText(languageItems[currentLanguage]);
 
-                        swAutoRefresh.setChecked(isAutoRefresh);
+                        swAutoRefresh.setChecked(AppConfig.isAutoRefresh);
                         swAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                isAutoRefresh = isChecked;
-                                spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
+                                AppConfig.isAutoRefresh = isChecked;
+                                spUtils.put(CONFIG_AUTO_REFRESH, AppConfig.isAutoRefresh);
                             }
                         });
 
-                        swAutoLoadmore.setChecked(isAutoLoadMore);
+                        swAutoLoadmore.setChecked(AppConfig.isAutoLoadMore);
                         swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                isAutoLoadMore = isChecked;
-                                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
+                                AppConfig.isAutoLoadMore = isChecked;
+                                spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
                                 setResult(RESULT_OK);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
                             }
                         });
 
-                        swBackExit.setChecked(isBackExit);
+                        swBackExit.setChecked(AppConfig.isBackExit);
                         swBackExit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                isBackExit = isChecked;
-                                spUtils.put(CONFIG_BACK_EXIT, isBackExit);
+                                AppConfig.isBackExit = isChecked;
+                                spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
                             }
                         });
 
-                        swSwipeBack.setChecked(isSwipeBack);
+                        swSwipeBack.setChecked(AppConfig.isSwipeBack);
                         swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                isSwipeBack = isChecked;
-                                spUtils.put(CONFIG_SWIPE_BACK, isSwipeBack);
+                                AppConfig.isSwipeBack = isChecked;
+                                spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                            }
+                        });
+
+                        swHighRam.setChecked(AppConfig.isHighRam);
+                        swHighRam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                AppConfig.isHighRam = isChecked;
+                                spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
                             }
                         });
@@ -252,37 +258,24 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void restartWithAnime() {
-        animateRevealShow(toolbar, false, new Animator.AnimatorListener() {
+        animateRevealShow(findViewById(R.id.content), true, new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 swAutoRefresh.setEnabled(false);
-                groupAutoRefresh.setClickable(false);
                 swAutoLoadmore.setEnabled(false);
-                groupAutoLoadmore.setClickable(false);
                 swBackExit.setEnabled(false);
-                groupRandomHeader.setClickable(false);
-                groupListType.setClickable(false);
-                groupBackExit.setClickable(false);
                 swSwipeBack.setEnabled(false);
-                groupSwipeBack.setClickable(false);
+                swHighRam.setEnabled(false);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                findViewById(R.id.content).setVisibility(View.GONE);
                 relaunchApp();
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                swAutoRefresh.setEnabled(true);
-                groupAutoRefresh.setClickable(true);
-                swAutoLoadmore.setEnabled(true);
-                groupAutoLoadmore.setClickable(true);
-                swBackExit.setEnabled(true);
-                groupRandomHeader.setClickable(false);
-                groupBackExit.setClickable(true);
-                swSwipeBack.setEnabled(true);
-                groupSwipeBack.setClickable(true);
             }
 
             @Override
@@ -302,18 +295,15 @@ public class SettingActivity extends BaseActivity {
         if (isReverse) {
             //关闭
             anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-            anim.setInterpolator(new DecelerateInterpolator());
-            anim.setDuration(450);
         } else {
             //开屏
             anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-            anim.setDuration(450);
         }
-
-
-        anim.start();
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(650);
         if (listener != null)
             anim.addListener(listener);
+        anim.start();
     }
 
     public void onClick(View v) {
@@ -327,10 +317,12 @@ public class SettingActivity extends BaseActivity {
                                 currentLanguage, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.loading)).show();
                                         currentLanguage = which;
                                         spUtils.put(CONFIG_LANGUAGE, currentLanguage);
                                         tvLanguageDetail.setText(languageItems[currentLanguage]);
                                         restartWithAnime();
+                                        dialog.dismiss();
                                     }
                                 })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -341,37 +333,22 @@ public class SettingActivity extends BaseActivity {
                         .create().show();
                 break;
 
-            case R.id.tv_clear_cache:
-            case R.id.tv_clear_cache_detail:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        LitePal.deleteDatabase("setting");
-                        String[] address = getResources().getStringArray(R.array.address);
-                        Glide.get(mActivity).clearDiskCache();
-                        for (String typeStr : address) {
-                            SPUtils.getInstance().put(typeStr + "_data", "");
-                        }
-                    }
-                }).start();
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
-                break;
-
             case R.id.tv_text_size:
             case R.id.tv_text_size_detail:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.text_size)
                         .setCancelable(true)
                         .setSingleChoiceItems(getResources().getStringArray(R.array.size),
-                                AppConfig.TextSize, new DialogInterface.OnClickListener() {
+                                AppConfig.mTextSize, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        AppConfig.TextSize = which;
+                                        AppConfig.mTextSize = which;
                                         spUtils.put(CONFIG_TEXT_SIZE, which);
                                         tvTextSizeDetail.setText(sizeItems[which]);
                                         SnackbarUtils.with(toolbar)
                                                 .setMessage(getResources().getString(R.string.successful))
                                                 .show();
+                                        dialog.dismiss();
                                     }
                                 })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -384,40 +361,40 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_auto_refresh:
             case R.id.tv_auto_refresh_detail:
-                if (isAutoRefresh) {
+                if (AppConfig.isAutoRefresh) {
                     swAutoRefresh.setChecked(false);
-                    isAutoRefresh = false;
+                    AppConfig.isAutoRefresh = false;
                 } else {
                     swAutoRefresh.setChecked(true);
-                    isAutoRefresh = true;
+                    AppConfig.isAutoRefresh = true;
                 }
-                spUtils.put(CONFIG_AUTO_REFRESH, isAutoRefresh);
+                spUtils.put(CONFIG_AUTO_REFRESH, AppConfig.isAutoRefresh);
                 break;
 
             case R.id.tv_auto_loadmore:
             case R.id.tv_auto_loadmore_detail:
-                if (isAutoLoadMore) {
+                if (AppConfig.isAutoLoadMore) {
                     swAutoLoadmore.setChecked(false);
-                    isAutoLoadMore = false;
+                    AppConfig.isAutoLoadMore = false;
                 } else {
                     swAutoLoadmore.setChecked(true);
-                    isAutoLoadMore = true;
+                    AppConfig.isAutoLoadMore = true;
                 }
-                spUtils.put(CONFIG_AUTO_LOADMORE, isAutoLoadMore);
+                spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
                 setResult(RESULT_OK);
                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
                 break;
 
             case R.id.tv_back_exit:
             case R.id.tv_back_exit_detail:
-                if (isBackExit) {
+                if (AppConfig.isBackExit) {
                     swBackExit.setChecked(false);
-                    isBackExit = false;
+                    AppConfig.isBackExit = false;
                 } else {
                     swBackExit.setChecked(true);
-                    isBackExit = true;
+                    AppConfig.isBackExit = true;
                 }
-                spUtils.put(CONFIG_BACK_EXIT, isBackExit);
+                spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
                 break;
 
             case R.id.tv_random_header:
@@ -431,6 +408,7 @@ public class SettingActivity extends BaseActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         spUtils.put(CONFIG_RANDOM_HEADER, which);
                                         tvRandomHeaderDetail.setText(headerItems[which]);
+                                        currentRandomHeader = which;
                                         if (which > 3)
                                             showColorPicker();
                                         else
@@ -452,12 +430,12 @@ public class SettingActivity extends BaseActivity {
                 new AlertDialog.Builder(mActivity)
                         .setTitle(R.string.list_type)
                         .setCancelable(true)
-                        .setSingleChoiceItems(listItems, AppConfig.type_list, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(listItems, AppConfig.listType, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         spUtils.put(CONFIG_LIST_TYPE, which);
                                         tvListTypeDetail.setText(listItems[which]);
-                                        AppConfig.type_list = which;
+                                        AppConfig.listType = which;
                                         SnackbarUtils.with(toolbar)
                                                 .setMessage(getString(R.string.start_after_restart_app))
                                                 .show();
@@ -473,15 +451,232 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_swipe_back:
             case R.id.tv_swipe_back_detail:
-                if (isSwipeBack) {
+                if (AppConfig.isSwipeBack) {
                     swSwipeBack.setChecked(false);
-                    isSwipeBack = false;
+                    AppConfig.isSwipeBack = false;
                 } else {
                     swSwipeBack.setChecked(true);
-                    isSwipeBack = true;
+                    AppConfig.isSwipeBack = true;
                 }
-                spUtils.put(CONFIG_SWIPE_BACK, isSwipeBack);
+                spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                break;
+
+            case R.id.tv_high_ram:
+            case R.id.tv_high_ram_detail:
+                if (AppConfig.isHighRam) {
+                    swHighRam.setChecked(false);
+                    AppConfig.isHighRam = false;
+                } else {
+                    swHighRam.setChecked(true);
+                    AppConfig.isHighRam = true;
+                }
+                spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                break;
+
+            case R.id.tv_input:
+            case R.id.tv_input_detail:
+                final EditText editText = new EditText(mActivity);
+                editText.setHint(R.string.input_backup_detail);
+                editText.setTextColor(getResources().getColor(R.color.black));
+                new MaterialStyledDialog.Builder(mActivity)
+                        .setHeaderDrawable(R.drawable.ic_edit)
+                        .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                        .setTitle(getResources().getString(R.string.input_backup))
+                        .setDescription(getResources().getString(R.string.input_message))
+                        .setHeaderColor(R.color.colorPrimary)
+                        .setCustomView(editText)
+                        .setPositiveText(android.R.string.ok)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                final String str = editText.getText().toString().trim();
+                                if (TextUtils.isEmpty(str)) {
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.empty_content)).show();
+                                } else {
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.loading)).show();
+                                    Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                            try {
+                                                ExportBean exportBean = gson.fromJson(str, ExportBean.class);
+                                                if (exportBean != null) {
+                                                    spUtils.put(CONFIG_NIGHT_MODE, exportBean.isNightMode);
+                                                    spUtils.put(CONFIG_HIGH_RAM, exportBean.isHighRam);
+                                                    spUtils.put(CONFIG_SWIPE_BACK, exportBean.isSwipeBack);
+                                                    spUtils.put(CONFIG_AUTO_REFRESH, exportBean.isAutoRefresh);
+                                                    spUtils.put(CONFIG_AUTO_LOADMORE, exportBean.isAutoLoadMore);
+                                                    spUtils.put(CONFIG_BACK_EXIT, exportBean.isBackExit);
+                                                    spUtils.put(CONFIG_LIST_TYPE, exportBean.listType);
+                                                    spUtils.put(CONFIG_RANDOM_HEADER, exportBean.currentRandomHeader);
+                                                    spUtils.put(CONFIG_LANGUAGE, exportBean.currentLanguage);
+                                                    spUtils.put(CONFIG_TEXT_SIZE, exportBean.mTextSize);
+                                                    spUtils.put(CONFIG_TYPE_ARRAY, exportBean.arrayStr);
+                                                    LitePal.saveAll(exportBean.blockList);
+                                                    e.onNext(true);
+                                                } else
+                                                    e.onNext(false);
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
+                                                e.onNext(false);
+                                            }
+                                            e.onComplete();
+                                        }
+                                    }).subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Consumer<Boolean>() {
+                                                @Override
+                                                public void accept(Boolean o) throws Exception {
+                                                    try {
+                                                        if (o) {
+                                                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
+                                                            restartWithAnime();
+                                                        }else
+                                                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).show();
+                                                    } catch (Exception e1) {
+                                                        e1.printStackTrace();
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        })
+                        .setNegativeText(getResources().getString(android.R.string.cancel))
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            }
+                        })
+                        .show();
+                break;
+
+            case R.id.tv_export:
+            case R.id.tv_export_detail:
+                new MaterialStyledDialog.Builder(mActivity)
+                        .setHeaderDrawable(R.drawable.ic_restore)
+                        .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                        .setTitle(getResources().getString(R.string.export_backup))
+                        .setDescription(getResources().getString(R.string.export_message))
+                        .setHeaderColor(R.color.colorPrimary)
+                        .setPositiveText(android.R.string.ok)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.loading)).show();
+                                Observable.create(new ObservableOnSubscribe<String>() {
+                                    @Override
+                                    public void subscribe(ObservableEmitter<String> e) throws Exception {
+                                        List<BlockItem> blockList = new ArrayList<>();
+                                        try {
+                                            blockList = LitePal.findAll(BlockItem.class);
+                                        } catch (Exception e1) {
+                                            e1.printStackTrace();
+                                        }
+                                        try {
+                                            ExportBean exportBean = new ExportBean();
+                                            exportBean.arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
+                                            exportBean.isNightMode = AppConfig.isNightMode;
+                                            exportBean.isHighRam = AppConfig.isHighRam;
+                                            exportBean.isSwipeBack = AppConfig.isSwipeBack;
+                                            exportBean.isAutoRefresh  = AppConfig.isAutoRefresh;
+                                            exportBean.isAutoLoadMore  = AppConfig.isAutoLoadMore;
+                                            exportBean.isBackExit  = AppConfig.isBackExit;
+                                            exportBean.listType  = AppConfig.listType;
+                                            exportBean.mTextSize  = AppConfig.mTextSize;
+                                            exportBean.currentRandomHeader  = currentRandomHeader;
+                                            exportBean.currentLanguage = currentLanguage;
+                                            exportBean.blockList = blockList;
+
+                                            String json = gson.toJson(exportBean);
+                                            e.onNext(json);
+                                        } catch (Exception e1) {
+                                            e1.printStackTrace();
+                                            e.onNext("");
+                                        }
+                                        e.onComplete();
+                                    }
+                                }).subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<String>() {
+                                            @Override
+                                            public void accept(String str) throws Exception {
+                                                try {
+                                                    if (!TextUtils.isEmpty(str)) {
+                                                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                                                        //noinspection ConstantConditions
+                                                        cm.setPrimaryClip(ClipData.newPlainText("json", str));
+                                                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
+                                                    }else
+                                                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).show();
+                                                } catch (Exception e1) {
+                                                    e1.printStackTrace();
+                                                }
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeText(getResources().getString(android.R.string.cancel))
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+                break;
+
+            case R.id.tv_clear_cache:
+            case R.id.tv_clear_cache_detail:
+                new AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.random_header_server)
+                        .setCancelable(true)
+                        .setSingleChoiceItems(
+                                getResources().getStringArray(R.array.delete_cache),0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which){
+                                            case 0:
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        LitePal.deleteAll(CacheNews.class);
+                                                        String[] address = getResources().getStringArray(R.array.address);
+                                                        Glide.get(mActivity).clearDiskCache();
+                                                        for (String typeStr : address) {
+                                                            SPUtils.getInstance().put(typeStr + "_data", "");
+                                                        }
+                                                    }
+                                                }).start();
+                                                break;
+                                            case 1:
+                                                LitePal.deleteAll(CacheNews.class, "type = ?", ""+CacheNews.CACHE_HISTORY);
+                                                break;
+                                            case 2:
+                                                LitePal.deleteAll(CacheNews.class, "type = ?", ""+CacheNews.CACHE_COLLECTION);
+                                                break;
+                                            case 3:
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        String[] address = getResources().getStringArray(R.array.address);
+                                                        Glide.get(mActivity).clearDiskCache();
+                                                        for (String typeStr : address) {
+                                                            SPUtils.getInstance().put(typeStr + "_data", "");
+                                                        }
+                                                    }
+                                                }).start();
+                                                break;
+                                        }
+                                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
+                                        dialog.dismiss();
+                                    }
+                                }
+                        ).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
                 break;
 
             case R.id.tv_check_update:

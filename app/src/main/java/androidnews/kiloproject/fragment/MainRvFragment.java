@@ -127,8 +127,15 @@ public class MainRvFragment extends BaseRvFragment {
                     if (contents != null && contents.size() > 0) {
                         try {
                             NewMainListData first = contents.get(0);
-                            first.setItemType(HEADER);
-                            requestRealPic(first);
+                            boolean isNopic = false;
+                            for (NewMainListData.AdsBean adsBean : first.getAds()) {
+                                if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
+                                    isNopic = true;
+                                    break;
+                                }
+                            }
+                            if (isNopic)
+                                requestRealPic(first);
                             List<CacheNews> cacheNews = null;
                             try {
                                 cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
@@ -204,11 +211,10 @@ public class MainRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         else
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
 
 //        refreshLayout.setRefreshHeader(new MaterialHeader(mActivity));
@@ -230,7 +236,7 @@ public class MainRvFragment extends BaseRvFragment {
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             if (contents == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -314,6 +320,8 @@ public class MainRvFragment extends BaseRvFragment {
                                                 NewMainListData dataItem = it.next();
                                                 if (dataItem == null)
                                                     it.remove();
+                                                checkExtra(dataItem);
+
                                                 if (cacheNews != null && cacheNews.size() > 0) {
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (dataItem.getDocid().contains(cacheNew.getDocid())) {
@@ -360,15 +368,16 @@ public class MainRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo))
+                                                if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo)) {
                                                     contents.add(dataItem);
+                                                }
                                             }
+                                            e.onNext(true);
                                             try {
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
-                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;
@@ -393,6 +402,8 @@ public class MainRvFragment extends BaseRvFragment {
                                                             break;
                                                         }
                                                     }
+                                                    checkExtra(dataItem);
+
                                                     if (!isSame) {
                                                         if (cacheNews != null && cacheNews.size() > 0) {
                                                             for (CacheNews cacheNew : cacheNews) {
@@ -799,6 +810,13 @@ public class MainRvFragment extends BaseRvFragment {
                 }
             }
             return false;
+        }
+    }
+
+    private void checkExtra(NewMainListData data){
+        if (data.getSpecialextra() != null && data.getSpecialextra().size() > 1) {
+            data.setItemType(CELL_EXTRA);
+            data.getSpecialextra().remove(0);
         }
     }
 }

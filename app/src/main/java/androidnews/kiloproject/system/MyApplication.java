@@ -12,11 +12,12 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.zhouyou.http.EasyHttp;
 
 import org.litepal.LitePal;
+
+import androidnews.kiloproject.R;
 
 import static androidnews.kiloproject.system.AppConfig.HOST_163;
 
@@ -36,14 +37,6 @@ public class MyApplication extends Application {
         instance = this;
 
         CrashReport.initCrashReport(getApplicationContext(), "e86bab41f6", false);
-        //检测内存泄露
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
-        // Normal app init code...
 
         //网络框架
         EasyHttp.init(this);//默认初始化
@@ -112,8 +105,8 @@ public class MyApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setDrawableSize(20);
+//                指定为经典Footer，默认是 BallPulseFooter
+                return new ClassicsFooter(context).setDrawableSize(24);
             }
         });
     }

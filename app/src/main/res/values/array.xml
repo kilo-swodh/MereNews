@@ -35,6 +35,13 @@
         <item>@string/type_tablet</item>
     </array>
 
+    <array name="delete_cache">
+        <item>@string/all</item>
+        <item>@string/history</item>
+        <item>@string/action_star</item>
+        <item>@string/news_cache</item>
+    </array>
+
     <string-array name="address">
         <!-- 网易 -->
         <item>T1348647909107</item> //头条
@@ -128,11 +135,11 @@
         <item>fake</item> //空
 
         <!-- 视频 -->
-        <item>V9LG4B3A0</item> //热点视频
-        <item>V9LG4CHOR</item> //娱乐视频
-        <item>V9LG4E6VR</item> //搞笑视频
         <item>00850FRB</item> //精品视频
 
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
         <item>fake</item> //空
 
         <item>fake</item> //空
@@ -434,11 +441,11 @@
         <item>fake</item> //空
 
         <!-- 视频分类 -->
-        <item>Hot Video</item>
-        <item>Entertainment video</item>
-        <item>Funny video</item>
-        <item>Excellent video</item>
+        <item>Coming soon</item>
 
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
         <item>fake</item> //空
 
         <item>fake</item> //空

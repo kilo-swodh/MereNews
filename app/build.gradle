@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1139
-        versionName "1.1.3-fixed"
+        versionCode 1149
+        versionName "1.1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,6 +30,8 @@ android {
             //混淆
             minifyEnabled true  //设为false即可断点调试
             shrinkResources true
+            //Zipalign优化
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -106,11 +108,6 @@ dependencies {
     //RecyclerView的Adapter
     //https://www.jianshu.com/p/b343fcff51b0
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
-
-    //内存泄露检测神器
-    // https://github.com/square/leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     //主界面控件
     //https://github.com/florent37/MaterialViewPager

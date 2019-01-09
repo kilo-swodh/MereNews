@@ -11,7 +11,7 @@
     android:layout_marginTop="@dimen/margin_normal"
     android:transitionName="big_card"
     app:cardCornerRadius="4dp"
-    app:cardElevation="2dp"
+    app:cardElevation="4dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 

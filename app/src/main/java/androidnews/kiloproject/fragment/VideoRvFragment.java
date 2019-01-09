@@ -107,7 +107,7 @@ public class VideoRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         else
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -138,7 +138,7 @@ public class VideoRvFragment extends BaseRvFragment {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
             }
             if (contents == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 if (refreshLayout != null)
                     refreshLayout.autoRefresh();
@@ -207,11 +207,11 @@ public class VideoRvFragment extends BaseRvFragment {
                                             try {
                                                 newList = retMap.get(typeStr);
                                                 contents.addAll(newList);
+                                                e.onNext(true);
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
-                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             currentPage += questPage;

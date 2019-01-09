@@ -1,5 +1,6 @@
 package androidnews.kiloproject.widget.materialviewpager.header;
 
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
@@ -46,8 +47,9 @@ public class MaterialViewPagerImageHelper {
             public void onAnimationEnd(View view) {
                 super.onAnimationEnd(view);
                 //change the image when alpha=0
-                if (GlideUtil.isValidContextForGlide(imageView.getContext()))
-                    Glide.with(imageView.getContext()).load(urlImage)
+                Context context = imageView.getContext();
+                if (GlideUtil.isValidContextForGlide(context))
+                    Glide.with(context).load(urlImage)
                             .apply(new RequestOptions().centerCrop())
                             .listener(new RequestListener<Drawable>() {
                                 @Override

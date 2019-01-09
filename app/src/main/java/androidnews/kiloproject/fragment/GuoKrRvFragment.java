@@ -141,7 +141,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI){
+        if (AppConfig.listType == LIST_TYPE_MULTI) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
             mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecoratorGrid());
         } else {
@@ -169,7 +169,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             if (contents.getListData() == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -189,6 +189,15 @@ public class GuoKrRvFragment extends BaseRvFragment {
                 dataUrl = GET_GUO_KR_LIST + 0;
                 break;
             case TYPE_LOADMORE:
+                if (currentPage == 0
+                        && contents.getListData() != null
+                        && contents.getListData().getResult().size() > 0)
+                    currentPage = 20;
+                if (currentPage > 60) {
+                    SnackbarUtils.with(mRecyclerView).setMessage(getResources().getString(R.string.empty_content)).show();
+                    refreshLayout.finishLoadMore(false);
+                    return;
+                }
                 dataUrl = GET_GUO_KR_LIST + currentPage;
                 break;
         }
@@ -216,7 +225,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                 SnackbarUtils.with(refreshLayout).
                                         setMessage(getString(R.string.load_fail) + e.getMessage()).
                                         showError();
-                            }catch (Exception e1){
+                            } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
@@ -238,7 +247,9 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                     }
                                     switch (type) {
                                         case TYPE_REFRESH:
-                                            if (cacheNews != null && cacheNews.size() > 0 && newData != null) {
+                                            if (newData == null)
+                                                return;
+                                            if (cacheNews != null && cacheNews.size() > 0)
                                                 for (GuoKrListData.ResultBean data : newData.getResult()) {
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (TextUtils.equals(data.getId() + "", cacheNew.getDocid())) {
@@ -250,7 +261,6 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 contents.setListData(newData);
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 e.onNext(true);
-                                            }
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
@@ -264,9 +274,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                for (GuoKrListData.ResultBean bean : newData.getResult()) {
-                                                    contents.getListData().getResult().addAll(newData.getResult());
-                                                }
+                                                contents.getListData().getResult().addAll(newData.getResult());
                                                 e.onNext(true);
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
@@ -342,7 +350,6 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                         contents.setTopData(newData);
                                         e.onNext(true);
                                     }
-
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())

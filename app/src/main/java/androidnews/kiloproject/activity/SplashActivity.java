@@ -26,13 +26,17 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
-import static androidnews.kiloproject.system.AppConfig.type_list;
+import static androidnews.kiloproject.system.AppConfig.listType;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
 public class SplashActivity extends AppCompatActivity {
@@ -44,16 +48,20 @@ public class SplashActivity extends AppCompatActivity {
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 SPUtils spUtils = SPUtils.getInstance();
                 AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
-
                 AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
+                AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
+                AppConfig.isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
+                AppConfig.isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
+                AppConfig.isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
                     initShortsCut();
 
-                AppConfig.type_list = spUtils.getInt(CONFIG_LIST_TYPE,-1);
-                if (type_list == -1)
-                    type_list = ScreenUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
+                AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE,-1);
+                if (listType == -1)
+                    listType = ScreenUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
 
-                AppConfig.TextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
+                AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
                 e.onNext(true);
                 e.onComplete();
             }

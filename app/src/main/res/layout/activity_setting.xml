@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background">
@@ -18,6 +19,7 @@
         app:popupTheme="@style/ToolbarPopupTheme" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +32,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_large"
@@ -42,7 +44,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.CardView
-                android:id="@+id/card_view_language"
+                android:id="@+id/card_basic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
@@ -51,18 +53,12 @@
                 android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+                app:layout_constraintTop_toBottomOf="@+id/tv_1">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/awesome_background">
-
-                    <android.support.constraint.Group
-                        android:id="@+id/group_language"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_language,tv_language_detail,view_language" />
 
                     <TextView
                         android:id="@+id/tv_language"
@@ -95,7 +91,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_language" />
 
                     <View
-                        android:id="@+id/view_language"
+                        android:id="@+id/view_text_size"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -106,71 +102,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_language_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_clear_cache"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_clear_cache,tv_clear_cache_detail,view_language" />
-
-                    <TextView
-                        android:id="@+id/tv_clear_cache"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_large"
-                        android:layout_marginTop="@dimen/margin_normal"
-                        android:text="@string/clear_cache"
-                        android:textColor="@color/main_text_color_dark"
-                        android:textSize="@dimen/text_normal"
-                        android:onClick="onClick"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_language" />
-
-                    <TextView
-                        android:id="@+id/tv_clear_cache_detail"
-                        android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_large"
-                        android:paddingTop="@dimen/margin_normal"
-                        android:text="@string/clear_cache_detail"
-                        android:textColor="@color/main_text_color_dark"
-                        android:textSize="@dimen/text_small"
-                        android:onClick="onClick"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache" />
-
-                    <View
-                        android:id="@+id/view_text_size"
-                        android:layout_width="0.0dip"
-                        android:layout_height="1.0px"
-                        android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_large"
-                        android:layout_marginTop="@dimen/margin_normal"
-                        android:background="@color/divider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache_detail" />
-
-                    <android.support.constraint.Group
-                        android:id="@+id/group_text_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_text_size,tv_text_size_detail,view_text_size" />
-
                     <TextView
                         android:id="@+id/tv_text_size"
                         android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
+                        android:layout_height="23dp"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:onClick="onClick"
                         android:text="@string/text_size"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_text_size" />
@@ -202,12 +144,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_text_size_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_auto_refresh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_auto_refresh,tv_auto_refresh_detail,view_auto_refresh,sw_auto_refresh" />
-
                     <TextView
                         android:id="@+id/tv_auto_refresh"
                         android:layout_width="0.0dip"
@@ -227,12 +163,11 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_normal"
                         android:text="@string/auto_refresh_detail"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_refresh"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh" />
@@ -258,12 +193,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_auto_refresh_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_auto_loadmore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_auto_loadmore,tv_auto_loadmore_detail,view_auto_loadmore,sw_auto_loadmore" />
-
                     <TextView
                         android:id="@+id/tv_auto_loadmore"
                         android:layout_width="0.0dip"
@@ -283,12 +212,11 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore_detail"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_auto_loadmore"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_auto_loadmore" />
@@ -314,12 +242,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_auto_loadmore_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_back_exit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_back_exit,tv_back_exit_detail,sw_back_exit,view_back_exit" />
-
                     <TextView
                         android:id="@+id/tv_back_exit"
                         android:layout_width="0.0dip"
@@ -339,12 +261,11 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/back_exit_detail"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_back_exit"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_back_exit" />
@@ -370,12 +291,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_back_exit_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_swipe_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_swipe_back,tv_swipe_back_detail,sw_swipe_back,view_swipe_back" />
-
                     <TextView
                         android:id="@+id/tv_swipe_back"
                         android:layout_width="0.0dip"
@@ -395,12 +310,11 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/swipe_back_detail"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toStartOf="@+id/sw_swipe_back"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back" />
@@ -415,7 +329,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_swipe_back" />
 
                     <View
-                        android:id="@+id/view_random_header"
+                        android:id="@+id/view_high_ram"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -426,11 +340,54 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_swipe_back_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_random_header"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_high_ram"
+                        android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_random_header,tv_random_header_detail,view_random_header" />
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/high_ram"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_high_ram"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_high_ram" />
+
+                    <TextView
+                        android:id="@+id/tv_high_ram_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/high_ram_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@+id/sw_high_ram"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_high_ram" />
+
+                    <Switch
+                        android:id="@+id/sw_high_ram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_high_ram_detail"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_language"
+                        app:layout_constraintTop_toTopOf="@+id/tv_high_ram" />
+
+                    <View
+                        android:id="@+id/view_random_header"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_high_ram_detail" />
 
                     <TextView
                         android:id="@+id/tv_random_header"
@@ -438,10 +395,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:onClick="onClick"
                         android:text="@string/random_header_server"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_random_header" />
@@ -451,7 +409,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
@@ -472,18 +430,13 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_random_header_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_list_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_list_type,tv_list_type_detail,view_list_type" />
-
                     <TextView
                         android:id="@+id/tv_list_type"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:text="@string/list_type"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
@@ -498,7 +451,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_normal"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
                         android:paddingTop="@dimen/margin_normal"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_small"
@@ -512,7 +465,154 @@
             </android.support.v7.widget.CardView>
 
             <TextView
-                android:id="@+id/textauto_refresh"
+                android:id="@+id/tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/setting_data"
+                android:textColor="@color/main_text_colorful"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_basic" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_backup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:foreground = "?attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_2">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_export"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/export_backup"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_export_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/export_backup_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_export" />
+
+                    <View
+                        android:id="@+id/view_input"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_export_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_input"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:text="@string/input_backup"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_input" />
+
+                    <TextView
+                        android:id="@+id/tv_input_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/input_backup_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_input" />
+
+                    <View
+                        android:id="@+id/view_clear_cache"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_input_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_clear_cache"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_clear_cache" />
+
+                    <TextView
+                        android:id="@+id/tv_clear_cache_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginBottom="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/clear_cache_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_clear_cache" />
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_large"
@@ -521,9 +621,10 @@
                 android:textColor="@color/main_text_colorful"
                 android:textSize="@dimen/text_normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_view_language" />
+                app:layout_constraintTop_toBottomOf="@+id/card_backup" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card_misc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_normal"
@@ -535,16 +636,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textauto_refresh">
+                app:layout_constraintTop_toBottomOf="@+id/tv_3">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                    <android.support.constraint.Group
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_donate, tv_donate_detail" />
 
                     <TextView
                         android:id="@+id/tv_donate"
@@ -588,11 +684,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_donate_detail" />
 
-                    <android.support.constraint.Group
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
-
                     <TextView
                         android:id="@+id/tv_join_us"
                         android:layout_width="0.0dip"
@@ -635,23 +726,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_join_us_detail" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/group_check_update"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_check_update, tv_check_update_detail" />
-
                     <TextView
                         android:id="@+id/tv_check_update"
                         android:layout_width="0.0dip"
-                        android:layout_height="wrap_content"
+                        android:layout_height="27dp"
                         android:layout_marginLeft="@dimen/margin_large"
-                        android:layout_marginRight="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:onClick="onClick"
                         android:text="@string/check_update"
                         android:textColor="@color/main_text_color_dark"
                         android:textSize="@dimen/text_normal"
-                        android:onClick="onClick"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_check_update" />

@@ -129,7 +129,7 @@ public class SmartisanRvFragment extends BaseRvFragment {
                         SmartisanRvFragment.super.onViewCreated(view, savedInstanceState);
                     }
                 });
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         else
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -156,7 +156,7 @@ public class SmartisanRvFragment extends BaseRvFragment {
         if (isVisible) {
             if (contents == null ||
                     contents.getList() == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -228,7 +228,9 @@ public class SmartisanRvFragment extends BaseRvFragment {
                                     }
                                     switch (type) {
                                         case TYPE_REFRESH:
-                                            if (cacheNews != null && cacheNews.size() > 0 && newData != null) {
+                                            if (newData == null)
+                                                return;
+                                            if (cacheNews != null && cacheNews.size() > 0)
                                                 for (SmartisanListData.DataBean.ListBean data : newData.getList()) {
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (TextUtils.equals(data.getId() + "", cacheNew.getDocid())) {
@@ -237,9 +239,12 @@ public class SmartisanRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                contents.setList(newData.getList());
+                                            contents.setList(newData.getList());
+                                            e.onNext(true);
+                                            try {
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
-                                                e.onNext(true);
+                                            } catch (Exception e1) {
+                                                e1.printStackTrace();
                                             }
                                             break;
                                         case TYPE_LOADMORE:

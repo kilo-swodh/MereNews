@@ -122,7 +122,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         else
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -149,7 +149,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             if (contents == null || contents.getChannel() == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -166,10 +166,10 @@ public class ITHomeRvFragment extends BaseRvFragment {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
-                dataUrl = GET_IT_HOME_REFRESH.replace("{typeStr}",typeStr);
+                dataUrl = GET_IT_HOME_REFRESH.replace("{typeStr}", typeStr);
                 break;
             case TYPE_LOADMORE:
-                dataUrl = GET_IT_HOME_LOAD_MORE.replace("{typeStr}",typeStr)
+                dataUrl = GET_IT_HOME_LOAD_MORE.replace("{typeStr}", typeStr)
                         .replace("{lastItemId}", ITHomeUtils.getMinNewsId(lastItemId));
                 break;
         }
@@ -198,7 +198,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                 SnackbarUtils.with(refreshLayout).
                                         setMessage(getString(R.string.load_fail) + e.getMessage()).
                                         showError();
-                            }catch (Exception e1){
+                            } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
@@ -221,7 +221,9 @@ public class ITHomeRvFragment extends BaseRvFragment {
 
                                     switch (type) {
                                         case TYPE_REFRESH:
-                                            if (cacheNews != null && cacheNews.size() > 0 && newData.getChannel() != null) {
+                                            if (newData.getChannel() == null)
+                                                return;
+                                            if (cacheNews != null && cacheNews.size() > 0)
                                                 for (ITHomeListData.ItemBean data : newData.getChannel()) {
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (TextUtils.equals(data.getNewsid() + "", cacheNew.getDocid())) {
@@ -230,14 +232,13 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                contents = newData;
-                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
-                                                e.onNext(true);
-                                            }
+                                            contents = newData;
+                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
+                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
-                                                if (cacheNews != null && cacheNews.size() > 0 && newData.getChannel() != null) {
+                                                if (cacheNews != null && cacheNews.size() > 0 && newData.getChannel() != null)
                                                     for (ITHomeListData.ItemBean data : newData.getChannel()) {
                                                         for (CacheNews cacheNew : cacheNews) {
                                                             if (TextUtils.equals(data.getNewsid() + "", cacheNew.getDocid())) {
@@ -246,7 +247,6 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                     }
-                                                }
                                                 contents.getChannel().addAll(newData.getChannel());
                                                 e.onNext(true);
                                             } catch (Exception e1) {

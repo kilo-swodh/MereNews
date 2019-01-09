@@ -10,15 +10,16 @@
         android:id="@+id/tv_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginLeft="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_normal"
         android:layout_marginRight="@dimen/margin_normal"
+        android:layout_weight="1"
         android:gravity="start|center_vertical"
+        android:maxLines="2"
         android:text="关键词"
         android:textColor="@color/main_text_color"
-        android:textSize="@dimen/text_normal"/>
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/tv_source"

@@ -12,6 +12,15 @@ public class NewMainListData implements MultiItemEntity {
 
     private int itemType;
     private boolean isReaded;
+    private boolean isOpen;
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
 
     public boolean isReaded() {
         return isReaded;
@@ -598,6 +607,16 @@ public class NewMainListData implements MultiItemEntity {
         private String daynum;
         private String TAG;
         private String TAGS;
+
+        private boolean isReaded;
+
+        public boolean isReaded() {
+            return isReaded;
+        }
+
+        public void setReaded(boolean readed) {
+            isReaded = readed;
+        }
 
         public String getTAG() {
             return TAG;

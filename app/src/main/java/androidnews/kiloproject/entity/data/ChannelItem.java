@@ -77,9 +77,4 @@ public class ChannelItem {
     this.newItem = paramInteger;
   }
 
-  public String toString() {
-    return "ChannelItem [id=" + this.id + ", name=" + this.name
-            + ", selected=" + this.selected
-            + ", newItem=" + this.newItem + "]";
-  }
 }

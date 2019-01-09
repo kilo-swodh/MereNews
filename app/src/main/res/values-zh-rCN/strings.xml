@@ -84,13 +84,19 @@
 
     <string name="setting_basic">基础</string>
 
+    <string name="setting_data">数据</string>
+
     <string name="setting_other">其他</string>
 
     <string name="language">语言</string>
 
     <string name="clear_cache">清空缓存</string>
 
-    <string name="clear_cache_detail">包含收藏/历史数据</string>
+    <string name="clear_cache_detail">可选收藏/历史/新闻缓存</string>
+
+    <string name="news_cache">新闻缓存数据</string>
+
+    <string name="all">全部</string>
 
     <string name="auto_refresh">自动刷新</string>
 
@@ -103,6 +109,14 @@
     <string name="night_theme">亮暗切换</string>
 
     <string name="list_type">列表式样</string>
+
+    <string name="input_backup">恢复数据</string>
+
+    <string name="input_backup_detail">导入已备份好的数据备份</string>
+
+    <string name="export_backup">备份数据</string>
+
+    <string name="export_backup_detail">包含设置/频道顺序/屏蔽规则</string>
 
     <string name="check_update">检查更新</string>
 
@@ -121,6 +135,10 @@
     <string name="swipe_back">滑动返回</string>
 
     <string name="swipe_back_detail">从左向右滑动页面返回</string>
+
+    <string name="high_ram">加强缓存</string>
+
+    <string name="high_ram_detail">占用更多内存以提高应用流畅度</string>
 
     <string name="back_exit">首页返回键退出</string>
 
@@ -155,6 +173,10 @@
     <string name="update_message">您可到应用商店更新,或点击确认进行下载安装</string>
 
     <string name="update_title_no">恭喜,当前已是最新版本</string>
+    
+    <string name="input_message">请将之前备份后获得的一串字符粘贴到下方</string>
+
+    <string name="export_message">导出后,将生成一串字符并自动复制到您的剪贴板,请妥善保管</string>
 
     <string name="subscribe_my_category">已选栏目</string>
 

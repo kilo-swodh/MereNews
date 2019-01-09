@@ -36,10 +36,9 @@ public class GuoKrAdapter extends BaseQuickAdapter<GuoKrListData.ResultBean, Bas
             helper.setTextColor(R.id.item_card_text,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
 
-        List<String> imgs = item.getImages();
-        if (imgs != null && imgs.size() > 0 && GlideUtil.isValidContextForGlide(mContext))
+        if (GlideUtil.isValidContextForGlide(mContext))
                 Glide.with(mContext)
-                        .load(imgs.get(0))
+                        .load(item.getHeadline_img())
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img));
         helper.setText(R.id.item_card_info, item.getSource_name());

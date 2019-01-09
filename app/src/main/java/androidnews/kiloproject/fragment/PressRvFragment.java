@@ -179,7 +179,7 @@ public class PressRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         else
             mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -205,7 +205,7 @@ public class PressRvFragment extends BaseRvFragment {
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             if (contents == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -316,6 +316,7 @@ public class PressRvFragment extends BaseRvFragment {
                                                 if (!isBlockBingo)
                                                     contents.add(dataItem);
                                             }
+                                            e.onNext(true);
                                             try {
                                                 SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(contents));
                                             } catch (Exception e1) {
@@ -385,9 +386,9 @@ public class PressRvFragment extends BaseRvFragment {
                                                 contents.clear();
                                                 contents.addAll(newList);
                                             }
+                                            e.onNext(true);
                                             break;
                                     }
-                                    e.onNext(true);
                                     e.onComplete();
                                 }
                             }).subscribeOn(Schedulers.computation())
@@ -452,6 +453,8 @@ public class PressRvFragment extends BaseRvFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (contents == null || contents.size() < 1)
+                    return;
                 PressListData item = contents.get(position);
                 Intent intent = null;
 

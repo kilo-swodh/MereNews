@@ -5,14 +5,16 @@ package androidnews.kiloproject.system;
  */
 
 public class AppConfig {
+    public static boolean isHighRam,
+            isSwipeBack,
+            isNightMode,
+            isAutoRefresh,
+            isAutoLoadMore,
+            isBackExit;
 
-    public static boolean isSwipeBack = false;
+    public static int listType;
 
-    public static boolean isNightMode = false;
-
-    public static int type_list;
-
-    public static int TextSize = 1;
+    public static int mTextSize = 1;
 
     public static final int TYPE_NETEASE_START = 0;
     public static final int TYPE_NETEASE_END = 49;
@@ -97,6 +99,8 @@ public class AppConfig {
     public static final String CONFIG_BACK_EXIT = "config_back_exit";
 
     public static final String CONFIG_SWIPE_BACK = "config_swipe_back";
+
+    public static final String CONFIG_HIGH_RAM = "config_high_ram";
 
     public static final String CONFIG_NIGHT_MODE = "config_night_mode";
 

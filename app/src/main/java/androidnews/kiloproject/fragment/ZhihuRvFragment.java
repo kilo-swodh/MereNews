@@ -118,7 +118,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
                     }
                 });
 
-        if (AppConfig.type_list == LIST_TYPE_MULTI)
+        if (AppConfig.listType == LIST_TYPE_MULTI)
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 3));
         else
             mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
@@ -144,7 +144,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             if (contents == null ||
-                    (SPUtils.getInstance().getBoolean(CONFIG_AUTO_REFRESH)) &&
+                    (AppConfig.isAutoRefresh) &&
                             (System.currentTimeMillis() - lastAutoRefreshTime > dividerAutoRefresh)) {
                 refreshLayout.autoRefresh();
             }
@@ -188,7 +188,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                 SnackbarUtils.with(refreshLayout).
                                         setMessage(getString(R.string.load_fail) + e.getMessage()).
                                         showError();
-                            }catch (Exception e1){
+                            } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
@@ -213,6 +213,8 @@ public class ZhihuRvFragment extends BaseRvFragment {
 
                                     switch (type) {
                                         case TYPE_REFRESH:
+                                            if (newData == null)
+                                                return;
                                             if (cacheNews != null && cacheNews.size() > 0) {
                                                 for (Iterator<ZhihuListData.StoriesBean> it = newData.getStories().iterator(); it.hasNext(); ) {
                                                     ZhihuListData.StoriesBean data = it.next();
@@ -235,10 +237,10 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                contents = newData;
-                                                SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
-                                                e.onNext(true);
                                             }
+                                            contents = newData;
+                                            e.onNext(true);
+                                            SPUtils.getInstance().put(CACHE_LIST_DATA, gson.toJson(newData));
                                             break;
                                         case TYPE_LOADMORE:
                                             if (contents == null) return;
@@ -336,7 +338,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(contents == null)
+                if (contents == null)
                     return;
                 ZhihuListData.StoriesBean bean = contents.getStories().get(position);
                 Intent intent = new Intent(getActivity(), ZhiHuDetailActivity.class);

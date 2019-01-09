@@ -58,7 +58,7 @@ public class BaseDetailActivity extends BaseActivity {
         webSetting.setAppCacheEnabled(true);
         webSetting.setDatabaseEnabled(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        switch (AppConfig.TextSize){
+        switch (AppConfig.mTextSize){
             case 0:
                 webSetting.setTextZoom(120);
                 break;

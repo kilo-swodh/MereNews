@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
-    app:cardElevation="2dp"
+    app:cardElevation="4dp"
     android:foreground = "?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/margin_normal"
     android:layout_marginLeft="@dimen/margin_normal"
     android:layout_marginRight="@dimen/margin_normal"
-    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginTop="@dimen/margin_normal"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,12 +22,8 @@
 
         <ImageView
             android:id="@+id/item_card_img"
-            android:layout_width="102dp"
+            android:layout_width="112dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

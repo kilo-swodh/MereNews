@@ -38,7 +38,6 @@
         android:text="@string/loading"
         android:textColor="@color/white"
         android:textSize="@dimen/text_small"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_galley_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

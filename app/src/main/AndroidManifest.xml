@@ -26,6 +26,8 @@
         android:maxAspectRatio="2.4"
         android:resizeableActivity="true"
         android:supportsRtl="true"
+        android:largeHeap="true"
+        android:configChanges="locale"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
 
