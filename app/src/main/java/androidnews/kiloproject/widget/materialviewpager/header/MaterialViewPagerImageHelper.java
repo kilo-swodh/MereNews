@@ -70,7 +70,6 @@ public class MaterialViewPagerImageHelper {
                                             }
                                         }
                                     });
-
                                     return false;
                                 }
                             })

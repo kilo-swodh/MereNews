@@ -215,7 +215,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                     refreshLayout.finishRefresh(false);
                                     break;
                                 case TYPE_LOADMORE:
-                                    if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE))
+                                    if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE) && mAdapter != null)
                                         mAdapter.loadMoreFail();
                                     else
                                         refreshLayout.finishLoadMore(false);
