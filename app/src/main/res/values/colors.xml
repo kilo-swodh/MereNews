@@ -17,7 +17,7 @@
     <color name="splash_bg">#f5f0ea</color>
 
     <color name="comment_name">@color/dodgerblue</color>
-    <color name="comment_bg_level_two">@color/floralwhite</color>
+    <color name="comment_bg_level_two">@color/ghostwhite</color>
 
     <color name="mask">#66000000</color><!--半透明遮罩 -->
     accent_color

@@ -152,13 +152,13 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
                             if (!TextUtils.isEmpty(response)) {
                                 currentData = new IThomeDetailData();
                                 try {
@@ -226,7 +226,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);

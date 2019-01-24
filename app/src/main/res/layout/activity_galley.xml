@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_galley_title" />
+        app:layout_constraintTop_toTopOf="@id/tv_galley_title" />
 
     <TextView
         android:id="@+id/tv_galley_title"
@@ -38,7 +38,7 @@
         android:text="@string/loading"
         android:textColor="@color/white"
         android:textSize="@dimen/text_small"
-        app:layout_constraintBottom_toTopOf="@+id/tv_galley_text"
+        app:layout_constraintBottom_toTopOf="@id/tv_galley_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -54,7 +54,7 @@
         android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/text_mini"
-        app:layout_constraintBottom_toTopOf="@+id/btn_galley_download"
+        app:layout_constraintBottom_toTopOf="@id/btn_galley_download"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

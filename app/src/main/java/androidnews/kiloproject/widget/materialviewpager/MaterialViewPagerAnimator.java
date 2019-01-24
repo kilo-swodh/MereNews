@@ -118,22 +118,16 @@ public class MaterialViewPagerAnimator {
 
         }
 
-        log("yOffset" + yOffset);
-
         //dispatch the new offset to all registered scrollables
         dispatchScrollOffset(source, minMax(0, yOffset, scrollMaxDp));
 
         float percent = yOffset / scrollMax;
-
-        log("percent1" + percent);
 
         if (percent != 0) {
             //distance between pager & toolbar
             float newDistance = ViewCompat.getY(mHeader.mPagerSlidingTabStrip) - mHeader.toolbar.getBottom();
 
             percent = 1 - newDistance / initialDistance;
-
-            log("percent2" + percent);
         }
 
         if (Float.isNaN(percent)) //fix for orientation change
@@ -167,8 +161,6 @@ public class MaterialViewPagerAnimator {
 
             if (mHeader.mPagerSlidingTabStrip != null) { //move the viewpager indicator
                 //float newY = ViewCompat.getY(mHeader.mPagerSlidingTabStrip) + scrollTop;
-
-                log("" + scrollTop);
 
                 //mHeader.mPagerSlidingTabStrip.setTranslationY(mHeader.getToolbar().getBottom()-mHeader.mPagerSlidingTabStrip.getY());
                 if (scrollTop <= 0) {

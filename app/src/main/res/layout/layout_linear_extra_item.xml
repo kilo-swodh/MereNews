@@ -31,7 +31,7 @@
         android:textColor="@color/main_text_color_dark"
         android:textSize="@dimen/text_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_card_img"
+        app:layout_constraintEnd_toStartOf="@id/item_card_img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

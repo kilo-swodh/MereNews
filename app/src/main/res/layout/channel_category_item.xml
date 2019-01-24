@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:descendantFocusability="blocksDescendants"
     android:layout_height="wrap_content">
@@ -8,6 +9,7 @@
       android:id="@+id/text_item"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:elevation="@dimen/elevation_low"
       android:layout_centerInParent="true"
       android:layout_marginLeft="@dimen/margin_normal"
       android:layout_marginTop="@dimen/margin_normal"
@@ -24,6 +26,7 @@
       android:id="@+id/ri_delete"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:elevation="@dimen/elevation_mid"
       android:background="@drawable/item_delecte_shape"
       android:layout_alignParentRight="true"
       android:clickable="true"
@@ -38,11 +41,18 @@
         android:background="@drawable/ic_clear" />
   </RelativeLayout>
 
-  <TextView
+  <de.hdodenhof.circleimageview.CircleImageView
       android:id="@+id/icon_new"
       android:layout_width="@dimen/margin_normal"
       android:layout_height="@dimen/margin_normal"
-      android:background="@drawable/a_l"
-      android:visibility="gone"/>
+      android:elevation="@dimen/elevation_mid"
+      android:layout_alignBottom="@id/text_item"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_marginBottom="@dimen/margin_small"
+      android:layout_marginRight="@dimen/margin_small"
+      android:layout_marginEnd="@dimen/margin_small"
+      android:src="@color/red"
+      android:visibility="gone" />
 
 </RelativeLayout>

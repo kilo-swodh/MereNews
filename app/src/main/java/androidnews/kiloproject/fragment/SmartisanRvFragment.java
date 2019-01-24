@@ -41,7 +41,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN;
 import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN_LOAD_MORE;
 import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN_REFRESH;
@@ -49,7 +48,6 @@ import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
 public class SmartisanRvFragment extends BaseRvFragment {
 
-    SmartisanAdapter mAdapter;
     //    MainListData contents;
     SmartisanListData.DataBean contents;
 
@@ -282,9 +280,10 @@ public class SmartisanRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -328,7 +327,7 @@ public class SmartisanRvFragment extends BaseRvFragment {
         if (contents == null || contents.getList() == null)
             return;
         mAdapter = new SmartisanAdapter(mActivity, contents.getList());
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

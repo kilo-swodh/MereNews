@@ -50,7 +50,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_LOAD_MORE;
 import static androidnews.kiloproject.system.AppConfig.GET_ZHIHU_REFRESH;
@@ -59,7 +58,6 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 
 public class ZhihuRvFragment extends BaseRvFragment {
 
-    ZhihuAdapter mAdapter;
     Banner banner;
     //    MainListData contents;
     ZhihuListData contents;
@@ -286,9 +284,10 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -334,7 +333,7 @@ public class ZhihuRvFragment extends BaseRvFragment {
             return;
         loadMoreDate = contents.getDate();
         mAdapter = new ZhihuAdapter(mActivity, contents.getStories());
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

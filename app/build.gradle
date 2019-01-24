@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1150
-        versionName "1.1.4-fixed"
+        versionCode 1153
+        versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -95,11 +95,11 @@ dependencies {
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    api 'com.blankj:utilcode:1.22.1'
+    api 'com.blankj:utilcode:1.22.9'
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
@@ -126,7 +126,7 @@ dependencies {
     api 'com.jude:swipebackhelper:3.1.2'
 
     //bugly
-    api 'com.tencent.bugly:crashreport:2.6.6.1'
+    api 'com.tencent.bugly:crashreport:2.8.6.0'
 
     //播放器
     api 'cn.jzvd:jiaozivideoplayer:6.3.1'
@@ -139,4 +139,15 @@ dependencies {
 
     //混淆
     api "com.blankj:free-proguard:0.0.10"
+
+    //性能检测
+    api 'com.facebook.device.yearclass:yearclass:2.1.0'
+
+    //闪屏Loading
+    api 'com.ethanhua:skeleton:1.1.2'
+    api 'io.supercharge:shimmerlayout:2.1.0'
+
+    //滑动布局
+    api 'com.github.ksoichiro:android-observablescrollview:1.6.0'
+    api 'com.nineoldandroids:library:2.4.0'
 }

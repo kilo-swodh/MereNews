@@ -1,28 +1,26 @@
 package androidnews.kiloproject.system.base;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 
-import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 
-import java.util.Locale;
-
 import androidnews.kiloproject.R;
-
-import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
+import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 /**
  * Created by Administrator on 2017/12/9.
@@ -41,15 +39,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (isNightMode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
 //        ScreenUtils.adaptScreen4VerticalSlide(this, 360);
         mActivity = this;
         isStart = true;
-        applyAppLanguage();
         SwipeBackHelper.onCreate(this);
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(isSwipeBack);
     }
@@ -144,29 +137,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         SwipeBackHelper.onDestroy(this);
     }
 
-    private void applyAppLanguage() {
-        int type = SPUtils.getInstance().getInt(CONFIG_LANGUAGE);
-        Locale myLocale = null;
-        switch (type) {
-            case 0:
-                myLocale = Locale.getDefault();
-                break;
-            case 1:
-                myLocale = new Locale("en");
-                break;
-            case 2:
-                myLocale = new Locale("zh");
-                break;
-        }
-        if (myLocale == null)
-            return;
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-    }
-
     public static boolean isLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
@@ -176,5 +146,51 @@ public abstract class BaseActivity extends AppCompatActivity {
             finishAfterTransition();
         else
             finish();
+    }
+
+    protected void restartWithAnime(int bgId,int contentId) {
+        findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        animateRevealShow(findViewById(contentId), true, new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                findViewById(contentId).setVisibility(View.GONE);
+                relaunchApp();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void animateRevealShow(final View view, final boolean isReverse, @Nullable Animator.AnimatorListener listener) {
+        if (!isLollipop())
+            return;
+        int cx = ScreenUtils.getScreenWidth() / 2;
+        int cy = ScreenUtils.getScreenHeight() / 2;
+        int finalRadius = Math.min(view.getWidth(), view.getHeight());
+        Animator anim;
+        if (isReverse) {
+            //关闭
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
+        } else {
+            //开屏
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        }
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(650);
+        if (listener != null)
+            anim.addListener(listener);
+        anim.start();
     }
 }

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#383838</color>
     <color name="colorPrimaryDark">#213131</color>
-    <color name="colorAccent">#111111</color>
+    <color name="colorAccent">#141414</color>
 
     <color name="main_text_colorful">@color/paleturquoise</color>
     <color name="main_text_color_dark">#ccc</color>

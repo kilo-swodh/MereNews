@@ -84,6 +84,8 @@
 
     <string name="setting_basic">基础</string>
 
+    <string name="setting_view">视图</string>
+
     <string name="setting_data">数据</string>
 
     <string name="setting_other">其他</string>
@@ -109,6 +111,14 @@
     <string name="night_theme">亮暗切换</string>
 
     <string name="list_type">列表式样</string>
+
+    <string name="notice">关闭刷新提醒</string>
+
+    <string name="notice_detail">刷新成功的底部提醒将关闭</string>
+
+    <string name="status_bar">状态栏强制适配</string>
+
+    <string name="status_bar_detail">主页状态栏强制添加半透明</string>
 
     <string name="input_backup">恢复数据</string>
 

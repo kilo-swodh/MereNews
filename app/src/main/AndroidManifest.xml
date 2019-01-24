@@ -15,7 +15,7 @@
     <!--8.0安装需要的权限-->
     <!--REQUEST_INSTALL_PACKAGES" />-->
 
-    <uses-sdk tools:overrideLibrary="cn.jzvd"/>
+    <uses-sdk tools:overrideLibrary="cn.jzvd,jp.wasabeef.takt"/>
 
     <application
         android:name="androidnews.kiloproject.system.MyApplication"

@@ -168,7 +168,7 @@ public class SmartisanDetailActivity extends BaseDetailActivity {
 
     private void loadUrl() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        progress.setVisibility(View.GONE);
+        skeletonScreen.hide();
         webView.loadUrl(currentUrl);
         saveCacheAsyn(CACHE_HISTORY);
     }

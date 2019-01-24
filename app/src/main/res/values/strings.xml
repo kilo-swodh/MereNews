@@ -84,6 +84,8 @@
 
     <string name="setting_basic">Basic</string>
 
+    <string name="setting_view">View</string>
+
     <string name="setting_data">Data</string>
 
     <string name="setting_other">Misc</string>
@@ -109,6 +111,14 @@
     <string name="night_theme">Theme Switch</string>
 
     <string name="list_type">List style</string>
+
+    <string name="notice">Turn off refresh alerts</string>
+
+    <string name="notice_detail">Refresh Successful SnackBar Close</string>
+
+    <string name="status_bar">Forced adaptation of status bar</string>
+
+    <string name="status_bar_detail">Mandatory addition of translucency to homepage status bar</string>
 
     <string name="input_backup">Restore data</string>
 

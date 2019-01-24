@@ -41,14 +41,11 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_VIDEOS;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
-import static com.chad.library.adapter.base.BaseQuickAdapter.SCALEIN;
 
 public class VideoRvFragment extends BaseRvFragment {
 
-    VideoRvAdapter mAdapter;
     //    MainListData contents;
     List<VideoListData> contents;
 
@@ -259,9 +256,10 @@ public class VideoRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -321,7 +319,7 @@ public class VideoRvFragment extends BaseRvFragment {
         if (mRecyclerView == null)
             return;
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.openLoadAnimation(SCALEIN);
+//        mAdapter.openLoadAnimation(SCALEIN);
         if (SPUtils.getInstance().getBoolean(CONFIG_AUTO_LOADMORE)) {
             mAdapter.setPreLoadNumber(PRE_LOAD_ITEM);
             mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

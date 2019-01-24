@@ -110,11 +110,13 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                     case R.id.action_comment:
                         break;
                     case R.id.action_link:
-                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                        //noinspection ConstantConditions
-                        cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShare_url()));
-                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).show();
+                        if (currentData != null) {
+                            ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                            //noinspection ConstantConditions
+                            cm.setPrimaryClip(ClipData.newPlainText("link", currentData.getShare_url()));
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
+                                    + " " + getString(R.string.successful)).show();
+                        }
                         break;
                     case R.id.action_browser:
                         try {
@@ -151,13 +153,13 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
                             if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 try {
                                     currentData = gson.fromJson(response, ZhihuDetailData.class);
@@ -201,7 +203,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                     });
         } else {
 //            refreshLayout.finishRefresh();
-            progress.setVisibility(View.GONE);
+            skeletonScreen.hide();
             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
         }
     }

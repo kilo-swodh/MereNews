@@ -1,6 +1,7 @@
 package androidnews.kiloproject.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -14,7 +15,7 @@ import androidnews.kiloproject.entity.data.CommentLevel;
 import androidnews.kiloproject.util.GlideUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, BaseViewHolder> {
+public class CommentAdapter extends BaseMultiItemQuickAdapter<CommentLevel, BaseViewHolder> {
     RequestOptions options;
     private Context mContext;
     public static final int LEVEL_ONE = 0;
@@ -26,7 +27,7 @@ public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, Bas
         addItemType(LEVEL_ONE, R.layout.comment_level_one);
         addItemType(LEVEL_TWO, R.layout.comment_level_two);
         options = new RequestOptions();
-        options.error(R.mipmap.ic_launcher);
+        options.error(R.drawable.ic_user_icon);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CommentAdapter  extends BaseMultiItemQuickAdapter<CommentLevel, Bas
                 helper.setText(R.id.tv_text, data.getText());
                 helper.setText(R.id.tv_time, data.getTime());
                 helper.setText(R.id.tv_name, data.getName().replace("&nbsp"," "));
-                if (GlideUtil.isValidContextForGlide(mContext))
+                if (GlideUtil.isValidContextForGlide(mContext) && !TextUtils.isEmpty(data.getImgUrl()))
                     Glide.with(mContext)
                             .load(data.getImgUrl())
                             .apply(options)

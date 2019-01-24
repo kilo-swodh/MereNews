@@ -208,7 +208,7 @@ public class ChannelFragment extends BaseFragment implements AdapterView.OnItemC
         switch (parent.getId()) {
             case R.id.userGridView:
                 //TODO position为 0的不可以进行任何操作
-                ToastUtils.showShort(subTags[position]);
+                ToastUtils.showShort(R.string.channel_tip1);
                 break;
             case R.id.otherGridView:
                 final ImageView moveImageView = getView(view);

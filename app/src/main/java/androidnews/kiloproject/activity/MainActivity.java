@@ -16,19 +16,23 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 
+import androidnews.kiloproject.entity.data.BlockItem;
 import androidnews.kiloproject.fragment.BaseRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
 import androidnews.kiloproject.fragment.PressRvFragment;
 import androidnews.kiloproject.fragment.SmartisanRvFragment;
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -37,6 +41,7 @@ import com.zhouyou.http.exception.ApiException;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +86,7 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -96,23 +102,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     List<BaseRvFragment> fragments = new ArrayList<>();
     String[] tagNames;
 
+    public List<BlockItem> blockList;
+
     public static final int DEFAULT_PAGE = 4;
 
     private SPUtils spUtils;
-
-    //分别为开始颜色，中间夜色，结束颜色
-    public static final int colors1[] = {Color.parseColor("#a48ce0"),
-            Color.parseColor("#8eadfd"),
-            Color.parseColor("#6eead2")};
-    public static final int colors2[] = {Color.parseColor("#16194c"),
-            Color.parseColor("#214599"),
-            Color.parseColor("#2386a5")};
-    public static final int colors3[] = {Color.parseColor("#83ccd2"),
-            Color.parseColor("#c3e7e7"),
-            Color.parseColor("#ffffff")};
-    public static final int colors4[] = {Color.parseColor("#a13dff"),
-            Color.parseColor("#5f86fd"),
-            Color.parseColor("#0578f9")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +152,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         EventBus.getDefault().register(this);
+
+        if (AppConfig.isStatusBar)
+            ImmersionBar.with(mActivity)
+                    .statusBarColor(R.color.mask, 0.2f)
+                    .fitsSystemWindows(true)
+                    .init();
     }
 
     @Override
@@ -171,6 +171,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 tagNames = getResources().getStringArray(R.array.address_tag);
 
                 String arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
+
+                blockList = LitePal.findAll(BlockItem.class);
+
                 if (TextUtils.isEmpty(arrayStr)) {
                     channelArray = new int[DEFAULT_PAGE];
                     for (int i = 0; i < DEFAULT_PAGE; i++) {
@@ -182,7 +185,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     List<Integer> channelList = new ArrayList<>();
                     for (int i = 0; i < channelStrArray.length; i++) {
                         int index = Integer.parseInt(channelStrArray[i]);
-                        if(index > tagNames.length - 1)
+                        if (index > tagNames.length - 1)
                             continue;
                         if (!TextUtils.equals(tagNames[index], "fake")) {
                             channelList.add(index);
@@ -226,7 +229,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 mViewPager.getViewPager().setOffscreenPageLimit(2);
                                 mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-                               startBgAnimate();
+                                startBgAnimate();
                             } else {
                                 mPagerAdapter.notifyDataSetChanged();
                             }
@@ -282,9 +285,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     isNightMode = true;
                 }
                 spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
-                intent = getIntent();
-                finish();
-                startActivity(intent);
+                restartWithAnime(R.id.drawer_layout,R.id.materialViewPager);
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -383,10 +384,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 requestBgData(1);
                 break;
             case 2:
+                //分别为开始颜色，中间夜色，结束颜色
+                final int colors1[] = {Color.parseColor("#a48ce0"),
+                        Color.parseColor("#8eadfd"),
+                        Color.parseColor("#6eead2")};
+                final int colors2[] = {Color.parseColor("#16194c"),
+                        Color.parseColor("#214599"),
+                        Color.parseColor("#2386a5")};
+                final int colors3[] = {Color.parseColor("#83ccd2"),
+                        Color.parseColor("#c3e7e7"),
+                        Color.parseColor("#ffffff")};
+                final int colors4[] = {Color.parseColor("#a13dff"),
+                        Color.parseColor("#5f86fd"),
+                        Color.parseColor("#0578f9")};
+                final int colors5[] = {Color.parseColor("#000caf"),
+                        Color.parseColor("#b1f0f8"),
+                        Color.parseColor("#faffc2")};
                 mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
                     @Override
                     public HeaderDesign getHeaderDesign(int page) {
-                        switch (page % 4) {
+                        switch (page % 5) {
                             case 0:
                                 return HeaderDesign.fromColorResAndDrawable(
                                         R.color.deepskyblue,
@@ -403,6 +420,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 return HeaderDesign.fromColorResAndDrawable(
                                         R.color.deepskyblue,
                                         new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors4));
+                            case 4:
+                                return HeaderDesign.fromColorResAndDrawable(
+                                        R.color.deepskyblue,
+                                        new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors5));
                         }
                         return null;
                     }
@@ -452,7 +473,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void requestBgData(final int type){
+    private void requestBgData(final int type) {
         EasyHttp.get(NEWS_PHOTO_URL)
                 .readTimeOut(30 * 1000)//局部定义读超时
                 .writeTimeOut(30 * 1000)
@@ -487,48 +508,48 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 .subscribe(new Consumer<Boolean>() {
                                     @Override
                                     public void accept(Boolean aBoolean) throws Exception {
-                                        if (aBoolean){
-                                          switch (type){
-                                              case 0:
-                                                  timer = new Timer();
-                                                  timerTask = new TimerTask() {
-                                                      @Override
-                                                      public void run() {
-                                                          runOnUiThread(new Runnable() {
-                                                              @Override
-                                                              public void run() {
-                                                                  try {
-                                                                      if (mViewPager != null && photoData != null) {
-                                                                          if (bgPosition == photoData.getCacheMoreData().size()) {
-                                                                              bgPosition = 0;
-                                                                          }
-                                                                          mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
-                                                                          bgPosition++;
-                                                                      }
-                                                                  } catch (Exception e) {
-                                                                      e.printStackTrace();
-                                                                  }
-                                                              }
-                                                          });
-                                                      }
-                                                  };
-                                                  timer.schedule(timerTask, 0, 10 * 1000);
-                                                  break;
-                                              case 1:
-                                                  mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-                                                      @Override
-                                                      public HeaderDesign getHeaderDesign(int page) {
-                                                          int postion = page % photoData.getCacheMoreData().size();
+                                        if (aBoolean) {
+                                            switch (type) {
+                                                case 0:
+                                                    timer = new Timer();
+                                                    timerTask = new TimerTask() {
+                                                        @Override
+                                                        public void run() {
+                                                            runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    try {
+                                                                        if (mViewPager != null && photoData != null) {
+                                                                            if (bgPosition == photoData.getCacheMoreData().size()) {
+                                                                                bgPosition = 0;
+                                                                            }
+                                                                            mViewPager.setImageUrl(photoData.getCacheMoreData().get(bgPosition).getCover(), 300);
+                                                                            bgPosition++;
+                                                                        }
+                                                                    } catch (Exception e) {
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    };
+                                                    timer.schedule(timerTask, 0, 10 * 1000);
+                                                    break;
+                                                case 1:
+                                                    mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+                                                        @Override
+                                                        public HeaderDesign getHeaderDesign(int page) {
+                                                            int postion = page % photoData.getCacheMoreData().size();
 
-                                                          return HeaderDesign.fromColorResAndUrl(
-                                                                  R.color.deepskyblue,
-                                                                  photoData.getCacheMoreData().get(postion).getCover());
-                                                      }
-                                                      //execute others actions if needed (ex : modify your header logo)
-                                                  });
-                                                  mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
-                                                  break;
-                                          }
+                                                            return HeaderDesign.fromColorResAndUrl(
+                                                                    R.color.deepskyblue,
+                                                                    photoData.getCacheMoreData().get(postion).getCover());
+                                                        }
+                                                        //execute others actions if needed (ex : modify your header logo)
+                                                    });
+                                                    mViewPager.setImageUrl(photoData.getCacheMoreData().get(0).getCover(), 200);
+                                                    break;
+                                            }
                                         } else
                                             SnackbarUtils.with(mViewPager).setMessage(getString(R.string.server_fail)).showError();
                                     }
@@ -581,5 +602,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 && timerTask != null)
             cancelTimer();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_UI_HIDDEN) {
+            Glide.get(mActivity).clearMemory();
+            for (BaseRvFragment fragment : fragments) {
+                fragment.startLowMemory();
+            }
+        }
+        Glide.get(mActivity).trimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        //内存低时,清理缓存
+        Glide.get(mActivity).clearMemory();
     }
 }

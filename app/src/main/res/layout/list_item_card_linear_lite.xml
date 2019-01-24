@@ -42,9 +42,9 @@
             android:maxLines="2"
             android:textColor="@color/main_text_color_dark"
             android:textSize="@dimen/text_normal"
-            app:layout_constraintBottom_toTopOf="@+id/item_card_info"
+            app:layout_constraintBottom_toTopOf="@id/item_card_info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_card_img"
+            app:layout_constraintStart_toEndOf="@id/item_card_img"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/text_mini"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/item_card_text" />
+            app:layout_constraintStart_toStartOf="@id/item_card_text" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

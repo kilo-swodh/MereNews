@@ -3,6 +3,7 @@ package androidnews.kiloproject.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -182,6 +183,7 @@ public class CommentActivity extends BaseActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         commentAdapter = new CommentAdapter(mActivity, comments);
                         rvContent.setLayoutManager(new LinearLayoutManager(mActivity));
+                        rvContent.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL));
                         rvContent.setAdapter(commentAdapter);
                     }
                 });

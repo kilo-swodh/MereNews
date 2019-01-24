@@ -160,13 +160,13 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
                             if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 String jsonNoHeader = response.substring(20, response.length());
                                 String jsonFine = jsonNoHeader.substring(0, jsonNoHeader.length() - 1);
@@ -233,7 +233,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
-                            progress.setVisibility(View.GONE);
+                            skeletonScreen.hide();
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);

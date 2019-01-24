@@ -16,6 +16,7 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.ChannelItem;
 import androidnews.kiloproject.widget.DragGrid;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DragAdapter extends BaseAdapter {
     /**
@@ -46,13 +47,13 @@ public class DragAdapter extends BaseAdapter {
     /**
      * TextView 频道内容
      */
-    private TextView item_text;
+    private TextView itemText;
     /**
      * 要删除的position
      */
     public int remove_position = -1;
     private boolean isDeleteIcon;
-    private RelativeLayout ri_delete;//删除按钮
+    private RelativeLayout riDelete;//删除按钮
     private OnDelecteItemListener listener;
     private boolean isDeleteing;//是否处于删除状态
     private boolean hideDeleteIcon;
@@ -74,7 +75,7 @@ public class DragAdapter extends BaseAdapter {
         if (channelList != null && channelList.size() != 0) {
             try {
                 return channelList.get(position);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -90,49 +91,49 @@ public class DragAdapter extends BaseAdapter {
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.channel_category_item, null);
         ChannelItem channel = getItem(position);
-        if (TextUtils.equals(channel.getName(),"fake")){
+        if (channel == null || TextUtils.equals(channel.getName(), "fake")) {
             view.setVisibility(View.GONE);
             return view;
         }
-        item_text = (TextView) view.findViewById(R.id.text_item);
-        ri_delete = (RelativeLayout) view.findViewById(R.id.ri_delete);
-        TextView icon_news = (TextView) view.findViewById(R.id.icon_new);
-        item_text.setText(channel.getName());
+        itemText = (TextView) view.findViewById(R.id.text_item);
+        riDelete = (RelativeLayout) view.findViewById(R.id.ri_delete);
+        CircleImageView iconNews = view.findViewById(R.id.icon_new);
+        itemText.setText(channel.getName());
 
 //        if ((position == 0)) {
-//			item_text.setTextColor(context.getResources().getColor(R.color.black));
-//            item_text.setEnabled(false);
+//			itemText.setTextColor(context.getResources().getColor(R.color.black));
+//            itemText.setEnabled(false);
 //        }
         if (isChanged && (position == holdPosition) && !isItemShow) {
-            item_text.setText("");
-            item_text.setSelected(true);
-            item_text.setEnabled(true);
-            ri_delete.setVisibility(View.INVISIBLE);
-            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
+            itemText.setText("");
+            itemText.setSelected(true);
+            itemText.setEnabled(true);
+            riDelete.setVisibility(View.INVISIBLE);
+            itemText.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
             isChanged = false;
         }
         if (!isVisible && (position == -1 + channelList.size())) {//TODO 添加item时的处理
-            item_text.setText("");
-            item_text.setSelected(true);
-            item_text.setEnabled(true);
-            ri_delete.setVisibility(View.INVISIBLE);
-            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
+            itemText.setText("");
+            itemText.setSelected(true);
+            itemText.setEnabled(true);
+            riDelete.setVisibility(View.INVISIBLE);
+            itemText.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
         }
         if (remove_position == position) {
-            item_text.setText("");
-            item_text.setSelected(true);
-            item_text.setEnabled(true);
-            ri_delete.setVisibility(View.INVISIBLE);
-            item_text.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
+            itemText.setText("");
+            itemText.setSelected(true);
+            itemText.setEnabled(true);
+            riDelete.setVisibility(View.INVISIBLE);
+            itemText.setVisibility(View.INVISIBLE);//设置如果当前拖拽的view没有放下，那当前位置的view不可见
         }
         //TODO 展示删除按钮
         if (isDeleteIcon) {
             if (!isVisible && (position == -1 + channelList.size())
                     || (remove_position == position) && isDeleteing
                     || (position == dragGrid.getShowing()) && !isItemShow) {
-                ri_delete.setVisibility(View.INVISIBLE);
+                riDelete.setVisibility(View.INVISIBLE);
             } else {
-                ri_delete.setVisibility(View.VISIBLE);
+                riDelete.setVisibility(View.VISIBLE);
             }
         }
         //TODO 判断是否展示新条目表示
@@ -141,20 +142,20 @@ public class DragAdapter extends BaseAdapter {
             if (!isVisible && (position == -1 + channelList.size())
                     || (remove_position == position) && isDeleteing
                     || (position == dragGrid.getShowing()) && !isItemShow) {
-                icon_news.setVisibility(View.INVISIBLE);
+                iconNews.setVisibility(View.INVISIBLE);
             } else {
-                icon_news.setVisibility(View.VISIBLE);
+                iconNews.setVisibility(View.VISIBLE);
             }
         } else {
-            icon_news.setVisibility(View.INVISIBLE);
+            iconNews.setVisibility(View.INVISIBLE);
         }
         if (hideDeleteIcon) {
-            ri_delete.setVisibility(View.INVISIBLE);
+            riDelete.setVisibility(View.INVISIBLE);
             if (position == channelList.size() - 1) {//到最后重置状态
                 hideDeleteIcon = false;
             }
         }
-        ri_delete.setOnClickListener(new View.OnClickListener() {
+        riDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != listener)
@@ -189,7 +190,7 @@ public class DragAdapter extends BaseAdapter {
             }
             isChanged = true;
             notifyDataSetChanged();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -250,7 +251,7 @@ public class DragAdapter extends BaseAdapter {
     //显示删除键的icon
     public void showDeleteIcon(boolean isDeleteIcon) {
         this.isDeleteIcon = isDeleteIcon;
-        if(startDragingListener!=null)
+        if (startDragingListener != null)
             startDragingListener.onStartDraging();
     }
 
@@ -276,11 +277,11 @@ public class DragAdapter extends BaseAdapter {
         this.isDeleteing = isDeleteing;
     }
 
-    public interface OnStartDragingListener{
+    public interface OnStartDragingListener {
         void onStartDraging();
     }
 
-    public void setOnStartDragingListener(OnStartDragingListener startDragingListener){
+    public void setOnStartDragingListener(OnStartDragingListener startDragingListener) {
         this.startDragingListener = startDragingListener;
     }
 }

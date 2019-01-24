@@ -9,6 +9,8 @@ public class ExportBean {
             isSwipeBack,
             isAutoRefresh,
             isAutoLoadMore,
+            isStatusBar,
+            isDisNotice,
             isBackExit;
     public int listType,
             currentRandomHeader,

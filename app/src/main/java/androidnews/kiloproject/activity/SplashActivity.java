@@ -3,6 +3,8 @@ package androidnews.kiloproject.activity;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,11 +12,14 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.DisplayMetrics;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.facebook.device.yearclass.YearClass;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
@@ -30,8 +35,12 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LAST_LAUNCH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
@@ -49,10 +58,11 @@ public class SplashActivity extends AppCompatActivity {
                 SPUtils spUtils = SPUtils.getInstance();
                 AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
                 AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
-                AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
                 AppConfig.isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
                 AppConfig.isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
                 AppConfig.isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
+                AppConfig.isStatusBar = spUtils.getBoolean(CONFIG_STATUS_BAR);
+                AppConfig.isDisNotice = spUtils.getBoolean(CONFIG_DISABLE_NOTICE);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
                     initShortsCut();
@@ -60,6 +70,20 @@ public class SplashActivity extends AppCompatActivity {
                 AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE,-1);
                 if (listType == -1)
                     listType = ScreenUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
+
+                long lastLaunchTime = spUtils.getLong(CONFIG_LAST_LAUNCH,-1);
+                if (lastLaunchTime == -1) {
+                    int year = YearClass.get(getApplicationContext());
+                    if (year > 2014){
+                        AppConfig.isHighRam = true;
+                        spUtils.put(CONFIG_HIGH_RAM,true);
+                    }
+                }else {
+                    AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
+                }
+                spUtils.put(CONFIG_LAST_LAUNCH,System.currentTimeMillis());
+
+                applyConfig();
 
                 AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
                 e.onNext(true);
@@ -103,5 +127,33 @@ public class SplashActivity extends AppCompatActivity {
 
             mSystemService.setDynamicShortcuts(dynamicShortcuts);//设置动态shortcut
         }
+    }
+
+    private void applyConfig() {
+        if (isNightMode)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        int language = SPUtils.getInstance().getInt(CONFIG_LANGUAGE);
+        Locale myLocale = null;
+        switch (language) {
+            case 0:
+                myLocale = Locale.getDefault();
+                break;
+            case 1:
+                myLocale = new Locale("en");
+                break;
+            case 2:
+                myLocale = new Locale("zh");
+                break;
+        }
+        if (myLocale == null)
+            return;
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

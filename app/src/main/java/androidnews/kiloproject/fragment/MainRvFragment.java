@@ -63,7 +63,6 @@ import static androidnews.kiloproject.entity.data.BlockItem.TYPE_KEYWORDS;
 import static androidnews.kiloproject.entity.data.BlockItem.TYPE_SOURCE;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
@@ -83,7 +82,6 @@ public class MainRvFragment extends BaseRvFragment {
     private int adSize = 0;
     private int realPicCount = 0;
 
-    List<BlockItem> blockList;
     String typeStr;
 
     public static MainRvFragment newInstance(int type) {
@@ -112,12 +110,6 @@ public class MainRvFragment extends BaseRvFragment {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                try {
-                    blockList = LitePal.findAll(BlockItem.class);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                    e.onComplete();
-                }
                 goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
 
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
@@ -128,12 +120,13 @@ public class MainRvFragment extends BaseRvFragment {
                         try {
                             NewMainListData first = contents.get(0);
                             boolean isNopic = false;
-                            for (NewMainListData.AdsBean adsBean : first.getAds()) {
-                                if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
-                                    isNopic = true;
-                                    break;
+                            if (first.getAds() != null)
+                                for (NewMainListData.AdsBean adsBean : first.getAds()) {
+                                    if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
+                                        isNopic = true;
+                                        break;
+                                    }
                                 }
-                            }
                             if (isNopic)
                                 requestRealPic(first);
                             List<CacheNews> cacheNews = null;
@@ -153,9 +146,9 @@ public class MainRvFragment extends BaseRvFragment {
                                         }
                                     }
                                     boolean isBlockBingo = false;
-                                    if (blockList != null && blockList.size() > 0) {
+                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
                                         if (dataItem.getAds() == null) {
-                                            for (BlockItem blockItem : blockList) {
+                                            for (BlockItem blockItem : getMainActivity().blockList) {
                                                 if (isBlockBingo)
                                                     break;
                                                 switch (blockItem.getType()) {
@@ -177,7 +170,7 @@ public class MainRvFragment extends BaseRvFragment {
                                             for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
                                                 NewMainListData.AdsBean adItem = adIt.next();
                                                 boolean isAdBlockBingo = false;
-                                                for (BlockItem blockItem : blockList) {
+                                                for (BlockItem blockItem : getMainActivity().blockList) {
                                                     if (isAdBlockBingo)
                                                         break;
                                                     if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
@@ -332,9 +325,9 @@ public class MainRvFragment extends BaseRvFragment {
                                                 }
                                                 boolean isBlockBingo = false;
                                                 boolean isHasAd = false;        //防止有ad的item因为ad而被屏蔽视为普通条目
-                                                if (blockList != null && blockList.size() > 0) {
+                                                if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
                                                     if (dataItem.getAds() == null) {
-                                                        for (BlockItem blockItem : blockList) {
+                                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                                             if (isBlockBingo)
                                                                 break;
                                                             switch (blockItem.getType()) {
@@ -357,7 +350,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                         for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
                                                             NewMainListData.AdsBean adItem = adIt.next();
                                                             boolean isAdBlockBingo = false;
-                                                            for (BlockItem blockItem : blockList) {
+                                                            for (BlockItem blockItem : getMainActivity().blockList) {
                                                                 if (isAdBlockBingo)
                                                                     break;
                                                                 if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
@@ -414,8 +407,8 @@ public class MainRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                         boolean isBlockBingo = false;
-                                                        if (blockList != null && blockList.size() > 0) {
-                                                            for (BlockItem blockItem : blockList) {
+                                                        if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                                            for (BlockItem blockItem : getMainActivity().blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -461,9 +454,10 @@ public class MainRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -514,7 +508,7 @@ public class MainRvFragment extends BaseRvFragment {
             adSize = 0;
         }
         mAdapter = new MainRvAdapter(mActivity, contents);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -522,38 +516,36 @@ public class MainRvFragment extends BaseRvFragment {
                     return;
                 NewMainListData item = contents.get(position);
                 Intent intent = null;
-                switch (item.getItemType()) {
-                    case CELL:
-                        if (!TextUtils.isEmpty(item.getSkipID()) && TextUtils.equals(item.getSkipType(), "photoset")) {
-                            String skipID = "";
-                            String rawId;
-                            rawId = item.getSkipID();
-                            if (!TextUtils.isEmpty(rawId)) {
-                                int index = rawId.lastIndexOf("|");
-                                if (index != -1) {
-                                    skipID = rawId.substring(index - 4, rawId.length());
-                                    intent = new Intent(mActivity, GalleyActivity.class);
-                                    intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
-                                    if (!item.isReaded()) {
-                                        item.setReaded(true);
-                                        mAdapter.notifyItemChanged(position);
-                                    }
-                                    startActivity(intent);
-                                } else {
-                                    SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
-                                    return;
+                if (item.getItemType() == CELL) {
+                    if (!TextUtils.isEmpty(item.getSkipID()) && TextUtils.equals(item.getSkipType(), "photoset")) {
+                        String skipID = "";
+                        String rawId;
+                        rawId = item.getSkipID();
+                        if (!TextUtils.isEmpty(rawId)) {
+                            int index = rawId.lastIndexOf("|");
+                            if (index != -1) {
+                                skipID = rawId.substring(index - 4, rawId.length());
+                                intent = new Intent(mActivity, GalleyActivity.class);
+                                intent.putExtra("skipID", skipID.replace("|", "/") + ".json");
+                                if (!item.isReaded()) {
+                                    item.setReaded(true);
+                                    mAdapter.notifyItemChanged(position);
                                 }
+                                startActivity(intent);
+                            } else {
+                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
+                                return;
                             }
-                            break;
-                        } else {
-                            intent = new Intent(mActivity, NewsDetailActivity.class);
-                            intent.putExtra("docid", item.getDocid().replace("_special", "").trim());
-                            if (!item.isReaded()) {
-                                item.setReaded(true);
-                                mAdapter.notifyItemChanged(position);
-                            }
-                            startActivity(intent);
                         }
+                    } else {
+                        intent = new Intent(mActivity, NewsDetailActivity.class);
+                        intent.putExtra("docid", item.getDocid().replace("_special", "").trim());
+                        if (!item.isReaded()) {
+                            item.setReaded(true);
+                            mAdapter.notifyItemChanged(position);
+                        }
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -583,18 +575,18 @@ public class MainRvFragment extends BaseRvFragment {
                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                 try {
                                                     String newSource = contents.get(position).getSource();
-                                                    if (blockList == null)
-                                                        blockList = new ArrayList<>();
+                                                    if (getMainActivity().blockList == null)
+                                                        getMainActivity().blockList = new ArrayList<>();
                                                     boolean isAdd = true;
-                                                    if (blockList.size() > 0) {
-                                                        for (BlockItem blockItem : blockList) {
+                                                    if (getMainActivity().blockList.size() > 0) {
+                                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                                             if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
                                                                 isAdd = false;
                                                         }
                                                     }
                                                     if (isAdd) {
                                                         BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
-                                                        blockList.add(newItem);
+                                                        getMainActivity().blockList.add(newItem);
                                                         e.onNext(1);
                                                         newItem.save();
                                                     } else {
@@ -650,19 +642,19 @@ public class MainRvFragment extends BaseRvFragment {
                                                             @Override
                                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                                 try {
-                                                                    if (blockList == null)
-                                                                        blockList = new ArrayList<>();
+                                                                    if (getMainActivity().blockList == null)
+                                                                        getMainActivity().blockList = new ArrayList<>();
                                                                     String keywords = editText.getText().toString();
                                                                     boolean isAdd = true;
-                                                                    if (blockList.size() > 0) {
-                                                                        for (BlockItem blockItem : blockList) {
+                                                                    if (getMainActivity().blockList.size() > 0) {
+                                                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                                                             if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
                                                                                 isAdd = false;
                                                                         }
                                                                     }
                                                                     if (isAdd) {
                                                                         BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
-                                                                        blockList.add(newItem);
+                                                                        getMainActivity().blockList.add(newItem);
                                                                         e.onNext(1);
                                                                         newItem.save();
                                                                     } else {
@@ -813,7 +805,7 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void checkExtra(NewMainListData data){
+    private void checkExtra(NewMainListData data) {
         if (data.getSpecialextra() != null && data.getSpecialextra().size() > 1) {
             data.setItemType(CELL_EXTRA);
             data.getSpecialextra().remove(0);

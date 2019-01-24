@@ -9,7 +9,10 @@
     <dimen name="text_small">15sp</dimen>
     <dimen name="text_mini">12sp</dimen>
 
-    <dimen name="elevation_toolbar">4dp</dimen>
+    <dimen name="elevation_toolbar">@dimen/elevation_mid</dimen>
+    <dimen name="elevation_low">2dp</dimen>
+    <dimen name="elevation_mid">4dp</dimen>
+    <dimen name="elevation_high">8dp</dimen>
 
     <dimen name="avatar_width">40dp</dimen>
 

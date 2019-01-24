@@ -10,6 +10,8 @@ public class AppConfig {
             isNightMode,
             isAutoRefresh,
             isAutoLoadMore,
+            isStatusBar,
+            isDisNotice,
             isBackExit;
 
     public static int listType;
@@ -102,6 +104,10 @@ public class AppConfig {
 
     public static final String CONFIG_HIGH_RAM = "config_high_ram";
 
+    public static final String CONFIG_DISABLE_NOTICE = "config_dis_notice";
+
+    public static final String CONFIG_STATUS_BAR = "config_status_bar";
+
     public static final String CONFIG_NIGHT_MODE = "config_night_mode";
 
     public static final String CONFIG_RANDOM_HEADER = "config_random_header_int";
@@ -116,7 +122,7 @@ public class AppConfig {
 
     public static final String CONFIG_LIST_TYPE = "config_list_type";
 
-    public static final String CONFIG_HAVE_CHECK_1 = "config_event_1";  //设置重置
+    public static final String CONFIG_LAST_LAUNCH = "config_last_launch";  //设置重置
 
     public static final int LIST_TYPE_SINGLE = 0;
 

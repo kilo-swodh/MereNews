@@ -54,7 +54,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_GUO_KR;
 import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_LIST;
 import static androidnews.kiloproject.system.AppConfig.GET_GUO_KR_TOP;
@@ -63,7 +62,6 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 
 public class GuoKrRvFragment extends BaseRvFragment {
 
-    GuoKrAdapter mAdapter;
     Banner banner;
     //    MainListData contents;
     GuoKrCacheData contents;
@@ -258,9 +256,9 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                         }
                                                     }
                                                 }
-                                                contents.setListData(newData);
-                                                lastAutoRefreshTime = System.currentTimeMillis();
-                                                e.onNext(true);
+                                            contents.setListData(newData);
+                                            lastAutoRefreshTime = System.currentTimeMillis();
+                                            e.onNext(true);
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
@@ -295,9 +293,10 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 requestBanner();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -386,7 +385,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
         if (contents == null || contents.getListData() == null || contents.getListData().getResult() == null)
             return;
         mAdapter = new GuoKrAdapter(mActivity, contents.getListData().getResult());
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

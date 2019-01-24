@@ -42,7 +42,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_LOAD_MORE;
 import static androidnews.kiloproject.system.AppConfig.GET_IT_HOME_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.HOST_IT_HOME;
@@ -50,7 +49,6 @@ import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
 public class ITHomeRvFragment extends BaseRvFragment {
 
-    ITHomeAdapter mAdapter;
     //    MainListData contents;
     ITHomeListData contents;
 
@@ -268,9 +266,10 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -314,7 +313,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
         if (contents == null || contents.getChannel() == null || contents.getChannel().size() < 1)
             return;
         mAdapter = new ITHomeAdapter(mActivity, contents.getChannel());
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

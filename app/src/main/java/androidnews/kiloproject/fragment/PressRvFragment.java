@@ -59,13 +59,11 @@ import static androidnews.kiloproject.entity.data.BlockItem.TYPE_KEYWORDS;
 import static androidnews.kiloproject.entity.data.BlockItem.TYPE_SOURCE;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
 public class PressRvFragment extends BaseRvFragment {
 
-    PressRvAdapter mAdapter;
     //    MainListData contents;
     List<PressListData> contents;
 
@@ -76,7 +74,6 @@ public class PressRvFragment extends BaseRvFragment {
     private int currentPage = 0;
     private int questPage = 20;
 
-    List<BlockItem> blockList;
     String typeStr;
 
     public static PressRvFragment newInstance(int type) {
@@ -105,12 +102,6 @@ public class PressRvFragment extends BaseRvFragment {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                try {
-                    blockList = LitePal.findAll(BlockItem.class);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                    e.onComplete();
-                }
                 goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
 
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
@@ -135,9 +126,9 @@ public class PressRvFragment extends BaseRvFragment {
                                             break;
                                         }
                                     }
-                                    if (blockList != null && blockList.size() > 0) {
+                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
                                         boolean isBlockBingo = false;
-                                        for (BlockItem blockItem : blockList) {
+                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                             if (isBlockBingo)
                                                 break;
                                             switch (blockItem.getType()) {
@@ -293,8 +284,8 @@ public class PressRvFragment extends BaseRvFragment {
                                                     }
                                                 }
                                                 boolean isBlockBingo = false;
-                                                if (blockList != null && blockList.size() > 0) {
-                                                    for (BlockItem blockItem : blockList) {
+                                                if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                                    for (BlockItem blockItem : getMainActivity().blockList) {
                                                         if (isBlockBingo)
                                                             break;
                                                         switch (blockItem.getType()) {
@@ -354,8 +345,8 @@ public class PressRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                         boolean isBlockBingo = false;
-                                                        if (blockList != null && blockList.size() > 0) {
-                                                            for (BlockItem blockItem : blockList) {
+                                                        if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                                            for (BlockItem blockItem : getMainActivity().blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -401,9 +392,10 @@ public class PressRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    SnackbarUtils.with(refreshLayout)
-                                                            .setMessage(getString(R.string.load_success))
-                                                            .show();
+                                                    if (AppConfig.isDisNotice)
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.load_success))
+                                                                .show();
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -449,7 +441,7 @@ public class PressRvFragment extends BaseRvFragment {
         if (contents == null || contents.size() < 1)
             return;
         mAdapter = new PressRvAdapter(mActivity, contents);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -493,18 +485,18 @@ public class PressRvFragment extends BaseRvFragment {
                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                 try {
                                                     String newSource = contents.get(position).getSource();
-                                                    if (blockList == null)
-                                                        blockList = new ArrayList<>();
+                                                    if (getMainActivity().blockList == null)
+                                                        getMainActivity().blockList = new ArrayList<>();
                                                     boolean isAdd = true;
-                                                    if (blockList.size() > 0) {
-                                                        for (BlockItem blockItem : blockList) {
+                                                    if (getMainActivity().blockList.size() > 0) {
+                                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                                             if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
                                                                 isAdd = false;
                                                         }
                                                     }
                                                     if (isAdd) {
                                                         BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
-                                                        blockList.add(newItem);
+                                                        getMainActivity().blockList.add(newItem);
                                                         e.onNext(1);
                                                         newItem.save();
                                                     } else {
@@ -560,20 +552,20 @@ public class PressRvFragment extends BaseRvFragment {
                                                             @Override
                                                             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                                                                 try {
-                                                                    if (blockList == null)
-                                                                        blockList = new ArrayList<>();
+                                                                    if (getMainActivity().blockList == null)
+                                                                        getMainActivity().blockList = new ArrayList<>();
 
                                                                     String keywords = editText.getText().toString();
                                                                     boolean isAdd = true;
-                                                                    if (blockList.size() > 0) {
-                                                                        for (BlockItem blockItem : blockList) {
+                                                                    if (getMainActivity().blockList.size() > 0) {
+                                                                        for (BlockItem blockItem : getMainActivity().blockList) {
                                                                             if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
                                                                                 isAdd = false;
                                                                         }
                                                                     }
                                                                     if (isAdd) {
                                                                         BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
-                                                                        blockList.add(newItem);
+                                                                        getMainActivity().blockList.add(newItem);
                                                                         e.onNext(1);
                                                                         newItem.save();
                                                                     } else {
@@ -642,5 +634,4 @@ public class PressRvFragment extends BaseRvFragment {
             refreshLayout.setEnableLoadMore(false);
         }
     }
-
 }

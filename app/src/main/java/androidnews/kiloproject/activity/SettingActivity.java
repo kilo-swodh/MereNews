@@ -14,8 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -41,7 +38,6 @@ import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.google.gson.Gson;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -61,7 +57,6 @@ import androidnews.kiloproject.util.AlipayUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -76,7 +71,9 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
@@ -108,6 +105,12 @@ public class SettingActivity extends BaseActivity {
     TextView tvHighRam;
     TextView tvHighRamDetail;
     Switch swHighRam;
+    TextView tvDisNotice;
+    TextView tvDisNoticeDetail;
+    Switch swDisNotice;
+    TextView tvStatusBar;
+    TextView tvStatusBarDetail;
+    Switch swStatusBar;
     TextView tvInput;
     TextView tvInputDetail;
     TextView tvExport;
@@ -135,33 +138,53 @@ public class SettingActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvLanguage = (TextView) findViewById(R.id.tv_language);
         tvLanguageDetail = (TextView) findViewById(R.id.tv_language_detail);
+
         tvClearCache = (TextView) findViewById(R.id.tv_clear_cache);
         tvClearCacheDetail = (TextView) findViewById(R.id.tv_clear_cache_detail);
+
         tvTextSize = (TextView) findViewById(R.id.tv_text_size);
-        tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail);
+        tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail)
+        ;
         tvAutoRefresh = (TextView) findViewById(R.id.tv_auto_refresh);
         tvAutoRefreshDetail = (TextView) findViewById(R.id.tv_auto_refresh_detail);
         swAutoRefresh = (Switch) findViewById(R.id.sw_auto_refresh);
+
         tvAutoLoadmore = (TextView) findViewById(R.id.tv_auto_loadmore);
         tvAutoLoadmoreDetail = (TextView) findViewById(R.id.tv_auto_loadmore_detail);
         swAutoLoadmore = (Switch) findViewById(R.id.sw_auto_loadmore);
+
         tvBackExit = (TextView) findViewById(R.id.tv_back_exit);
         tvBackExitDetail = (TextView) findViewById(R.id.tv_back_exit_detail);
         swBackExit = (Switch) findViewById(R.id.sw_back_exit);
+
         tvSwipeBack = (TextView) findViewById(R.id.tv_swipe_back);
         tvSwipeBackDetail = (TextView) findViewById(R.id.tv_swipe_back_detail);
         swSwipeBack = (Switch) findViewById(R.id.sw_swipe_back);
+
         tvHighRam = (TextView) findViewById(R.id.tv_high_ram);
         tvHighRamDetail = (TextView) findViewById(R.id.tv_high_ram_detail);
         swHighRam = (Switch) findViewById(R.id.sw_high_ram);
+
+        tvStatusBar = (TextView) findViewById(R.id.tv_status_bar);
+        tvStatusBarDetail = (TextView) findViewById(R.id.tv_status_bar_detail);
+        swStatusBar = (Switch) findViewById(R.id.sw_status_bar);
+
+        tvDisNotice = (TextView) findViewById(R.id.tv_dis_notice);
+        tvDisNoticeDetail = (TextView) findViewById(R.id.tv_dis_notice_detail);
+        swDisNotice = (Switch) findViewById(R.id.sw_dis_notice);
+
         tvInput = (TextView) findViewById(R.id.tv_input);
         tvInputDetail = (TextView) findViewById(R.id.tv_input_detail);
+
         tvExport = (TextView) findViewById(R.id.tv_export);
         tvExportDetail = (TextView) findViewById(R.id.tv_export_detail);
+
         tvCheckUpdate = (TextView) findViewById(R.id.tv_check_update);
         tvCheckUpdateDetail = (TextView) findViewById(R.id.tv_check_update_detail);
+
         tvRandomHeader = (TextView) findViewById(R.id.tv_random_header);
         tvRandomHeaderDetail = (TextView) findViewById(R.id.tv_random_header_detail);
+
         tvListType = (TextView) findViewById(R.id.tv_list_type);
         tvListTypeDetail = (TextView) findViewById(R.id.tv_list_type_detail);
 
@@ -198,112 +221,87 @@ public class SettingActivity extends BaseActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        tvRandomHeaderDetail.setText(headerItems[currentRandomHeader]);
-                        tvListTypeDetail.setText(listItems[spUtils.getInt(CONFIG_LIST_TYPE, LIST_TYPE_SINGLE)]);
-                        tvTextSizeDetail.setText(sizeItems[AppConfig.mTextSize]);
-                        tvLanguageDetail.setText(languageItems[currentLanguage]);
+                        try {
+                            tvRandomHeaderDetail.setText(headerItems[currentRandomHeader]);
+                            tvListTypeDetail.setText(listItems[spUtils.getInt(CONFIG_LIST_TYPE, LIST_TYPE_SINGLE)]);
+                            tvTextSizeDetail.setText(sizeItems[AppConfig.mTextSize]);
+                            tvLanguageDetail.setText(languageItems[currentLanguage]);
 
-                        swAutoRefresh.setChecked(AppConfig.isAutoRefresh);
-                        swAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                AppConfig.isAutoRefresh = isChecked;
-                                spUtils.put(CONFIG_AUTO_REFRESH, AppConfig.isAutoRefresh);
-                            }
-                        });
+                            swAutoRefresh.setChecked(AppConfig.isAutoRefresh);
+                            swAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isAutoRefresh = isChecked;
+                                    spUtils.put(CONFIG_AUTO_REFRESH, AppConfig.isAutoRefresh);
+                                }
+                            });
 
-                        swAutoLoadmore.setChecked(AppConfig.isAutoLoadMore);
-                        swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                AppConfig.isAutoLoadMore = isChecked;
-                                spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
-                                setResult(RESULT_OK);
-                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
-                            }
-                        });
+                            swAutoLoadmore.setChecked(AppConfig.isAutoLoadMore);
+                            swAutoLoadmore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isAutoLoadMore = isChecked;
+                                    spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
+                                    setResult(RESULT_OK);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
+                                }
+                            });
 
-                        swBackExit.setChecked(AppConfig.isBackExit);
-                        swBackExit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                AppConfig.isBackExit = isChecked;
-                                spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
-                            }
-                        });
+                            swBackExit.setChecked(AppConfig.isBackExit);
+                            swBackExit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isBackExit = isChecked;
+                                    spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
+                                }
+                            });
 
-                        swSwipeBack.setChecked(AppConfig.isSwipeBack);
-                        swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                AppConfig.isSwipeBack = isChecked;
-                                spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
-                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
-                            }
-                        });
+                            swSwipeBack.setChecked(AppConfig.isSwipeBack);
+                            swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isSwipeBack = isChecked;
+                                    spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                                }
+                            });
 
-                        swHighRam.setChecked(AppConfig.isHighRam);
-                        swHighRam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                AppConfig.isHighRam = isChecked;
-                                spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
-                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
-                            }
-                        });
+                            swHighRam.setChecked(AppConfig.isHighRam);
+                            swHighRam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isHighRam = isChecked;
+                                    spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
+                                }
+                            });
 
-                        tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
+                            swDisNotice.setChecked(AppConfig.isDisNotice);
+                            swDisNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isDisNotice = isChecked;
+                                    spUtils.put(CONFIG_DISABLE_NOTICE, AppConfig.isDisNotice);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
+                                }
+                            });
+
+                            swStatusBar.setChecked(AppConfig.isStatusBar);
+                            swStatusBar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isStatusBar = isChecked;
+                                    spUtils.put(CONFIG_STATUS_BAR, AppConfig.isStatusBar);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).show();
+                                }
+                            });
+
+                            tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 });
-    }
-
-    private void restartWithAnime() {
-        animateRevealShow(findViewById(R.id.content), true, new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                swAutoRefresh.setEnabled(false);
-                swAutoLoadmore.setEnabled(false);
-                swBackExit.setEnabled(false);
-                swSwipeBack.setEnabled(false);
-                swHighRam.setEnabled(false);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                findViewById(R.id.content).setVisibility(View.GONE);
-                relaunchApp();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void animateRevealShow(final View view, final boolean isReverse, @Nullable Animator.AnimatorListener listener) {
-        if (!isLollipop())
-            return;
-        int cx = ScreenUtils.getScreenWidth() / 2;
-        int cy = ScreenUtils.getScreenHeight() / 2;
-        int finalRadius = Math.min(view.getWidth(), view.getHeight());
-        Animator anim;
-        if (isReverse) {
-            //关闭
-            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-        } else {
-            //开屏
-            anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-        }
-        anim.setInterpolator(new DecelerateInterpolator());
-        anim.setDuration(650);
-        if (listener != null)
-            anim.addListener(listener);
-        anim.start();
     }
 
     public void onClick(View v) {
@@ -321,7 +319,7 @@ public class SettingActivity extends BaseActivity {
                                         currentLanguage = which;
                                         spUtils.put(CONFIG_LANGUAGE, currentLanguage);
                                         tvLanguageDetail.setText(languageItems[currentLanguage]);
-                                        restartWithAnime();
+                                        restartWithAnime(R.id.root_view,R.id.content);
                                         dialog.dismiss();
                                     }
                                 })
@@ -475,6 +473,32 @@ public class SettingActivity extends BaseActivity {
                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
                 break;
 
+            case R.id.tv_dis_notice:
+            case R.id.tv_dis_notice_detail:
+                if (AppConfig.isDisNotice) {
+                    swDisNotice.setChecked(false);
+                    AppConfig.isDisNotice = false;
+                } else {
+                    swDisNotice.setChecked(true);
+                    AppConfig.isDisNotice = true;
+                }
+                spUtils.put(CONFIG_DISABLE_NOTICE, AppConfig.isDisNotice);
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
+                break;
+
+            case R.id.tv_status_bar:
+            case R.id.tv_status_bar_detail:
+                if (AppConfig.isStatusBar) {
+                    swStatusBar.setChecked(false);
+                    AppConfig.isStatusBar = false;
+                } else {
+                    swStatusBar.setChecked(true);
+                    AppConfig.isStatusBar = true;
+                }
+                spUtils.put(CONFIG_STATUS_BAR, AppConfig.isStatusBar);
+                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).show();
+                break;
+
             case R.id.tv_input:
             case R.id.tv_input_detail:
                 final EditText editText = new EditText(mActivity);
@@ -507,6 +531,8 @@ public class SettingActivity extends BaseActivity {
                                                     spUtils.put(CONFIG_SWIPE_BACK, exportBean.isSwipeBack);
                                                     spUtils.put(CONFIG_AUTO_REFRESH, exportBean.isAutoRefresh);
                                                     spUtils.put(CONFIG_AUTO_LOADMORE, exportBean.isAutoLoadMore);
+                                                    spUtils.put(CONFIG_DISABLE_NOTICE, exportBean.isDisNotice);
+                                                    spUtils.put(CONFIG_STATUS_BAR, exportBean.isStatusBar);
                                                     spUtils.put(CONFIG_BACK_EXIT, exportBean.isBackExit);
                                                     spUtils.put(CONFIG_LIST_TYPE, exportBean.listType);
                                                     spUtils.put(CONFIG_RANDOM_HEADER, exportBean.currentRandomHeader);
@@ -531,7 +557,7 @@ public class SettingActivity extends BaseActivity {
                                                     try {
                                                         if (o) {
                                                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
-                                                            restartWithAnime();
+                                                            restartWithAnime(R.id.root_view,R.id.content);
                                                         }else
                                                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).show();
                                                     } catch (Exception e1) {
@@ -580,6 +606,8 @@ public class SettingActivity extends BaseActivity {
                                             exportBean.isHighRam = AppConfig.isHighRam;
                                             exportBean.isSwipeBack = AppConfig.isSwipeBack;
                                             exportBean.isAutoRefresh  = AppConfig.isAutoRefresh;
+                                            exportBean.isDisNotice = AppConfig.isDisNotice;
+                                            exportBean.isStatusBar = AppConfig.isStatusBar;
                                             exportBean.isAutoLoadMore  = AppConfig.isAutoLoadMore;
                                             exportBean.isBackExit  = AppConfig.isBackExit;
                                             exportBean.listType  = AppConfig.listType;
@@ -629,7 +657,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_clear_cache:
             case R.id.tv_clear_cache_detail:
                 new AlertDialog.Builder(mActivity)
-                        .setTitle(R.string.random_header_server)
+                        .setTitle(R.string.clear_cache)
                         .setCancelable(true)
                         .setSingleChoiceItems(
                                 getResources().getStringArray(R.array.delete_cache),0, new DialogInterface.OnClickListener() {
