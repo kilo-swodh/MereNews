@@ -1,28 +1,44 @@
 package androidnews.kiloproject.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.gyf.barlibrary.OSUtils;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
+import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.callback.DownloadProgressCallBack;
+import com.zhouyou.http.exception.ApiException;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.util.FileCompatUtil;
 
 
 public class BaseDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
@@ -42,14 +58,20 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
 
         webView.setBackgroundColor(0);
         webView.getBackground().setAlpha(0);
-        webView.setScrollViewCallbacks(this);
+        if (ScreenUtils.getScreenWidth() * 2 > ScreenUtils.getScreenHeight())
+            webView.setScrollViewCallbacks(this);
+        webView.setDrawingCacheEnabled(true);
+        webView.buildDrawingCache();
+        webView.buildLayer();
 
-        skeletonScreen = Skeleton.bind(webView)
-                .load(R.layout.layout_skeleton_news)
-                .duration(1000)
-                .color(R.color.main_background)
-                .show();
+        initListener();
 
+        if (!OSUtils.isFlymeOS4Later())
+            skeletonScreen = Skeleton.bind(webView)
+                    .load(R.layout.layout_skeleton_news)
+                    .duration(1000)
+                    .color(R.color.main_background)
+                    .show();
         initView();
         initStatusBar(R.color.main_background, true);
     }
@@ -61,6 +83,98 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         return true;
     }
 
+    private void initListener() {
+        webView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                WebView.HitTestResult result = ((WebView) v).getHitTestResult();
+                if (null == result)
+                    return false;
+                int type = result.getType();
+                final String url = result.getExtra();
+                switch (type) {
+                    case WebView.HitTestResult.UNKNOWN_TYPE: //未知
+                    case WebView.HitTestResult.EDIT_TEXT_TYPE: // 选中的文字类型
+                    case WebView.HitTestResult.PHONE_TYPE: // 处理拨号
+                    case WebView.HitTestResult.EMAIL_TYPE: // 处理Email
+                    case WebView.HitTestResult.GEO_TYPE: // 　地图类型
+                    case WebView.HitTestResult.SRC_ANCHOR_TYPE: // 超链接
+                        break;
+                    case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE: // 带有链接的图片类型
+                    case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
+                        if (!TextUtils.isEmpty(url)) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                            builder.setTitle(R.string.download)
+                                    .setMessage(R.string.download_img_q)
+                                    .setCancelable(true)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            downloadImg(url);
+                                        }
+                                    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                        }
+                }
+                return true;
+            }
+        });
+
+        webView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void downloadImg(String currentImg) {
+        try {
+            String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
+            String path = FileCompatUtil.getMediaDir(mActivity);
+            EasyHttp.downLoad(currentImg)
+                    .savePath(path)
+                    .saveName(fileName)//不设置默认名字是时间戳生成的
+                    .execute(new DownloadProgressCallBack<String>() {
+                        @Override
+                        public void update(long bytesRead, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onStart() {
+                            //开始下载
+                        }
+
+                        @Override
+                        public void onComplete(String path) {
+                            //下载完成，path：下载文件保存的完整路径
+                            SnackbarUtils.with(webView)
+                                    .setMessage(getString(R.string.download_success))
+                                    .show();
+                        }
+
+                        @Override
+                        public void onError(ApiException e) {
+                            //下载失败
+                            SnackbarUtils.with(webView)
+                                    .setMessage(getString(R.string.download_fail) + e.getMessage())
+                                    .showError();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            SnackbarUtils.with(webView)
+                    .setMessage(getString(R.string.download_fail))
+                    .showError();
+        }
+    }
+
     protected void initWeb() {
         WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
@@ -70,15 +184,18 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         webSetting.setAppCacheEnabled(true);
         webSetting.setDatabaseEnabled(true);
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        switch (AppConfig.mTextSize){
+        webSetting.setPluginState(WebSettings.PluginState.ON);
+        if (isLollipop())
+            webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        switch (AppConfig.mTextSize) {
             case 0:
-                webSetting.setTextZoom(120);
+                webSetting.setTextZoom(125);
                 break;
             case 1:
                 webSetting.setTextZoom(100);
                 break;
             case 2:
-                webSetting.setTextZoom(80);
+                webSetting.setTextZoom(75);
                 break;
         }
     }
@@ -106,9 +223,11 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
     }
 
     @Override
-    protected void initSlowly() { }
+    protected void initSlowly() {
+    }
 
-    protected void initView(){}
+    protected void initView() {
+    }
 
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
     }
@@ -154,15 +273,20 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                if (webView == null || toolbar == null)return;
+                if (webView == null || toolbar == null) return;
                 float translationY = (float) animation.getAnimatedValue();
                 ViewHelper.setTranslationY(toolbar, translationY);
                 ViewHelper.setTranslationY(webView, translationY);
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) (webView).getLayoutParams();
                 lp.height = (int) -translationY + findViewById(android.R.id.content).getHeight() - lp.topMargin;
-                ( webView).requestLayout();
+                (webView).requestLayout();
             }
         });
         animator.start();
+    }
+
+    protected void hideSkeleton() {
+        if (!OSUtils.isFlymeOS4Later())
+            skeletonScreen.hide();
     }
 }

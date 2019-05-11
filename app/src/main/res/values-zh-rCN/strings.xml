@@ -72,6 +72,10 @@
 
     <string name="server_fail">服务器返回数据异常</string>
 
+    <string name="download">下载</string>
+
+    <string name="download_img_q">是否下载当前图片?</string>
+
     <string name="download_success">下载成功</string>
 
     <string name="download_fail">下载失败</string>

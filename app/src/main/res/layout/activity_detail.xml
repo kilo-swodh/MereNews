@@ -23,4 +23,12 @@
         android:background="@color/transparent"
         android:focusableInTouchMode="true"
         android:layout_marginTop="?attr/actionBarSize"/>
+
+    <ViewStub
+        android:id="@+id/stub_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/layout_web_video_full">
+    </ViewStub>
+
 </FrameLayout>

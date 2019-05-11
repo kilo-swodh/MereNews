@@ -475,7 +475,7 @@ public class SettingActivity extends BaseActivity {
 
             case R.id.tv_dis_notice:
             case R.id.tv_dis_notice_detail:
-                if (AppConfig.isDisNotice) {
+                if (!AppConfig.isDisNotice) {
                     swDisNotice.setChecked(false);
                     AppConfig.isDisNotice = false;
                 } else {

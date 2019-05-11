@@ -21,11 +21,15 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1153
-        versionName "1.1.5"
+        versionCode 1166
+        versionName "1.1.6-fixed"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
         release {
             //混淆
             minifyEnabled true  //设为false即可断点调试

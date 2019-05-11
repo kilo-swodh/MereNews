@@ -82,6 +82,8 @@ public class MainRvFragment extends BaseRvFragment {
     private int adSize = 0;
     private int realPicCount = 0;
 
+    private String lastSkipId;
+
     String typeStr;
 
     public static MainRvFragment newInstance(int type) {
@@ -120,13 +122,21 @@ public class MainRvFragment extends BaseRvFragment {
                         try {
                             NewMainListData first = contents.get(0);
                             boolean isNopic = false;
-                            if (first.getAds() != null)
-                                for (NewMainListData.AdsBean adsBean : first.getAds()) {
-                                    if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
+//                            if (first.getAds() != null)
+//                                for (NewMainListData.AdsBean adsBean : first.getAds()) {
+//                                    if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
+//                                        isNopic = true;
+//                                        break;
+//                                    }
+//                                }
+                            if (first.getAds() != null) {
+                                Iterator<NewMainListData.AdsBean> adsBean = first.getAds().iterator();
+                                while (adsBean.hasNext()) {
+                                    if (TextUtils.equals(adsBean.next().getImgsrc(), "bigimg"))
                                         isNopic = true;
-                                        break;
-                                    }
+                                    else adsBean.remove();
                                 }
+                            }
                             if (isNopic)
                                 requestRealPic(first);
                             List<CacheNews> cacheNews = null;
@@ -293,7 +303,17 @@ public class MainRvFragment extends BaseRvFragment {
                                         if (type == TYPE_REFRESH) {
                                             NewMainListData first = retMap.get(typeStr).get(0);
                                             first.setItemType(HEADER);
-                                            requestRealPic(first);
+                                            boolean isNopic = false;
+                                            if (first.getAds() != null) {
+                                                Iterator<NewMainListData.AdsBean> adsBean = first.getAds().iterator();
+                                                while (adsBean.hasNext()) {
+                                                    if (TextUtils.equals(adsBean.next().getImgsrc(), "bigimg"))
+                                                        isNopic = true;
+                                                    else adsBean.remove();
+                                                }
+                                            }
+                                            if (isNopic)
+                                                requestRealPic(first);
                                         }
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
@@ -309,12 +329,15 @@ public class MainRvFragment extends BaseRvFragment {
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }
+                                            if (newList != null && newList.size() > 2) {
+                                                newList = kickRepeat(newList);
+                                            }
                                             for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
                                                 NewMainListData dataItem = it.next();
-                                                if (dataItem == null)
+                                                if (dataItem == null || checkExtra(dataItem) == 2) {
                                                     it.remove();
-                                                checkExtra(dataItem);
-
+                                                    continue;
+                                                }
                                                 if (cacheNews != null && cacheNews.size() > 0) {
                                                     for (CacheNews cacheNew : cacheNews) {
                                                         if (dataItem.getDocid().contains(cacheNew.getDocid())) {
@@ -386,7 +409,7 @@ public class MainRvFragment extends BaseRvFragment {
 //                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!isGoodItem(dataItem)) {
+                                                    if (!isGoodItem(dataItem) || checkExtra(dataItem) == 2) {
                                                         continue;
                                                     }
                                                     for (NewMainListData myBean : contents) {
@@ -395,7 +418,6 @@ public class MainRvFragment extends BaseRvFragment {
                                                             break;
                                                         }
                                                     }
-                                                    checkExtra(dataItem);
 
                                                     if (!isSame) {
                                                         if (cacheNews != null && cacheNews.size() > 0) {
@@ -454,7 +476,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    if (AppConfig.isDisNotice)
+                                                    if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
                                                                 .setMessage(getString(R.string.load_success))
                                                                 .show();
@@ -791,9 +813,7 @@ public class MainRvFragment extends BaseRvFragment {
         String mTag = data.getTAGS();
         if (data.getPriority() > 500)       //某些霸屏的新闻
             return false;
-        if (TextUtils.isEmpty(data.getUrl_3w())) {       //老新闻
-            return false;
-        } else if (TextUtils.isEmpty(mTag))
+        if (TextUtils.isEmpty(mTag))
             return true;
         else {
             for (String gTag : goodTags) {
@@ -805,10 +825,23 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void checkExtra(NewMainListData data) {
+    private int checkExtra(NewMainListData data) {
         if (data.getSpecialextra() != null && data.getSpecialextra().size() > 1) {
-            data.setItemType(CELL_EXTRA);
-            data.getSpecialextra().remove(0);
+            if (TextUtils.equals(data.getSkipID(), lastSkipId))
+                return 2;
+            else {
+                data.setItemType(CELL_EXTRA);
+                data.getSpecialextra().remove(0);
+                lastSkipId = data.getSkipID();
+                return 1;
+            }
         }
+        return 0;
+    }
+
+    private List<NewMainListData> kickRepeat(List<NewMainListData> newList){
+        if (TextUtils.equals(newList.get(1).getDocid(),newList.get(3).getDocid()))
+            newList.remove(1);
+        return newList;
     }
 }

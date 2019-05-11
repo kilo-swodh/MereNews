@@ -72,6 +72,10 @@
 
     <string name="server_fail">Server returns data exception</string>
 
+    <string name="download">Download</string>
+
+    <string name="download_img_q">Whether to download the current picture?</string>
+
     <string name="download_success">Download success</string>
 
     <string name="download_fail">Download fail</string>
@@ -250,4 +254,5 @@
 
     <string name="message_reading_record">You have {type} {num} news articles in Mere News.</string>
 
+    <string name="flyme_bug">"Flyme系统下可能存在异常,暂时禁用"</string>
 </resources>

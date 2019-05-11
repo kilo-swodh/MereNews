@@ -266,7 +266,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    if (AppConfig.isDisNotice)
+                                                    if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
                                                                 .setMessage(getString(R.string.load_success))
                                                                 .show();
@@ -317,7 +317,12 @@ public class ITHomeRvFragment extends BaseRvFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ITHomeListData.ItemBean bean = contents.getChannel().get(position);
+                List<ITHomeListData.ItemBean> channels = contents.getChannel();
+                if (channels == null || channels.size() < position) {
+                    SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail)).show();
+                    return;
+                }
+                ITHomeListData.ItemBean bean = channels.get(position);
                 Intent intent = new Intent(getActivity(), ITHomeDetailActivity.class);
                 try {
                     intent.putExtra("title", bean.getTitle());

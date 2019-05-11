@@ -139,7 +139,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
         title = intent.getStringExtra("title");
         pTime = intent.getStringExtra("time");
         img = intent.getStringExtra("img");
-        if (!TextUtils.isEmpty(newsId)) {
+        if (!TextUtils.isEmpty(newsId) && newsId.length() > 3) {
             StringBuilder sb = new StringBuilder(newsId);
             sb.insert(3,"%2F");
             String detailId = sb.toString();
@@ -152,13 +152,13 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            skeletonScreen.hide();
+                            hideSkeleton();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            skeletonScreen.hide();
+                            hideSkeleton();
                             if (!TextUtils.isEmpty(response)) {
                                 currentData = new IThomeDetailData();
                                 try {
@@ -226,7 +226,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
-                            skeletonScreen.hide();
+                            hideSkeleton();
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);
@@ -295,7 +295,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                     @Override
                     public void accept(Boolean b) throws Exception {
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
-                        if (b) {
+                        if (b && webView != null) {
                             webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
 //                            webView.loadData(html, "text/html; charset=UTF-8", null);
                             saveCacheAsyn(CACHE_HISTORY);

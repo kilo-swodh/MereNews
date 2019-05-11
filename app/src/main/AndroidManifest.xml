@@ -24,6 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:maxAspectRatio="2.4"
+        android:usesCleartextTraffic="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:largeHeap="true"
@@ -61,7 +62,8 @@
         <activity android:name=".activity.GalleyActivity"
             android:theme="@style/AppThemeColor"/>
 
-        <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
 
         <activity android:name=".activity.CacheActivity"/>
 

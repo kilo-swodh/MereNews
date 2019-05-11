@@ -293,7 +293,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 requestBanner();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    if (AppConfig.isDisNotice)
+                                                    if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
                                                                 .setMessage(getString(R.string.load_success))
                                                                 .show();

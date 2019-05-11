@@ -91,8 +91,8 @@
         <item>T1504171773862</item> //佛学
         <item>T1509448512433</item> //天猫
         <item>T1509504918215</item> //京东
-        <item>T1533779729713</item> //改革
 
+        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
 
@@ -297,7 +297,7 @@
         <item>T1467100238109</item> //华商晨报
         <!--<item>T1467423962658</item> //企业参考-->
         <item>T1468814169539</item> //前沿时报
-        <item>T1468983880621</item> //青年时报
+        <item>T1468983880621</item> //青年时报(空缺)
         <item>T1469167711734</item> //中国慈善家
         <item>T1469500605873</item> //诸暨日报爱诸暨
         <!--<item>T1470207789202</item> //焦点新闻-->
@@ -397,7 +397,7 @@
         <item>Home Furnishing</item>
         <item>Parenting</item>
         <item>Auto</item>
-        <item>Sociology</item>
+        <item>Vacancy</item>
         <item>Forum</item>
         <item>House property</item>
         <item>Today</item>
@@ -409,8 +409,8 @@
         <item>Buddhism</item>
         <item>Tmall</item>
         <item>JD.COM</item>
-        <item>Reform</item>
 
+        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
 
@@ -557,7 +557,7 @@
         <item>Ta Kung Pao</item>
         <item>Chinese Business Morning Post</item>
         <item>Frontier Times</item>
-        <item>Youth Times</item>
+        <item>Vacancy</item>
         <item>Charity in China</item>
         <item>Zhuji Daily</item>
 

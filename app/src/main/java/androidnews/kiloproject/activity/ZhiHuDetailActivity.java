@@ -153,13 +153,13 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            skeletonScreen.hide();
+                            hideSkeleton();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            skeletonScreen.hide();
+                            hideSkeleton();
                             if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 try {
                                     currentData = gson.fromJson(response, ZhihuDetailData.class);
@@ -203,7 +203,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                     });
         } else {
 //            refreshLayout.finishRefresh();
-            skeletonScreen.hide();
+            hideSkeleton();
             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
         }
     }

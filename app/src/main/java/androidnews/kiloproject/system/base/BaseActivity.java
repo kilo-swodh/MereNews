@@ -159,7 +159,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 findViewById(contentId).setVisibility(View.GONE);
-                relaunchApp();
+                relaunchApp(true);
             }
 
             @Override

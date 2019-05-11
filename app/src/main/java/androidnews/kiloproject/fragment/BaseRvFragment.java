@@ -14,6 +14,7 @@ import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.barlibrary.OSUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import androidnews.kiloproject.R;
@@ -59,7 +60,7 @@ public abstract class BaseRvFragment extends BaseLazyFragment {
         if (ImmersionBar.hasNotchScreen(mActivity))
             refreshLayout.setHeaderInsetStart(ConvertUtils.px2dp(ImmersionBar.getStatusBarHeight(mActivity)));
         refreshLayout.setHeaderTriggerRate(0.7f);
-        if (!(this instanceof ZhihuRvFragment) && AppConfig.listType == LIST_TYPE_SINGLE){
+        if (!(this instanceof ZhihuRvFragment) && AppConfig.listType == LIST_TYPE_SINGLE && !OSUtils.isFlymeOS4Later()){
             skeletonScreen = Skeleton.bind(mRecyclerView)
                     .adapter(mAdapter)
                     .shimmer(true)      // whether show shimmer animation.                      default is true

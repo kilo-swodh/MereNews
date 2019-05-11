@@ -164,7 +164,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
 
     private void loadUrl() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        skeletonScreen.hide();
+        hideSkeleton();
         webView.loadUrl(currentUrl);
         saveCacheAsyn(CACHE_HISTORY);
     }
@@ -251,7 +251,6 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
     @Override
     protected void initWeb() {
         super.initWeb();
-
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

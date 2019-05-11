@@ -78,9 +78,8 @@ public class SplashActivity extends AppCompatActivity {
                         AppConfig.isHighRam = true;
                         spUtils.put(CONFIG_HIGH_RAM,true);
                     }
-                }else {
+                }else
                     AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
-                }
                 spUtils.put(CONFIG_LAST_LAUNCH,System.currentTimeMillis());
 
                 applyConfig();

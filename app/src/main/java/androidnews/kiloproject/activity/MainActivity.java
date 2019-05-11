@@ -32,7 +32,9 @@ import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
+import com.gyf.barlibrary.FlymeOSStatusBarFontUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.barlibrary.OSUtils;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -285,7 +287,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     isNightMode = true;
                 }
                 spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
-                restartWithAnime(R.id.drawer_layout,R.id.materialViewPager);
+                restartWithAnime(R.id.drawer_layout, R.id.materialViewPager);
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

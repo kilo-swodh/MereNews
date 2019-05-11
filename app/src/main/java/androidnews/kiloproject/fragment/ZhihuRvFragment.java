@@ -284,10 +284,12 @@ public class ZhihuRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    if (AppConfig.isDisNotice)
+                                                    if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
                                                                 .setMessage(getString(R.string.load_success))
                                                                 .show();
+                                                    if (contents.getStories().size() < 9)
+                                                        requestData(TYPE_LOADMORE);
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }

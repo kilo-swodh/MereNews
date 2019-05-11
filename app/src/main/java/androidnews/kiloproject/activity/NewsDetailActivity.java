@@ -4,12 +4,18 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
+import android.webkit.WebChromeClient;
+import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -30,6 +36,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -43,6 +50,11 @@ public class NewsDetailActivity extends BaseDetailActivity {
     private String html;
     private NewsDetailData currentData;
     private boolean isStar = false;
+
+    private boolean isVideo = false;
+    private boolean isLand = false;
+    private ViewStub videoStub;
+    private FrameLayout videoLayout;
 
     private int type = 0;
     public static final int TPYE_AUDIO = 1024;
@@ -131,7 +143,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                             Uri uri = Uri.parse(currentData.getShareLink());
                             intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;
@@ -160,17 +172,16 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         @Override
                         public void onError(ApiException e) {
                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                            skeletonScreen.hide();
+                            hideSkeleton();
 //                            refreshLayout.finishRefresh();
                         }
 
                         @Override
                         public void onSuccess(String response) {
-                            skeletonScreen.hide();
+                            hideSkeleton();
                             if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                 String jsonNoHeader = response.substring(20, response.length());
                                 String jsonFine = jsonNoHeader.substring(0, jsonNoHeader.length() - 1);
-
                                 if (response.contains("点这里升级")) {
                                     ToastUtils.showShort(getString(R.string.server_fail));
                                     finish();
@@ -186,6 +197,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                        currentData.setBody(deleteAd(currentData.getBody()));
                                         e.onNext(checkStar(false));
                                         e.onComplete();
                                     }
@@ -233,7 +245,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                     .subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
-                            skeletonScreen.hide();
+                            hideSkeleton();
                             if (aBoolean) {
                                 initWeb();
                                 getSupportActionBar().setTitle(R.string.news);
@@ -241,7 +253,6 @@ public class NewsDetailActivity extends BaseDetailActivity {
 //                                webView.loadData(html, "text/html; charset=UTF-8", null);
                             } else
                                 SnackbarUtils.with(toolbar).setMessage(getString(R.string.load_fail)).showError();
-
                         }
                     });
         }
@@ -301,7 +312,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         "</html>";
                 if (currentData.getVideo() != null) {
                     for (NewsDetailData.VideoBean videoBean : currentData.getVideo()) {
-                        String mediaUrl = videoBean.getMp4_url();
+                        String mediaUrl = videoBean.getUrl_mp4();
                         if (TextUtils.isEmpty(mediaUrl)) {
                             mediaUrl = videoBean.getUrl_mp4();
                         }
@@ -314,7 +325,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         } else {
                             html = html.replace(videoBean.getRef(),
                                     "<video src=\"" + mediaUrl +
-                                            "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"></video>");
+                                            "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"type=\"video/mp4\"></video>");
+                            isVideo = true;
                         }
                     }
                 }
@@ -331,6 +343,11 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean b) throws Exception {
+                        if (isVideo) {
+                            videoStub = (ViewStub) findViewById(R.id.stub_video);
+                            videoStub.setVisibility(View.VISIBLE);
+                            videoLayout = findViewById(R.id.fl_video_full);
+                        }
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
                         if (b && webView != null) {
                             webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
@@ -339,6 +356,27 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         }
                     }
                 });
+    }
+
+    private String deleteAd(String data) {
+        if (data.contains("<!--SPINFO")) {
+            int index = data.indexOf("<!--SPINFO");
+            int imgHead = data.indexOf("<!--IMG#", index);
+            if (imgHead != -1) {
+                int imgEnd = data.indexOf("-->", imgHead);
+                String resultStart = data.substring(0, imgHead - 1);
+                String resultEnd = data.substring(imgEnd + 3, data.length() - 1);
+                data = resultStart + resultEnd;
+            }
+        }
+        if (data.contains("<p>原标题：")) {
+            int imgHead = data.indexOf("<p>原标题：");
+            int imgEnd = data.indexOf("</p>", imgHead);
+            String resultStart = data.substring(0, imgHead - 1);
+            String resultEnd = data.substring(imgEnd + 4, data.length() - 1);
+            data = resultStart + resultEnd;
+        }
+        return data;
     }
 
     private void saveCacheAsyn(int type) {
@@ -389,6 +427,55 @@ public class NewsDetailActivity extends BaseDetailActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    protected void initWeb() {
+        super.initWeb();
+        webView.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                ScreenUtils.getScreenRotation(mActivity);
+                fullScreen(true);
+                ScreenUtils.setFullScreen(mActivity);
+                webView.setVisibility(View.GONE);
+                videoLayout.setVisibility(View.VISIBLE);
+                videoLayout.addView(view);
+                super.onShowCustomView(view, callback);
+            }
+
+            @Override
+            public void onHideCustomView() {
+                fullScreen(false);
+                ScreenUtils.setNonFullScreen(mActivity);
+                webView.setVisibility(View.VISIBLE);
+                videoLayout.setVisibility(View.GONE);
+                videoLayout.removeAllViews();
+                super.onHideCustomView();
+
+            }
+        });
+    }
+
+    private void fullScreen(boolean isStart) {
+        if (isStart) {
+            isLand = ScreenUtils.isLandscape();
+            try {
+                if (currentData != null && currentData.getVideo().get(0).getVideoRatio() > 1) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            if (isLand)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+            else
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        }
     }
 
     @Override

@@ -256,7 +256,7 @@ public class VideoRvFragment extends BaseRvFragment {
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
                                                     refreshLayout.finishRefresh(true);
-                                                    if (AppConfig.isDisNotice)
+                                                    if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
                                                                 .setMessage(getString(R.string.load_success))
                                                                 .show();
