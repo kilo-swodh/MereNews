@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
@@ -159,6 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 findViewById(contentId).setVisibility(View.GONE);
+                ActivityUtils.finishAllActivitiesExceptNewest();
                 relaunchApp(true);
             }
 

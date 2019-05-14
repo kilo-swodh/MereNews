@@ -43,13 +43,13 @@
     <style name="AppThemeMain" parent="AppThemeColor">//主界面专用
         <item name="android:windowIsTranslucent">false</item>//就是关掉这个Activity的透明背景
         <item name="android:textColorPrimary">@color/splash_bg</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- 欢迎页背景 -->
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
-        <!-- <item name="android:windowIsTranslucent">true</item> --> <!-- 透明背景不要了 -->
     </style>
 
     <!-- MaterialViewPager-->

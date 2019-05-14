@@ -32,9 +32,7 @@ import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
-import com.gyf.barlibrary.FlymeOSStatusBarFontUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.gyf.barlibrary.OSUtils;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -321,7 +319,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 firstTime = System.currentTimeMillis();
             } else {
                 finish();
-                System.exit(0);
             }
             return true;
         }

@@ -21,7 +21,7 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1166
+        versionCode 1167
         versionName "1.1.6-fixed"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -72,7 +72,7 @@ dependencies {
 
     //链式网络请求
     // https://github.com/zhou-you/RxEasyHttp
-    api 'com.zhouyou:rxeasyhttp:2.1.3'
+    api 'com.zhouyou:rxeasyhttp:2.1.5'
 
     //权限
     // https://github.com/yanzhenjie/AndPermission
@@ -103,7 +103,7 @@ dependencies {
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
@@ -111,7 +111,7 @@ dependencies {
 
     //RecyclerView的Adapter
     //https://www.jianshu.com/p/b343fcff51b0
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
     //主界面控件
     //https://github.com/florent37/MaterialViewPager
