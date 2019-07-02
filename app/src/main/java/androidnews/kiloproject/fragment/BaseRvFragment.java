@@ -1,20 +1,19 @@
 package androidnews.kiloproject.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.bumptech.glide.Glide;
+import com.blankj.utilcode.util.RomUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.gson.Gson;
-import com.gyf.barlibrary.ImmersionBar;
-import com.gyf.barlibrary.OSUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import androidnews.kiloproject.R;
@@ -22,7 +21,6 @@ import androidnews.kiloproject.activity.MainActivity;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseLazyFragment;
 
-import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
 import static androidnews.kiloproject.system.AppConfig.isHighRam;
 
@@ -60,7 +58,7 @@ public abstract class BaseRvFragment extends BaseLazyFragment {
         if (ImmersionBar.hasNotchScreen(mActivity))
             refreshLayout.setHeaderInsetStart(ConvertUtils.px2dp(ImmersionBar.getStatusBarHeight(mActivity)));
         refreshLayout.setHeaderTriggerRate(0.7f);
-        if (!(this instanceof ZhihuRvFragment) && AppConfig.listType == LIST_TYPE_SINGLE && !OSUtils.isFlymeOS4Later()){
+        if (!(this instanceof ZhihuRvFragment) && AppConfig.listType == LIST_TYPE_SINGLE && !RomUtils.isMeizu()){
             skeletonScreen = Skeleton.bind(mRecyclerView)
                     .adapter(mAdapter)
                     .shimmer(true)      // whether show shimmer animation.                      default is true

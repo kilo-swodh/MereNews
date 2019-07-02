@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -14,21 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.DownloadListener;
-import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.gyf.barlibrary.OSUtils;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.zhouyou.http.EasyHttp;
@@ -46,7 +46,6 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
     Toolbar toolbar;
     ObservableWebView webView;
     SkeletonScreen skeletonScreen;
-
 //    SmartRefreshLayout refreshLayout;
 
     @Override
@@ -55,18 +54,17 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         setContentView(R.layout.activity_detail);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         webView = (ObservableWebView) findViewById(R.id.web_news);
-
         webView.setBackgroundColor(0);
         webView.getBackground().setAlpha(0);
-        if (ScreenUtils.getScreenWidth() * 2 > ScreenUtils.getScreenHeight())
-            webView.setScrollViewCallbacks(this);
+//        if (ScreenUtils.getScreenWidth() * 2 > ScreenUtils.getScreenHeight())
+        webView.setScrollViewCallbacks(this);
         webView.setDrawingCacheEnabled(true);
         webView.buildDrawingCache();
         webView.buildLayer();
 
         initListener();
 
-        if (!OSUtils.isFlymeOS4Later())
+        if (!RomUtils.isMeizu())
             skeletonScreen = Skeleton.bind(webView)
                     .load(R.layout.layout_skeleton_news)
                     .duration(1000)
@@ -119,8 +117,9 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
                                 }
                             }).show();
                         }
+                        return true;
                 }
-                return true;
+                return false;
             }
         });
 
@@ -132,6 +131,7 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
                 startActivity(intent);
             }
         });
+
     }
 
     private void downloadImg(String currentImg) {
@@ -286,7 +286,7 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
     }
 
     protected void hideSkeleton() {
-        if (!OSUtils.isFlymeOS4Later())
+        if (!RomUtils.isMeizu())
             skeletonScreen.hide();
     }
 }

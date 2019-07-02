@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:elevation="2dp"
+        android:elevation="@dimen/elevation_low"
         android:background="@android:color/white"
         android:layout_marginBottom="@dimen/cardMarginVertical"
         android:layout_marginLeft="@dimen/cardMarginHorizontal"

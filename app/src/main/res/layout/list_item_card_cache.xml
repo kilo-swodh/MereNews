@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<com.google.android.material.card.MaterialCardView
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:maxHeight="72dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp"
-    android:foreground = "?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/margin_normal"
     android:layout_marginLeft="@dimen/margin_normal"
     android:layout_marginRight="@dimen/margin_normal"
@@ -16,10 +13,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/awesome_background">
+        android:background="@drawable/ripple_background">
 
         <ImageView
             android:id="@+id/item_card_img"
@@ -57,5 +54,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/item_card_text" />
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

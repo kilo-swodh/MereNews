@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/root_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_background">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ToolbarPopupTheme" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -37,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/setting_basic"
                 android:textColor="@color/main_text_colorful"
@@ -44,19 +45,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.v7.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_basic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_1">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -133,7 +133,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_text_size" />
 
                     <View
-                        android:id="@+id/view_auto_refresh"
+                        android:id="@+id/view_notification"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -145,10 +145,38 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_text_size_detail" />
 
                     <TextView
+                        android:id="@+id/tv_notification"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:text="@string/notification"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_notification" />
+
+                    <View
+                        android:id="@+id/view_auto_refresh"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_notification" />
+
+                    <TextView
                         android:id="@+id/tv_auto_refresh"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/auto_refresh"
                         android:textColor="@color/main_text_color_dark"
@@ -163,6 +191,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/auto_refresh_detail"
@@ -176,9 +205,11 @@
                         android:id="@+id/sw_auto_refresh"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        app:theme="@style/SwitchTheme"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
                         app:layout_constraintBottom_toBottomOf="@id/tv_auto_refresh_detail"
-                        app:layout_constraintEnd_toEndOf="@id/tv_language"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_auto_refresh" />
 
                     <View
@@ -198,6 +229,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore"
                         android:textColor="@color/main_text_color_dark"
@@ -212,6 +244,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/auto_loadmore_detail"
@@ -226,8 +259,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_auto_loadmore_detail"
-                        app:layout_constraintEnd_toEndOf="@id/tv_language"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_auto_loadmore" />
 
                     <View
@@ -247,6 +282,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/back_exit"
                         android:textColor="@color/main_text_color_dark"
@@ -261,6 +297,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/back_exit_detail"
@@ -275,8 +312,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_back_exit_detail"
-                        app:layout_constraintEnd_toEndOf="@id/tv_language"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_back_exit" />
 
                     <View
@@ -296,6 +335,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/swipe_back"
                         android:textColor="@color/main_text_color_dark"
@@ -310,6 +350,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/swipe_back_detail"
@@ -324,8 +365,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_swipe_back_detail"
-                        app:layout_constraintEnd_toEndOf="@id/tv_language"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_swipe_back" />
 
                     <View
@@ -345,6 +388,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/high_ram"
                         android:textColor="@color/main_text_color_dark"
@@ -359,6 +403,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginBottom="@dimen/margin_normal"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
@@ -375,12 +420,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_high_ram_detail"
-                        app:layout_constraintEnd_toEndOf="@id/tv_language"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_high_ram" />
 
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tv_view"
@@ -394,19 +441,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_basic" />
 
-            <android.support.v7.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_view">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -415,6 +461,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/notice"
                         android:textColor="@color/main_text_color_dark"
@@ -429,6 +476,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/notice_detail"
@@ -443,6 +491,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_dis_notice_detail"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_dis_notice" />
@@ -464,6 +514,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:text="@string/status_bar"
                         android:textColor="@color/main_text_color_dark"
@@ -478,6 +529,7 @@
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:onClick="onClick"
                         android:paddingTop="@dimen/margin_normal"
                         android:text="@string/status_bar_detail"
@@ -492,6 +544,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
                         app:layout_constraintBottom_toBottomOf="@id/tv_status_bar_detail"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_status_bar" />
@@ -580,15 +634,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_list_type" />
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tv_backup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/setting_data"
                 android:textColor="@color/main_text_colorful"
@@ -596,19 +651,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
 
-            <android.support.v7.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_backup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_backup">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -727,15 +781,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_clear_cache" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tv_misc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/setting_other"
                 android:textColor="@color/main_text_colorful"
@@ -743,7 +798,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_backup" />
 
-            <android.support.v7.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_misc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -752,13 +807,12 @@
                 android:layout_marginRight="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:focusable="true"
-                android:foreground = "?attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_misc">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -877,9 +931,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_check_update" />
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
-        </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v4.widget.NestedScrollView>
-</android.support.constraint.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

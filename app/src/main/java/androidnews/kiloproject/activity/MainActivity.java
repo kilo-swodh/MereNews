@@ -1,22 +1,40 @@
 package androidnews.kiloproject.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.blankj.utilcode.util.SPUtils;
@@ -28,11 +46,12 @@ import androidnews.kiloproject.fragment.BaseRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
 import androidnews.kiloproject.fragment.PressRvFragment;
 import androidnews.kiloproject.fragment.SmartisanRvFragment;
+import androidnews.kiloproject.push.NotifyWork;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -47,6 +66,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.PhotoCenterData;
@@ -86,7 +107,6 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
-import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -228,7 +248,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 mViewPager.getViewPager().setAdapter(mPagerAdapter);
                                 mViewPager.getViewPager().setOffscreenPageLimit(2);
                                 mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
-
                                 startBgAnimate();
                             } else {
                                 mPagerAdapter.notifyDataSetChanged();
@@ -279,11 +298,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent);
                 break;
             case R.id.nav_theme:
-                if (isNightMode) {
-                    isNightMode = false;
-                } else {
-                    isNightMode = true;
-                }
+                isNightMode = !isNightMode;
                 spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
                 restartWithAnime(R.id.drawer_layout, R.id.materialViewPager);
                 break;

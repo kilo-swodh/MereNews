@@ -1,27 +1,49 @@
 package androidnews.kiloproject.activity;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Icon;
+import android.icu.util.Currency;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.util.DisplayMetrics;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.core.os.ConfigurationCompat;
+import androidx.core.view.ViewCompat;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.Operation;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowInsets;
+
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.facebook.device.yearclass.YearClass;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.push.NotifyWork;
 import androidnews.kiloproject.system.AppConfig;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -34,17 +56,22 @@ import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LAST_LAUNCH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
+import static androidnews.kiloproject.system.AppConfig.PUSH_WORK_NAME;
 import static androidnews.kiloproject.system.AppConfig.listType;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
@@ -52,6 +79,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -63,28 +91,34 @@ public class SplashActivity extends AppCompatActivity {
                 AppConfig.isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
                 AppConfig.isStatusBar = spUtils.getBoolean(CONFIG_STATUS_BAR);
                 AppConfig.isDisNotice = spUtils.getBoolean(CONFIG_DISABLE_NOTICE);
+                AppConfig.isPush = spUtils.getBoolean(CONFIG_PUSH, true);
+                AppConfig.isPushSound = spUtils.getBoolean(CONFIG_PUSH_SOUND);
+                AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
+                AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS,false);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();
 
-                AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE,-1);
+                AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE, -1);
                 if (listType == -1)
-                    listType = ScreenUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
+                    listType = DeviceUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
 
-                long lastLaunchTime = spUtils.getLong(CONFIG_LAST_LAUNCH,-1);
+                long lastLaunchTime = spUtils.getLong(CONFIG_LAST_LAUNCH, -1);
                 if (lastLaunchTime == -1) {
                     int year = YearClass.get(getApplicationContext());
-                    if (year > 2014){
+                    if (year > 2014) {
                         AppConfig.isHighRam = true;
-                        spUtils.put(CONFIG_HIGH_RAM,true);
+                        spUtils.put(CONFIG_HIGH_RAM, true);
                     }
-                }else
+                } else
                     AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
-                spUtils.put(CONFIG_LAST_LAUNCH,System.currentTimeMillis());
+                spUtils.put(CONFIG_LAST_LAUNCH, System.currentTimeMillis());
 
                 applyConfig();
 
                 AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
+
+                checkPushWork();
                 e.onNext(true);
                 e.onComplete();
             }
@@ -138,7 +172,10 @@ public class SplashActivity extends AppCompatActivity {
         Locale myLocale = null;
         switch (language) {
             case 0:
-                myLocale = Locale.getDefault();
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
+                    myLocale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+                else
+                    myLocale = Locale.getDefault();
                 break;
             case 1:
                 myLocale = new Locale("en");
@@ -154,5 +191,41 @@ public class SplashActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+    }
+
+    @SuppressLint("NewApi")
+    public void checkPushWork() {
+        if (!AppConfig.isPush) return;
+
+        Constraints myCoustrain = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true) //不在电量不足执行
+                .setRequiresCharging(true) //在充电时执行
+                .setRequiresStorageNotLow(true) //不在存储容量不足时执行
+                .setRequiresDeviceIdle(true) //在待机状态下执行 调用需要API级别最低为23
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest.Builder notifyWork = null;
+        switch (AppConfig.pushTime) {
+            case 0:
+                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 18, TimeUnit.MINUTES);
+                break;
+            case 1:
+                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 42, TimeUnit.MINUTES);
+                break;
+            case 2:
+                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 160, TimeUnit.MINUTES);
+                break;
+            case 3:
+                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 300, TimeUnit.MINUTES);
+                break;
+            default:
+                break;
+        }
+        if (notifyWork != null) {
+            notifyWork.setConstraints(myCoustrain);
+            PeriodicWorkRequest workRequest = notifyWork.build();
+            WorkManager.getInstance().enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP,workRequest);
+        }
     }
 }

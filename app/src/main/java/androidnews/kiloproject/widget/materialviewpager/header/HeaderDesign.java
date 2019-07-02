@@ -1,8 +1,8 @@
 package androidnews.kiloproject.widget.materialviewpager.header;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 
 /**
  * Created by florentchampigny on 10/06/15.

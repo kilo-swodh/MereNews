@@ -11,6 +11,6 @@
         android:layout_marginLeft="@dimen/cardMarginHorizontal"
         android:layout_marginRight="@dimen/cardMarginHorizontal"
         android:layout_marginTop="@dimen/cardMarginVertical"
-        android:elevation="2dp" />
+        android:elevation="@dimen/elevation_low" />
 
 </FrameLayout>

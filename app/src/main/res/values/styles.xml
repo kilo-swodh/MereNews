@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
-
         <item name="android:textColorPrimary">@color/main_text_color_dark</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
@@ -59,6 +58,17 @@
     <style name="MVP_AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- White arrow -->
         <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
+        <item name="colorSwitchThumbNormal">@color/colorPrimary</item>
+        <!-- Inactive track color(30% transparency) switch关闭时的轨迹的颜色 30%这个颜色 -->
+        <item name="android:colorForeground">@color/colorAccent</item>
+
+        <!--使用方法： 在布局文件中给需要自定义控件中增加app:theme="@style/MySwitch"-->
     </style>
 
 </resources>

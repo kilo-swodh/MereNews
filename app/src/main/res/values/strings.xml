@@ -2,257 +2,283 @@
 
 <resources>
 
-    <string name="app_name">Mere News</string>
+    <string name="app_name">Mere新闻</string>
 
-    <string name="successful">Successful</string>
+    <string name="successful">成功</string>
 
-    <string name="fail">Fail</string>
+    <string name="fail">失败</string>
 
-    <string name="save">Save</string>
+    <string name="save">保存</string>
 
-    <string name="sort">Sort</string>
+    <string name="sort">排序</string>
 
-    <string name="big">Big</string>
+    <string name="big">大号</string>
 
-    <string name="normal">Normal</string>
+    <string name="normal">标准</string>
 
-    <string name="small">Small</string>
+    <string name="small">小号</string>
 
-    <string name="setting">Setting</string>
+    <string name="setting">设置</string>
 
-    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
 
-    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+    <string name="message_permission_always_failed">请到设置中给予本App权限:\n\n%1$s</string>
 
-    <string name="message_setting_comeback">The user comes back from the settings page.</string>
+    <string name="message_setting_comeback">从设置中回来了</string>
 
-    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
+    <string name="message_install_failed">安装应用的权限被禁止了</string>
 
-    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+    <string name="message_overlay_failed">在其他应用上显示的权限被禁止了</string>
 
     <string name="apk_name">android.apk</string>
 
-    <string name="action_comment">Comment</string>
+    <string name="action_comment">评论</string>
 
-    <string name="action_link">Copy link</string>
+    <string name="action_link">复制链接</string>
 
-    <string name="action_browser">Open in browser</string>
+    <string name="action_browser">浏览器中打开</string>
 
-    <string name="action_star">Collection</string>
+    <string name="action_star">收藏</string>
 
-    <string name="action_share">Share</string>
+    <string name="action_share">分享</string>
 
-    <string name="action_delete_all">Delete All</string>
+    <string name="action_delete_all">全部删除</string>
 
-    <string name="action_list_number">Statistical</string>
+    <string name="action_list_number">统计</string>
 
-    <string name="action_block_source">Shielded News source</string>
+    <string name="action_block_source">屏蔽该来源</string>
 
-    <string name="action_block_keywords">Shielded keywords</string>
+    <string name="action_block_keywords">屏蔽关键词</string>
 
-    <string name="source">News source</string>
+    <string name="source">新闻源</string>
 
-    <string name="keywords">Keywords</string>
+    <string name="keywords">关键词</string>
 
-    <string name="star_no">Collection cancelled</string>
+    <string name="star_no">已取消收藏</string>
 
-    <string name="star_yes">Collection completed</string>
+    <string name="star_yes">已添加收藏</string>
 
-    <string name="history">History</string>
+    <string name="history">历史</string>
 
-    <string name="about">About</string>
+    <string name="about">关于</string>
 
-    <string name="block_rule">Block rule</string>
+    <string name="block_rule">屏蔽规则</string>
 
-    <string name="loading">Now loading</string>
+    <string name="loading">正在加载</string>
 
-    <string name="load_success">Load success</string>
+    <string name="load_success">加载成功</string>
 
-    <string name="load_fail">Load failed</string>
+    <string name="load_fail">加载失败</string>
 
-    <string name="server_fail">Server returns data exception</string>
+    <string name="server_fail">服务器返回数据异常</string>
 
-    <string name="download">Download</string>
+    <string name="download">下载</string>
 
-    <string name="download_img_q">Whether to download the current picture?</string>
+    <string name="download_img_q">是否下载当前图片?</string>
 
-    <string name="download_success">Download success</string>
+    <string name="download_success">下载成功</string>
 
-    <string name="download_fail">Download fail</string>
+    <string name="download_fail">下载失败</string>
 
-    <string name="empty_content">It\'s nothing.</string>
+    <string name="empty_content">什么也没有...</string>
 
-    <string name="no_comment">No comment</string>
+    <string name="no_comment">未开放评论区</string>
 
-    <string name="news">News</string>
+    <string name="news">报道</string>
 
-    <string name="setting_basic">Basic</string>
+    <string name="setting_basic">基础</string>
 
-    <string name="setting_view">View</string>
+    <string name="setting_view">视图</string>
 
-    <string name="setting_data">Data</string>
+    <string name="setting_data">数据</string>
 
-    <string name="setting_other">Misc</string>
+    <string name="setting_other">其他</string>
 
-    <string name="language">Language</string>
+    <string name="language">语言</string>
 
-    <string name="clear_cache">Clear cache</string>
+    <string name="clear_cache">清空缓存</string>
 
-    <string name="clear_cache_detail">Optional Collection/History/News cache</string>
+    <string name="clear_cache_detail">可选收藏/历史/新闻缓存</string>
 
-    <string name="news_cache">News cache</string>
+    <string name="news_cache">新闻缓存数据</string>
 
-    <string name="all">All</string>
+    <string name="all">全部</string>
 
-    <string name="auto_refresh">auto refresh</string>
+    <string name="auto_refresh">自动刷新</string>
 
-    <string name="auto_refresh_detail">Automatic refresh during handover</string>
+    <string name="auto_refresh_detail">切换时自动刷新</string>
 
-    <string name="auto_loadmore">Preloading data</string>
+    <string name="auto_loadmore">预加载数据</string>
 
-    <string name="auto_loadmore_detail">When you browse to the end, load in advance, avoid waiting, and consume more traffic.</string>
+    <string name="auto_loadmore_detail">当快浏览到尽头时提前加载,避免等待,更耗费流量</string>
 
-    <string name="night_theme">Theme Switch</string>
+    <string name="night_theme">亮暗切换</string>
 
-    <string name="list_type">List style</string>
+    <string name="list_type">列表式样</string>
 
-    <string name="notice">Turn off refresh alerts</string>
+    <string name="notice">关闭刷新提醒</string>
 
-    <string name="notice_detail">Refresh Successful SnackBar Close</string>
+    <string name="notice_detail">刷新成功的底部提醒将关闭</string>
 
-    <string name="status_bar">Forced adaptation of status bar</string>
+    <string name="status_bar">状态栏强制适配</string>
 
-    <string name="status_bar_detail">Mandatory addition of translucency to homepage status bar</string>
+    <string name="status_bar_detail">主页状态栏强制添加半透明</string>
 
-    <string name="input_backup">Restore data</string>
+    <string name="input_backup">恢复数据</string>
 
-    <string name="input_backup_detail">Import backed-up data.</string>
+    <string name="input_backup_detail">导入已备份好的数据备份</string>
 
-    <string name="export_backup">Backup data</string>
+    <string name="export_backup">备份数据</string>
 
-    <string name="export_backup_detail">Contains settings/channel order/shielded rules.</string>
+    <string name="export_backup_detail">包含设置/频道顺序/屏蔽规则</string>
 
-    <string name="check_update">Check the update</string>
+    <string name="check_update">检查更新</string>
 
-    <string name="check_update_detail">The current version is:</string>
+    <string name="check_update_detail">当前版本为:</string>
 
-    <string name="join_us">Add user group</string>
+    <string name="join_us">加用户群</string>
 
-    <string name="join_us_detail">QQ group num:938435700</string>
+    <string name="join_us_detail">企鹅群号:938435700</string>
 
-    <string name="join_us_error">No QQ mobile</string>
+    <string name="join_us_error">没有找到手Q</string>
 
-    <string name="donate">donation</string>
+    <string name="donate">捐赠</string>
 
-    <string name="donate_detail">By the way, make a wish in the notes</string>
+    <string name="donate_detail">顺便在备注中许个愿</string>
 
-    <string name="swipe_back">Sliding Back</string>
+    <string name="swipe_back">滑动返回</string>
 
-    <string name="swipe_back_detail">Sliding back from left to right</string>
+    <string name="swipe_back_detail">从左向右滑动页面返回</string>
 
-    <string name="high_ram">Enhanced cache</string>
+    <string name="high_ram">加强缓存</string>
 
-    <string name="high_ram_detail">Use more memory to improve application fluency</string>
+    <string name="high_ram_detail">占用更多内存以提高应用流畅度</string>
 
-    <string name="back_exit">Press the back button to exit(HomePage)</string>
+    <string name="back_exit">首页返回键退出</string>
 
-    <string name="back_exit_detail">Double click the back button to exit the app</string>
+    <string name="back_exit_detail">双击返回键直接退出应用</string>
 
-    <string name="random_header_server">Cover setting</string>
+    <string name="random_header_server">封面设置</string>
 
-    <string name="text_size">Article Text Size</string>
+    <string name="text_size">文章字号</string>
 
-    <string name="random_header_pic_per">Manual transmission</string>
+    <string name="random_header_pic_per">滑动轮播</string>
 
-    <string name="random_header_pic_auto">Automatic transmission</string>
+    <string name="random_header_pic_auto">自动轮播</string>
 
-    <string name="random_header_color_gradual">Gradual color transmission</string>
+    <string name="random_header_color_gradual">渐变色轮播</string>
 
-    <string name="random_header_color_pure">Pure color transmission</string>
+    <string name="random_header_color_pure">纯色轮播</string>
 
-    <string name="custom_header_color_pure">Custom pure color</string>
+    <string name="custom_header_color_pure">自定义纯色</string>
 
-    <string name="click_to_exit">Press again to exit the app</string>
+    <string name="click_to_exit">再按一次退出应用</string>
 
-    <string name="start_after_exit">Start after exit</string>
+    <string name="start_after_exit">退出界面后生效</string>
 
-    <string name="start_after_restart_list">Pull down and refresh news and take effect</string>
+    <string name="start_after_restart_list">下拉刷新新闻后生效</string>
 
-    <string name="start_after_restart_app">The next entry will take effect.</string>
+    <string name="easter_egg_tip">已开启彩蛋功能</string>
+
+    <string name="start_after_restart_app">下次进入应用生效</string>
+
+    <string name="tip_title">友情提示</string>
+
+    <string name="update_title">发现一个新版本</string>
+
+    <string name="update_message">您可到应用商店更新,或点击确认进行下载安装</string>
+
+    <string name="update_title_no">恭喜,当前已是最新版本</string>
+    
+    <string name="input_message">请将之前备份后获得的一串字符粘贴到下方</string>
+
+    <string name="export_message">导出后,将生成一串字符并自动复制到您的剪贴板,请妥善保管</string>
+
+    <string name="subscribe_my_category">已选栏目</string>
+
+    <string name="subscribe_more_category">更多栏目</string>
+
+    <string name="channel">频道</string>
+
+    <string name="channel_select">频道选择</string>
+
+    <string name="channel_tip1">长按排序或者删除</string>
+
+    <string name="channel_tip2">点击添加</string>
+
+    <string name="delete">删除</string>
+
+    <string name="delete_message">是否删除该条内容</string>
+
+    <string name="repeated">这条重复了</string>
+
+    <string name="shortcut_star">收藏记录</string>
+
+    <string name="shortcut_disabled">快捷方式已被禁用</string>
+
+    <string name="zhihu">知乎日报</string>
+
+    <string name="guokr">果壳精选</string>
+
+    <string name="tab_netease">网易</string>
+
+    <string name="tab_other">其他</string>
+
+    <string name="tab_video">视频</string>
+
+    <string name="tab_ithome">IT之家</string>
+
+    <string name="tab_press">报刊</string>
+
+    <string name="tab_smartisan">锤子</string>
+    
+    <string name="type_phone">手机</string>
+
+    <string name="type_tablet">平板</string>
+    
+    <string name="color_choose">选择颜色</string>
+
+    <string name="sort_tip">长按并拖动改变分类顺序</string>
+
+    <string name="reading_record">阅读记录</string>
+
+    <string name="shared_reading_record">我已经在"Mere新闻"中{type}{num}篇新闻</string>
+
+    <string name="collected">收藏了</string>
+
+    <string name="read">阅读了</string>
+
+    <string name="message_reading_record">您目前已在"Mere新闻"中{type}{num}篇新闻</string>
+
+    <string name="notification">推送-Beta</string>
+
+    <string name="notification_detail">总开关</string>
+
+    <string name="notification_ticker">您有一条新的热点新闻</string>
+
+    <string name="notification_tip">推送间隔时间具体由系统安排，如长时间无法收到新闻资讯，请添加后台运行白名单</string>
+    
+    <string name="notification_time">推送频率</string>
+
+    <string name="notification_time_detail">修改最小间隔频率</string>
+
+    <string name="notification_sound">静默推送</string>
+
+    <string name="notification_sound_detail">不禁止振动和铃声</string>
+
+    <string name="time_level_1">频繁</string>
+    <string name="time_level_2">一般</string>
+    <string name="time_level_3">随缘</string>
+    <string name="time_level_4">极少</string>
+
+    <string name="message_save_title">是否立即应用改动？</string>
+    <string name="message_save_meesage">应用将重启以使改动生效</string>
+
+    <string name="click2detail">点击查看详情</string>
 
     <string name="auto">Auto</string>
 
     <string name="english">English</string>
 
     <string name="chinese">中文</string>
-
-    <string name="tip_title">Tips</string>
-
-    <string name="update_title">There are newer versions</string>
-
-    <string name="update_message">You can go to the app store to update, or click Ok to download and install</string>
-
-    <string name="update_title_no">Congratulations, this is the latest version</string>
-
-    <string name="input_message">Paste a string from previous backups to the bottom</string>
-
-    <string name="export_message">After exporting, a string will be generated and automatically copied to your clipboard. Please keep them properly.</string>
-
-    <string name="subscribe_my_category">Selected channel</string>
-
-    <string name="subscribe_more_category">More channel</string>
-
-    <string name="channel">Channel</string>
-
-    <string name="channel_select">Channel Select</string>
-
-    <string name="channel_tip1">Long click sort or delete</string>
-
-    <string name="channel_tip2">Click Add</string>
-
-    <string name="delete">Delete</string>
-
-    <string name="delete_message">Do you want to delete this item?</string>
-
-    <string name="repeated">This one is repeated.</string>
-
-    <string name="shortcut_star">Collection record</string>
-
-    <string name="shortcut_disabled">Shortcuts have been disabled.</string>
-
-    <string name="zhihu">Zhihu</string>
-
-    <string name="guokr">GuoKr</string>
-
-    <string name="tab_netease">Netease</string>
-
-    <string name="tab_other">Other</string>
-
-    <string name="tab_video">Video</string>
-
-    <string name="tab_ithome">IT Home</string>
-
-    <string name="tab_press">Press</string>
-
-    <string name="tab_smartisan">Smartisan</string>
-
-    <string name="type_phone">Phone</string>
-
-    <string name="type_tablet">Tablet</string>
-
-    <string name="color_choose">Choose color</string>
-
-    <string name="sort_tip">Long press and drag to change the classification order</string>
-
-    <string name="reading_record">Reading record</string>
-
-    <string name="shared_reading_record">I\'ve {type} {num} stories in "Mere News"</string>
-
-    <string name="collected">collected</string>
-
-    <string name="read">read</string>
-
-    <string name="message_reading_record">You have {type} {num} news articles in Mere News.</string>
-
-    <string name="flyme_bug">"Flyme系统下可能存在异常,暂时禁用"</string>
 </resources>

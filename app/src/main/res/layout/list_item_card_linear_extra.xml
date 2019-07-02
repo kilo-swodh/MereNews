@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,16 +9,13 @@
     android:layout_marginLeft="@dimen/margin_normal"
     android:layout_marginRight="@dimen/margin_normal"
     android:layout_marginTop="@dimen/margin_normal"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
-
-    <android.support.constraint.ConstraintLayout
+·
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/awesome_background">
+        android:background="@drawable/ripple_background">
 
         <TextView
             android:id="@+id/item_card_info"
@@ -61,11 +58,12 @@
             android:id="@+id/item_card_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:layout_marginStart="@dimen/margin_normal"
+            android:paddingBottom="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:paddingStart="@dimen/margin_normal"
             android:ellipsize="end"
             android:maxLines="2"
+            android:background="@color/mask_light"
             android:textColor="@color/white"
             android:textSize="@dimen/text_normal"
             app:layout_constraintBottom_toBottomOf="@id/item_card_img"
@@ -85,11 +83,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_card_img" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_extra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/item_card_img" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.v7.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

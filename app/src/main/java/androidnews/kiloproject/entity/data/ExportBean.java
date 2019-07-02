@@ -11,10 +11,14 @@ public class ExportBean {
             isAutoLoadMore,
             isStatusBar,
             isDisNotice,
-            isBackExit;
+            isBackExit,
+            isPush,
+            isPushSound,
+            isEasterEggs;
     public int listType,
             currentRandomHeader,
             currentLanguage,
-            mTextSize;
+            mTextSize,
+            pushTime;
     public List<BlockItem> blockList;
 }

@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+
+<resources>
+
+    <string name="app_name">Mere News</string>
+
+    <string name="successful">Successful</string>
+
+    <string name="fail">Fail</string>
+
+    <string name="save">Save</string>
+
+    <string name="sort">Sort</string>
+
+    <string name="big">Big</string>
+
+    <string name="normal">Normal</string>
+
+    <string name="small">Small</string>
+
+    <string name="setting">Setting</string>
+
+    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+
+    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+
+    <string name="message_setting_comeback">The user comes back from the settings page.</string>
+
+    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
+
+    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+
+    <string name="apk_name">android.apk</string>
+
+    <string name="action_comment">Comment</string>
+
+    <string name="action_link">Copy link</string>
+
+    <string name="action_browser">Open in browser</string>
+
+    <string name="action_star">Collection</string>
+
+    <string name="action_share">Share</string>
+
+    <string name="action_delete_all">Delete All</string>
+
+    <string name="action_list_number">Statistical</string>
+
+    <string name="action_block_source">Shielded News source</string>
+
+    <string name="action_block_keywords">Shielded keywords</string>
+
+    <string name="source">News source</string>
+
+    <string name="keywords">Keywords</string>
+
+    <string name="star_no">Collection cancelled</string>
+
+    <string name="star_yes">Collection completed</string>
+
+    <string name="history">History</string>
+
+    <string name="about">About</string>
+
+    <string name="block_rule">Block rule</string>
+
+    <string name="loading">Now loading</string>
+
+    <string name="load_success">Load success</string>
+
+    <string name="load_fail">Load failed</string>
+
+    <string name="server_fail">Server returns data exception</string>
+
+    <string name="download">Download</string>
+
+    <string name="download_img_q">Whether to download the current picture?</string>
+
+    <string name="download_success">Download success</string>
+
+    <string name="download_fail">Download fail</string>
+
+    <string name="empty_content">It\'s nothing.</string>
+
+    <string name="no_comment">No comment</string>
+
+    <string name="news">News</string>
+
+    <string name="setting_basic">Basic</string>
+
+    <string name="setting_view">View</string>
+
+    <string name="setting_data">Data</string>
+
+    <string name="setting_other">Misc</string>
+
+    <string name="language">Language</string>
+
+    <string name="clear_cache">Clear cache</string>
+
+    <string name="clear_cache_detail">Optional Collection/History/News cache</string>
+
+    <string name="news_cache">News cache</string>
+
+    <string name="all">All</string>
+
+    <string name="auto_refresh">auto refresh</string>
+
+    <string name="auto_refresh_detail">Automatic refresh during handover</string>
+
+    <string name="auto_loadmore">Preloading data</string>
+
+    <string name="auto_loadmore_detail">When you browse to the end, load in advance, avoid waiting, and consume more traffic.</string>
+
+    <string name="night_theme">Theme Switch</string>
+
+    <string name="list_type">List style</string>
+
+    <string name="notice">Turn off refresh alerts</string>
+
+    <string name="notice_detail">Refresh Successful SnackBar Close</string>
+
+    <string name="status_bar">Forced adaptation of status bar</string>
+
+    <string name="status_bar_detail">Mandatory addition of translucency to homepage status bar</string>
+
+    <string name="input_backup">Restore data</string>
+
+    <string name="input_backup_detail">Import backed-up data.</string>
+
+    <string name="export_backup">Backup data</string>
+
+    <string name="export_backup_detail">Contains settings/channel order/shielded rules.</string>
+
+    <string name="check_update">Check the update</string>
+
+    <string name="check_update_detail">The current version is:</string>
+
+    <string name="join_us">Add user group</string>
+
+    <string name="join_us_detail">QQ group num:938435700</string>
+
+    <string name="join_us_error">No QQ mobile</string>
+
+    <string name="donate">donation</string>
+
+    <string name="donate_detail">By the way, make a wish in the notes</string>
+
+    <string name="swipe_back">Sliding Back</string>
+
+    <string name="swipe_back_detail">Sliding back from left to right</string>
+
+    <string name="high_ram">Enhanced cache</string>
+
+    <string name="high_ram_detail">Use more memory to improve application fluency</string>
+
+    <string name="back_exit">Press the back button to exit(HomePage)</string>
+
+    <string name="back_exit_detail">Double click the back button to exit the app</string>
+
+    <string name="random_header_server">Cover setting</string>
+
+    <string name="text_size">Article Text Size</string>
+
+    <string name="random_header_pic_per">Manual transmission</string>
+
+    <string name="random_header_pic_auto">Automatic transmission</string>
+
+    <string name="random_header_color_gradual">Gradual color transmission</string>
+
+    <string name="random_header_color_pure">Pure color transmission</string>
+
+    <string name="custom_header_color_pure">Custom pure color</string>
+
+    <string name="click_to_exit">Press again to exit the app</string>
+
+    <string name="start_after_exit">Start after exit</string>
+
+    <string name="start_after_restart_list">Pull down and refresh news and take effect</string>
+
+    <string name="easter_egg_tip">Easter Eggs function turned on</string>
+
+    <string name="start_after_restart_app">The next entry will take effect.</string>
+
+    <string name="tip_title">Tips</string>
+
+    <string name="update_title">There are newer versions</string>
+
+    <string name="update_message">You can go to the app store to update, or click Ok to download and install</string>
+
+    <string name="update_title_no">Congratulations, this is the latest version</string>
+
+    <string name="input_message">Paste a string from previous backups to the bottom</string>
+
+    <string name="export_message">After exporting, a string will be generated and automatically copied to your clipboard. Please keep them properly.</string>
+
+    <string name="subscribe_my_category">Selected channel</string>
+
+    <string name="subscribe_more_category">More channel</string>
+
+    <string name="channel">Channel</string>
+
+    <string name="channel_select">Channel Select</string>
+
+    <string name="channel_tip1">Long click sort or delete</string>
+
+    <string name="channel_tip2">Click Add</string>
+
+    <string name="delete">Delete</string>
+
+    <string name="delete_message">Do you want to delete this item?</string>
+
+    <string name="repeated">This one is repeated.</string>
+
+    <string name="shortcut_star">Collection record</string>
+
+    <string name="shortcut_disabled">Shortcuts have been disabled.</string>
+
+    <string name="zhihu">Zhihu</string>
+
+    <string name="guokr">GuoKr</string>
+
+    <string name="tab_netease">Netease</string>
+
+    <string name="tab_other">Other</string>
+
+    <string name="tab_video">Video</string>
+
+    <string name="tab_ithome">IT Home</string>
+
+    <string name="tab_press">Press</string>
+
+    <string name="tab_smartisan">Smartisan</string>
+
+    <string name="type_phone">Phone</string>
+
+    <string name="type_tablet">Tablet</string>
+
+    <string name="color_choose">Choose color</string>
+
+    <string name="sort_tip">Long press and drag to change the classification order</string>
+
+    <string name="reading_record">Reading record</string>
+
+    <string name="shared_reading_record">I\'ve {type} {num} stories in "Mere News"</string>
+
+    <string name="collected">collected</string>
+
+    <string name="read">read</string>
+
+    <string name="message_reading_record">You have {type} {num} news articles in Mere News.</string>
+
+    <string name="notification">Notification</string>
+
+    <string name="notification_detail">Master switch</string>
+
+    <string name="notification_ticker">You have a new hot news</string>
+
+    <string name="notification_tip">Push interval is scheduled by the system. If you can\'t receive news for a long time, Please add a white list for background operation.</string>
+
+    <string name="notification_time">Notification Frequency</string>
+
+    <string name="notification_time_detail">The set time is the shortest time under the ideal condition, which is arranged by the system itself.</string>
+
+    <string name="notification_sound">Notification Sound</string>
+
+    <string name="notification_sound_detail">No use of ringing and vibration</string>
+
+    <string name="time_level_1">frequent</string>
+    <string name="time_level_2">normal</string>
+    <string name="time_level_3">less</string>
+    <string name="time_level_4">few</string>
+
+    <string name="message_save_title">Save changes or not?</string>
+    <string name="message_save_meesage">Unsaved changes will be lost</string>
+
+    <string name="click2detail">Click here for details</string>
+</resources>

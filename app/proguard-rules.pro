@@ -133,3 +133,4 @@
  -keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
       <init>(...);
  }
+

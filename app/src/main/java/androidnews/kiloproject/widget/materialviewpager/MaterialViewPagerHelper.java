@@ -1,9 +1,8 @@
 package androidnews.kiloproject.widget.materialviewpager;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.concurrent.ConcurrentHashMap;
 

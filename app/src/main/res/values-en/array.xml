@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nav Drawer Menu Items -->
+
+    <array name="address_tag">
+        <!-- 网易 -->
+        <item>Highlights</item>
+        <item>Tech</item>
+        <item>Entertainment</item>
+        <item>Scoops</item>
+        <item>Sports</item>
+        <item>Game</item>
+        <item>Health</item>
+        <item>NBA</item>
+        <item>Business</item>
+        <item>Education</item>
+        <item>Fun</item>
+        <item>Art</item>
+        <item>Politics</item>
+        <item>Special</item>
+        <item>Blizzard</item>
+        <item>Phone</item>
+        <item>Football</item>
+        <item>Digital</item>
+        <item>Running</item>
+        <item>History</item>
+        <item>Stock</item>
+        <item>Lottery</item>
+        <item>Vacancy</item>
+        <item>CBA</item>
+        <item>Chinese Football</item>
+        <item>Travel</item>
+        <item>NetEase Blog</item>
+        <item>Military</item>
+        <item>Movie</item>
+        <item>Smart</item>
+        <item>Emotion</item>
+        <item>Radio Station</item>
+        <item>Home Furnishing</item>
+        <item>Parenting</item>
+        <item>Auto</item>
+        <item>Vacancy</item>
+        <item>Forum</item>
+        <item>House property</item>
+        <item>Today</item>
+        <item>Open class</item>
+        <item>Marketing</item>
+        <item>Aviation</item>
+        <item>Music</item>
+        <item>Double creation</item>
+        <item>Buddhism</item>
+        <item>Tmall</item>
+        <item>JD.COM</item>
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <!-- 其他分类 -->
+        <item>ZhiHuDaily</item>
+        <item>GuoKr</item>
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <!-- 视频分类 -->
+        <item>Coming soon</item>
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <!-- IT之家 -->
+        <item>News</item>  //资讯
+        <item>Evaluate</item>//评测室
+        <item>Android</item>//安卓
+        <item>Phone</item>  //手机
+        <item>Digital</item>//数码
+        <item>PC</item>     //电脑
+        <item>Geek</item>   //极客学院
+        <item>VR</item>     //VR
+        <item>Auto</item>   //智能汽车
+        <item>Game</item>   //电竞
+        <item>Windows</item>//Windows
+        <item>Live</item>   //发布会
+        <item>iOS</item>    //苹果
+        <item>Discovery</item>//科普
+        <item>Internet</item>//网络焦点
+        <item>IT</item>     //行业前沿
+        <item>OPPO</item>   //OPPO
+
+        <item>HUAWEI</item> //华为
+        <item>VIVO</item>   //VIVO
+        <item>Xiaomi</item> //小米
+
+        <item>ARTISAN T</item> //锤子
+        <item>SUMSANG</item>//三星
+        <item>OnePlus</item>  //一加
+        <item>MEIZU</item>  //魅族
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <!-- 报刊 -->
+        <item>World Expo</item>
+        <item>Weekend Pictorial</item>
+        <item>Global Characters</item>
+        <item>Bund Pictorial</item>
+        <item>Nandu Weekly</item>
+        <item>Nandu Entertainment</item>
+        <item>Life Weekly</item>
+        <item>Time Weekly</item>
+        <item>China Business Daily</item>
+        <item>Chengdu Evening News</item>
+        <item>Democracy and the rule of law</item>
+        <item>Southern Metropolis</item>
+        <item>Shanxi Evening News</item>
+        <item>Family Doctor</item>
+        <item>Peoples livelihood weekly</item>
+        <item>Kangyi Magazine</item>
+        <item>Peoples Network Public Opinion</item>
+        <item>Chinese menstruation</item>
+        <item>Beijing Youth Daily</item>
+        <item>Zijin Mountain Video</item>
+        <item>Zhangjiakou</item>
+        <item>Youth in Guangzhou</item>
+        <item>West China Community</item>
+        <item>Guangming Daily</item>
+        <item>Legal Daily</item>
+        <item>Yueyang Net</item>
+        <item>Tangshan Radio</item>
+        <item>Oriental Today</item>
+        <item>Hengyang Channel</item>
+        <item>Zhengzhou Evening News</item>
+        <item>Keqiao Daily</item>
+        <item>Chengde Evening News</item>
+        <item>ASEAN Expo</item>
+        <item>Wushi Evening News</item>
+        <item>One Fuqing</item>
+        <item>New Evening News</item>
+        <item>Big Technology</item>
+        <item>Changan Observation</item>
+        <item>Nanguo Morning Post</item>
+        <item>Hushi bar</item>
+        <item>Youth Newspaper New Media</item>
+        <item>Weekly Digest</item>
+        <item>Oriental Guardian</item>
+        <item>Power Hunan</item>
+        <item>Zhujiang Business Journal</item>
+        <item>Yulin Daily</item>
+        <item>Ta Kung Pao</item>
+        <item>Chinese Business Morning Post</item>
+        <item>Frontier Times</item>
+        <item>Vacancy</item>
+        <item>Charity in China</item>
+        <item>Zhuji Daily</item>
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>Selected</item>
+        <item>Literature</item>
+        <item>Life</item>
+        <item>Science and technology</item>
+        <item>Sociology</item>
+        <item>Business</item>
+        <item>Science</item>
+        <item>Nonfiction</item>
+        <item>Video</item>
+
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+    </array>
+</resources>

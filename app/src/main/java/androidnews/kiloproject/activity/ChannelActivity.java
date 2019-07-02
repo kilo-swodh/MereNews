@@ -2,16 +2,24 @@ package androidnews.kiloproject.activity;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -42,7 +50,6 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_OTHER_END_USED;
-import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_END_USED;
 import static androidnews.kiloproject.system.AppConfig.TYPE_PRESS_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_END_USED;
@@ -79,7 +86,7 @@ public class ChannelActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.action_save:
                         item.setEnabled(false);
-                        saveChannel();
+                        saveSetting();
                         break;
                     case R.id.action_sort:
                         RecyclerView rvSort = new RecyclerView(mActivity);
@@ -188,7 +195,7 @@ public class ChannelActivity extends BaseActivity {
         return true;
     }
 
-    private void saveChannel() {
+    private void saveSetting() {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {

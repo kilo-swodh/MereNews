@@ -13,7 +13,7 @@ public class GlideUtil {
         }
         if (context instanceof Activity) {
             final Activity activity = (Activity) context;
-            if ((Build.VERSION.SDK_INT > 16 && activity.isDestroyed()) || activity.isFinishing()) {
+            if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN && activity.isDestroyed()) || activity.isFinishing()) {
                 return false;
             }
         }

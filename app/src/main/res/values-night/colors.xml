@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#383838</color>
-    <color name="colorPrimaryDark">#213131</color>
+    <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#141414</color>
 
     <color name="main_text_colorful">@color/paleturquoise</color>
@@ -9,12 +9,15 @@
     <color name="main_text_color">#FFFAF0</color>
     <color name="main_text_color_read">#999</color>
     <color name="divider">#FFFAFA</color>
-    <color name="main_background">@color/colorAccent</color>
+    <color name="main_background">@color/colorPrimaryDark</color>
     <color name="awesome_background">#424242</color>
+
+    <color name="ripple_color">@color/colorPrimaryDark</color>
 
     <color name="colorful_theme">@color/main_text_color</color>
 
     <color name="comment_name">@color/deepskyblue</color>
     <color name="comment_bg_level_two">@color/colorPrimary</color>
 
+    <color name="seek_bar_color">@color/main_text_colorful</color>
 </resources>

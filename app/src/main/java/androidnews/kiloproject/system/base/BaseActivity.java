@@ -2,20 +2,22 @@ package androidnews.kiloproject.system.base;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.google.gson.Gson;
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 
 import androidnews.kiloproject.R;
@@ -123,23 +125,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // 如果你的app可以横竖屏切换，并且适配4.4或者emui3手机请务必在onConfigurationChanged方法里添加这句话
-        ImmersionBar.with(this).init();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，
-        // 在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
-        ImmersionBar.with(mActivity).destroy();
         SwipeBackHelper.onDestroy(this);
     }
 
     public static boolean isLollipop() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        return Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH;
     }
 
     public void finishWithAnime() {
@@ -150,28 +142,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void restartWithAnime(int bgId,int contentId) {
-        findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        animateRevealShow(findViewById(contentId), true, new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            animateRevealShow(findViewById(contentId), true, new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                findViewById(contentId).setVisibility(View.GONE);
-                ActivityUtils.finishAllActivitiesExceptNewest();
-                relaunchApp(true);
-            }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    findViewById(contentId).setVisibility(View.GONE);
+                    ActivityUtils.finishAllActivitiesExceptNewest();
+                    relaunchApp(true);
+                }
 
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+        }else {
+            ActivityUtils.finishAllActivitiesExceptNewest();
+            relaunchApp(true);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

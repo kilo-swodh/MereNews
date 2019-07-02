@@ -1,5 +1,7 @@
 package androidnews.kiloproject.system;
 
+import java.util.UUID;
+
 /**
  * Created by ct_OS on 2018-1-1.
  */
@@ -12,9 +14,11 @@ public class AppConfig {
             isAutoLoadMore,
             isStatusBar,
             isDisNotice,
-            isBackExit;
-
-    public static int listType;
+            isBackExit,
+            isPush,
+            isPushSound,
+            isEasterEggs;
+    public static int listType,pushTime;
 
     public static int mTextSize = 1;
 
@@ -123,6 +127,19 @@ public class AppConfig {
     public static final String CONFIG_LIST_TYPE = "config_list_type";
 
     public static final String CONFIG_LAST_LAUNCH = "config_last_launch";  //设置重置
+
+    public static final String CONFIG_PUSH = "config_push";
+
+    public static final String CONFIG_PUSH_TIME = "config_push_time";
+
+    public static final String CONFIG_PUSH_SOUND = "config_push_sound";
+
+    public static final String CONFIG_EASTER_EGGS = "config_easter_eggs";
+
+    public static final String CACHE_LAST_PUSH_ID = "cache_push_id";  //当日推送的id统计
+    public static final String CACHE_LAST_PUSH_TIME = "cache_push_TIME";  //当日推送的时间统计
+
+    public static final String PUSH_WORK_NAME = "mere_push_work";
 
     public static final int LIST_TYPE_SINGLE = 0;
 

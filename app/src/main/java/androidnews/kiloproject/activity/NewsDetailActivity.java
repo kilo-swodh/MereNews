@@ -5,16 +5,17 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -36,7 +37,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.Nullable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -183,8 +183,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                 String jsonNoHeader = response.substring(20, response.length());
                                 String jsonFine = jsonNoHeader.substring(0, jsonNoHeader.length() - 1);
                                 if (response.contains("点这里升级")) {
-                                    ToastUtils.showShort(getString(R.string.server_fail));
-                                    finish();
+                                    loadError();
                                     return;
                                 }
                                 try {
@@ -194,6 +193,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                     ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
                                     finish();
                                 }
+                                if (TextUtils.isEmpty(currentData.getBody()))
+                                    loadError();
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -433,6 +434,10 @@ public class NewsDetailActivity extends BaseDetailActivity {
     protected void initWeb() {
         super.initWeb();
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
+            }
 
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
@@ -476,6 +481,11 @@ public class NewsDetailActivity extends BaseDetailActivity {
             else
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
+    }
+
+    private void loadError(){
+        ToastUtils.showShort(getString(R.string.server_fail));
+        finish();
     }
 
     @Override

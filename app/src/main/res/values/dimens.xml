@@ -19,4 +19,7 @@
     <dimen name="cardMarginHorizontal">10dp</dimen>
     <dimen name="cardMarginVertical">8dp</dimen>
 
+    <dimen name="corner_small">4dp</dimen>
+    <dimen name="corner_normal">16dp</dimen>
+    <dimen name="corner_large">20dp</dimen>
 </resources>

@@ -3,34 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="androidnews.kiloproject">
 
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="20" />
-    <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>-->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="20" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.READ_LOGS" />-->
 
-    <!--WRITE_EXTERNAL_STORAGE"/>-->
-    <!--8.0安装需要的权限-->
-    <!--REQUEST_INSTALL_PACKAGES" />-->
+    <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
 
-    <uses-sdk tools:overrideLibrary="cn.jzvd,jp.wasabeef.takt"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-sdk tools:overrideLibrary="cn.jzvd,jp.wasabeef.takt,
+    com.xw.repo.bubbleseekbar"/>
 
     <application
         android:name="androidnews.kiloproject.system.MyApplication"
         android:allowBackup="true"
+        android:configChanges="locale"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:maxAspectRatio="2.4"
-        android:usesCleartextTraffic="true"
-        android:resizeableActivity="true"
-        android:supportsRtl="true"
         android:largeHeap="true"
-        android:configChanges="locale"
+        android:maxAspectRatio="2.4"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/AppTheme">
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <meta-data
             android:name="android.max_aspect"
@@ -39,13 +39,14 @@
         <!--适配华为（huawei）刘海屏-->
         <meta-data
             android:name="android.notch_support"
-            android:value="true"/>
+            android:value="true" />
         <!--适配小米（xiaomi）刘海屏-->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <activity android:name=".activity.SplashActivity"
+        <activity
+            android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,34 +54,40 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity"
-            android:theme="@style/AppThemeMain"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppThemeMain" />
 
-        <activity android:name=".activity.AboutActivity"/>
+        <activity android:name=".activity.AboutActivity" />
 
-        <activity android:name=".activity.GalleyActivity"
-            android:theme="@style/AppThemeColor"/>
+        <activity
+            android:name=".activity.GalleyActivity"
+            android:theme="@style/AppThemeColor" />
 
-        <activity android:name=".activity.NewsDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name=".activity.NewsDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
-        <activity android:name=".activity.CacheActivity"/>
+        <activity android:name=".activity.CacheActivity" />
 
-        <activity android:name=".activity.CommentActivity"/>
+        <activity android:name=".activity.CommentActivity" />
 
-        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.SettingActivity" />
 
-        <activity android:name=".activity.ChannelActivity"/>
+        <activity android:name=".activity.NotificationActivity"/>
 
-        <activity android:name=".activity.ZhiHuDetailActivity"/>
+        <activity android:name=".activity.ChannelActivity" />
 
-        <activity android:name=".activity.GuoKrDetailActivity"/>
+        <activity android:name=".activity.ZhiHuDetailActivity" />
 
-        <activity android:name=".activity.BlockActivity"/>
+        <activity android:name=".activity.GuoKrDetailActivity" />
 
-        <activity android:name=".activity.ITHomeDetailActivity"/>
+        <activity android:name=".activity.BlockActivity" />
 
-        <activity android:name=".activity.SmartisanDetailActivity"/>
+        <activity android:name=".activity.ITHomeDetailActivity" />
+
+        <activity android:name=".activity.SmartisanDetailActivity" />
+
     </application>
 </manifest>

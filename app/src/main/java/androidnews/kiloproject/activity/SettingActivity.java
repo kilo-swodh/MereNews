@@ -1,7 +1,5 @@
 package androidnews.kiloproject.activity;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -10,26 +8,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
@@ -66,12 +61,16 @@ import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
@@ -79,9 +78,8 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
-import static com.blankj.utilcode.util.AppUtils.relaunchApp;
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
     Toolbar toolbar;
     TextView tvLanguage;
@@ -130,6 +128,7 @@ public class SettingActivity extends BaseActivity {
     String[] headerItems;
     String[] listItems;
     String[] sizeItems;
+    private TextView mNotificationTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,6 +186,8 @@ public class SettingActivity extends BaseActivity {
 
         tvListType = (TextView) findViewById(R.id.tv_list_type);
         tvListTypeDetail = (TextView) findViewById(R.id.tv_list_type_detail);
+
+        mNotificationTv = (TextView) findViewById(R.id.tv_notification);
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
@@ -297,7 +298,7 @@ public class SettingActivity extends BaseActivity {
                             });
 
                             tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -319,8 +320,8 @@ public class SettingActivity extends BaseActivity {
                                         currentLanguage = which;
                                         spUtils.put(CONFIG_LANGUAGE, currentLanguage);
                                         tvLanguageDetail.setText(languageItems[currentLanguage]);
-                                        restartWithAnime(R.id.root_view,R.id.content);
                                         dialog.dismiss();
+                                        restartWithAnime(R.id.root_view, R.id.content);
                                     }
                                 })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -539,6 +540,11 @@ public class SettingActivity extends BaseActivity {
                                                     spUtils.put(CONFIG_LANGUAGE, exportBean.currentLanguage);
                                                     spUtils.put(CONFIG_TEXT_SIZE, exportBean.mTextSize);
                                                     spUtils.put(CONFIG_TYPE_ARRAY, exportBean.arrayStr);
+                                                    spUtils.put(CONFIG_PUSH, exportBean.isPush);
+                                                    spUtils.put(CONFIG_PUSH_SOUND, exportBean.isPushSound);
+                                                    spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
+                                                    spUtils.put(CONFIG_PUSH_TIME, exportBean.pushTime);
+                                                    spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
                                                     LitePal.saveAll(exportBean.blockList);
                                                     e.onNext(true);
                                                 } else
@@ -557,8 +563,8 @@ public class SettingActivity extends BaseActivity {
                                                     try {
                                                         if (o) {
                                                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
-                                                            restartWithAnime(R.id.root_view,R.id.content);
-                                                        }else
+                                                            restartWithAnime(R.id.root_view, R.id.content);
+                                                        } else
                                                             SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).show();
                                                     } catch (Exception e1) {
                                                         e1.printStackTrace();
@@ -605,14 +611,17 @@ public class SettingActivity extends BaseActivity {
                                             exportBean.isNightMode = AppConfig.isNightMode;
                                             exportBean.isHighRam = AppConfig.isHighRam;
                                             exportBean.isSwipeBack = AppConfig.isSwipeBack;
-                                            exportBean.isAutoRefresh  = AppConfig.isAutoRefresh;
+                                            exportBean.isAutoRefresh = AppConfig.isAutoRefresh;
                                             exportBean.isDisNotice = AppConfig.isDisNotice;
                                             exportBean.isStatusBar = AppConfig.isStatusBar;
-                                            exportBean.isAutoLoadMore  = AppConfig.isAutoLoadMore;
-                                            exportBean.isBackExit  = AppConfig.isBackExit;
-                                            exportBean.listType  = AppConfig.listType;
-                                            exportBean.mTextSize  = AppConfig.mTextSize;
-                                            exportBean.currentRandomHeader  = currentRandomHeader;
+                                            exportBean.isAutoLoadMore = AppConfig.isAutoLoadMore;
+                                            exportBean.isBackExit = AppConfig.isBackExit;
+                                            exportBean.listType = AppConfig.listType;
+                                            exportBean.mTextSize = AppConfig.mTextSize;
+                                            exportBean.isPush = AppConfig.isPush;
+                                            exportBean.isPushSound = AppConfig.isPushSound;
+                                            exportBean.pushTime = AppConfig.pushTime;
+                                            exportBean.currentRandomHeader = currentRandomHeader;
                                             exportBean.currentLanguage = currentLanguage;
                                             exportBean.blockList = blockList;
 
@@ -635,7 +644,7 @@ public class SettingActivity extends BaseActivity {
                                                         //noinspection ConstantConditions
                                                         cm.setPrimaryClip(ClipData.newPlainText("json", str));
                                                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
-                                                    }else
+                                                    } else
                                                         SnackbarUtils.with(toolbar).setMessage(getString(R.string.fail)).show();
                                                 } catch (Exception e1) {
                                                     e1.printStackTrace();
@@ -660,10 +669,10 @@ public class SettingActivity extends BaseActivity {
                         .setTitle(R.string.clear_cache)
                         .setCancelable(true)
                         .setSingleChoiceItems(
-                                getResources().getStringArray(R.array.delete_cache),0, new DialogInterface.OnClickListener() {
+                                getResources().getStringArray(R.array.delete_cache), 0, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        switch (which){
+                                        switch (which) {
                                             case 0:
                                                 new Thread(new Runnable() {
                                                     @Override
@@ -678,10 +687,10 @@ public class SettingActivity extends BaseActivity {
                                                 }).start();
                                                 break;
                                             case 1:
-                                                LitePal.deleteAll(CacheNews.class, "type = ?", ""+CacheNews.CACHE_HISTORY);
+                                                LitePal.deleteAll(CacheNews.class, "type = ?", "" + CacheNews.CACHE_HISTORY);
                                                 break;
                                             case 2:
-                                                LitePal.deleteAll(CacheNews.class, "type = ?", ""+CacheNews.CACHE_COLLECTION);
+                                                LitePal.deleteAll(CacheNews.class, "type = ?", "" + CacheNews.CACHE_COLLECTION);
                                                 break;
                                             case 3:
                                                 new Thread(new Runnable() {
@@ -786,7 +795,14 @@ public class SettingActivity extends BaseActivity {
                 }
             case R.id.tv_donate:
             case R.id.tv_donate_detail:
+                SPUtils.getInstance().put(CONFIG_EASTER_EGGS,true);
+//                SnackbarUtils.with(toolbar)
+//                        .setMessage(getString(R.string.easter_egg_tip))
+//                        .show();
                 AlipayUtil.startAlipayClient(mActivity, AlipayUtil.PAY_ID);
+                break;
+            case R.id.tv_notification:
+                startActivity(new Intent(mActivity,NotificationActivity.class));
                 break;
         }
     }

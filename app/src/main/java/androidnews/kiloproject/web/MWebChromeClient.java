@@ -92,6 +92,6 @@ public class MWebChromeClient extends WebChromeClient {
         if (redValue >= 223 && greenValue >= 223 && blueValue >= 223)
             isWhite = true;
         int color = Color.argb(alphaValue, redValue, greenValue, blueValue);
-        String a = "0x" + Integer.toHexString(color);
+        String colorStr = "0x" + Integer.toHexString(color);
     }
 }

@@ -5,12 +5,14 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -365,6 +367,17 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    protected void initWeb() {
+        super.initWeb();
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
+            }
+        });
     }
 
     @Override

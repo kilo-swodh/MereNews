@@ -12,6 +12,8 @@
     <color name="main_background">@android:color/white</color>
     <color name="awesome_background">@color/main_background</color>
 
+    <color name="ripple_color">@color/gray_cc</color>
+
     <color name="colorful_theme">@color/main_background</color>
 
     <color name="splash_bg">#f5f0ea</color>
@@ -20,8 +22,10 @@
     <color name="comment_bg_level_two">@color/ghostwhite</color>
 
     <color name="mask">#66000000</color><!--半透明遮罩 -->
-    accent_color
+    <color name="mask_light">#33000000</color>
     <color name="drawerArrowColor">@android:color/white</color>
+
+    <color name="seek_bar_color">@color/colorPrimaryDark</color>
 
     <color name="transparent">#00000000</color><!--透明色 -->   
     <color name="white">#FFFFFF</color><!--白色 -->   

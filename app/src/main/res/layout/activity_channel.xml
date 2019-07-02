@@ -7,19 +7,19 @@
     android:orientation="vertical"
     android:background="@color/main_background">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_background"
-        android:elevation="4dp">
-        <android.support.v7.widget.Toolbar
+        android:elevation="@dimen/elevation_mid">
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ToolbarPopupTheme" />
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_channel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,11 +31,10 @@
             app:tabSelectedTextColor="@color/main_text_colorful"
             app:tabTextColor="@color/main_text_color"
             app:tabIndicatorColor="@color/main_text_colorful" />
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_channel"
-        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
