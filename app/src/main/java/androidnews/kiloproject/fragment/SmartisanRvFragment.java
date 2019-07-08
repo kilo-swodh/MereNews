@@ -42,8 +42,8 @@ import io.reactivex.schedulers.Schedulers;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN;
-import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN_LOAD_MORE;
-import static androidnews.kiloproject.system.AppConfig.HOST_SMARTISAN_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.GET_SMARTISAN_LOAD_MORE;
+import static androidnews.kiloproject.system.AppConfig.GET_SMARTISAN_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 
 public class SmartisanRvFragment extends BaseRvFragment {
@@ -171,11 +171,11 @@ public class SmartisanRvFragment extends BaseRvFragment {
         String dataUrl = "";
         switch (type) {
             case TYPE_REFRESH:
-                dataUrl = HOST_SMARTISAN_REFRESH
+                dataUrl = GET_SMARTISAN_REFRESH
                         .replace("{cate_id}", typeStr);
                 break;
             case TYPE_LOADMORE:
-                dataUrl = HOST_SMARTISAN_LOAD_MORE
+                dataUrl = GET_SMARTISAN_LOAD_MORE
                         .replace("{cate_id}", typeStr)
                         .replace("{last_id}", lastItemId);
                 break;

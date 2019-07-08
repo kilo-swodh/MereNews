@@ -28,8 +28,9 @@ public class AppConfig {
 
     public static final int TYPE_ZHIHU = 50;
     public static final int TYPE_GUOKR = 51;
+    public static final int TYPE_CNBETA = 52;
     public static final int TYPE_OTHER_END = 69;
-    public static final int TYPE_OTHER_END_USED = 51;
+    public static final int TYPE_OTHER_END_USED = 52;       //加其他记得改
 
     public static final int TYPE_VIDEO_START = 70;
     public static final int TYPE_VIDEO_END = 89;
@@ -50,11 +51,8 @@ public class AppConfig {
     //网易
     public static final String HOST_163 = "http://c.m.163.com";
     public static final String HOST_163_COMMENT = "http://comment.api.163.com";
-
     public static final String GET_NEWS_DETAIL = "nc/article/{docid}/full.html";
-
     public static final String GET_MAIN_DATA = "/nc/article/headline/{typeStr}/{currentPage}-20.html";
-
     public static final String GET_NEWS_COMMENT = "/api/json/post/list/new/normal/{board}/{docid}/desc/0/20/10/2/2";
 
     public static final String GET_VIDEOS = "/nc/video/list/{typeStr}/n/{currentPage}-20.html";
@@ -84,8 +82,19 @@ public class AppConfig {
 
     //锤子阅读
     public static final String HOST_SMARTISAN = "http://reader.smartisan.com";
-    public static final String HOST_SMARTISAN_REFRESH = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id=&page_size=20";
-    public static final String HOST_SMARTISAN_LOAD_MORE = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id={last_id}&page_size=20";
+    public static final String GET_SMARTISAN_REFRESH = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id=&page_size=20";
+    public static final String GET_SMARTISAN_LOAD_MORE = "/index.php?r=find/GetArticleList&cate_id={cate_id}&art_id={last_id}&page_size=20";
+
+    //CnBeta
+    public static final String HOST_CNBETA = "http://api.cnbeta.com/capi?";
+    public static final String GET_CNBETA_REFRESH = "app_key=10000&end_sid=2147483647&format=json&method=Article.Lists&timestamp={timestamp}&v=2.8.5";
+    public static final String GET_CNBETA_LOADMORE = "app_key=10000&end_sid={end_sid}&format=json&method=Article.Lists&timestamp={timestamp}&v=2.8.5";
+    public static final String GET_CNBETA_DETAIL = "app_key=10000&format=json&method=Article.NewsContent&sid={sid}&timestamp={timestamp}&v=2.8.5";
+    public static final String GET_CNBETA_COMMENT = "app_key=10000&format=json&method=Article.Comment&page=1&pageSize=20&sid={sid}&timestamp={timestamp}&v=2.8.5";
+    public static final String GET_CNBETA_EXTRA = "&sign=";
+    public static final String GET_CNBETA_MD5_EXTRA = "&mpuffgvbvbttn3Rc";
+    public static final String HOST_CNBETA_SHARE = "http://www.cnbeta.com/articles/";
+    public static final String HOST_CNBETA_IMG = "https://static.cnbetacdn.com";
 
     //更新
     public static final String CHECK_UPADTE_ADDRESS = "https://raw.githubusercontent.com/kilo-swodh/MereNews/master/update.txt";

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_normal"
+    android:layout_marginTop="@dimen/margin_normal"
+    android:layout_marginRight="@dimen/margin_normal"
+    android:layout_marginBottom="@dimen/margin_normal"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ripple_background">
+
+        <ImageView
+            android:id="@+id/item_card_img"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/item_card_img_logo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_card_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/text_mini"
+            app:layout_constraintEnd_toStartOf="@id/item_card_img"
+            app:layout_constraintStart_toEndOf="@+id/item_card_img_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_card_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/main_text_color_dark"
+            android:textSize="@dimen/text_normal"
+            app:layout_constraintBottom_toTopOf="@id/item_card_subtitle"
+            app:layout_constraintEnd_toEndOf="@id/item_card_time"
+            app:layout_constraintStart_toStartOf="@+id/item_card_img_logo"
+            app:layout_constraintTop_toBottomOf="@id/item_card_time" />
+
+        <TextView
+            android:id="@+id/item_card_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/main_text_color_dark"
+            android:textSize="@dimen/text_mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/item_card_img_logo"
+            app:layout_constraintTop_toBottomOf="@+id/item_card_img" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

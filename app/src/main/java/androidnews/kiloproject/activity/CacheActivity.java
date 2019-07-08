@@ -42,6 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
+import static androidnews.kiloproject.system.AppConfig.TYPE_CNBETA;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_NETEASE_START;
@@ -201,6 +202,17 @@ public class CacheActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             break;
+                                        case TYPE_CNBETA:
+                                            intent = new Intent(mActivity, CnBetaDetailActivity.class);
+                                            switch (i) {
+                                                case 1:
+                                                    intent.putExtra("sid", cacheNews.getDocid());
+                                                    break;
+                                                case 2:
+                                                    intent.putExtra("htmlText", cacheNews.getHtmlText());
+                                                    break;
+                                            }
+                                            break;
                                         case TYPE_NETEASE_START://包含网易报刊
                                             intent = new Intent(mActivity, NewsDetailActivity.class);
                                             switch (i) {
@@ -214,11 +226,18 @@ public class CacheActivity extends BaseActivity {
                                             break;
                                         case TYPE_ITHOME_START:
                                             intent = new Intent(mActivity, ITHomeDetailActivity.class);
-                                            intent.putExtra("title", cacheNews.getTitle());
-                                            intent.putExtra("url", cacheNews.getUrl());
-                                            intent.putExtra("id", cacheNews.getDocid());
-                                            intent.putExtra("time", cacheNews.getTimeStr());
-                                            intent.putExtra("img", cacheNews.getImgUrl());
+                                            switch (i) {
+                                                case 1:
+                                                    intent.putExtra("title", cacheNews.getTitle());
+                                                    intent.putExtra("url", cacheNews.getUrl());
+                                                    intent.putExtra("id", cacheNews.getDocid());
+                                                    intent.putExtra("time", cacheNews.getTimeStr());
+                                                    intent.putExtra("img", cacheNews.getImgUrl());
+                                                    break;
+                                                case 2:
+                                                    intent.putExtra("htmlText", cacheNews.getHtmlText());
+                                                    break;
+                                            }
                                             break;
                                         case TYPE_SMARTISAN_START:
                                             intent = new Intent(mActivity, SmartisanDetailActivity.class);

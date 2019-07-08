@@ -260,7 +260,7 @@
 
     <string name="notification_time">Notification Frequency</string>
 
-    <string name="notification_time_detail">The set time is the shortest time under the ideal condition, which is arranged by the system itself.</string>
+    <string name="notification_time_detail">The set time is the shortest time under the ideal condition, which is arranged by the system itself.Rest time is fixed as silent push mode</string>
 
     <string name="notification_sound">Notification Sound</string>
 

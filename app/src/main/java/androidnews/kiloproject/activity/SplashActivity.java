@@ -94,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
                 AppConfig.isPush = spUtils.getBoolean(CONFIG_PUSH, true);
                 AppConfig.isPushSound = spUtils.getBoolean(CONFIG_PUSH_SOUND);
                 AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
-                AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS,false);
+                AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();
@@ -197,13 +197,13 @@ public class SplashActivity extends AppCompatActivity {
     public void checkPushWork() {
         if (!AppConfig.isPush) return;
 
-        Constraints myCoustrain = new Constraints.Builder()
-                .setRequiresBatteryNotLow(true) //不在电量不足执行
-                .setRequiresCharging(true) //在充电时执行
-                .setRequiresStorageNotLow(true) //不在存储容量不足时执行
-                .setRequiresDeviceIdle(true) //在待机状态下执行 调用需要API级别最低为23
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
+//        Constraints myCoustrain = new Constraints.Builder()
+//                .setRequiresBatteryNotLow(true) //不在电量不足执行
+//                .setRequiresCharging(true) //在充电时执行
+//                .setRequiresStorageNotLow(true) //不在存储容量不足时执行
+//                .setRequiresDeviceIdle(true) //在待机状态下执行 调用需要API级别最低为23
+//                .setRequiredNetworkType(NetworkType.CONNECTED)
+//                .build();
 
         PeriodicWorkRequest.Builder notifyWork = null;
         switch (AppConfig.pushTime) {
@@ -223,7 +223,7 @@ public class SplashActivity extends AppCompatActivity {
                 break;
         }
         if (notifyWork != null) {
-            notifyWork.setConstraints(myCoustrain);
+//            notifyWork.setConstraints(myCoustrain);
             PeriodicWorkRequest workRequest = notifyWork.build();
             WorkManager.getInstance().enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP,workRequest);
         }

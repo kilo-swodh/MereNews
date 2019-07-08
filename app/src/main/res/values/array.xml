@@ -111,8 +111,8 @@
 
         <item>知乎日报</item>
         <item>果壳精选</item>
+        <item>cnBeta</item>
 
-        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
 
@@ -368,8 +368,8 @@
         <!-- 其他分类 -->
         <item>zhihu</item> //知乎
         <item>guoke</item> //果壳
+        <item>cnbeta</item>
 
-        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
 

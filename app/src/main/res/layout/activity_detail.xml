@@ -28,7 +28,13 @@
         android:id="@+id/stub_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/layout_web_video_full">
-    </ViewStub>
+        android:layout="@layout/layout_web_video_full"/>
+    
+    <ViewStub
+        android:id="@+id/stub_danmu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:layout="@layout/layout_danmu"/>
 
 </FrameLayout>

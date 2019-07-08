@@ -89,5 +89,7 @@
 
         <activity android:name=".activity.SmartisanDetailActivity" />
 
+        <activity android:name=".activity.CnBetaDetailActivity"/>
+
     </application>
 </manifest>

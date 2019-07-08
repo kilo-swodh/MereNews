@@ -82,7 +82,7 @@
 
     <string name="empty_content">什么也没有...</string>
 
-    <string name="no_comment">未开放评论区</string>
+    <string name="no_comment">没有评论哦</string>
 
     <string name="news">报道</string>
 
@@ -256,7 +256,7 @@
 
     <string name="notification_ticker">您有一条新的热点新闻</string>
 
-    <string name="notification_tip">推送间隔时间具体由系统安排，如长时间无法收到新闻资讯，请添加后台运行白名单</string>
+    <string name="notification_tip">推送间隔时间具体由系统安排，且尽可能节约资源，如果长时间无法收到新闻资讯推送，可尝试添加后台运行白名单。同时深夜时段固定是静默推送。</string>
     
     <string name="notification_time">推送频率</string>
 

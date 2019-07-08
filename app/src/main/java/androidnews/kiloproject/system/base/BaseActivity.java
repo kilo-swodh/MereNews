@@ -21,6 +21,8 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.jude.swipbackhelper.SwipeBackHelper;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.system.AppConfig;
+
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 import static com.blankj.utilcode.util.AppUtils.relaunchApp;
@@ -92,36 +94,37 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initStatusBar(int colorRes, boolean isBlackFront) {
 //        ScreenUtils.cancelAdaptScreen(this);
         mImmersionBar = ImmersionBar.with(this);
-        if (isNightMode) {
-            mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
-                    .statusBarColor(colorRes)
-                    .navigationBarColor(colorRes)
-                    .fitsSystemWindows(true)
-                    .init();   //所有子类都将继承这些相同的属性
-        } else {
-            if (isBlackFront) {
-                if (ImmersionBar.isSupportNavigationIconDark()){
-                    mImmersionBar.navigationBarColor(R.color.main_background)
-                            .navigationBarDarkIcon(true);
-                }else {
-                    mImmersionBar.navigationBarColor(R.color.divider);
-                }
-                mImmersionBar.statusBarDarkFont(true, 0.2f)
-                        //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，
-                        // 如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                        .statusBarColor(colorRes)
-                        .fitsSystemWindows(true)
-                        .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
-                        .init();
-            } else {
+
+            if (isNightMode) {
                 mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
                         .statusBarColor(colorRes)
                         .navigationBarColor(colorRes)
                         .fitsSystemWindows(true)
                         .init();   //所有子类都将继承这些相同的属性
+            } else {
+                if (isBlackFront) {
+                    if (ImmersionBar.isSupportNavigationIconDark()) {
+                        mImmersionBar.navigationBarColor(R.color.main_background)
+                                .navigationBarDarkIcon(true);
+                    } else {
+                        mImmersionBar.navigationBarColor(R.color.divider);
+                    }
+                    mImmersionBar.statusBarDarkFont(true, 0.2f)
+                            //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，
+                            // 如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                            .statusBarColor(colorRes)
+                            .fitsSystemWindows(true)
+                            .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
+                            .init();
+                } else {
+                    mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
+                            .statusBarColor(colorRes)
+                            .navigationBarColor(colorRes)
+                            .fitsSystemWindows(true)
+                            .init();   //所有子类都将继承这些相同的属性
+                }
             }
-        }
-//        ScreenUtils.restoreAdaptScreen();
+        
     }
 
     @Override

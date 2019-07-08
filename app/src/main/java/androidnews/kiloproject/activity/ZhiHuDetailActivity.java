@@ -106,8 +106,6 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                             isStar = true;
                         }
                         break;
-                    case R.id.action_comment:
-                        break;
                     case R.id.action_link:
                         if (currentData != null) {
                             ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);

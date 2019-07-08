@@ -1,0 +1,10 @@
+<TextView
+    android:id="@+id/tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:paddingLeft="@dimen/margin_normal"
+    android:paddingRight="@dimen/margin_normal"
+    android:background="@drawable/danmu_bg"
+    android:layout_margin="@dimen/margin_normal"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

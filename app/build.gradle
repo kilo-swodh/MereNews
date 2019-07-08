@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1174
-        versionName "1.1.7"
+        versionCode 1177
+        versionName "1.1.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -151,4 +151,6 @@ dependencies {
     //SeekBar
     implementation 'com.xw.repo:bubbleseekbar:3.20-lite'
 
+    //弹幕
+    implementation 'com.github.hust201010701:XDanmuku:-SNAPSHOT'
 }

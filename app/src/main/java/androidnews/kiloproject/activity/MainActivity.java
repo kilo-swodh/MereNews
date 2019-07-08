@@ -1,10 +1,5 @@
 package androidnews.kiloproject.activity;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -13,28 +8,17 @@ import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.work.Constraints;
-import androidx.work.Data;
-import androidx.work.NetworkType;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.blankj.utilcode.util.SPUtils;
@@ -43,10 +27,10 @@ import com.bumptech.glide.Glide;
 
 import androidnews.kiloproject.entity.data.BlockItem;
 import androidnews.kiloproject.fragment.BaseRvFragment;
+import androidnews.kiloproject.fragment.CnBetaRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
 import androidnews.kiloproject.fragment.PressRvFragment;
 import androidnews.kiloproject.fragment.SmartisanRvFragment;
-import androidnews.kiloproject.push.NotifyWork;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
@@ -66,8 +50,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.PhotoCenterData;
@@ -96,6 +78,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
 import static androidnews.kiloproject.system.AppConfig.NEWS_PHOTO_URL;
+import static androidnews.kiloproject.system.AppConfig.TYPE_CNBETA;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ITHOME_START;
@@ -175,7 +158,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (AppConfig.isStatusBar)
             ImmersionBar.with(mActivity)
-                    .statusBarColor(R.color.mask, 0.2f)
+                    .statusBarColor(R.color.mask)
+                    .navigationBarColor(R.color.mask,R.color.main_text_color_dark,0.4f)
                     .fitsSystemWindows(true)
                     .init();
     }
@@ -373,6 +357,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     return new ZhihuRvFragment();
                 case TYPE_GUOKR:
                     return new GuoKrRvFragment();
+                case TYPE_CNBETA:
+                    return new CnBetaRvFragment();
             }
             if (type >= TYPE_VIDEO_START && type <= TYPE_VIDEO_END)
                 return VideoRvFragment.newInstance(channelArray[position]);

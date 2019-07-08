@@ -47,7 +47,7 @@
             android:id="@+id/item_card_info"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:background="@color/shimmer_color"
+            android:background="@drawable/shimmer_bg"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"

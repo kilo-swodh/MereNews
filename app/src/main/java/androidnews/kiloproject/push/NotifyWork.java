@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -97,13 +98,12 @@ public class NotifyWork extends Worker {
                                         new TypeToken<HashMap<String, List<NewMainListData>>>() {
                                         }.getType());
                                 NewMainListData mData = null;
-
                                 long lastPushTime = SPUtils.getInstance().getLong(CACHE_LAST_PUSH_TIME);
                                 String lastId = "";
                                 if (TimeUtils.isToday(lastPushTime))
                                     lastId = SPUtils.getInstance().getString(CACHE_LAST_PUSH_ID);
                                 for (int i = 0; i < retMap.get(typeStr).size(); i++) {
-                                    if (i > 3)
+                                    if (i > 4)
                                         break;
                                     else {
                                         NewMainListData newMainListData = retMap.get(typeStr).get(i);
@@ -113,6 +113,7 @@ public class NotifyWork extends Worker {
                                         }
                                     }
                                 }
+
                                 if (mData != null) {
                                     SPUtils.getInstance().put(CACHE_LAST_PUSH_ID, lastId + mData.getDocid());
                                     SPUtils.getInstance().put(CACHE_LAST_PUSH_TIME, System.currentTimeMillis());
@@ -127,6 +128,8 @@ public class NotifyWork extends Worker {
     }
 
     public void sendNotification(String title, String text, String doCid) {
+        Time t = new Time();
+        t.setToNow();
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "Mere Push");
         mBuilder.setSmallIcon(R.drawable.ic_paper)//设置小图标
                 .setContentTitle(title)//设置内容标题
@@ -137,7 +140,7 @@ public class NotifyWork extends Worker {
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(text))
                 .setTicker(mContext.getResources().getString(R.string.notification_ticker));//通知弹出时状态栏的提示文本
-        if (AppConfig.isPushSound)
+        if (AppConfig.isPushSound || t.hour == 23 || t.hour < 7)
             mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
         else
             mBuilder.setDefaults(Notification.DEFAULT_ALL);//设置声音震动
@@ -146,7 +149,7 @@ public class NotifyWork extends Worker {
         //创建一个意图
         Intent intent = new Intent(mContext, NewsDetailActivity.class);
         intent.putExtra("docid", doCid);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), msgId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), msgId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         mBuilder.setContentIntent(pendingIntent);
 
         //获取通知管理对象

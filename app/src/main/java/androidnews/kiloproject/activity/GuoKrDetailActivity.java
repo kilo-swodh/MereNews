@@ -112,8 +112,6 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
                             isStar = true;
                         }
                         break;
-                    case R.id.action_comment:
-                        break;
                     case R.id.action_link:
                         ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
                         //noinspection ConstantConditions

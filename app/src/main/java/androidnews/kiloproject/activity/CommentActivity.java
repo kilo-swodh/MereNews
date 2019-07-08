@@ -22,7 +22,7 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.CommentAdapter;
 import androidnews.kiloproject.entity.data.CommentLevel;
-import androidnews.kiloproject.entity.net.CommonFullData;
+import androidnews.kiloproject.entity.net.NewsCommonData;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -84,9 +84,9 @@ public class CommentActivity extends BaseActivity {
                     public void onSuccess(String response) {
                         progress.setVisibility(View.GONE);
                         if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                            CommonFullData data = null;
+                            NewsCommonData data = null;
                             try {
-                                data = gson.fromJson(response, CommonFullData.class);
+                                data = gson.fromJson(response, NewsCommonData.class);
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -102,12 +102,12 @@ public class CommentActivity extends BaseActivity {
                 });
     }
 
-    private void analysisData(CommonFullData data) {
+    private void analysisData(NewsCommonData data) {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                for (CommonFullData.NewPostsBean floor : data.getNewPosts()) {
-                    CommonFullData.NewPostsBean._$1Bean layer = floor.get_$1();
+                for (NewsCommonData.NewPostsBean floor : data.getNewPosts()) {
+                    NewsCommonData.NewPostsBean._$1Bean layer = floor.get_$1();
                     if (layer != null) {
                         comments.add(new CommentLevel(layer.getTimg(), layer.getF(), layer.getB(), layer.getT(), LEVEL_ONE));
                     }
