@@ -221,7 +221,7 @@ public class CnBetaRvFragment extends BaseRvFragment {
 
                                     switch (type) {
                                         case TYPE_REFRESH:
-                                            if (newData.getResult() == null)
+                                            if (newData == null || newData.getResult() == null)
                                                 return;
                                             if (cacheNews != null && cacheNews.size() > 0)
                                                 for (CnBetaListData.ResultBean data : newData.getResult()) {
@@ -238,7 +238,7 @@ public class CnBetaRvFragment extends BaseRvFragment {
                                             break;
                                         case TYPE_LOADMORE:
                                             try {
-                                                if (cacheNews != null && cacheNews.size() > 0 && newData.getResult() != null)
+                                                if (cacheNews != null && cacheNews.size() > 0 && newData.getResult() != null) {
                                                     for (CnBetaListData.ResultBean data : newData.getResult()) {
                                                         for (CacheNews cacheNew : cacheNews) {
                                                             if (TextUtils.equals(data.getSid() + "", cacheNew.getDocid())) {
@@ -247,8 +247,9 @@ public class CnBetaRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                     }
-                                                contents.addAll(newData.getResult());
-                                                e.onNext(true);
+                                                    contents.addAll(newData.getResult());
+                                                    e.onNext(true);
+                                                }
                                             } catch (Exception e1) {
                                                 e1.printStackTrace();
                                             }

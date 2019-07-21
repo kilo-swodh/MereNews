@@ -66,6 +66,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
@@ -95,6 +96,7 @@ public class SplashActivity extends AppCompatActivity {
                 AppConfig.isPushSound = spUtils.getBoolean(CONFIG_PUSH_SOUND);
                 AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
                 AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
+                AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();

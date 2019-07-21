@@ -276,9 +276,16 @@
 
     <string name="click2detail">点击查看详情</string>
 
+    <string name="skeleton">加载动画</string>
+    <string name="skeleton_detail">使用闪烁动画填充内容</string>
+
     <string name="auto">Auto</string>
 
     <string name="english">English</string>
 
     <string name="chinese">中文</string>
+
+    <string name="explorer_title">邀请您试用MereNews探索版</string>
+
+    <string name="explorer_message">目前仅针对少数粉丝开放使用,试试看吗?注意对设备性能有一定要求哦</string>
 </resources>

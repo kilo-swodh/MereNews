@@ -20,7 +20,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
@@ -58,20 +57,20 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         webView.getBackground().setAlpha(0);
 //        if (ScreenUtils.getScreenWidth() * 2 > ScreenUtils.getScreenHeight())
         webView.setScrollViewCallbacks(this);
-        webView.setDrawingCacheEnabled(true);
-        webView.buildDrawingCache();
-        webView.buildLayer();
+//        webView.setDrawingCacheEnabled(true);
+//        webView.buildDrawingCache();
+//        webView.buildLayer();
 
         initListener();
 
-        if (!RomUtils.isMeizu())
+        if (!RomUtils.isMeizu() && AppConfig.isShowSkeleton)
             skeletonScreen = Skeleton.bind(webView)
                     .load(R.layout.layout_skeleton_news)
                     .duration(1000)
                     .color(R.color.main_background)
                     .show();
         initView();
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
     }
 
     @Override
@@ -286,7 +285,7 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
     }
 
     protected void hideSkeleton() {
-        if (!RomUtils.isMeizu())
+        if (!RomUtils.isMeizu() && AppConfig.isShowSkeleton)
             skeletonScreen.hide();
     }
 }

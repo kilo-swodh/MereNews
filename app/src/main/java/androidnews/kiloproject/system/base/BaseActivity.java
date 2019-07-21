@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
@@ -91,40 +93,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     //状态栏沉浸(颜色资源)
-    protected void initStatusBar(int colorRes, boolean isBlackFront) {
+    protected void initBar(int colorRes, boolean isBlackFront) {
 //        ScreenUtils.cancelAdaptScreen(this);
         mImmersionBar = ImmersionBar.with(this);
-
-            if (isNightMode) {
-                mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
-                        .statusBarColor(colorRes)
-                        .navigationBarColor(colorRes)
-                        .fitsSystemWindows(true)
-                        .init();   //所有子类都将继承这些相同的属性
-            } else {
-                if (isBlackFront) {
-                    if (ImmersionBar.isSupportNavigationIconDark()) {
-                        mImmersionBar.navigationBarColor(R.color.main_background)
-                                .navigationBarDarkIcon(true);
-                    } else {
-                        mImmersionBar.navigationBarColor(R.color.divider);
-                    }
-                    mImmersionBar.statusBarDarkFont(true, 0.2f)
-                            //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，
-                            // 如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                            .statusBarColor(colorRes)
-                            .fitsSystemWindows(true)
-                            .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
-                            .init();
-                } else {
-                    mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
-                            .statusBarColor(colorRes)
-                            .navigationBarColor(colorRes)
-                            .fitsSystemWindows(true)
-                            .init();   //所有子类都将继承这些相同的属性
-                }
-            }
-        
+        if (!isNightMode && isBlackFront)
+            mImmersionBar.statusBarDarkFont(true, 0.2f)
+                    //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，
+                    // 如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                    .statusBarColor(colorRes)
+                    .navigationBarColor(ImmersionBar.isSupportNavigationIconDark() ? R.color.main_background : R.color.divider)
+                    .navigationBarDarkIcon(ImmersionBar.isSupportNavigationIconDark())
+                    .fitsSystemWindows(true)
+                    .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
+                    .init();
+        else
+            mImmersionBar.keyboardEnable(true)  //解决软键盘与底部输入框冲突问题
+                    .statusBarColor(colorRes)
+                    .navigationBarColor(colorRes)
+                    .fitsSystemWindows(true)
+                    .init();   //所有子类都将继承这些相同的属性
     }
 
     @Override
@@ -144,7 +131,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             finish();
     }
 
-    protected void restartWithAnime(int bgId,int contentId) {
+    protected void restartWithAnime(int bgId, int contentId) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
             findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             animateRevealShow(findViewById(contentId), true, new Animator.AnimatorListener() {
@@ -168,7 +155,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 public void onAnimationRepeat(Animator animation) {
                 }
             });
-        }else {
+        } else {
             ActivityUtils.finishAllActivitiesExceptNewest();
             relaunchApp(true);
         }

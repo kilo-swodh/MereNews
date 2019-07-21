@@ -275,4 +275,7 @@
     <string name="message_save_meesage">Unsaved changes will be lost</string>
 
     <string name="click2detail">Click here for details</string>
+
+    <string name="skeleton">Load animation</string>
+    <string name="skeleton_detail">Fill in content with flicker animation</string>
 </resources>

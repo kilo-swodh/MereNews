@@ -551,7 +551,7 @@
                         app:layout_constraintTop_toTopOf="@id/tv_status_bar" />
 
                     <View
-                        android:id="@+id/view_random_header"
+                        android:id="@+id/view_skeleton"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -561,6 +561,59 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_status_bar_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_skeleton"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/skeleton"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toStartOf="@id/sw_skeleton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_skeleton" />
+
+                    <TextView
+                        android:id="@+id/tv_skeleton_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/skeleton_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/sw_skeleton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_skeleton" />
+
+                    <Switch
+                        android:id="@+id/sw_skeleton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_skeleton_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_skeleton" />
+
+                    <View
+                        android:id="@+id/view_random_header"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_skeleton_detail" />
 
                     <TextView
                         android:id="@+id/tv_random_header"

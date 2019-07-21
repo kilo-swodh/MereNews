@@ -51,7 +51,7 @@ public class CommentActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_recyclerview);
         toolbar = findViewById(R.id.toolbar);
         progress = findViewById(R.id.progress);
         rvContent = findViewById(R.id.rv_content);
@@ -59,7 +59,7 @@ public class CommentActivity extends BaseActivity {
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.action_comment);
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
     }
 
     @Override

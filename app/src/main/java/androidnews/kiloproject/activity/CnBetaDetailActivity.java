@@ -425,6 +425,7 @@ public class CnBetaDetailActivity extends BaseDetailActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                if (webView == null)return;
                 webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
             }
         });

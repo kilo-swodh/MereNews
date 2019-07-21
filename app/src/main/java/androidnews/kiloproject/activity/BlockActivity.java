@@ -59,7 +59,7 @@ public class BlockActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cache);
+        setContentView(R.layout.activity_recyclerview);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         rvContent = (RecyclerView) findViewById(R.id.rv_content);
         progress = (ProgressBar) findViewById(R.id.progress);
@@ -186,7 +186,7 @@ public class BlockActivity extends BaseActivity {
                 return false;
             }
         });
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
     }
 
     @Override

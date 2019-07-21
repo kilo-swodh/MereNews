@@ -255,6 +255,7 @@ public class SmartisanDetailActivity extends BaseDetailActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                if (webView == null)return;
                 webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
                 view.loadUrl("javascript:function setTop(){document.querySelector('.download-wrapper').style.display=\"none\";}setTop();");
                 view.loadUrl("javascript:function setTop(){document.querySelector('.footer').style.display=\"none\";}setTop();");

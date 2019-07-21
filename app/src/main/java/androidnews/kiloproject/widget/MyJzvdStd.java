@@ -354,7 +354,7 @@ public class MyJzvdStd extends Jzvd {
     public void showWifiDialog() {
         super.showWifiDialog();
         new MaterialStyledDialog.Builder(getContext())
-                .setHeaderDrawable(R.drawable.ic_warning)
+                .setHeaderDrawable(R.drawable.ic_update)
                 .setHeaderScaleType(ImageView.ScaleType.CENTER)
                 .setTitle(getResources().getString(R.string.tip_title))
                 .setDescription(getResources().getString(cn.jzvd.R.string.tips_not_wifi))

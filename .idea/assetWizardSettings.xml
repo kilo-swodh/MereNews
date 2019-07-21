@@ -148,7 +148,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_restore_page_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_update_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -158,13 +158,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="200" />
-                            <entry key="outputName" value="ic_paper" />
+                            <entry key="outputName" value="ic_update" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="E:\Download\ic_paper.svg" />
-                            <entry key="width" value="200" />
                           </map>
                         </option>
                       </PersistentState>

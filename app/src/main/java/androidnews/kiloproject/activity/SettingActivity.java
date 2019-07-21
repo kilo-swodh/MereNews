@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.RomUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.Utils;
@@ -56,7 +57,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidnews.kiloproject.system.AppConfig.BUGLY_KEY;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
+import static androidnews.kiloproject.system.AppConfig.QQ_KEY;
 import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
@@ -100,6 +102,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvSwipeBack;
     TextView tvSwipeBackDetail;
     Switch swSwipeBack;
+    TextView tvSkeleton;
+    TextView tvSkeletonDetail;
+    Switch swSkeleton;
     TextView tvHighRam;
     TextView tvHighRamDetail;
     Switch swHighRam;
@@ -160,6 +165,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvSwipeBackDetail = (TextView) findViewById(R.id.tv_swipe_back_detail);
         swSwipeBack = (Switch) findViewById(R.id.sw_swipe_back);
 
+        tvSkeleton = (TextView) findViewById(R.id.tv_skeleton);
+        tvSkeletonDetail = (TextView) findViewById(R.id.tv_skeleton_detail);
+        swSkeleton = (Switch) findViewById(R.id.sw_skeleton);
+
         tvHighRam = (TextView) findViewById(R.id.tv_high_ram);
         tvHighRamDetail = (TextView) findViewById(R.id.tv_high_ram_detail);
         swHighRam = (Switch) findViewById(R.id.sw_high_ram);
@@ -191,7 +200,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
     }
 
     @Override
@@ -257,6 +266,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 }
                             });
 
+                            swSkeleton.setChecked(AppConfig.isShowSkeleton);
+                            swSkeleton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isShowSkeleton = isChecked;
+                                    spUtils.put(CONFIG_SHOW_SKELETON, AppConfig.isShowSkeleton);
+                                }
+                            });
+
                             swSwipeBack.setChecked(AppConfig.isSwipeBack);
                             swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
@@ -298,6 +316,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             });
 
                             tvCheckUpdateDetail.setText(getString(R.string.check_update_detail) + AppUtils.getAppVersionName());
+
+                            if (RomUtils.isMeizu()) {
+                                swSkeleton.setVisibility(View.GONE);
+                                tvSkeleton.setVisibility(View.GONE);
+                                tvSkeletonDetail.setVisibility(View.GONE);
+                                findViewById(R.id.view_skeleton).setVisibility(View.GONE);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -394,6 +419,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     AppConfig.isBackExit = true;
                 }
                 spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
+                break;
+
+            case R.id.tv_skeleton:
+            case R.id.tv_skeleton_detail:
+                if (AppConfig.isShowSkeleton) {
+                    swSkeleton.setChecked(false);
+                    AppConfig.isShowSkeleton = false;
+                } else {
+                    swSkeleton.setChecked(true);
+                    AppConfig.isShowSkeleton = true;
+                }
+                spUtils.put(CONFIG_SHOW_SKELETON, AppConfig.isShowSkeleton);
                 break;
 
             case R.id.tv_random_header:
@@ -545,6 +582,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
                                                     spUtils.put(CONFIG_PUSH_TIME, exportBean.pushTime);
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
+                                                    spUtils.put(CONFIG_SHOW_SKELETON,exportBean.isShowSkeleton);
                                                     LitePal.saveAll(exportBean.blockList);
                                                     e.onNext(true);
                                                 } else
@@ -623,6 +661,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                             exportBean.pushTime = AppConfig.pushTime;
                                             exportBean.currentRandomHeader = currentRandomHeader;
                                             exportBean.currentLanguage = currentLanguage;
+                                            exportBean.isShowSkeleton = AppConfig.isShowSkeleton;
                                             exportBean.blockList = blockList;
 
                                             String json = gson.toJson(exportBean);
@@ -741,7 +780,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                         newVersionCode = Integer.parseInt(response.trim());
                                         if (AppUtils.getAppVersionCode() < newVersionCode) {
                                             new MaterialStyledDialog.Builder(mActivity)
-                                                    .setHeaderDrawable(R.drawable.ic_warning)
+                                                    .setHeaderDrawable(R.drawable.ic_update)
                                                     .setHeaderScaleType(ImageView.ScaleType.CENTER)
                                                     .setTitle(getResources().getString(R.string.update_title))
                                                     .setDescription(getResources().getString(R.string.update_message))
@@ -783,7 +822,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_join_us:
             case R.id.tv_join_us_detail:
                 Intent intent = new Intent();
-                intent.setData(Uri.parse(BUGLY_KEY));
+                intent.setData(Uri.parse(QQ_KEY));
                 // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 try {
                     startActivity(intent);
@@ -795,14 +834,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
             case R.id.tv_donate:
             case R.id.tv_donate_detail:
-                SPUtils.getInstance().put(CONFIG_EASTER_EGGS,true);
+                SPUtils.getInstance().put(CONFIG_EASTER_EGGS, true);
 //                SnackbarUtils.with(toolbar)
 //                        .setMessage(getString(R.string.easter_egg_tip))
 //                        .show();
                 AlipayUtil.startAlipayClient(mActivity, AlipayUtil.PAY_ID);
                 break;
             case R.id.tv_notification:
-                startActivity(new Intent(mActivity,NotificationActivity.class));
+                startActivity(new Intent(mActivity, NotificationActivity.class));
                 break;
         }
     }

@@ -20,7 +20,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.xw.repo.BubbleSeekBar;
 
@@ -73,7 +72,7 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.notification);
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.AppUtils;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.core.view.GravityCompat;
@@ -19,6 +25,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.blankj.utilcode.util.SPUtils;
@@ -72,11 +80,15 @@ import io.reactivex.schedulers.Schedulers;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.fragment.BaseRvFragment.TYPE_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_RANDOM_HEADER;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_EXPLORER;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TYPE_ARRAY;
+import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_ADDRESS;
+import static androidnews.kiloproject.system.AppConfig.DOWNLOAD_EXPLORER_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.NEWS_PHOTO_URL;
 import static androidnews.kiloproject.system.AppConfig.TYPE_CNBETA;
 import static androidnews.kiloproject.system.AppConfig.TYPE_GUOKR;
@@ -159,8 +171,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (AppConfig.isStatusBar)
             ImmersionBar.with(mActivity)
                     .statusBarColor(R.color.mask)
-                    .navigationBarColor(R.color.mask,R.color.main_text_color_dark,0.4f)
+                    .navigationBarColor(R.color.mask, R.color.main_text_color_dark, 0.4f)
                     .fitsSystemWindows(true)
+                    .init();
+        else
+            ImmersionBar.with(mActivity)
+                    .statusBarColor(R.color.transparent)  //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
+                    .navigationBarColor(ImmersionBar.isSupportNavigationIconDark() ? R.color.main_background : R.color.divider)
+                    .navigationBarDarkIcon(!AppConfig.isNightMode && ImmersionBar.isSupportNavigationIconDark())
                     .init();
     }
 
@@ -237,6 +255,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 mPagerAdapter.notifyDataSetChanged();
                             }
                         }
+                        if (AppConfig.isEasterEggs && !SPUtils.getInstance().getBoolean(CONFIG_SHOW_EXPLORER)) {
+                            new MaterialStyledDialog.Builder(mActivity)
+                                    .setHeaderDrawable(R.drawable.ic_smile)
+                                    .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                    .setTitle(getResources().getString(R.string.explorer_title))
+                                    .setDescription(getResources().getString(R.string.explorer_message))
+                                    .setHeaderColor(R.color.colorPrimary)
+                                    .setPositiveText(android.R.string.ok)
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Uri uri = Uri.parse(DOWNLOAD_EXPLORER_ADDRESS);
+                                            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                        }
+                                    })
+                                    .setNegativeText(getResources().getString(android.R.string.cancel))
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            SPUtils.getInstance().put(CONFIG_SHOW_EXPLORER,true);
+                        } else
+                            checkUpdate();
                     }
                 });
     }
@@ -621,5 +665,44 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onLowMemory();
         //内存低时,清理缓存
         Glide.get(mActivity).clearMemory();
+    }
+
+    private void checkUpdate() {
+        EasyHttp.get(CHECK_UPADTE_ADDRESS)
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .connectTimeout(30 * 1000)
+                .timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        if (response != null) {
+                            int newVersionCode;
+                            try {
+                                newVersionCode = Integer.parseInt(response.trim());
+                                if (AppUtils.getAppVersionCode() < newVersionCode) {
+                                    SnackbarUtils.with(mViewPager)
+                                            .setMessage(getResources().getString(R.string.update_title))
+                                            .setAction(getResources().getString(R.string.download),
+                                                    new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Uri uri = Uri.parse(DOWNLOAD_ADDRESS);
+                                                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                                                }
+                                            })
+                                            .show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
     }
 }

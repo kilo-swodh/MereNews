@@ -17,7 +17,8 @@ public class AppConfig {
             isBackExit,
             isPush,
             isPushSound,
-            isEasterEggs;
+            isEasterEggs,
+            isShowSkeleton;
     public static int listType,pushTime;
 
     public static int mTextSize = 1;
@@ -101,7 +102,9 @@ public class AppConfig {
 
     public static final String DOWNLOAD_ADDRESS = "https://www.pgyer.com/android_news";
 
-    public static final String BUGLY_KEY = "mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" +
+    public static final String DOWNLOAD_EXPLORER_ADDRESS = "https://www.pgyer.com/mere_explorer";
+
+    public static final String QQ_KEY = "mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" +
             "dfXHsJjgt5dX_ma5KylHFi60LZmFsuLv";
 
     //常量
@@ -143,7 +146,11 @@ public class AppConfig {
 
     public static final String CONFIG_PUSH_SOUND = "config_push_sound";
 
+    public static final String CONFIG_SHOW_SKELETON = "config_show_skeleton";
+
     public static final String CONFIG_EASTER_EGGS = "config_easter_eggs";
+
+    public static final String CONFIG_SHOW_EXPLORER = "config_show_explorer";
 
     public static final String CACHE_LAST_PUSH_ID = "cache_push_id";  //当日推送的id统计
     public static final String CACHE_LAST_PUSH_TIME = "cache_push_TIME";  //当日推送的时间统计

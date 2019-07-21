@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/main_background"
+        android:elevation="@dimen/elevation_toolbar"
         app:popupTheme="@style/ToolbarPopupTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

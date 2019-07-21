@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt' (废弃)
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "androidnews.kiloproject"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         //方法数限制解除
         multiDexEnabled false
@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1177
-        versionName "1.1.8"
+        versionCode 1184
+        versionName "1.1.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -84,7 +84,7 @@ dependencies {
     implementation 'org.litepal.android:java:3.0.0'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     //工具包

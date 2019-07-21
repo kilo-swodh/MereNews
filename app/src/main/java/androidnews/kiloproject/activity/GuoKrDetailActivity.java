@@ -251,6 +251,7 @@ public class GuoKrDetailActivity extends BaseDetailActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                if (webView == null)return;
                 if (isNightMode) {
                     InputStream is = getResources().openRawResource(R.raw.night);
                     byte[] buffer = new byte[0];

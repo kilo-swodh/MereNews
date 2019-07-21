@@ -42,7 +42,7 @@ public class AboutActivity extends BaseActivity {
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.about);
-        initStatusBar(R.color.main_background, true);
+        initBar(R.color.main_background, true);
     }
 
     @Override
