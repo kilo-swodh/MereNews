@@ -64,6 +64,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
@@ -85,18 +86,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 SPUtils spUtils = SPUtils.getInstance();
-                AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
-                AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
-                AppConfig.isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
-                AppConfig.isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
-                AppConfig.isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
-                AppConfig.isStatusBar = spUtils.getBoolean(CONFIG_STATUS_BAR);
-                AppConfig.isDisNotice = spUtils.getBoolean(CONFIG_DISABLE_NOTICE);
-                AppConfig.isPush = spUtils.getBoolean(CONFIG_PUSH, true);
-                AppConfig.isPushSound = spUtils.getBoolean(CONFIG_PUSH_SOUND);
-                AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
-                AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
-                AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();
@@ -197,7 +186,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     public void checkPushWork() {
-        if (!AppConfig.isPush) return;
+        if (!AppConfig.isPush || AppConfig.isPushMode) return;
 
 //        Constraints myCoustrain = new Constraints.Builder()
 //                .setRequiresBatteryNotLow(true) //不在电量不足执行
@@ -210,7 +199,7 @@ public class SplashActivity extends AppCompatActivity {
         PeriodicWorkRequest.Builder notifyWork = null;
         switch (AppConfig.pushTime) {
             case 0:
-                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 18, TimeUnit.MINUTES);
+                notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 20, TimeUnit.MINUTES);
                 break;
             case 1:
                 notifyWork = new PeriodicWorkRequest.Builder(NotifyWork.class, 42, TimeUnit.MINUTES);

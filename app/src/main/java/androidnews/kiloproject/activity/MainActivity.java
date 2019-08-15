@@ -1,5 +1,6 @@
 package androidnews.kiloproject.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -39,12 +40,13 @@ import androidnews.kiloproject.fragment.CnBetaRvFragment;
 import androidnews.kiloproject.fragment.ITHomeRvFragment;
 import androidnews.kiloproject.fragment.PressRvFragment;
 import androidnews.kiloproject.fragment.SmartisanRvFragment;
+import androidnews.kiloproject.service.PushIntentService;
 import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.PollingUtils;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 import androidnews.kiloproject.widget.materialviewpager.header.HeaderDesign;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -102,6 +104,9 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static androidnews.kiloproject.system.AppConfig.isPush;
+import static androidnews.kiloproject.system.AppConfig.isPushMode;
+import static androidnews.kiloproject.util.PollingUtils.PUSH_ACTIVE;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -165,7 +170,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ColorStateList csl = getBaseContext().getResources().getColorStateList(R.color.navigation_menu_item_color);
         navigation.setItemTextColor(csl);
 
-        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         EventBus.getDefault().register(this);
 
         if (AppConfig.isStatusBar)
@@ -283,6 +287,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             checkUpdate();
                     }
                 });
+         if (isPush && isPushMode)
+            checkPushCompat();
     }
 
     @Override
@@ -704,5 +710,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                     }
                 });
+    }
+
+    @SuppressLint("NewApi")
+    public void checkPushCompat() {
+        if (!isPush) return;
+        int sec = 0;
+        switch (AppConfig.pushTime) {
+            case 0:
+                sec = 20 * 60;
+                break;
+            case 1:
+                sec = 42 * 60;
+                break;
+            case 2:
+                sec = 160 * 60;
+                break;
+            case 3:
+                sec = 300 * 60;
+                break;
+        }
+        if (sec != 0) {
+            PollingUtils.startPollingService(this, sec, PushIntentService.class, PUSH_ACTIVE);
+        }
     }
 }

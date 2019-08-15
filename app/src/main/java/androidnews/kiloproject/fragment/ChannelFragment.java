@@ -3,8 +3,10 @@ package androidnews.kiloproject.fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,7 +183,7 @@ public class ChannelFragment extends BaseFragment implements AdapterView.OnItemC
                                                 try {
                                                     int[] endLocation = new int[2];
                                                     //获取终点的坐标
-                                                    otherGridView.getChildAt(otherGridView.getLastVisiblePosition()).getLocationInWindow(endLocation);
+                                                    otherGridView.getChildAt(otherAdapter.getLastVaildPositon() - 1).getLocationInWindow(endLocation);
                                                     MoveAnim(moveImageView, startLocation, endLocation, channel, userGridView);
                                                     userAdapter.setRemove(position);
                                                 } catch (Exception localException) {

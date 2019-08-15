@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1184
-        versionName "1.1.9"
+        versionCode 1186
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -117,7 +117,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     //侧滑返回
-    implementation 'com.jude:swipebackhelper:3.1.2'
+    implementation 'com.blankj:swipe-panel:1.1'
 
     //bugly
     implementation 'com.tencent.bugly:crashreport:2.8.6.0'

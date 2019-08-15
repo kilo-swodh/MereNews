@@ -214,6 +214,8 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                 @Override
                 public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                     html = getIntent().getStringExtra("htmlText");
+                    if (TextUtils.isEmpty(html))
+                        return;
                     if (isNightMode)
                         html.replace("<body text=\"#333\">", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
                     if (!StringUtils.isEmpty(html)) {

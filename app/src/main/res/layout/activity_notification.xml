@@ -129,6 +129,57 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_push_sound" />
 
+     <View
+            android:id="@+id/view_push_mode"
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_push_sound_detail" />
+
+        <TextView
+            android:id="@+id/tv_push_mode"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/notification_mode"
+            android:textColor="@color/main_text_color_dark"
+            android:textSize="@dimen/text_normal"
+            android:onClick="onClick"
+            app:layout_constraintEnd_toStartOf="@id/sw_push_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_push_mode" />
+
+        <TextView
+            android:id="@+id/tv_push_mode_detail"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:onClick="onClick"
+            android:paddingTop="@dimen/margin_normal"
+            android:text="@string/notification_mode_detail"
+            android:textColor="@color/main_text_color_dark"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toStartOf="@id/sw_push_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_push_mode" />
+
+        <Switch
+            android:id="@+id/sw_push_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginRight="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:theme="@style/SwitchTheme"
+            app:layout_constraintBottom_toBottomOf="@id/tv_push_mode_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_push_mode" />
+
         <View
             android:id="@+id/view_push_time"
             android:layout_width="0.0dip"
@@ -137,7 +188,7 @@
             android:background="@color/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_push_sound_detail" />
+            app:layout_constraintTop_toBottomOf="@id/tv_push_mode_detail" />
 
         <TextView
             android:id="@+id/tv_push_time"

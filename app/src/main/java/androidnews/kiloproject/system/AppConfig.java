@@ -17,6 +17,7 @@ public class AppConfig {
             isBackExit,
             isPush,
             isPushSound,
+            isPushMode,
             isEasterEggs,
             isShowSkeleton;
     public static int listType,pushTime;
@@ -145,6 +146,8 @@ public class AppConfig {
     public static final String CONFIG_PUSH_TIME = "config_push_time";
 
     public static final String CONFIG_PUSH_SOUND = "config_push_sound";
+
+    public static final String CONFIG_PUSH_MODE = "config_push_mode";
 
     public static final String CONFIG_SHOW_SKELETON = "config_show_skeleton";
 

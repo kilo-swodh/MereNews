@@ -188,13 +188,13 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
             webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         switch (AppConfig.mTextSize) {
             case 0:
-                webSetting.setTextZoom(125);
+                webSetting.setTextZoom(130);
                 break;
             case 1:
                 webSetting.setTextZoom(100);
                 break;
             case 2:
-                webSetting.setTextZoom(75);
+                webSetting.setTextZoom(70);
                 break;
         }
     }

@@ -15,14 +15,16 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 
+import com.blankj.swipepanel.SwipePanel;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.google.gson.Gson;
 import com.gyf.immersionbar.ImmersionBar;
-import com.jude.swipbackhelper.SwipeBackHelper;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.activity.MainActivity;
 import androidnews.kiloproject.system.AppConfig;
 
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
@@ -38,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     boolean isStart = false;
     private ImmersionBar mImmersionBar;
     protected Gson gson = new Gson();
+    protected SwipePanel swipePanel;
 
     public static final int SELECT_RESULT = 999;
     public static final int SETTING_RESULT = 998;
@@ -50,8 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        ScreenUtils.adaptScreen4VerticalSlide(this, 360);
         mActivity = this;
         isStart = true;
-        SwipeBackHelper.onCreate(this);
-        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(isSwipeBack);
     }
 
     @Override
@@ -62,12 +63,21 @@ public abstract class BaseActivity extends AppCompatActivity {
             initSlowly();
             isStart = false;
         }
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        SwipeBackHelper.onPostCreate(this);
+        if(isSwipeBack && !(this instanceof MainActivity)) {
+            swipePanel = new SwipePanel(this);
+            swipePanel.setLeftEdgeSize(SizeUtils.dp2px(110));// 设置左侧触发阈值 110dp
+            swipePanel.setLeftDrawable(R.drawable.ic_arrow_back);// 设置左侧 icon
+            swipePanel.setRightEdgeSize(SizeUtils.dp2px(110));// 设置左侧触发阈值 110dp
+            swipePanel.setRightDrawable(R.drawable.ic_arrow_back_right);// 设置左侧 icon
+            swipePanel.wrapView(findViewById(R.id.root_view));// 设置嵌套在 rootLayout 外层
+            swipePanel.setOnFullSwipeListener(new SwipePanel.OnFullSwipeListener() {// 设置完全划开松手后的监听
+                @Override
+                public void onFullSwipe(int direction) {
+                    finishWithAnime();
+                    swipePanel.close(direction);// 关闭
+                }
+            });
+        }
     }
 
     //对只需要一次初始化的耗时操作或者界面绘制放在这里
@@ -112,12 +122,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .navigationBarColor(colorRes)
                     .fitsSystemWindows(true)
                     .init();   //所有子类都将继承这些相同的属性
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SwipeBackHelper.onDestroy(this);
     }
 
     public static boolean isLollipop() {

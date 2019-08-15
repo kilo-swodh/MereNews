@@ -3,6 +3,7 @@ package androidnews.kiloproject.system;
 import android.app.Application;
 import android.content.Context;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -19,6 +20,19 @@ import org.litepal.LitePal;
 
 import androidnews.kiloproject.R;
 
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.HOST_163;
 
 //import org.litepal.LitePal;
@@ -50,6 +64,21 @@ public class MyApplication extends Application {
 
         //Util工具包
         Utils.init(this);
+
+        SPUtils spUtils = SPUtils.getInstance();
+        AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
+        AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
+        AppConfig.isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);
+        AppConfig.isAutoLoadMore = spUtils.getBoolean(CONFIG_AUTO_LOADMORE);
+        AppConfig.isBackExit = spUtils.getBoolean(CONFIG_BACK_EXIT);
+        AppConfig.isStatusBar = spUtils.getBoolean(CONFIG_STATUS_BAR);
+        AppConfig.isDisNotice = spUtils.getBoolean(CONFIG_DISABLE_NOTICE);
+        AppConfig.isPush = spUtils.getBoolean(CONFIG_PUSH, true);
+        AppConfig.isPushSound = spUtils.getBoolean(CONFIG_PUSH_SOUND);
+        AppConfig.isPushMode = spUtils.getBoolean(CONFIG_PUSH_MODE);
+        AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
+        AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
+        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
 
 //        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 //            @Override

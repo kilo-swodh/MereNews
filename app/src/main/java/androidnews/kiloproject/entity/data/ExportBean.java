@@ -14,6 +14,7 @@ public class ExportBean {
             isBackExit,
             isPush,
             isPushSound,
+            isPushMode,
             isEasterEggs,
             isShowSkeleton;
     public int listType,

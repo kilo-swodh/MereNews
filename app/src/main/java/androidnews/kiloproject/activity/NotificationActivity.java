@@ -24,8 +24,10 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.xw.repo.BubbleSeekBar;
 
 import androidnews.kiloproject.R;
+import androidnews.kiloproject.service.PushIntentService;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
+import androidnews.kiloproject.util.PollingUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -34,6 +36,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.PUSH_WORK_NAME;
@@ -48,6 +51,9 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
     private TextView mPushSoundTv;
     private TextView mPushSoundDetailTv;
     private Switch mPushSoundSw;
+    private TextView mPushModeTv;
+    private TextView mPushModeDetailTv;
+    private Switch mPushModeSw;
     private TextView mPushTimeTv;
     private BubbleSeekBar mPushTimeSb;
 
@@ -67,6 +73,9 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         mPushSoundTv = (TextView) findViewById(R.id.tv_push_sound);
         mPushSoundDetailTv = (TextView) findViewById(R.id.tv_push_sound_detail);
         mPushSoundSw = (Switch) findViewById(R.id.sw_push_sound);
+        mPushModeTv = (TextView) findViewById(R.id.tv_push_mode);
+        mPushModeDetailTv = (TextView) findViewById(R.id.tv_push_mode_detail);
+        mPushModeSw = (Switch) findViewById(R.id.sw_push_mode);
         mPushTimeTv = (TextView) findViewById(R.id.tv_push_time);
         mPushTimeSb = (BubbleSeekBar) findViewById(R.id.sb_push_time);
 
@@ -122,6 +131,15 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                             }
                         });
 
+                        mPushModeSw.setChecked(AppConfig.isPushMode);
+                        mPushModeSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                AppConfig.isPushMode = isChecked;
+                                spUtils.put(CONFIG_PUSH_MODE, AppConfig.isPushMode);
+                            }
+                        });
+
                         mPushTimeSb.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
                             @NonNull
                             @Override
@@ -162,6 +180,17 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                 }
                 spUtils.put(CONFIG_PUSH_SOUND, AppConfig.isPushSound);
                 break;
+            case R.id.tv_push_mode:
+            case R.id.tv_push_mode_detail:
+                if (AppConfig.isPushMode) {
+                    mPushModeSw.setChecked(false);
+                    AppConfig.isPushMode = false;
+                } else {
+                    mPushModeSw.setChecked(true);
+                    AppConfig.isPushMode = true;
+                }
+                spUtils.put(CONFIG_PUSH_MODE, AppConfig.isPushMode);
+                break;
             default:
                 break;
         }
@@ -179,8 +208,14 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         SPUtils.getInstance().put(CONFIG_PUSH_TIME, pushTime);
         if (AppConfig.isPush) {
             restartWithAnime(R.id.root_view, R.id.content);
-        } else
+            if (AppConfig.isPushMode)
+                WorkManager.getInstance().cancelUniqueWork(PUSH_WORK_NAME);
+            else
+                PollingUtils.stopPollingService(this, PushIntentService.class, PollingUtils.PUSH_ACTIVE);
+        } else {
+            PollingUtils.stopPollingService(this, PushIntentService.class, PollingUtils.PUSH_ACTIVE);
             WorkManager.getInstance().cancelUniqueWork(PUSH_WORK_NAME);
+        }
     }
 
     @Override

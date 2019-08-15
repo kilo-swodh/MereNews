@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.blankj:swipe-panel:1.1@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/17196d85ffadb8a606b775003a6a8f3b/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/17196d85ffadb8a606b775003a6a8f3b/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/17196d85ffadb8a606b775003a6a8f3b/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.blankj/swipe-panel/1.1/ee602e53084b64d2d1b0408014dbbd080ba98962/swipe-panel-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

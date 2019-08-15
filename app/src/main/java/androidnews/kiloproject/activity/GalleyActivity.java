@@ -3,24 +3,28 @@ package androidnews.kiloproject.activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.swipepanel.SwipePanel;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.gyf.immersionbar.ImmersionBar;
-import com.jude.swipbackhelper.SwipeBackHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
@@ -45,7 +49,6 @@ public class GalleyActivity extends BaseActivity {
     TextView tvGalleyPage;
     ProgressBar progressBar;
     View btnGalleyDownload;
-
     private GalleyData galleyContent;
     private String currentImg;
 
@@ -76,7 +79,6 @@ public class GalleyActivity extends BaseActivity {
                 lpDownLoad.setMargins(0, 0, dimNor, dimLarge + navHeight);
             }
         }
-        SwipeBackHelper.getCurrentPage(mActivity).setDisallowInterceptTouchEvent(false);
     }
 
     @Override
@@ -173,8 +175,10 @@ public class GalleyActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // 滚动的时候改变自定义控件的动画
                 currentImg = galleyContent.getPhotos().get(position).getImgurl();
-                if (isSwipeBack)
-                    SwipeBackHelper.getCurrentPage(mActivity).setDisallowInterceptTouchEvent(position != 0);
+                if (swipePanel != null) {
+                    swipePanel.setLeftEnabled(position == 0 && isSwipeBack);
+                    swipePanel.setRightEnabled(position == galleyContent.getPhotos().size() - 1 && isSwipeBack);
+                }
             }
 
             @Override

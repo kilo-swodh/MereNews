@@ -81,8 +81,19 @@ public class OtherAdapter extends BaseAdapter {
      * 添加频道列表
      */
     public void addItem(ChannelItem channel) {
-        channelList.add(channel);
+        channelList.add(getLastVaildPositon(),channel);
         notifyDataSetChanged();
+    }
+
+    public int getLastVaildPositon(){
+        int lastVaild = 0;
+        for (int i = 0; i < channelList.size(); i++) {
+            if (channelList.get(i).getName().equals("fake")) {
+                lastVaild = i;
+                break;
+            }
+        }
+        return lastVaild;
     }
 
     /**

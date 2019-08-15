@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,24 +123,7 @@ public class MainRvFragment extends BaseRvFragment {
                     if (contents != null && contents.size() > 0) {
                         try {
                             NewMainListData first = contents.get(0);
-                            boolean isNopic = false;
-//                            if (first.getAds() != null)
-//                                for (NewMainListData.AdsBean adsBean : first.getAds()) {
-//                                    if (TextUtils.equals(adsBean.getImgsrc(), "bigimg")) {
-//                                        isNopic = true;
-//                                        break;
-//                                    }
-//                                }
-                            if (first.getAds() != null) {
-                                Iterator<NewMainListData.AdsBean> adsBean = first.getAds().iterator();
-                                while (adsBean.hasNext()) {
-                                    if (TextUtils.equals(adsBean.next().getImgsrc(), "bigimg"))
-                                        isNopic = true;
-                                    else adsBean.remove();
-                                }
-                            }
-                            if (isNopic)
-                                requestRealPic(first);
+                            checkAdPic(first);
                             List<CacheNews> cacheNews = null;
                             try {
                                 cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
@@ -198,8 +183,7 @@ public class MainRvFragment extends BaseRvFragment {
                             e1.printStackTrace();
                             e.onNext(false);
                         }
-                    } else
-                        e.onNext(false);
+                    } else e.onNext(false);
                 } else e.onNext(false);
                 e.onComplete();
             }
@@ -303,17 +287,7 @@ public class MainRvFragment extends BaseRvFragment {
                                         if (type == TYPE_REFRESH) {
                                             NewMainListData first = retMap.get(typeStr).get(0);
                                             first.setItemType(HEADER);
-                                            boolean isNopic = false;
-                                            if (first.getAds() != null) {
-                                                Iterator<NewMainListData.AdsBean> adsBean = first.getAds().iterator();
-                                                while (adsBean.hasNext()) {
-                                                    if (TextUtils.equals(adsBean.next().getImgsrc(), "bigimg"))
-                                                        isNopic = true;
-                                                    else adsBean.remove();
-                                                }
-                                            }
-                                            if (isNopic)
-                                                requestRealPic(first);
+                                            checkAdPic(first);
                                         }
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
@@ -746,65 +720,72 @@ public class MainRvFragment extends BaseRvFragment {
         }
     }
 
-    private void requestRealPic(NewMainListData first) {
-        if (first.getAds() != null)
-            for (int i = 0; i < first.getAds().size(); i++) {
-                final int position = i;
+    private void checkAdPic(NewMainListData first) {
+        if (first.getAds() != null) {       //剔除重复
+            Iterator<NewMainListData.AdsBean> adIt = first.getAds().iterator();
+            while (adIt.hasNext()) {
+                NewMainListData.AdsBean bean =
+                        adIt.next();
+                if (!bean.getSkipID().contains("|") ||
+                        TextUtils.equals(bean.getTitle(), (first.getTitle())))
+                    adIt.remove();
+            }
+            for (int i = 0; i < first.getAds().size(); i++) {       //搜索图片真实地址
                 NewMainListData.AdsBean bean =
                         first.getAds().get(i);
-                if (!bean.getSkipID().contains("|") ||
-                        TextUtils.equals(bean.getTitle(), (first.getTitle()))) {
-                    first.getAds().remove(i);
-                    continue;
-                }
                 if (TextUtils.equals(bean.getImgsrc(), "bigimg")) {
                     String skipID = bean.getSkipID().split("000")[1];
-                    EasyHttp.get("/photo/api/set/" + "000" + skipID.replace("|", "/") + ".json")
-                            .readTimeOut(30 * 1000)//局部定义读超时
-                            .writeTimeOut(30 * 1000)
-                            .connectTimeout(30 * 1000)
-                            .timeStamp(true)
-                            .execute(new SimpleCallBack<String>() {
-                                @Override
-                                public void onError(ApiException e) {
-                                    if (refreshLayout != null)
-                                        try {
-                                            SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
-                                        } catch (Exception e1) {
-                                            e1.printStackTrace();
-                                        }
-                                }
-
-                                @Override
-                                public void onSuccess(String response) {
-                                    if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
-                                        GalleyData galleyContent;
-                                        try {
-                                            galleyContent = gson.fromJson(response, GalleyData.class);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            return;
-                                        }
-                                        if (contents != null && contents.size() > 0) {
-                                            NewMainListData bean = contents.get(0);
-                                            try {
-                                                bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getImgurl());
-                                                if (mAdapter != null)
-                                                    mAdapter.notifyItemChanged(0);
-                                                realPicCount++;
-                                                if (adSize > 0 && realPicCount == adSize) {
-                                                    String json = gson.toJson(contents);
-                                                    SPUtils.getInstance().put(CACHE_LIST_DATA, json);
-                                                }
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                }
-                            });
+                    requestAdPic(skipID, i);
                 }
             }
+        }
+    }
+
+    private void requestAdPic(String skipID, int position) {
+        EasyHttp.get("/photo/api/set/" + "000" + skipID.replace("|", "/") + ".json")
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .connectTimeout(30 * 1000)
+                .timeStamp(true)
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        if (refreshLayout != null)
+                            try {
+                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.load_fail) + e.getMessage()).showError();
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
+                            GalleyData galleyContent;
+                            try {
+                                galleyContent = gson.fromJson(response, GalleyData.class);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return;
+                            }
+                            if (contents != null && contents.size() > 0) {
+                                NewMainListData bean = contents.get(0);
+                                try {
+                                    bean.getAds().get(position).setImgsrc(galleyContent.getPhotos().get(0).getImgurl());
+                                    if (mAdapter != null)
+                                        mAdapter.notifyItemChanged(0);
+                                    realPicCount++;
+                                    if (adSize > 0 && realPicCount == adSize) {
+                                        String json = gson.toJson(contents);
+                                        SPUtils.getInstance().put(CACHE_LIST_DATA, json);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     private boolean isGoodItem(NewMainListData data) {
@@ -839,8 +820,8 @@ public class MainRvFragment extends BaseRvFragment {
         return 0;
     }
 
-    private List<NewMainListData> kickRepeat(List<NewMainListData> newList){
-        if (TextUtils.equals(newList.get(1).getDocid(),newList.get(3).getDocid()))
+    private List<NewMainListData> kickRepeat(List<NewMainListData> newList) {
+        if (TextUtils.equals(newList.get(1).getDocid(), newList.get(3).getDocid()))
             newList.remove(1);
         return newList;
     }

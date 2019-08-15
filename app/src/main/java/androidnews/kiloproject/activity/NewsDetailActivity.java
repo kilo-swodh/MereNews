@@ -21,6 +21,7 @@ import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
@@ -193,7 +194,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                     ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
                                     finish();
                                 }
-                                if (TextUtils.isEmpty(currentData.getBody()))
+                                if (currentData == null && TextUtils.isEmpty(currentData.getBody()))
                                     loadError();
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
@@ -466,6 +467,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
 
     private void fullScreen(boolean isStart) {
         if (isStart) {
+            toolbar.setVisibility(View.GONE);
             isLand = ScreenUtils.isLandscape();
             try {
                 if (currentData != null && currentData.getVideo().get(0).getVideoRatio() > 1) {
@@ -477,6 +479,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 e.printStackTrace();
             }
         } else {
+            toolbar.setVisibility(View.VISIBLE);
             if (isLand)
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
             else

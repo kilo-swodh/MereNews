@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_view"
+    android:id="@+id/drag_root_view"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:orientation="horizontal"

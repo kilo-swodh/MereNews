@@ -18,6 +18,8 @@
 
     <string name="small">小号</string>
 
+    <string name="largest">特大</string>
+
     <string name="setting">设置</string>
 
     <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
@@ -250,13 +252,13 @@
 
     <string name="message_reading_record">您目前已在"Mere新闻"中{type}{num}篇新闻</string>
 
-    <string name="notification">推送-Beta</string>
+    <string name="notification">推送</string>
 
     <string name="notification_detail">总开关</string>
 
     <string name="notification_ticker">您有一条新的热点新闻</string>
 
-    <string name="notification_tip">推送间隔时间具体由系统安排，且尽可能节约资源，如果长时间无法收到新闻资讯推送，可尝试添加后台运行白名单。同时深夜时段固定是静默推送。</string>
+    <string name="notification_tip">推送间隔时间具体由系统安排,为了尽可能节约资源，国产机型请尝试添加后台运行白名单(后台运行权限/电池优化等)。另外深夜时段固定是静默推送。</string>
     
     <string name="notification_time">推送频率</string>
 
@@ -265,6 +267,10 @@
     <string name="notification_sound">静默推送</string>
 
     <string name="notification_sound_detail">不禁止振动和铃声</string>
+
+    <string name="notification_mode">兼容模式</string>
+
+    <string name="notification_mode_detail">功能正常则不要开启</string>
 
     <string name="time_level_1">频繁</string>
     <string name="time_level_2">一般</string>

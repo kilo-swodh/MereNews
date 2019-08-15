@@ -57,6 +57,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
 import static androidnews.kiloproject.system.AppConfig.QQ_KEY;
 import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
@@ -579,6 +580,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                                     spUtils.put(CONFIG_TYPE_ARRAY, exportBean.arrayStr);
                                                     spUtils.put(CONFIG_PUSH, exportBean.isPush);
                                                     spUtils.put(CONFIG_PUSH_SOUND, exportBean.isPushSound);
+                                                    spUtils.put(CONFIG_PUSH_MODE, exportBean.isPushMode);
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
                                                     spUtils.put(CONFIG_PUSH_TIME, exportBean.pushTime);
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
@@ -658,6 +660,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                             exportBean.mTextSize = AppConfig.mTextSize;
                                             exportBean.isPush = AppConfig.isPush;
                                             exportBean.isPushSound = AppConfig.isPushSound;
+                                            exportBean.isPushMode = AppConfig.isPushMode;
                                             exportBean.pushTime = AppConfig.pushTime;
                                             exportBean.currentRandomHeader = currentRandomHeader;
                                             exportBean.currentLanguage = currentLanguage;

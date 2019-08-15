@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="57" />
+                                                <entry key="scalingPercent" value="91" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -73,9 +73,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="f5f0ea" />
-                                      <entry key="foregroundImage" value="F:\512.png" />
-                                      <entry key="previewDensity" value="XXXHIGH" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="E:\Mere_fg.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -148,7 +147,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_update_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_forward_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -159,7 +158,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_update" />
+                            <entry key="outputName" value="ic_arrow_back_right" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="E:\Download\ic_paper.svg" />
                           </map>

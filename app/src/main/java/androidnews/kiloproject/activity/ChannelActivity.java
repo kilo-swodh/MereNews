@@ -94,7 +94,7 @@ public class ChannelActivity extends BaseActivity {
                         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
                         itemTouchHelper.attachToRecyclerView(rvSort);
 
-                        mAdapter.enableDragItem(itemTouchHelper, R.id.root_view, true);
+                        mAdapter.enableDragItem(itemTouchHelper, R.id.drag_root_view, true);
                         mAdapter.setOnItemDragListener(new OnItemDragListener() {
                             @Override
                             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {

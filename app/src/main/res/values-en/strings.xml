@@ -18,6 +18,8 @@
 
     <string name="small">Small</string>
 
+    <string name="largest">Largest</string>
+
     <string name="setting">Setting</string>
 
     <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
@@ -265,6 +267,10 @@
     <string name="notification_sound">Notification Sound</string>
 
     <string name="notification_sound_detail">No use of ringing and vibration</string>
+
+    <string name="notification_mode">Compat mode</string>
+
+    <string name="notification_mode_detail">Suggestions are given to the whitelist and not pushed to try.</string>
 
     <string name="time_level_1">frequent</string>
     <string name="time_level_2">normal</string>
