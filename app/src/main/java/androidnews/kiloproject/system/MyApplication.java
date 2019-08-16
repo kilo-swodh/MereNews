@@ -25,6 +25,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
@@ -33,6 +34,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.HOST_163;
 
 //import org.litepal.LitePal;
@@ -66,6 +68,9 @@ public class MyApplication extends Application {
         Utils.init(this);
 
         SPUtils spUtils = SPUtils.getInstance();
+        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
+        AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE, -1);
+        AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
         AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
         AppConfig.isSwipeBack = spUtils.getBoolean(CONFIG_SWIPE_BACK);
         AppConfig.isAutoRefresh = spUtils.getBoolean(CONFIG_AUTO_REFRESH);

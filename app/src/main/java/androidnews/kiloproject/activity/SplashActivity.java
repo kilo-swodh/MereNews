@@ -90,7 +90,6 @@ public class SplashActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();
 
-                AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE, -1);
                 if (listType == -1)
                     listType = DeviceUtils.isTablet() ? LIST_TYPE_MULTI : LIST_TYPE_SINGLE;
 
@@ -106,8 +105,6 @@ public class SplashActivity extends AppCompatActivity {
                 spUtils.put(CONFIG_LAST_LAUNCH, System.currentTimeMillis());
 
                 applyConfig();
-
-                AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
 
                 checkPushWork();
                 e.onNext(true);
