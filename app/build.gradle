@@ -21,7 +21,7 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1190
+        versionCode 1191
         versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

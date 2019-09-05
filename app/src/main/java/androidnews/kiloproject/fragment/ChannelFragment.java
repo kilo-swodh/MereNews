@@ -208,12 +208,16 @@ public class ChannelFragment extends BaseFragment implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
         //如果点击的时候，之前动画还没结束，那么就让点击事件无效
         if (isMove) {
-            ((BaseActivity)mActivity).swipePanel.setLeftEnabled(false);
-            ((BaseActivity)mActivity).swipePanel.setRightEnabled(false);
+            if (((BaseActivity)mActivity).swipePanel != null) {
+                ((BaseActivity) mActivity).swipePanel.setLeftEnabled(false);
+                ((BaseActivity) mActivity).swipePanel.setRightEnabled(false);
+            }
             return;
         }else {
-            ((BaseActivity)mActivity).swipePanel.setLeftEnabled(true);
-            ((BaseActivity)mActivity).swipePanel.setRightEnabled(true);
+            if (((BaseActivity)mActivity).swipePanel != null) {
+                ((BaseActivity) mActivity).swipePanel.setLeftEnabled(true);
+                ((BaseActivity) mActivity).swipePanel.setRightEnabled(true);
+            }
         }
         switch (parent.getId()) {
             case R.id.userGridView:

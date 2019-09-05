@@ -407,7 +407,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
                 spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
                 setResult(RESULT_OK);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
                 break;
 
             case R.id.tv_back_exit:
@@ -496,7 +495,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     AppConfig.isSwipeBack = true;
                 }
                 spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
                 break;
 
             case R.id.tv_high_ram:
@@ -509,12 +507,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     AppConfig.isHighRam = true;
                 }
                 spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_exit)).show();
                 break;
 
             case R.id.tv_dis_notice:
             case R.id.tv_dis_notice_detail:
-                if (!AppConfig.isDisNotice) {
+                if (AppConfig.isDisNotice) {
                     swDisNotice.setChecked(false);
                     AppConfig.isDisNotice = false;
                 } else {
@@ -522,7 +519,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     AppConfig.isDisNotice = true;
                 }
                 spUtils.put(CONFIG_DISABLE_NOTICE, AppConfig.isDisNotice);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.successful)).show();
                 break;
 
             case R.id.tv_status_bar:
@@ -535,7 +531,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     AppConfig.isStatusBar = true;
                 }
                 spUtils.put(CONFIG_STATUS_BAR, AppConfig.isStatusBar);
-                SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).show();
                 break;
 
             case R.id.tv_input:
