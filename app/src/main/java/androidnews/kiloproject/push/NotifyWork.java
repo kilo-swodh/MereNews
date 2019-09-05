@@ -114,8 +114,8 @@ public class NotifyWork extends Worker {
 
                                 if (mData != null) {
                                     String newLastId = mData.getDocid() + "," + lastId;
-                                    if (lastId.length() > 128) {
-                                        newLastId = lastId.substring(0, 108);
+                                    if (lastId.length() > 188) {
+                                        newLastId = lastId.substring(0, 160);
                                     }
                                     SPUtils.getInstance().put(CACHE_LAST_PUSH_ID, newLastId);
                                     sendNotification(mContext, mData.getTitle(), mData.getDigest(), mData.getDocid().replace("_special", "").trim());
@@ -157,7 +157,7 @@ public class NotifyWork extends Worker {
         NotificationManager mNotificaionManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("Mere Push", "Mere Push Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("Mere Push", "Mere Push Channel",NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.RED); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知

@@ -129,6 +129,8 @@ public class DragGrid extends GridView {
     /* 移动时候最后个动画的ID */
     private String LastAnimationID;
 
+    public boolean isEdit = false;
+
     public DragGrid(Context context) {
         super(context);
         init(context);

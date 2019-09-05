@@ -1,13 +1,15 @@
 <component name="libraryTable">
   <library name="Gradle: com.blankj:utilcodex:1.24.2@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d40c9e5b577d53785960936fe019edec/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a87eb20d44cebc33a433289e6104f35b/utilcodex-1.24.2/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d40c9e5b577d53785960936fe019edec/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d40c9e5b577d53785960936fe019edec/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a87eb20d44cebc33a433289e6104f35b/utilcodex-1.24.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a87eb20d44cebc33a433289e6104f35b/utilcodex-1.24.2/res" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.blankj/utilcodex/1.24.2/9a0c98ee335d6521eee633414fe210976432c546/utilcodex-1.24.2-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.blankj/utilcodex/1.24.2/4f2b460a777f16a3bf0ba20a1b6646d1331d0d8f/utilcodex-1.24.2-sources.jar!/" />
     </SOURCES>

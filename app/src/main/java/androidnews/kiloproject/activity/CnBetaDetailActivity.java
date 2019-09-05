@@ -197,7 +197,7 @@ public class CnBetaDetailActivity extends BaseDetailActivity {
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                        if (Integer.parseInt(currentData.getResult().getComments()) > 0)
+                                        if (currentData != null && Integer.parseInt(currentData.getResult().getComments()) > 0)
                                             initComment();
                                         else
                                             isCommentReady = -1;

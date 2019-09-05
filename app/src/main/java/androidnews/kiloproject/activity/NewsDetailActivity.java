@@ -194,8 +194,10 @@ public class NewsDetailActivity extends BaseDetailActivity {
                                     ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
                                     finish();
                                 }
-                                if (currentData == null || TextUtils.isEmpty(currentData.getBody()))
+                                if (currentData == null || TextUtils.isEmpty(currentData.getBody())) {
                                     loadError();
+                                    return;
+                                }
                                 Observable.create(new ObservableOnSubscribe<Boolean>() {
                                     @Override
                                     public void subscribe(ObservableEmitter<Boolean> e) throws Exception {

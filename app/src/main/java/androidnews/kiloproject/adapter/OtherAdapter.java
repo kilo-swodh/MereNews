@@ -53,7 +53,7 @@ public class OtherAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.channel_category_item, null);
         ChannelItem channel = getItem(position);
-        if (TextUtils.equals(channel.getName(),"fake")){
+        if (TextUtils.equals(channel.getName(), "fake")) {
             view.setVisibility(View.GONE);
             return view;
         }
@@ -81,18 +81,19 @@ public class OtherAdapter extends BaseAdapter {
      * 添加频道列表
      */
     public void addItem(ChannelItem channel) {
-        channelList.add(getLastVaildPositon(),channel);
+        channelList.add(getLastVaildPositon(), channel);
         notifyDataSetChanged();
     }
 
-    public int getLastVaildPositon(){
-        int lastVaild = 0;
+    public int getLastVaildPositon() {
+        int lastVaild = -1;
         for (int i = 0; i < channelList.size(); i++) {
             if (channelList.get(i).getName().equals("fake")) {
                 lastVaild = i;
                 break;
             }
         }
+        if (lastVaild < 0)lastVaild = 0;
         return lastVaild;
     }
 

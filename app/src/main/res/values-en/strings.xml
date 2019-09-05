@@ -20,6 +20,8 @@
 
     <string name="largest">Largest</string>
 
+    <string name="mini">Mini</string>
+
     <string name="setting">Setting</string>
 
     <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
@@ -284,4 +286,6 @@
 
     <string name="skeleton">Load animation</string>
     <string name="skeleton_detail">Fill in content with flicker animation</string>
+
+    <string name="support_offline">Support offline</string>
 </resources>

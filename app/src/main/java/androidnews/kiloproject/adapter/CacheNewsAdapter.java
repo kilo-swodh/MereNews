@@ -1,6 +1,7 @@
 package androidnews.kiloproject.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,10 +18,12 @@ import androidnews.kiloproject.util.GlideUtil;
 public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder> {
     RequestOptions options;
     private Context mContext;
+    private String offStr;
 
     public CacheNewsAdapter(Context Context, List data) {
         super(R.layout.list_item_card_cache, data);
         this.mContext = Context;
+        offStr = "-" + mContext.getResources().getString(R.string.support_offline);
         options = new RequestOptions();
         options.centerCrop()
                 .error(R.drawable.ic_error);
@@ -29,7 +32,7 @@ public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, CacheNews item) {
         helper.setText(R.id.item_card_text, item.getTitle());
-        helper.setText(R.id.item_card_info, item.getSource());
+        helper.setText(R.id.item_card_info, item.getSource() + (TextUtils.isEmpty(item.getHtmlText()) ? "" : offStr));
         if (GlideUtil.isValidContextForGlide(mContext))
             Glide.with(mContext)
                     .load(item.getImgUrl())

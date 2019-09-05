@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     boolean isStart = false;
     private ImmersionBar mImmersionBar;
     protected Gson gson = new Gson();
-    protected SwipePanel swipePanel;
+    public SwipePanel swipePanel;
 
     public static final int SELECT_RESULT = 999;
     public static final int SETTING_RESULT = 998;

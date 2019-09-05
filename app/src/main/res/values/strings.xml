@@ -18,7 +18,9 @@
 
     <string name="small">小号</string>
 
-    <string name="largest">特大</string>
+    <string name="largest">最大</string>
+
+    <string name="mini">最小</string>
 
     <string name="setting">设置</string>
 
@@ -294,4 +296,6 @@
     <string name="explorer_title">邀请您试用MereNews探索版</string>
 
     <string name="explorer_message">目前仅针对少数粉丝开放使用,试试看吗?注意对设备性能有一定要求哦</string>
+
+    <string name="support_offline">支持离线</string>
 </resources>

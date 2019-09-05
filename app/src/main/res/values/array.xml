@@ -10,6 +10,8 @@
         <item>@string/big</item>
         <item>@string/normal</item>
         <item>@string/small</item>
+        <item>@string/largest</item>
+        <item>@string/mini</item>
     </array>
 
     <array name="header_setting">
@@ -71,7 +73,7 @@
         <item>古玩</item>
         <item>政务</item>
         <item>精选</item>
-        <item>暴雪</item>
+        <item>空缺</item>
         <item>手机</item>
         <item>足球</item>
         <item>数码</item>

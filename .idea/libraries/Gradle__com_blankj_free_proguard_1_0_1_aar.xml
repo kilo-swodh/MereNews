@@ -1,10 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.blankj:free-proguard:1.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd0d68d9786d18631d926cce1ae68635/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd0d68d9786d18631d926cce1ae68635/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/280760a6aac76335437e40177663af89/jetified-free-proguard-1.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/280760a6aac76335437e40177663af89/jetified-free-proguard-1.0.1/res" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.blankj/free-proguard/1.0.1/fd18ccead94e42407acb9b81cc151ef22ce39281/free-proguard-1.0.1-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.blankj/free-proguard/1.0.1/fd18ccead94e42407acb9b81cc151ef22ce39281/free-proguard-1.0.1-sources.jar!/" />
     </SOURCES>

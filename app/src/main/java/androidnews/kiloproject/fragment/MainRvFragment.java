@@ -305,61 +305,61 @@ public class MainRvFragment extends BaseRvFragment {
                                             }
                                             if (newList != null && newList.size() > 2) {
                                                 newList = kickRepeat(newList);
-                                            }
-                                            for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
-                                                NewMainListData dataItem = it.next();
-                                                if (dataItem == null || checkExtra(dataItem) == 2) {
-                                                    it.remove();
-                                                    continue;
-                                                }
-                                                if (cacheNews != null && cacheNews.size() > 0) {
-                                                    for (CacheNews cacheNew : cacheNews) {
-                                                        if (dataItem.getDocid().contains(cacheNew.getDocid())) {
-                                                            dataItem.setReaded(true);
-                                                            break;
-                                                        }
+                                                for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
+                                                    NewMainListData dataItem = it.next();
+                                                    if (dataItem == null || checkExtra(dataItem) == 2) {
+                                                        it.remove();
+                                                        continue;
                                                     }
-                                                }
-                                                boolean isBlockBingo = false;
-                                                boolean isHasAd = false;        //防止有ad的item因为ad而被屏蔽视为普通条目
-                                                if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
-                                                    if (dataItem.getAds() == null) {
-                                                        for (BlockItem blockItem : getMainActivity().blockList) {
-                                                            if (isBlockBingo)
+                                                    if (cacheNews != null && cacheNews.size() > 0) {
+                                                        for (CacheNews cacheNew : cacheNews) {
+                                                            if (dataItem.getDocid().contains(cacheNew.getDocid())) {
+                                                                dataItem.setReaded(true);
                                                                 break;
-                                                            switch (blockItem.getType()) {
-                                                                case TYPE_SOURCE:
-                                                                    if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
-                                                                        it.remove();
-                                                                        isBlockBingo = true;
-                                                                    }
-                                                                    break;
-                                                                case TYPE_KEYWORDS:
-                                                                    if (dataItem.getTitle().contains(blockItem.getText())) {
-                                                                        it.remove();
-                                                                        isBlockBingo = true;
-                                                                    }
-                                                                    break;
                                                             }
                                                         }
-                                                    } else if (dataItem.getAds().size() > 0) {
-                                                        isHasAd = true;
-                                                        for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
-                                                            NewMainListData.AdsBean adItem = adIt.next();
-                                                            boolean isAdBlockBingo = false;
+                                                    }
+                                                    boolean isBlockBingo = false;
+                                                    boolean isHasAd = false;        //防止有ad的item因为ad而被屏蔽视为普通条目
+                                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                                        if (dataItem.getAds() == null) {
                                                             for (BlockItem blockItem : getMainActivity().blockList) {
-                                                                if (isAdBlockBingo)
+                                                                if (isBlockBingo)
                                                                     break;
-                                                                if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
+                                                                switch (blockItem.getType()) {
+                                                                    case TYPE_SOURCE:
+                                                                        if (TextUtils.equals(dataItem.getSource(), blockItem.getText())) {
+                                                                            it.remove();
+                                                                            isBlockBingo = true;
+                                                                        }
+                                                                        break;
+                                                                    case TYPE_KEYWORDS:
+                                                                        if (dataItem.getTitle().contains(blockItem.getText())) {
+                                                                            it.remove();
+                                                                            isBlockBingo = true;
+                                                                        }
+                                                                        break;
+                                                                }
+                                                            }
+                                                        } else if (dataItem.getAds().size() > 0) {
+                                                            isHasAd = true;
+                                                            for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
+                                                                NewMainListData.AdsBean adItem = adIt.next();
+                                                                if (adItem.getSkipID().equals("00AJ0003|650617")) {   //王凯微笑
                                                                     adIt.remove();
-                                                                    isAdBlockBingo = true;
+                                                                    continue;
+                                                                }
+
+                                                                for (BlockItem blockItem : getMainActivity().blockList) {
+                                                                    if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText()))
+                                                                        adIt.remove();
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                }
-                                                if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo)) {
-                                                    contents.add(dataItem);
+                                                    if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo)) {
+                                                        contents.add(dataItem);
+                                                    }
                                                 }
                                             }
                                             e.onNext(true);

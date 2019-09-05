@@ -29,6 +29,7 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.adapter.DragAdapter;
 import androidnews.kiloproject.adapter.OtherAdapter;
 import androidnews.kiloproject.entity.data.ChannelItem;
+import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.system.base.BaseFragment;
 import androidnews.kiloproject.widget.DragGrid;
 import androidnews.kiloproject.widget.OtherGridView;
@@ -183,7 +184,9 @@ public class ChannelFragment extends BaseFragment implements AdapterView.OnItemC
                                                 try {
                                                     int[] endLocation = new int[2];
                                                     //获取终点的坐标
-                                                    otherGridView.getChildAt(otherAdapter.getLastVaildPositon() - 1).getLocationInWindow(endLocation);
+                                                    int otherPosition = otherAdapter.getLastVaildPositon() - 1;
+                                                    if (otherPosition < 0)otherPosition = 0;
+                                                    otherGridView.getChildAt(otherPosition).getLocationInWindow(endLocation);
                                                     MoveAnim(moveImageView, startLocation, endLocation, channel, userGridView);
                                                     userAdapter.setRemove(position);
                                                 } catch (Exception localException) {
@@ -205,7 +208,12 @@ public class ChannelFragment extends BaseFragment implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
         //如果点击的时候，之前动画还没结束，那么就让点击事件无效
         if (isMove) {
+            ((BaseActivity)mActivity).swipePanel.setLeftEnabled(false);
+            ((BaseActivity)mActivity).swipePanel.setRightEnabled(false);
             return;
+        }else {
+            ((BaseActivity)mActivity).swipePanel.setLeftEnabled(true);
+            ((BaseActivity)mActivity).swipePanel.setRightEnabled(true);
         }
         switch (parent.getId()) {
             case R.id.userGridView:
