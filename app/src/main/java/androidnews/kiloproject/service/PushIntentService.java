@@ -73,10 +73,11 @@ public class PushIntentService extends IntentService {
                                 }
 
                                 if (mData != null) {
-                                    String newLastId = mData.getDocid() + "," + lastId;
-                                    if (lastId.length() > 128) {
-                                        newLastId = lastId.substring(0, 108);
+                                    if (lastId.length() > 188) {
+                                        lastId = mData.getDocid() + "," + lastId.substring(0, 160);
                                     }
+                                    String newLastId = mData.getDocid() + "," + lastId;
+
                                     SPUtils.getInstance().put(CACHE_LAST_PUSH_ID, newLastId);
                                     NotifyWork.sendNotification(PushIntentService.this,mData.getTitle(), mData.getDigest(), mData.getDocid().replace("_special", "").trim());
                                 }

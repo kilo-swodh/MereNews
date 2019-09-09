@@ -45,6 +45,12 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
+        <service android:name=".service.PushIntentService">
+            <intent-filter>
+                <action android:name="androidnews.kiloproject.service.PushIntentService" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">

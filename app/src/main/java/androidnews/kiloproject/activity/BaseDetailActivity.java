@@ -197,10 +197,10 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
                 webSetting.setTextZoom(70);
                 break;
             case 3:
-                webSetting.setTextZoom(190);
+                webSetting.setTextZoom(160);
                 break;
             case 4:
-                webSetting.setTextZoom(40);
+                webSetting.setTextZoom(50);
                 break;
         }
     }

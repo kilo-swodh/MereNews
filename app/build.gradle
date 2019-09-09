@@ -21,8 +21,8 @@ android {
 
 //        ndk{abiFilters "armeabi"}
 
-        versionCode 1191
-        versionName "1.2.1"
+        versionCode 1192
+        versionName "1.2.1-fixed"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -76,8 +76,8 @@ dependencies {
 
     //下拉刷新的外层布局
     // https://github.com/scwang90/SmartRefreshLayout
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-11'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-11'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
 
     //sqlite数据库
     // https://github.com/LitePalFramework/LitePal
@@ -85,7 +85,7 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     //工具包
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
@@ -93,7 +93,7 @@ dependencies {
 
     //状态栏沉浸
     // https://github.com/gyf-dev/ImmersionBar
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
 
     //跨组件通讯
     // https://github.com/greenrobot/EventBus
@@ -114,13 +114,13 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
 
     //椭圆图标
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     //侧滑返回
     implementation 'com.blankj:swipe-panel:1.1'
 
     //bugly
-    implementation 'com.tencent.bugly:crashreport:2.8.6.0'
+    implementation 'com.tencent.bugly:crashreport:3.0.1'
 
     //播放器
     implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
@@ -132,7 +132,7 @@ dependencies {
     implementation 'com.github.QuadFlask:colorpicker:0.0.13'
 
     //混淆
-    implementation "com.blankj:free-proguard:1.0.1"
+    implementation 'com.blankj:free-proguard:1.0.1'
 
     //性能检测
     implementation 'com.facebook.device.yearclass:yearclass:2.1.0'
@@ -146,7 +146,7 @@ dependencies {
     implementation 'com.nineoldandroids:library:2.4.0'
 
     //Work
-    implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation 'androidx.work:work-runtime:2.2.0'
 
     //SeekBar
     implementation 'com.xw.repo:bubbleseekbar:3.20-lite'

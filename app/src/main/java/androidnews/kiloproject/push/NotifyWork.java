@@ -13,21 +13,11 @@ import android.text.format.Time;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.target.NotificationTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
@@ -113,10 +103,10 @@ public class NotifyWork extends Worker {
                                 }
 
                                 if (mData != null) {
-                                    String newLastId = mData.getDocid() + "," + lastId;
                                     if (lastId.length() > 188) {
-                                        newLastId = lastId.substring(0, 160);
+                                        lastId = mData.getDocid() + "," + lastId.substring(0, 160);
                                     }
+                                    String newLastId = mData.getDocid() + "," + lastId;
                                     SPUtils.getInstance().put(CACHE_LAST_PUSH_ID, newLastId);
                                     sendNotification(mContext, mData.getTitle(), mData.getDigest(), mData.getDocid().replace("_special", "").trim());
                                 }

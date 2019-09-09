@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 
 public class PollingUtils {
-    public static final String PUSH_ACTIVE = "com.androidnews.kiloproject.service.PushIntentService";
+    public static final String PUSH_ACTIVE = "androidnews.kiloproject.service.PushIntentService";
 
     //开启轮询服务
     public static void startPollingService(Context context, int seconds, Class<?> cls, String action) {

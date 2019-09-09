@@ -14,8 +14,7 @@
         android:background="@color/main_background"
         android:elevation="@dimen/elevation_toolbar"
         android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ToolbarPopupTheme"
-        app:navigationIcon="?attr/homeAsUpIndicator" />
+        app:popupTheme="@style/ToolbarPopupTheme" />
 
     <com.github.ksoichiro.android.observablescrollview.ObservableWebView
         android:id="@+id/web_news"

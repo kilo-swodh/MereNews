@@ -16,27 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 import androidx.core.os.ConfigurationCompat;
-import androidx.core.view.ViewCompat;
-import androidx.work.Constraints;
-import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.NetworkType;
-import androidx.work.Operation;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowInsets;
 
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.facebook.device.yearclass.YearClass;
-import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.List;
 import java.util.Locale;
