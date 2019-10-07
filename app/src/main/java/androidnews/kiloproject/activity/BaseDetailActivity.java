@@ -156,6 +156,7 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
                             SnackbarUtils.with(webView)
                                     .setMessage(getString(R.string.download_success))
                                     .show();
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
                         }
 
                         @Override

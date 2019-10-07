@@ -32,6 +32,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true"/>
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />

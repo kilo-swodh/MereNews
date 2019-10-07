@@ -3,6 +3,7 @@ package androidnews.kiloproject.system;
 import android.app.Application;
 import android.content.Context;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -19,6 +20,8 @@ import com.zhouyou.http.EasyHttp;
 import org.litepal.LitePal;
 
 import androidnews.kiloproject.R;
+import io.reactivex.functions.Consumer;
+import io.reactivex.plugins.RxJavaPlugins;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
@@ -120,6 +123,12 @@ public class MyApplication extends Application {
 //                EventBus.getDefault().unregister(activity);
 //            }
 //        });
+        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                LogUtils.d("onRxJavaErrorHandler ---->: $it");
+            }
+        });
     }
 
     public static MyApplication getInstance() {

@@ -351,6 +351,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                             videoStub = (ViewStub) findViewById(R.id.stub_video);
                             videoStub.setVisibility(View.VISIBLE);
                             videoLayout = findViewById(R.id.fl_video_full);
+                            videoLayout.setKeepScreenOn(true);
                         }
                         getSupportActionBar().setDisplayShowTitleEnabled(false);
                         if (b && webView != null) {

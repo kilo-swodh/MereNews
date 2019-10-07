@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/root_view"
@@ -58,7 +59,8 @@
         android:textSize="@dimen/text_mini"
         app:layout_constraintBottom_toTopOf="@id/btn_galley_download"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/btn_galley_download"
@@ -91,9 +93,23 @@
         android:text="1/1"
         android:textColor="@color/white"
         android:textSize="@dimen/text_mini"
-        android:layout_marginBottom="@dimen/margin_large"
+        android:onClick="onClick"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginLeft="@dimen/margin_normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_galley_download"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_galley_download"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/btn_arrow_down"
+        android:layout_width="@dimen/margin_largest"
+        android:layout_height="@dimen/margin_largest"
+        android:background="@drawable/ic_arrow_down"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:onClick="onClick"
+        app:layout_constraintTop_toTopOf="@+id/btn_galley_download"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_galley_download"
+        app:layout_constraintStart_toEndOf="@+id/tv_galley_page"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

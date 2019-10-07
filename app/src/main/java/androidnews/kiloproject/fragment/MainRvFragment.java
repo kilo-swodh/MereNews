@@ -307,7 +307,7 @@ public class MainRvFragment extends BaseRvFragment {
                                                 newList = kickRepeat(newList);
                                                 for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
                                                     NewMainListData dataItem = it.next();
-                                                    if (dataItem == null || checkExtra(dataItem) == 2) {
+                                                    if (dataItem == null || checkExtra(dataItem) == 2 || TextUtils.equals(dataItem.getArticleType(), "webview")) {
                                                         it.remove();
                                                         continue;
                                                     }
@@ -383,7 +383,7 @@ public class MainRvFragment extends BaseRvFragment {
 //                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!isGoodItem(dataItem) || checkExtra(dataItem) == 2) {
+                                                    if (!isGoodItem(dataItem) || checkExtra(dataItem) == 2 || TextUtils.equals(dataItem.getArticleType(), "webview")) {
                                                         continue;
                                                     }
                                                     for (NewMainListData myBean : contents) {

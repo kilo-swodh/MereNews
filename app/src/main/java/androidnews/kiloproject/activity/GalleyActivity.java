@@ -1,24 +1,22 @@
 package androidnews.kiloproject.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.core.view.ViewCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.blankj.swipepanel.SwipePanel;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SizeUtils;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -41,7 +39,7 @@ import androidnews.kiloproject.widget.PinchImageView;
 
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 
-public class GalleyActivity extends BaseActivity {
+public class GalleyActivity extends BaseActivity implements View.OnClickListener {
 
     ViewPager galleyViewpager;
     TextView tvGalleyTitle;
@@ -49,6 +47,7 @@ public class GalleyActivity extends BaseActivity {
     TextView tvGalleyPage;
     ProgressBar progressBar;
     View btnGalleyDownload;
+    View mArrowDownBtn;
     private GalleyData galleyContent;
     private String currentImg;
 
@@ -62,6 +61,7 @@ public class GalleyActivity extends BaseActivity {
         tvGalleyPage = (TextView) findViewById(R.id.tv_galley_page);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         btnGalleyDownload = (View) findViewById(R.id.btn_galley_download);
+        mArrowDownBtn = (View) findViewById(R.id.btn_arrow_down);
 
 //        ViewCompat.setTransitionName(galleyViewpager, "banner_pic");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
@@ -221,6 +221,7 @@ public class GalleyActivity extends BaseActivity {
                                     SnackbarUtils.with(tvGalleyTitle)
                                             .setMessage(getString(R.string.download_success))
                                             .show();
+                                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
                                 }
 
                                 @Override
@@ -236,6 +237,15 @@ public class GalleyActivity extends BaseActivity {
                     SnackbarUtils.with(tvGalleyTitle)
                             .setMessage(getString(R.string.download_fail))
                             .showError();
+                }
+                break;
+            case R.id.btn_arrow_down:
+                if (tvGalleyText.getVisibility() == View.VISIBLE){
+                    tvGalleyText.setVisibility(View.GONE);
+                    mArrowDownBtn.setBackgroundResource(R.drawable.ic_arrow_up);
+                }else {
+                    tvGalleyText.setVisibility(View.VISIBLE);
+                    mArrowDownBtn.setBackgroundResource(R.drawable.ic_arrow_down);
                 }
                 break;
         }

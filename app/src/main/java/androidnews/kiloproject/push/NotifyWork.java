@@ -149,7 +149,7 @@ public class NotifyWork extends Worker {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("Mere Push", "Mere Push Channel",NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
-            channel.setLightColor(Color.RED); //小红点颜色
+            channel.setLightColor(Color.YELLOW); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
             mNotificaionManager.createNotificationChannel(channel);
         }

@@ -105,6 +105,7 @@ public class NewMainListData implements MultiItemEntity {
     private int hasHead;
     private int imgType;
     private int order;
+    private String articleType;
     private int votecount;
     private boolean hasCover;
     private String docid;
@@ -489,6 +490,14 @@ public class NewMainListData implements MultiItemEntity {
 
     public void setSpecialextra(List<SpecialextraBean> specialextra) {
         this.specialextra = specialextra;
+    }
+
+    public String getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(String articleType) {
+        this.articleType = articleType;
     }
 
     public static class AdsBean {

@@ -42,24 +42,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LAST_LAUNCH;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_TIME;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
-import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
 import static androidnews.kiloproject.system.AppConfig.PUSH_WORK_NAME;
@@ -202,7 +187,7 @@ public class SplashActivity extends AppCompatActivity {
         if (notifyWork != null) {
 //            notifyWork.setConstraints(myCoustrain);
             PeriodicWorkRequest workRequest = notifyWork.build();
-            WorkManager.getInstance().enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP,workRequest);
+            WorkManager.getInstance().enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, workRequest);
         }
     }
 }
