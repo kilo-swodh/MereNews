@@ -3,8 +3,8 @@
     <item android:state_checked="true"
         android:color="#757575"/> <!-- selected颜色 -->
     <item android:state_pressed="true"
-        android:color="#ccc"/> <!-- pressed颜色 -->
+        android:color="#ccceee"/> <!-- pressed颜色 -->
     <item android:state_focused="true"
-        android:color="#FFC107"/> <!-- focused颜色 -->
-    <item android:color="#FFA000"/> <!-- default颜色 -->
+        android:color="#333333"/> <!-- focused颜色 -->
+    <item android:color="#666666"/> <!-- default颜色 -->
 </selector>

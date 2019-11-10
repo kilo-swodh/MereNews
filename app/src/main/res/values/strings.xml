@@ -24,7 +24,7 @@
 
     <string name="setting">设置</string>
 
-    <string name="message_permission_rationale">为保证App功能正常运行,请同意下列权限:\n\n%1$s</string>
+    <string name="message_permission_rationale">为保证App功能正常运行,请同意权限</string>
 
     <string name="message_permission_always_failed">请到设置中给予本App权限:\n\n%1$s</string>
 
@@ -37,6 +37,8 @@
     <string name="apk_name">android.apk</string>
 
     <string name="action_comment">评论</string>
+
+    <string name="action_video">悬浮视频</string>
 
     <string name="action_link">复制链接</string>
 
@@ -53,6 +55,10 @@
     <string name="action_block_source">屏蔽该来源</string>
 
     <string name="action_block_keywords">屏蔽关键词</string>
+
+    <string name="no_video">没有视频内容哦</string>
+
+    <string name="not_support">该功能不支持</string>
 
     <string name="source">新闻源</string>
 
@@ -286,6 +292,12 @@
 
     <string name="skeleton">加载动画</string>
     <string name="skeleton_detail">使用闪烁动画填充内容</string>
+
+    <string name="haptic">振动反馈</string>
+    <string name="haptic_detail">建议线性马达机型使用</string>
+
+    <string name="no_image">省流模式</string>
+    <string name="no_image_detail">尽量不加载图片以节约流量</string>
 
     <string name="auto">Auto</string>
 

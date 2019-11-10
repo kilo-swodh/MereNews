@@ -6,7 +6,7 @@ import androidnews.kiloproject.entity.net.ITHomeListData;
 
 import static androidnews.kiloproject.system.AppConfig.HOST_IT_HOME_URL;
 
-public class XmlParseUtil {
+public class XmlParseUtils {
     public static ITHomeListData getITHomeListData(String xml) {
         ITHomeListData data = new ITHomeListData();
         int lastIndex = 0;

@@ -29,7 +29,7 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.net.IThomeDetailData;
-import androidnews.kiloproject.util.XmlParseUtil;
+import androidnews.kiloproject.util.XmlParseUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -164,9 +164,9 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                             if (!TextUtils.isEmpty(response)) {
                                 currentData = new IThomeDetailData();
                                 try {
-                                    currentData.setNewssource(XmlParseUtil.getXmlElement("newssource",response));
-                                    currentData.setNewsauthor(XmlParseUtil.getXmlElement("newsauthor",response));
-                                    currentData.setDetail(XmlParseUtil.getXmlElement("detail",response)
+                                    currentData.setNewssource(XmlParseUtils.getXmlElement("newssource",response));
+                                    currentData.setNewsauthor(XmlParseUtils.getXmlElement("newsauthor",response));
+                                    currentData.setDetail(XmlParseUtils.getXmlElement("detail",response)
                                             .replace("&amp;","&")
                                             .replace("&lt;","<")
                                             .replace("&gt;",">")
@@ -365,6 +365,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
         super.onCreateOptionsMenu(menu);
         try {
             menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

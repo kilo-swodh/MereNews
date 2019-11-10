@@ -4,12 +4,10 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.youth.banner.loader.ImageLoader;
 
 import androidnews.kiloproject.R;
-import androidnews.kiloproject.util.GlideUtil;
 
 public class GlideImageLoader extends ImageLoader {
 
@@ -30,7 +28,7 @@ public class GlideImageLoader extends ImageLoader {
          传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
          切记不要胡乱强转！
          */
-        if (GlideUtil.isValidContextForGlide(mContext))
+        if (GlideUtils.isValidContextForGlide(mContext))
             Glide.with(mContext)
                     .load(path)
                     .apply(options)

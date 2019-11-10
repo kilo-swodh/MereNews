@@ -13,7 +13,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.CacheNews;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder> {
     RequestOptions options;
@@ -33,10 +34,12 @@ public class CacheNewsAdapter extends BaseQuickAdapter<CacheNews, BaseViewHolder
     protected void convert(BaseViewHolder helper, CacheNews item) {
         helper.setText(R.id.item_card_text, item.getTitle());
         helper.setText(R.id.item_card_info, item.getSource() + (TextUtils.isEmpty(item.getHtmlText()) ? "" : offStr));
-        if (GlideUtil.isValidContextForGlide(mContext))
+        if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext))
             Glide.with(mContext)
                     .load(item.getImgUrl())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img));
+        else
+            helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
     }
 }

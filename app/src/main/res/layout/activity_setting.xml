@@ -372,7 +372,7 @@
                         app:layout_constraintTop_toTopOf="@id/tv_swipe_back" />
 
                     <View
-                        android:id="@+id/view_high_ram"
+                        android:id="@+id/view_haptic"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -382,6 +382,59 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_swipe_back_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_haptic"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/haptic"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toStartOf="@id/sw_haptic"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_haptic" />
+
+                    <TextView
+                        android:id="@+id/tv_haptic_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/haptic_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/sw_haptic"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_haptic" />
+
+                    <Switch
+                        android:id="@+id/sw_haptic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_haptic_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_haptic" />
+
+                    <View
+                        android:id="@+id/view_high_ram"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_haptic_detail" />
 
                     <TextView
                         android:id="@+id/tv_high_ram"
@@ -498,7 +551,7 @@
                         app:layout_constraintTop_toTopOf="@id/tv_dis_notice" />
 
                     <View
-                        android:id="@+id/view_status_bar"
+                        android:id="@+id/view_no_image"
                         android:layout_width="0.0dip"
                         android:layout_height="1.0px"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -508,6 +561,59 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_dis_notice_detail" />
+
+                    <TextView
+                        android:id="@+id/tv_no_image"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/no_image"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_normal"
+                        android:onClick="onClick"
+                        app:layout_constraintEnd_toStartOf="@id/sw_no_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_no_image" />
+
+                    <TextView
+                        android:id="@+id/tv_no_image_detail"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:onClick="onClick"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/no_image_detail"
+                        android:textColor="@color/main_text_color_dark"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/sw_no_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_no_image" />
+
+                    <Switch
+                        android:id="@+id/sw_no_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        app:theme="@style/SwitchTheme"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_no_image_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_no_image" />
+
+                    <View
+                        android:id="@+id/view_status_bar"
+                        android:layout_width="0.0dip"
+                        android:layout_height="1.0px"
+                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginRight="@dimen/margin_large"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_no_image_detail" />
 
                     <TextView
                         android:id="@+id/tv_status_bar"
@@ -686,7 +792,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_list_type" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

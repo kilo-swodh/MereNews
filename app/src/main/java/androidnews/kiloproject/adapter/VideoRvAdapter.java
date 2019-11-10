@@ -12,7 +12,7 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.VideoListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.util.GlideUtils;
 import androidnews.kiloproject.widget.MyJzvdStd;
 import cn.jzvd.Jzvd;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,14 +41,14 @@ public class VideoRvAdapter extends BaseQuickAdapter<VideoListData, BaseViewHold
         else
             helper.setTextColor(R.id.item_card_text,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
-        if (!TextUtils.isEmpty(item.getTopicImg()) && GlideUtil.isValidContextForGlide(mContext))
+        if (!TextUtils.isEmpty(item.getTopicImg()) && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext).load(item.getTopicImg())
                         .apply(options)
                         .into((CircleImageView) helper.getView(R.id.item_card_img));
 
         MyJzvdStd videoView = helper.getView(R.id.item_card_vid);
         videoView.setUp(item.getMp4_url(), item.getSectiontitle(), Jzvd.SCREEN_WINDOW_LIST);
-        if (!TextUtils.isEmpty(item.getCover()) && GlideUtil.isValidContextForGlide(mContext))
+        if (!TextUtils.isEmpty(item.getCover()) && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext)
                         .load(item.getCover())
                         .apply(options)

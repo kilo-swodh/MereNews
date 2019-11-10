@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -224,6 +226,8 @@ public class PressRvFragment extends BaseRvFragment {
                         if (refreshLayout != null) {
                             switch (type) {
                                 case TYPE_REFRESH:
+                                    if (AppConfig.isHaptic)
+                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                     refreshLayout.finishRefresh(false);
                                     break;
                                 case TYPE_LOADMORE:
@@ -233,13 +237,7 @@ public class PressRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            try {
-                                SnackbarUtils.with(refreshLayout).
-                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                        showError();
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                            }
+                            ToastUtils.showShort(getString(R.string.load_fail) + e.getMessage());
                         }
                     }
 
@@ -391,6 +389,8 @@ public class PressRvFragment extends BaseRvFragment {
                                                 createAdapter();
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
+                                                    if (AppConfig.isHaptic)
+                                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                                     refreshLayout.finishRefresh(true);
                                                     if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
@@ -423,6 +423,8 @@ public class PressRvFragment extends BaseRvFragment {
     private void loadFailed(int type) {
         switch (type) {
             case TYPE_REFRESH:
+                if (AppConfig.isHaptic)
+                    refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 refreshLayout.finishRefresh(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;

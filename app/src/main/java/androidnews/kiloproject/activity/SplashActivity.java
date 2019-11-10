@@ -22,6 +22,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import android.util.DisplayMetrics;
+import android.webkit.WebView;
 
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -78,8 +79,6 @@ public class SplashActivity extends AppCompatActivity {
                     AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
                 spUtils.put(CONFIG_LAST_LAUNCH, System.currentTimeMillis());
 
-                applyConfig();
-
                 checkPushWork();
                 e.onNext(true);
                 e.onComplete();
@@ -89,8 +88,8 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (isNightMode)
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        new WebView(SplashActivity.this);
+                        applyConfig();
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         finish();
                     }
@@ -127,8 +126,12 @@ public class SplashActivity extends AppCompatActivity {
     private void applyConfig() {
         if (isNightMode)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        else {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
 
         int language = SPUtils.getInstance().getInt(CONFIG_LANGUAGE);
         Locale myLocale = null;

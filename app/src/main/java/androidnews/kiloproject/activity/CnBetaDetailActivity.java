@@ -420,6 +420,17 @@ public class CnBetaDetailActivity extends BaseDetailActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        try {
+            menu.getItem(1).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
     protected void initWeb() {
         super.initWeb();
         webView.setWebChromeClient(new WebChromeClient() {

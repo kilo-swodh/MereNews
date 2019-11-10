@@ -15,6 +15,8 @@ public class ExportBean {
             isPush,
             isPushSound,
             isPushMode,
+            isHaptic,
+            isNoImage,
             isEasterEggs,
             isShowSkeleton;
     public int listType,

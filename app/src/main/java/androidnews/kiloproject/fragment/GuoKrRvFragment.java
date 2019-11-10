@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import androidnews.kiloproject.system.AppConfig;
@@ -210,6 +212,8 @@ public class GuoKrRvFragment extends BaseRvFragment {
                         if (refreshLayout != null) {
                             switch (type) {
                                 case TYPE_REFRESH:
+                                    if (AppConfig.isHaptic)
+                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                     refreshLayout.finishRefresh(false);
                                     break;
                                 case TYPE_LOADMORE:
@@ -219,13 +223,7 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            try {
-                                SnackbarUtils.with(refreshLayout).
-                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                        showError();
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                            }
+                            ToastUtils.showShort(getString(R.string.load_fail) + e.getMessage());
                         }
                     }
 
@@ -292,6 +290,8 @@ public class GuoKrRvFragment extends BaseRvFragment {
                                                 createAdapter();
                                                 requestBanner();
                                                 try {
+                                                    if (AppConfig.isHaptic)
+                                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                                     refreshLayout.finishRefresh(true);
                                                     if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
@@ -368,6 +368,8 @@ public class GuoKrRvFragment extends BaseRvFragment {
     private void loadFailed(int type) {
         switch (type) {
             case TYPE_REFRESH:
+                if (AppConfig.isHaptic)
+                    refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 refreshLayout.finishRefresh(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;

@@ -12,7 +12,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.CommentLevel;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends BaseMultiItemQuickAdapter<CommentLevel, BaseViewHolder> {
@@ -32,18 +33,20 @@ public class CommentAdapter extends BaseMultiItemQuickAdapter<CommentLevel, Base
 
     @Override
     protected void convert(final BaseViewHolder helper, CommentLevel item) {
-        switch (item.getItemType()){
+        switch (item.getItemType()) {
             case LEVEL_ONE:
             case LEVEL_TWO:
                 final CommentLevel data = item;
                 helper.setText(R.id.tv_text, data.getText());
                 helper.setText(R.id.tv_time, data.getTime());
-                helper.setText(R.id.tv_name, data.getName().replace("&nbsp"," "));
-                if (GlideUtil.isValidContextForGlide(mContext) && !TextUtils.isEmpty(data.getImgUrl()))
+                helper.setText(R.id.tv_name, data.getName().replace("&nbsp", " "));
+                if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext) && !TextUtils.isEmpty(data.getImgUrl()))
                     Glide.with(mContext)
                             .load(data.getImgUrl())
                             .apply(options)
-                            .into((CircleImageView)helper.getView(R.id.iv_avatar));
+                            .into((CircleImageView) helper.getView(R.id.iv_avatar));
+                else
+                    helper.setImageResource(R.id.iv_avatar, R.drawable.ic_user_icon);
                 break;
         }
     }

@@ -10,16 +10,28 @@
         android:icon="@drawable/ic_comment"
         app:showAsAction="always|withText" />
 
-    <item android:id="@+id/action_link"
-        android:title="@string/action_link"
+    <item android:id="@+id/action_video"
+        android:title="@string/action_video"
         android:orderInCategory="80"
-        android:icon="@drawable/ic_link"
+        android:icon="@drawable/ic_video"
         app:showAsAction="ifRoom|withText" />
 
     <item android:id="@+id/action_browser"
         android:title="@string/action_browser"
         android:orderInCategory="80"
         android:icon="@drawable/ic_open_in_browser"
+        app:showAsAction="ifRoom|withText" />
+
+<!--    <item android:id="@+id/action_tts"-->
+<!--        android:title="@string/action_tts"-->
+<!--        android:orderInCategory="80"-->
+<!--        android:icon="@drawable/ic_tts"-->
+<!--        app:showAsAction="ifRoom|withText" />-->
+
+    <item android:id="@+id/action_link"
+        android:title="@string/action_link"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_link"
         app:showAsAction="ifRoom|withText" />
 
     <item android:id="@+id/action_star"
@@ -32,6 +44,6 @@
         android:title="@string/action_share"
         android:orderInCategory="80"
         android:icon="@drawable/ic_share"
-        app:showAsAction="always|withText" />
+        app:showAsAction="ifRoom|withText" />
 
 </menu>

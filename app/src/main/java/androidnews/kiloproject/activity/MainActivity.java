@@ -51,9 +51,6 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
@@ -170,7 +167,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ColorStateList csl = getBaseContext().getResources().getColorStateList(R.color.navigation_menu_item_color);
         navigation.setItemTextColor(csl);
 
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
         if (AppConfig.isStatusBar)
             ImmersionBar.with(mActivity)
@@ -426,7 +423,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TimerTask timerTask;
 
     private void startBgAnimate() {
-        switch (spUtils.getInt(CONFIG_RANDOM_HEADER, 0)) {
+        int headerType = spUtils.getInt(CONFIG_RANDOM_HEADER, 0);
+        if (AppConfig.isNoImage)headerType = 2; //强制渐变色
+        switch (headerType) {
             case 0:
                 requestBgData(0);
                 break;
@@ -536,11 +535,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
 
                     @Override
-                    public void onSuccess(final String s) {
+                    public void onSuccess(final String result) {
                         Observable.create(new ObservableOnSubscribe<Boolean>() {
                             @Override
                             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                String temp = s.replace(")", "}");
+                                String temp = result.replace(")", "}");
                                 String response = temp.replace("cacheMoreData(", "{\"cacheMoreData\":");
                                 if (!TextUtils.isEmpty(response) || TextUtils.equals(response, "{}")) {
                                     try {
@@ -634,8 +633,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {/* Do something */}
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(MessageEvent event) {/* Do something */}
 
     @Override
     protected void onPause() {
@@ -651,7 +650,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 && timer != null
                 && timerTask != null)
             cancelTimer();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
     @Override

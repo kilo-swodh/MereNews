@@ -137,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void restartWithAnime(int bgId, int contentId) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            findViewById(bgId).setBackgroundColor(getResources().getColor(R.color.slategray));
             animateRevealShow(findViewById(contentId), true, new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {

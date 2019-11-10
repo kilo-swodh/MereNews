@@ -12,7 +12,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.ZhihuListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class ZhihuAdapter extends BaseQuickAdapter<ZhihuListData.StoriesBean, BaseViewHolder> {
     RequestOptions options;
@@ -36,9 +37,11 @@ public class ZhihuAdapter extends BaseQuickAdapter<ZhihuListData.StoriesBean, Ba
             helper.setTextColor(R.id.item_card_text,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
         List<String> imgs = item.getImages();
-        if (imgs != null && imgs.size() > 0 && GlideUtil.isValidContextForGlide(mContext))
+        if (!AppConfig.isNoImage && imgs != null && imgs.size() > 0 && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext).load(imgs.get(0))
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img));
+        else
+            helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
     }
 }

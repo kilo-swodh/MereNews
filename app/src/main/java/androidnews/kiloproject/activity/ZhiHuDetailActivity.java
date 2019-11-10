@@ -267,6 +267,7 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
         super.onCreateOptionsMenu(menu);
         try {
             menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -18,6 +18,8 @@ public class AppConfig {
             isPush,
             isPushSound,
             isPushMode,
+            isHaptic,
+            isNoImage,
             isEasterEggs,
             isShowSkeleton;
     public static int listType,pushTime;
@@ -154,6 +156,10 @@ public class AppConfig {
     public static final String CONFIG_EASTER_EGGS = "config_easter_eggs";
 
     public static final String CONFIG_SHOW_EXPLORER = "config_show_explorer";
+
+    public static final String CONFIG_HAPTIC = "config_haptic";
+
+    public static final String CONFIG_NO_IMAGE = "config_no_image";
 
     public static final String CACHE_LAST_PUSH_ID = "cache_push_id";  //当日推送的id统计
     public static final String CACHE_LAST_PUSH_TIME = "cache_push_TIME";  //当日推送的时间统计

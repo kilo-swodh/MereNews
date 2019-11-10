@@ -12,7 +12,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.CnBetaListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class CnBetaAdapter extends BaseQuickAdapter<CnBetaListData.ResultBean, BaseViewHolder> {
     RequestOptions options;
@@ -40,19 +41,22 @@ public class CnBetaAdapter extends BaseQuickAdapter<CnBetaListData.ResultBean, B
                     mContext.getResources().getColor(R.color.main_text_color_read));
             helper.setTextColor(R.id.item_card_subtitle,
                     mContext.getResources().getColor(R.color.main_text_color_read));
-        }else {
+        } else {
             helper.setTextColor(R.id.item_card_text,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
             helper.setTextColor(R.id.item_card_subtitle,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
         }
-        if (GlideUtil.isValidContextForGlide(mContext)) {
+        if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext)) {
             Glide.with(mContext).load(item.getThumb())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img));
             Glide.with(mContext).load(item.getTopic_logo())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img_logo));
+        } else {
+            helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
+            helper.setImageResource(R.id.item_card_img_logo, R.mipmap.ic_launcher);
         }
     }
 }

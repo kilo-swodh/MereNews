@@ -2,9 +2,11 @@ package androidnews.kiloproject.system;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,8 +30,10 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HAPTIC;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NO_IMAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_SOUND;
@@ -39,6 +43,7 @@ import static androidnews.kiloproject.system.AppConfig.CONFIG_STATUS_BAR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SWIPE_BACK;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_TEXT_SIZE;
 import static androidnews.kiloproject.system.AppConfig.HOST_163;
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 //import org.litepal.LitePal;
 
@@ -71,7 +76,7 @@ public class MyApplication extends Application {
         Utils.init(this);
 
         SPUtils spUtils = SPUtils.getInstance();
-        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
+        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON, true);
         AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE, -1);
         AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
         AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
@@ -86,7 +91,12 @@ public class MyApplication extends Application {
         AppConfig.isPushMode = spUtils.getBoolean(CONFIG_PUSH_MODE);
         AppConfig.pushTime = spUtils.getInt(CONFIG_PUSH_TIME, 1);
         AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
-        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
+        AppConfig.isHaptic = spUtils.getBoolean(CONFIG_HAPTIC);
+        AppConfig.isNoImage = spUtils.getBoolean(CONFIG_NO_IMAGE);
+
+        int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (mode == Configuration.UI_MODE_NIGHT_YES)
+            AppConfig.isNightMode = true;
 
 //        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 //            @Override

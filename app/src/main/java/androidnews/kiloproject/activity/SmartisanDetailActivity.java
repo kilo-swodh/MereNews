@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -41,6 +42,7 @@ import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_START;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
+import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 public class SmartisanDetailActivity extends BaseDetailActivity {
     private String currentUrl;
@@ -193,6 +195,7 @@ public class SmartisanDetailActivity extends BaseDetailActivity {
                         null,
                         type,
                         TYPE_SMARTISAN_START);
+                cacheNews.setUrl(currentUrl);
                 cacheNews.save();
             }
         }).start();
@@ -224,6 +227,7 @@ public class SmartisanDetailActivity extends BaseDetailActivity {
         super.onCreateOptionsMenu(menu);
         try {
             menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -284,8 +288,21 @@ public class SmartisanDetailActivity extends BaseDetailActivity {
             // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理
             // 此方法在API24被废弃，不处理POST请求
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+                WebView.HitTestResult result = view.getHitTestResult();
+                if (url.startsWith("mailto:")) {
+                    //Handle mail Urls
+                    startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(url)));
+                    return true;
+                } else if (url.startsWith("tel:")) {
+                    //Handle telephony Urls
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
+                    return true;
+                }else if (!TextUtils.isEmpty(url) && result == null) {
+                    view.loadUrl(url);
+                    return true;
+                }
+                return false;
             }
 
             // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理

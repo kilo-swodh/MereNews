@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.hust201010701:XDanmuku:-SNAPSHOT@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/70b1c8483f45e57cbcce63082edce5a5/jetified-XDanmuku--SNAPSHOT/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/70b1c8483f45e57cbcce63082edce5a5/jetified-XDanmuku--SNAPSHOT/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6e8d41766f2773a409eb5e5e133a1f49/jetified-XDanmuku--SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6e8d41766f2773a409eb5e5e133a1f49/jetified-XDanmuku--SNAPSHOT/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

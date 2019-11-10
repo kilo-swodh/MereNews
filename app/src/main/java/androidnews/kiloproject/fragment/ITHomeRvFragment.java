@@ -6,12 +6,14 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -31,7 +33,7 @@ import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.net.ITHomeListData;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.util.ITHomeUtils;
-import androidnews.kiloproject.util.XmlParseUtil;
+import androidnews.kiloproject.util.XmlParseUtils;
 import androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -183,6 +185,8 @@ public class ITHomeRvFragment extends BaseRvFragment {
                         if (refreshLayout != null) {
                             switch (type) {
                                 case TYPE_REFRESH:
+                                    if (AppConfig.isHaptic)
+                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                     refreshLayout.finishRefresh(false);
                                     break;
                                 case TYPE_LOADMORE:
@@ -192,13 +196,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                         refreshLayout.finishLoadMore(false);
                                     break;
                             }
-                            try {
-                                SnackbarUtils.with(refreshLayout).
-                                        setMessage(getString(R.string.load_fail) + e.getMessage()).
-                                        showError();
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                            }
+                            ToastUtils.showShort(getString(R.string.load_fail) + e.getMessage());
                         }
                     }
 
@@ -211,7 +209,7 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                     ITHomeListData newData = null;
                                     List<CacheNews> cacheNews = null;
                                     try {
-                                        newData = XmlParseUtil.getITHomeListData(response);
+                                        newData = XmlParseUtils.getITHomeListData(response);
                                         cacheNews = LitePal.where("type = ?", String.valueOf(CACHE_HISTORY)).find(CacheNews.class);
                                     } catch (Exception e1) {
                                         e1.printStackTrace();
@@ -265,6 +263,8 @@ public class ITHomeRvFragment extends BaseRvFragment {
                                                 createAdapter();
                                                 lastAutoRefreshTime = System.currentTimeMillis();
                                                 try {
+                                                    if (AppConfig.isHaptic)
+                                                        refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                                     refreshLayout.finishRefresh(true);
                                                     if (!AppConfig.isDisNotice)
                                                         SnackbarUtils.with(refreshLayout)
@@ -296,6 +296,8 @@ public class ITHomeRvFragment extends BaseRvFragment {
     private void loadFailed(int type) {
         switch (type) {
             case TYPE_REFRESH:
+                if (AppConfig.isHaptic)
+                    refreshLayout.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 refreshLayout.finishRefresh(false);
                 SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.server_fail)).showError();
                 break;

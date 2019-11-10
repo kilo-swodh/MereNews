@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_normal"
+        android:background="@color/dimgray">
+        <ImageView
+            android:id="@+id/btn_exit"
+            android:src="@drawable/ic_close_wite"
+            android:layout_width="@dimen/margin_largest"
+            android:layout_height="@dimen/margin_largest"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/btn_previous"
+            android:src="@drawable/ic_skip_previous_white"
+            android:layout_width="@dimen/margin_largest"
+            android:layout_height="@dimen/margin_largest"
+            android:layout_marginEnd="@dimen/margin_largest"
+            android:layout_marginRight="@dimen/margin_largest"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next"
+            app:layout_constraintRight_toLeftOf="@+id/btn_next"/>
+
+        <ImageView
+            android:id="@+id/btn_next"
+            android:src="@drawable/ic_skip_next_white"
+            android:layout_width="@dimen/margin_largest"
+            android:layout_height="@dimen/margin_largest"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidnews.kiloproject.widget.MyJzvdStd
+        android:id="@+id/item_card_vid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

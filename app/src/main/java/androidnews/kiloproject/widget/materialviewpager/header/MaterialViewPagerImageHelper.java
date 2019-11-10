@@ -21,7 +21,7 @@ import com.bumptech.glide.request.target.Target;
 
 import android.os.Handler;
 
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.util.GlideUtils;
 import androidnews.kiloproject.widget.materialviewpager.MaterialViewPager;
 
 /**
@@ -48,7 +48,7 @@ public class MaterialViewPagerImageHelper {
                 super.onAnimationEnd(view);
                 //change the image when alpha=0
                 Context context = imageView.getContext();
-                if (GlideUtil.isValidContextForGlide(context))
+                if (GlideUtils.isValidContextForGlide(context))
                     Glide.with(context).load(urlImage)
                             .apply(new RequestOptions().centerCrop())
                             .listener(new RequestListener<Drawable>() {

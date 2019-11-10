@@ -12,7 +12,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.PressListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class PressRvAdapter extends BaseQuickAdapter<PressListData, BaseViewHolder> {
     RequestOptions options;
@@ -45,10 +46,12 @@ public class PressRvAdapter extends BaseQuickAdapter<PressListData, BaseViewHold
             helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
             helper.setImageResource(R.id.item_card_img, R.color.white);
         } else {
-            if (GlideUtil.isValidContextForGlide(mContext))
+            if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext).load(item.getImgsrc())
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img));
+            else
+                helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
             helper.setText(R.id.item_card_subtitle, "");
         }
     }

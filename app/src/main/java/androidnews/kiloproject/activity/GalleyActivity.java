@@ -34,7 +34,7 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.GalleyData;
 import androidnews.kiloproject.system.base.BaseActivity;
-import androidnews.kiloproject.util.FileCompatUtil;
+import androidnews.kiloproject.util.FileCompatUtils;
 import androidnews.kiloproject.widget.PinchImageView;
 
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
@@ -201,7 +201,7 @@ public class GalleyActivity extends BaseActivity implements View.OnClickListener
             case R.id.btn_galley_download:
                 try {
                     String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
-                    String path = FileCompatUtil.getMediaDir(mActivity);
+                    String path = FileCompatUtils.getMediaDir(mActivity);
                     EasyHttp.downLoad(currentImg)
                             .savePath(path)
                             .saveName(fileName)//不设置默认名字是时间戳生成的

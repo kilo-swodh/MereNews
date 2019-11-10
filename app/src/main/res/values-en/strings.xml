@@ -24,7 +24,7 @@
 
     <string name="setting">Setting</string>
 
-    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="message_permission_rationale">Grant the permissions to continue the program</string>
 
     <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
 
@@ -37,6 +37,8 @@
     <string name="apk_name">android.apk</string>
 
     <string name="action_comment">Comment</string>
+
+    <string name="action_video">PIP</string>
 
     <string name="action_link">Copy link</string>
 
@@ -53,6 +55,10 @@
     <string name="action_block_source">Shielded News source</string>
 
     <string name="action_block_keywords">Shielded keywords</string>
+
+    <string name="no_video">Theres no video here</string>
+
+    <string name="not_support">This feature is not supported</string>
 
     <string name="source">News source</string>
 
@@ -286,6 +292,12 @@
 
     <string name="skeleton">Load animation</string>
     <string name="skeleton_detail">Fill in content with flicker animation</string>
+
+    <string name="haptic">FeedBack</string>
+    <string name="haptic_detail">Recommended for Linear Resonant Actuator Device</string>
+
+    <string name="no_image">Data Saver</string>
+    <string name="no_image_detail">Load as few pictures as possible to save data</string>
 
     <string name="support_offline">Support offline</string>
 </resources>

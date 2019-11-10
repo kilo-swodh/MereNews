@@ -10,12 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-
     <uses-sdk tools:overrideLibrary="cn.jzvd,jp.wasabeef.takt,
-    com.xw.repo.bubbleseekbar"/>
+    com.xw.repo.bubbleseekbar,com.example.fixedfloatwindow" />
 
     <application
         android:name="androidnews.kiloproject.system.MyApplication"
@@ -32,8 +31,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
-            android:value="true"/>
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true" />
 
         <meta-data
             android:name="android.max_aspect"
@@ -84,7 +84,7 @@
 
         <activity android:name=".activity.SettingActivity" />
 
-        <activity android:name=".activity.NotificationActivity"/>
+        <activity android:name=".activity.NotificationActivity" />
 
         <activity android:name=".activity.ChannelActivity" />
 
@@ -98,7 +98,7 @@
 
         <activity android:name=".activity.SmartisanDetailActivity" />
 
-        <activity android:name=".activity.CnBetaDetailActivity"/>
+        <activity android:name=".activity.CnBetaDetailActivity" />
 
     </application>
 </manifest>

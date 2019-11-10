@@ -3,8 +3,7 @@ package androidnews.kiloproject.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,12 +27,13 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.util.GlideImageLoader;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.activity.GalleyActivity;
 import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.entity.net.NewMainListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.util.GlideUtils;
 
 import static androidnews.kiloproject.fragment.BaseRvFragment.CELL;
 import static androidnews.kiloproject.fragment.BaseRvFragment.CELL_EXTRA;
@@ -135,10 +135,12 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                     helper.setText(R.id.item_card_subtitle, item.getDigest().replace("&nbsp", ""));
                     helper.setImageResource(R.id.item_card_img, R.color.white);
                 } else {
-                    if (GlideUtil.isValidContextForGlide(mContext))
+                    if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext))
                         Glide.with(mContext).load(item.getImgsrc())
                                 .apply(options)
                                 .into((ImageView) helper.getView(R.id.item_card_img));
+                    else
+                        helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
                     helper.setText(R.id.item_card_subtitle, "");
                 }
                 break;
@@ -153,7 +155,7 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                     e.printStackTrace();
                 }
 
-                if (GlideUtil.isValidContextForGlide(mContext))
+                if (GlideUtils.isValidContextForGlide(mContext))
                     Glide.with(mContext).load(item.getImgsrc())
                             .apply(options)
                             .into(ivPic);
@@ -245,7 +247,7 @@ public class MainRvAdapter extends BaseMultiItemQuickAdapter<NewMainListData, Ba
                 helper.setTextColor(R.id.item_card_text,
                         mContext.getResources().getColor(R.color.main_text_color_dark));
 
-            if (GlideUtil.isValidContextForGlide(mContext))
+            if (GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext).load(item.getImgsrc())
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img));

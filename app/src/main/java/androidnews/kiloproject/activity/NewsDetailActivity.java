@@ -1,39 +1,57 @@
 package androidnews.kiloproject.activity;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.net.Uri;
+
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
+import android.view.animation.BounceInterpolator;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.gyf.immersionbar.ImmersionBar;
+import com.bumptech.glide.Glide;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.PermissionListener;
+import com.yhao.floatwindow.Screen;
+import com.yhao.floatwindow.ViewStateListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
 
 import org.litepal.LitePal;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.net.NewsDetailData;
+import androidnews.kiloproject.util.GlideUtils;
+import androidnews.kiloproject.widget.MyJzvdStd;
+import cn.jzvd.Jzvd;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -52,13 +70,15 @@ public class NewsDetailActivity extends BaseDetailActivity {
     private NewsDetailData currentData;
     private boolean isStar = false;
 
-    private boolean isVideo = false;
     private boolean isLand = false;
     private ViewStub videoStub;
     private FrameLayout videoLayout;
 
     private int type = 0;
     public static final int TPYE_AUDIO = 1024;
+
+    private List<NewsDetailData.VideoBean> videoList = new ArrayList();
+    private int videoIndex = 0;
 
     @Override
     protected void initView() {
@@ -147,6 +167,63 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        break;
+                    case R.id.action_video:
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                            if (videoList.size() > 0) {
+                                View view = getLayoutInflater().inflate(R.layout.layout_pip_video,null);
+                                MyJzvdStd videoView = view.findViewById(R.id.item_card_vid);
+                                loadVideo(videoView);
+
+                                view.findViewById(R.id.btn_exit).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        FloatWindow.destroy("Video");
+                                        Jzvd.releaseAllVideos();
+                                    }
+                                });
+                                view.findViewById(R.id.btn_previous).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (videoIndex == 0){
+                                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.no_video)).show();
+                                        }else {
+                                            videoIndex--;
+                                            loadVideo(videoView);
+                                        }
+                                    }
+                                });
+                                view.findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (videoIndex == (videoList.size() - 1)){
+                                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.no_video)).show();
+                                        }else {
+                                            videoIndex++;
+                                            loadVideo(videoView);
+                                        }
+                                    }
+                                });
+
+                                FloatWindow
+                                        .with(mActivity.getApplicationContext())
+                                        .setView(view)
+                                        .setWidth(Screen.width, 0.8f) //设置悬浮控件宽高
+                                        .setHeight(Screen.width, 0.7f)
+                                        .setX(0)
+                                        .setY(0)
+                                        .setMoveType(MoveType.slide, 50, 50)
+                                        .setMoveStyle(500, new BounceInterpolator())
+                                        .setViewStateListener(mViewStateListener)
+                                        .setPermissionListener(mPermissionListener)
+                                        .setDesktopShow(true)
+                                        .setTag("Video")
+                                        .build();
+                                FloatWindow.get("Video").show();
+                            } else
+                                SnackbarUtils.with(toolbar).setMessage(getString(R.string.no_video)).show();
+                        } else
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.not_support)).show();
                         break;
                 }
                 return false;
@@ -330,7 +407,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                             html = html.replace(videoBean.getRef(),
                                     "<video src=\"" + mediaUrl +
                                             "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"type=\"video/mp4\"></video>");
-                            isVideo = true;
+                            videoList.add(videoBean);
                         }
                     }
                 }
@@ -347,7 +424,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean b) throws Exception {
-                        if (isVideo) {
+                        if (videoList.size() > 0) {
                             videoStub = (ViewStub) findViewById(R.id.stub_video);
                             videoStub.setVisibility(View.VISIBLE);
                             videoLayout = findViewById(R.id.fl_video_full);
@@ -383,6 +460,56 @@ public class NewsDetailActivity extends BaseDetailActivity {
         }
         return data;
     }
+
+    private PermissionListener mPermissionListener = new PermissionListener() {
+        @Override
+        public void onSuccess() {
+            LogUtils.d("permission success");
+        }
+
+        @Override
+        public void onFail() {
+            SnackbarUtils.with(toolbar).setMessage(getString(R.string.message_permission_rationale)).showError();
+            LogUtils.d("permission fail");
+        }
+    };
+
+    private ViewStateListener mViewStateListener = new ViewStateListener() {
+        @Override
+        public void onPositionUpdate(int x, int y) {
+            Log.d("FloatWindow", "onPositionUpdate: x=" + x + " y=" + y);
+        }
+
+        @Override
+        public void onShow() {
+            Log.d("FloatWindow", "onShow");
+        }
+
+        @Override
+        public void onHide() {
+            Log.d("FloatWindow", "onHide");
+        }
+
+        @Override
+        public void onDismiss() {
+            Log.d("FloatWindow", "onDismiss");
+        }
+
+        @Override
+        public void onMoveAnimStart() {
+            Log.d("FloatWindow", "onMoveAnimStart");
+        }
+
+        @Override
+        public void onMoveAnimEnd() {
+            Log.d("FloatWindow", "onMoveAnimEnd");
+        }
+
+        @Override
+        public void onBackToDesktop() {
+            Log.d("FloatWindow", "onBackToDesktop");
+        }
+    };
 
     private void saveCacheAsyn(int type) {
         new Thread(new Runnable() {
@@ -440,7 +567,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (webView == null)return;
+                if (webView == null) return;
                 webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
             }
 
@@ -490,6 +617,15 @@ public class NewsDetailActivity extends BaseDetailActivity {
         }
     }
 
+    private void loadVideo(MyJzvdStd videoView){
+        NewsDetailData.VideoBean videoItem = videoList.get(videoIndex);
+        videoView.setUp(videoItem.getUrl_mp4(), videoItem.getAlt(), Jzvd.SCREEN_WINDOW_NORMAL);
+        if (!TextUtils.isEmpty(videoItem.getCover()) && GlideUtils.isValidContextForGlide(mActivity))
+            Glide.with(mActivity)
+                    .load(videoItem.getCover())
+                    .into(videoView.thumbImageView);
+    }
+
     private void loadError(){
         ToastUtils.showShort(getString(R.string.server_fail));
         finish();
@@ -500,6 +636,8 @@ public class NewsDetailActivity extends BaseDetailActivity {
         super.onPause();
         if (type != TPYE_AUDIO)
             webView.onPause();
+        if (videoList.size() > 0)
+            Jzvd.releaseAllVideos();
     }
 
     @Override
@@ -507,5 +645,51 @@ public class NewsDetailActivity extends BaseDetailActivity {
         super.onResume();
         if (type != TPYE_AUDIO)
             webView.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (videoList.size() > 0 && Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            LogUtils.d("avoid calling setRequestedOrientation when Oreo.");
+            return;
+        }
+        super.setRequestedOrientation(requestedOrientation);
+    }
+
+    private boolean isTranslucentOrFloating(){
+        boolean isTranslucentOrFloating = false;
+        try {
+            int [] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
+            final TypedArray ta = obtainStyledAttributes(styleableRes);
+            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
+            m.setAccessible(true);
+            isTranslucentOrFloating = (boolean)m.invoke(null, ta);
+            m.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isTranslucentOrFloating;
+    }
+
+    private boolean fixOrientation(){
+        try {
+            Field field = Activity.class.getDeclaredField("mActivityInfo");
+            field.setAccessible(true);
+            ActivityInfo o = (ActivityInfo)field.get(this);
+            o.screenOrientation = -1;
+            field.setAccessible(false);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

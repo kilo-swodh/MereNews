@@ -5,7 +5,7 @@ import android.os.Build;
 
 import java.io.File;
 
-public class FileCompatUtil {
+public class FileCompatUtils {
 
     public static String getMediaDir(Context mContext) {
         String path = null;

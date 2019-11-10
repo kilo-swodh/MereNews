@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 
 import java.net.URISyntaxException;
 
-public class AlipayUtil {
+public class AlipayUtils {
     //个人二维码ID
     public static final String PAY_ID = "fkx0355397srvdzuyqcau4c";//支付宝--我的二维码 新版本 需要有个人支付二维码
 

@@ -12,7 +12,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.ITHomeListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class ITHomeAdapter extends BaseQuickAdapter<ITHomeListData.ItemBean, BaseViewHolder> {
     RequestOptions options;
@@ -46,9 +47,11 @@ public class ITHomeAdapter extends BaseQuickAdapter<ITHomeListData.ItemBean, Bas
             helper.setTextColor(R.id.item_card_subtitle,
                     mContext.getResources().getColor(R.color.main_text_color_dark));
         }
-        if (GlideUtil.isValidContextForGlide(mContext))
+        if (!AppConfig.isNoImage && GlideUtils.isValidContextForGlide(mContext))
             Glide.with(mContext).load(item.getImage())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img));
+        else
+            helper.setImageResource(R.id.item_card_img, R.drawable.ic_news_pic);
     }
 }

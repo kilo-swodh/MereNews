@@ -14,7 +14,8 @@ import java.util.List;
 
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.net.SmartisanListData;
-import androidnews.kiloproject.util.GlideUtil;
+import androidnews.kiloproject.system.AppConfig;
+import androidnews.kiloproject.util.GlideUtils;
 
 public class SmartisanAdapter extends BaseQuickAdapter<SmartisanListData.DataBean.ListBean, BaseViewHolder> {
     RequestOptions options;
@@ -48,35 +49,37 @@ public class SmartisanAdapter extends BaseQuickAdapter<SmartisanListData.DataBea
         helper.setText(R.id.item_card_info, item.getSite_info().getName());
 
         String img1 = item.getPrepic1();
-        if (!TextUtils.isEmpty(img1)) {
-            if (GlideUtil.isValidContextForGlide(mContext))
+        if (!AppConfig.isNoImage && !TextUtils.isEmpty(img1)) {
+            if (GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext)
                         .load(img1)
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img_1));
             String img2 = item.getPrepic2();
             String img3 = item.getPrepic3();
-            if (!TextUtils.isEmpty(img2) && GlideUtil.isValidContextForGlide(mContext))
+            if (!TextUtils.isEmpty(img2) && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext)
                         .load(img2)
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img_2));
-            if (!TextUtils.isEmpty(img3) && GlideUtil.isValidContextForGlide(mContext))
+            if (!TextUtils.isEmpty(img3) && GlideUtils.isValidContextForGlide(mContext))
                 Glide.with(mContext)
                         .load(img3)
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.item_card_img_3));
-        }else {
-            helper.setGone(R.id.item_card_img_1,false);
-            helper.setGone(R.id.item_card_img_2,false);
-            helper.setGone(R.id.item_card_img_3,false);
+        } else {
+            helper.setGone(R.id.item_card_img_1, false);
+            helper.setGone(R.id.item_card_img_2, false);
+            helper.setGone(R.id.item_card_img_3, false);
         }
 
         String imgLogo = item.getSite_info().getPic();
-        if (!TextUtils.isEmpty(imgLogo) && GlideUtil.isValidContextForGlide(mContext))
+        if (!AppConfig.isNoImage && !TextUtils.isEmpty(imgLogo) && GlideUtils.isValidContextForGlide(mContext))
             Glide.with(mContext)
                     .load(imgLogo)
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.item_card_img_logo));
+        else
+            helper.setImageResource(R.id.item_card_img_logo, R.mipmap.ic_launcher);
     }
 }

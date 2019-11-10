@@ -49,7 +49,7 @@ import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.data.ExportBean;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
-import androidnews.kiloproject.util.AlipayUtil;
+import androidnews.kiloproject.util.AlipayUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -57,6 +57,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HAPTIC;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NO_IMAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
 import static androidnews.kiloproject.system.AppConfig.QQ_KEY;
@@ -106,6 +108,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvSkeleton;
     TextView tvSkeletonDetail;
     Switch swSkeleton;
+    TextView tvHaptic;
+    TextView tvHapticDetail;
+    Switch swHaptic;
     TextView tvHighRam;
     TextView tvHighRamDetail;
     Switch swHighRam;
@@ -115,6 +120,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvStatusBar;
     TextView tvStatusBarDetail;
     Switch swStatusBar;
+    TextView tvNoImage;
+    TextView tvNoImageDetail;
+    Switch swNoImage;
     TextView tvInput;
     TextView tvInputDetail;
     TextView tvExport;
@@ -134,7 +142,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     String[] headerItems;
     String[] listItems;
     String[] sizeItems;
-    private TextView mNotificationTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,8 +155,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvClearCacheDetail = (TextView) findViewById(R.id.tv_clear_cache_detail);
 
         tvTextSize = (TextView) findViewById(R.id.tv_text_size);
-        tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail)
-        ;
+        tvTextSizeDetail = (TextView) findViewById(R.id.tv_text_size_detail);
+
         tvAutoRefresh = (TextView) findViewById(R.id.tv_auto_refresh);
         tvAutoRefreshDetail = (TextView) findViewById(R.id.tv_auto_refresh_detail);
         swAutoRefresh = (Switch) findViewById(R.id.sw_auto_refresh);
@@ -170,6 +177,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvSkeletonDetail = (TextView) findViewById(R.id.tv_skeleton_detail);
         swSkeleton = (Switch) findViewById(R.id.sw_skeleton);
 
+        tvHaptic = (TextView) findViewById(R.id.tv_haptic);
+        tvHapticDetail = (TextView) findViewById(R.id.tv_haptic_detail);
+        swHaptic = (Switch) findViewById(R.id.sw_haptic);
+
         tvHighRam = (TextView) findViewById(R.id.tv_high_ram);
         tvHighRamDetail = (TextView) findViewById(R.id.tv_high_ram_detail);
         swHighRam = (Switch) findViewById(R.id.sw_high_ram);
@@ -177,6 +188,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvStatusBar = (TextView) findViewById(R.id.tv_status_bar);
         tvStatusBarDetail = (TextView) findViewById(R.id.tv_status_bar_detail);
         swStatusBar = (Switch) findViewById(R.id.sw_status_bar);
+
+        tvNoImage = (TextView) findViewById(R.id.tv_no_image);
+        tvNoImageDetail = (TextView) findViewById(R.id.tv_no_image_detail);
+        swNoImage = (Switch) findViewById(R.id.sw_no_image);
 
         tvDisNotice = (TextView) findViewById(R.id.tv_dis_notice);
         tvDisNoticeDetail = (TextView) findViewById(R.id.tv_dis_notice_detail);
@@ -196,8 +211,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         tvListType = (TextView) findViewById(R.id.tv_list_type);
         tvListTypeDetail = (TextView) findViewById(R.id.tv_list_type_detail);
-
-        mNotificationTv = (TextView) findViewById(R.id.tv_notification);
 
         initToolbar(toolbar, true);
         getSupportActionBar().setTitle(R.string.setting);
@@ -276,6 +289,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 }
                             });
 
+                            swHaptic.setChecked(AppConfig.isHaptic);
+                            swHaptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isHaptic = isChecked;
+                                    spUtils.put(CONFIG_HAPTIC, AppConfig.isHaptic);
+                                }
+                            });
+
                             swSwipeBack.setChecked(AppConfig.isSwipeBack);
                             swSwipeBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
@@ -313,6 +335,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                     AppConfig.isStatusBar = isChecked;
                                     spUtils.put(CONFIG_STATUS_BAR, AppConfig.isStatusBar);
                                     SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).show();
+                                }
+                            });
+
+                            swNoImage.setChecked(AppConfig.isNoImage);
+                            swNoImage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isNoImage = isChecked;
+                                    spUtils.put(CONFIG_NO_IMAGE, AppConfig.isNoImage);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_list)).show();
                                 }
                             });
 
@@ -386,51 +418,38 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.tv_auto_refresh:
             case R.id.tv_auto_refresh_detail:
-                if (AppConfig.isAutoRefresh) {
-                    swAutoRefresh.setChecked(false);
-                    AppConfig.isAutoRefresh = false;
-                } else {
-                    swAutoRefresh.setChecked(true);
-                    AppConfig.isAutoRefresh = true;
-                }
+                AppConfig.isAutoRefresh = !AppConfig.isAutoRefresh;
+                swAutoRefresh.setChecked(AppConfig.isAutoRefresh);
                 spUtils.put(CONFIG_AUTO_REFRESH, AppConfig.isAutoRefresh);
                 break;
 
             case R.id.tv_auto_loadmore:
             case R.id.tv_auto_loadmore_detail:
-                if (AppConfig.isAutoLoadMore) {
-                    swAutoLoadmore.setChecked(false);
-                    AppConfig.isAutoLoadMore = false;
-                } else {
-                    swAutoLoadmore.setChecked(true);
-                    AppConfig.isAutoLoadMore = true;
-                }
+                AppConfig.isAutoLoadMore = !AppConfig.isAutoLoadMore;
+                swAutoLoadmore.setChecked(AppConfig.isAutoLoadMore);
                 spUtils.put(CONFIG_AUTO_LOADMORE, AppConfig.isAutoLoadMore);
                 setResult(RESULT_OK);
                 break;
 
             case R.id.tv_back_exit:
             case R.id.tv_back_exit_detail:
-                if (AppConfig.isBackExit) {
-                    swBackExit.setChecked(false);
-                    AppConfig.isBackExit = false;
-                } else {
-                    swBackExit.setChecked(true);
-                    AppConfig.isBackExit = true;
-                }
+                AppConfig.isBackExit = !AppConfig.isBackExit;
+                swBackExit.setChecked(AppConfig.isBackExit);
                 spUtils.put(CONFIG_BACK_EXIT, AppConfig.isBackExit);
                 break;
 
             case R.id.tv_skeleton:
             case R.id.tv_skeleton_detail:
-                if (AppConfig.isShowSkeleton) {
-                    swSkeleton.setChecked(false);
-                    AppConfig.isShowSkeleton = false;
-                } else {
-                    swSkeleton.setChecked(true);
-                    AppConfig.isShowSkeleton = true;
-                }
+                AppConfig.isShowSkeleton = !AppConfig.isShowSkeleton;
+                swSkeleton.setChecked(AppConfig.isShowSkeleton);
                 spUtils.put(CONFIG_SHOW_SKELETON, AppConfig.isShowSkeleton);
+                break;
+
+            case R.id.tv_haptic:
+            case R.id.tv_haptic_detail:
+                AppConfig.isHaptic = !AppConfig.isHaptic;
+                swHaptic.setChecked(AppConfig.isHaptic);
+                spUtils.put(CONFIG_HAPTIC, AppConfig.isHaptic);
                 break;
 
             case R.id.tv_random_header:
@@ -487,50 +506,37 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.tv_swipe_back:
             case R.id.tv_swipe_back_detail:
-                if (AppConfig.isSwipeBack) {
-                    swSwipeBack.setChecked(false);
-                    AppConfig.isSwipeBack = false;
-                } else {
-                    swSwipeBack.setChecked(true);
-                    AppConfig.isSwipeBack = true;
-                }
+                AppConfig.isSwipeBack = !AppConfig.isSwipeBack;
+                swSwipeBack.setChecked(AppConfig.isSwipeBack);
                 spUtils.put(CONFIG_SWIPE_BACK, AppConfig.isSwipeBack);
                 break;
 
             case R.id.tv_high_ram:
             case R.id.tv_high_ram_detail:
-                if (AppConfig.isHighRam) {
-                    swHighRam.setChecked(false);
-                    AppConfig.isHighRam = false;
-                } else {
-                    swHighRam.setChecked(true);
-                    AppConfig.isHighRam = true;
-                }
+                AppConfig.isHighRam = !AppConfig.isHighRam;
+                swHighRam.setChecked(AppConfig.isHighRam);
                 spUtils.put(CONFIG_HIGH_RAM, AppConfig.isHighRam);
                 break;
 
             case R.id.tv_dis_notice:
             case R.id.tv_dis_notice_detail:
-                if (AppConfig.isDisNotice) {
-                    swDisNotice.setChecked(false);
-                    AppConfig.isDisNotice = false;
-                } else {
-                    swDisNotice.setChecked(true);
-                    AppConfig.isDisNotice = true;
-                }
+                AppConfig.isDisNotice = !AppConfig.isDisNotice;
+                swDisNotice.setChecked(AppConfig.isDisNotice);
                 spUtils.put(CONFIG_DISABLE_NOTICE, AppConfig.isDisNotice);
                 break;
 
             case R.id.tv_status_bar:
             case R.id.tv_status_bar_detail:
-                if (AppConfig.isStatusBar) {
-                    swStatusBar.setChecked(false);
-                    AppConfig.isStatusBar = false;
-                } else {
-                    swStatusBar.setChecked(true);
-                    AppConfig.isStatusBar = true;
-                }
+                AppConfig.isStatusBar = !AppConfig.isStatusBar;
+                swStatusBar.setChecked(AppConfig.isStatusBar);
                 spUtils.put(CONFIG_STATUS_BAR, AppConfig.isStatusBar);
+                break;
+
+            case R.id.tv_no_image:
+            case R.id.tv_no_image_detail:
+                AppConfig.isNoImage = !AppConfig.isNoImage;
+                swNoImage.setChecked(AppConfig.isNoImage);
+                spUtils.put(CONFIG_NO_IMAGE, AppConfig.isNoImage);
                 break;
 
             case R.id.tv_input:
@@ -576,10 +582,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                                     spUtils.put(CONFIG_PUSH, exportBean.isPush);
                                                     spUtils.put(CONFIG_PUSH_SOUND, exportBean.isPushSound);
                                                     spUtils.put(CONFIG_PUSH_MODE, exportBean.isPushMode);
-                                                    spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
                                                     spUtils.put(CONFIG_PUSH_TIME, exportBean.pushTime);
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
                                                     spUtils.put(CONFIG_SHOW_SKELETON,exportBean.isShowSkeleton);
+                                                    spUtils.put(CONFIG_HAPTIC,exportBean.isHaptic);
+                                                    spUtils.put(CONFIG_NO_IMAGE,exportBean.isNoImage);
                                                     LitePal.saveAll(exportBean.blockList);
                                                     e.onNext(true);
                                                 } else
@@ -661,7 +668,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                             exportBean.currentLanguage = currentLanguage;
                                             exportBean.isShowSkeleton = AppConfig.isShowSkeleton;
                                             exportBean.blockList = blockList;
-
+                                            exportBean.isHaptic = AppConfig.isHaptic;
+                                            exportBean.isNoImage = AppConfig.isNoImage;
                                             String json = gson.toJson(exportBean);
                                             e.onNext(json);
                                         } catch (Exception e1) {
@@ -836,7 +844,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 //                SnackbarUtils.with(toolbar)
 //                        .setMessage(getString(R.string.easter_egg_tip))
 //                        .show();
-                AlipayUtil.startAlipayClient(mActivity, AlipayUtil.PAY_ID);
+                AlipayUtils.startAlipayClient(mActivity, AlipayUtils.PAY_ID);
                 break;
             case R.id.tv_notification:
                 startActivity(new Intent(mActivity, NotificationActivity.class));

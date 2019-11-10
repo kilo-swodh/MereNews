@@ -37,7 +37,7 @@ import com.zhouyou.http.exception.ApiException;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
-import androidnews.kiloproject.util.FileCompatUtil;
+import androidnews.kiloproject.util.FileCompatUtils;
 
 
 public class BaseDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
@@ -130,13 +130,12 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
                 startActivity(intent);
             }
         });
-
     }
 
     private void downloadImg(String currentImg) {
         try {
             String fileName = currentImg.substring(currentImg.lastIndexOf('/'), currentImg.length());
-            String path = FileCompatUtil.getMediaDir(mActivity);
+            String path = FileCompatUtils.getMediaDir(mActivity);
             EasyHttp.downLoad(currentImg)
                     .savePath(path)
                     .saveName(fileName)//不设置默认名字是时间戳生成的

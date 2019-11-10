@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 
-public class GlideUtil {
+public class GlideUtils {
     @TargetApi(17)
     public static boolean isValidContextForGlide(final Context context) {
         if (context == null) {
