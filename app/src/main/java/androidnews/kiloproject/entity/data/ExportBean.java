@@ -18,7 +18,8 @@ public class ExportBean {
             isHaptic,
             isNoImage,
             isEasterEggs,
-            isShowSkeleton;
+            isShowSkeleton,
+            isAutoNight;
     public int listType,
             currentRandomHeader,
             currentLanguage,

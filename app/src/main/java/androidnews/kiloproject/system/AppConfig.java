@@ -1,6 +1,9 @@
 package androidnews.kiloproject.system;
 
+import java.util.List;
 import java.util.UUID;
+
+import androidnews.kiloproject.entity.data.BlockItem;
 
 /**
  * Created by ct_OS on 2018-1-1.
@@ -21,14 +24,18 @@ public class AppConfig {
             isHaptic,
             isNoImage,
             isEasterEggs,
-            isShowSkeleton;
+            isShowSkeleton,
+            isAutoNight;;
     public static int listType,pushTime;
+
+    public static String[] goodTags;
+    public static List<BlockItem> blockList;
 
     public static int mTextSize = 1;
 
     public static final int TYPE_NETEASE_START = 0;
     public static final int TYPE_NETEASE_END = 49;
-    public static final int TYPE_NETEASE_END_USED = 48;
+    public static final int TYPE_NETEASE_END_USED = 44;
 
     public static final int TYPE_ZHIHU = 50;
     public static final int TYPE_GUOKR = 51;
@@ -101,11 +108,11 @@ public class AppConfig {
     public static final String HOST_CNBETA_IMG = "https://static.cnbetacdn.com";
 
     //更新
-    public static final String CHECK_UPADTE_ADDRESS = "https://raw.githubusercontent.com/kilo-swodh/MereNews/master/update.txt";
+    public static final String CHECK_UPDATE_ADDRESS = "https://gitee.com/kiloswodh/android_news/raw/master/mere_update.json";
 
-    public static final String DOWNLOAD_ADDRESS = "https://www.pgyer.com/android_news";
+    public static final String DOWNLOAD_ADDRESS = "https://www.lanzous.com/b00t809ah";
 
-    public static final String DOWNLOAD_EXPLORER_ADDRESS = "https://www.pgyer.com/mere_explorer";
+    public static final String DOWNLOAD_EXPLORER_ADDRESS = "https://www.lanzous.com/b00t809da";
 
     public static final String QQ_KEY = "mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" +
             "dfXHsJjgt5dX_ma5KylHFi60LZmFsuLv";
@@ -153,6 +160,8 @@ public class AppConfig {
 
     public static final String CONFIG_SHOW_SKELETON = "config_show_skeleton";
 
+    public static final String CONFIG_AUTO_NIGHT = "config_auto_night";
+
     public static final String CONFIG_EASTER_EGGS = "config_easter_eggs";
 
     public static final String CONFIG_SHOW_EXPLORER = "config_show_explorer";
@@ -162,7 +171,6 @@ public class AppConfig {
     public static final String CONFIG_NO_IMAGE = "config_no_image";
 
     public static final String CACHE_LAST_PUSH_ID = "cache_push_id";  //当日推送的id统计
-    public static final String CACHE_LAST_PUSH_TIME = "cache_push_TIME";  //当日推送的时间统计
 
     public static final String PUSH_WORK_NAME = "mere_push_work";
 

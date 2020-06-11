@@ -32,15 +32,15 @@ import androidnews.kiloproject.activity.NewsDetailActivity;
 import androidnews.kiloproject.entity.net.NewMainListData;
 import androidnews.kiloproject.system.AppConfig;
 
+import static androidnews.kiloproject.fragment.MainRvFragment.isGoodItem;
 import static androidnews.kiloproject.system.AppConfig.CACHE_LAST_PUSH_ID;
-import static androidnews.kiloproject.system.AppConfig.CACHE_LAST_PUSH_TIME;
 import static androidnews.kiloproject.system.AppConfig.GET_MAIN_DATA;
 import static com.blankj.utilcode.util.NetworkUtils.getMobileDataEnabled;
 import static com.blankj.utilcode.util.NetworkUtils.getWifiEnabled;
 
 public class NotifyWork extends Worker {
     private Context mContext;
-    private String typeStr = "T1429173683626";
+    private final static String typeStr = "T1348647853363";
 
     public NotifyWork(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -94,8 +94,12 @@ public class NotifyWork extends Worker {
                                         }.getType());
                                 NewMainListData mData = null;
                                 String lastId = SPUtils.getInstance().getString(CACHE_LAST_PUSH_ID);
-                                for (int i = 0; i < 5; i++) {
+                                for (int i = 0; i < 7; i++) {
                                     NewMainListData newMainListData = retMap.get(typeStr).get(i);
+                                    if (!isGoodItem(newMainListData)
+                                            || TextUtils.isEmpty(newMainListData.getSkipID())
+                                            || TextUtils.equals(newMainListData.getSkipType(), "photoset"))
+                                        continue;
                                     if (!lastId.contains(newMainListData.getDocid())) {
                                         mData = newMainListData;
                                         break;

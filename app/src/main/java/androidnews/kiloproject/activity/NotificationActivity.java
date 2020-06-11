@@ -225,7 +225,7 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                         .setHeaderDrawable(R.drawable.ic_save_white)
                         .setHeaderScaleType(ImageView.ScaleType.CENTER)
                         .setTitle(R.string.message_save_title)
-                        .setDescription(getString(R.string.message_save_meesage))
+                        .setDescription(getString(R.string.message_save_message))
                         .setHeaderColor(R.color.colorAccent)
                         .setPositiveText(android.R.string.ok)
                         .setNegativeText(android.R.string.no)

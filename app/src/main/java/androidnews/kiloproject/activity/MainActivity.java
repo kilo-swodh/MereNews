@@ -64,7 +64,6 @@ import androidnews.kiloproject.fragment.GuoKrRvFragment;
 import androidnews.kiloproject.fragment.VideoRvFragment;
 import androidnews.kiloproject.fragment.ZhihuRvFragment;
 import androidnews.kiloproject.fragment.MainRvFragment;
-import androidnews.kiloproject.entity.event.MessageEvent;
 import androidnews.kiloproject.system.base.BaseActivity;
 
 
@@ -79,7 +78,7 @@ import io.reactivex.schedulers.Schedulers;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_HISTORY;
 import static androidnews.kiloproject.fragment.BaseRvFragment.TYPE_REFRESH;
-import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
+import static androidnews.kiloproject.system.AppConfig.CHECK_UPDATE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HEADER_COLOR;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
@@ -100,10 +99,12 @@ import static androidnews.kiloproject.system.AppConfig.TYPE_SMARTISAN_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_END;
 import static androidnews.kiloproject.system.AppConfig.TYPE_VIDEO_START;
 import static androidnews.kiloproject.system.AppConfig.TYPE_ZHIHU;
+import static androidnews.kiloproject.system.AppConfig.isAutoNight;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 import static androidnews.kiloproject.system.AppConfig.isPush;
 import static androidnews.kiloproject.system.AppConfig.isPushMode;
 import static androidnews.kiloproject.util.PollingUtils.PUSH_ACTIVE;
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -118,8 +119,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     int[] channelArray = new int[DEFAULT_PAGE];
     List<BaseRvFragment> fragments = new ArrayList<>();
     String[] tagNames;
-
-    public List<BlockItem> blockList;
 
     public static final int DEFAULT_PAGE = 4;
 
@@ -195,7 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 String arrayStr = spUtils.getString(CONFIG_TYPE_ARRAY);
 
-                blockList = LitePal.findAll(BlockItem.class);
+                AppConfig.blockList = LitePal.findAll(BlockItem.class);
 
                 if (TextUtils.isEmpty(arrayStr)) {
                     channelArray = new int[DEFAULT_PAGE];
@@ -230,7 +229,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
                             if (mPagerAdapter == null) {
-                                mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                                mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(),BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
                                     @Override
                                     public Fragment getItem(int position) {
                                         BaseRvFragment fragment = createFragment(position);
@@ -280,8 +279,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     })
                                     .show();
                             SPUtils.getInstance().put(CONFIG_SHOW_EXPLORER,true);
-                        } else
-                            checkUpdate();
+                        }
+//                            checkUpdate();
                     }
                 });
          if (isPush && isPushMode)
@@ -329,9 +328,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent);
                 break;
             case R.id.nav_theme:
-                isNightMode = !isNightMode;
-                spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
-                restartWithAnime(R.id.drawer_layout, R.id.materialViewPager);
+                 if (isAutoNight){
+                    SnackbarUtils.with(mViewPager).setMessage(getString(R.string.tip_to_close_auto_night)).show();
+                }else {
+                    isNightMode = !isNightMode;
+                    spUtils.put(CONFIG_NIGHT_MODE, isNightMode);
+                    restartWithAnime(R.id.drawer_layout, R.id.materialViewPager);
+                }
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -670,45 +673,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onLowMemory();
         //内存低时,清理缓存
         Glide.get(mActivity).clearMemory();
-    }
-
-    private void checkUpdate() {
-        EasyHttp.get(CHECK_UPADTE_ADDRESS)
-                .readTimeOut(30 * 1000)//局部定义读超时
-                .writeTimeOut(30 * 1000)
-                .connectTimeout(30 * 1000)
-                .timeStamp(true)
-                .execute(new SimpleCallBack<String>() {
-                    @Override
-                    public void onError(ApiException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onSuccess(String response) {
-                        if (response != null) {
-                            int newVersionCode;
-                            try {
-                                newVersionCode = Integer.parseInt(response.trim());
-                                if (AppUtils.getAppVersionCode() < newVersionCode) {
-                                    SnackbarUtils.with(mViewPager)
-                                            .setMessage(getResources().getString(R.string.update_title))
-                                            .setAction(getResources().getString(R.string.download),
-                                                    new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Uri uri = Uri.parse(DOWNLOAD_ADDRESS);
-                                                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                                                }
-                                            })
-                                            .show();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
     }
 
     @SuppressLint("NewApi")

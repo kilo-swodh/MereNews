@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -26,11 +25,13 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
 
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_NIGHT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_DISABLE_NOTICE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_EASTER_EGGS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HAPTIC;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LIST_TYPE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NO_IMAGE;
@@ -76,7 +77,8 @@ public class MyApplication extends Application {
         Utils.init(this);
 
         SPUtils spUtils = SPUtils.getInstance();
-        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON, true);
+        AppConfig.isShowSkeleton = spUtils.getBoolean(CONFIG_SHOW_SKELETON,true);
+        AppConfig.isAutoNight = spUtils.getBoolean(CONFIG_AUTO_NIGHT);
         AppConfig.listType = spUtils.getInt(CONFIG_LIST_TYPE, -1);
         AppConfig.mTextSize = spUtils.getInt(CONFIG_TEXT_SIZE, 1);
         AppConfig.isNightMode = spUtils.getBoolean(CONFIG_NIGHT_MODE);
@@ -93,6 +95,7 @@ public class MyApplication extends Application {
         AppConfig.isEasterEggs = spUtils.getBoolean(CONFIG_EASTER_EGGS);
         AppConfig.isHaptic = spUtils.getBoolean(CONFIG_HAPTIC);
         AppConfig.isNoImage = spUtils.getBoolean(CONFIG_NO_IMAGE);
+        AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
 
         int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (mode == Configuration.UI_MODE_NIGHT_YES)

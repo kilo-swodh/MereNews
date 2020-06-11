@@ -128,9 +128,9 @@ public class PressRvFragment extends BaseRvFragment {
                                             break;
                                         }
                                     }
-                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                    if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
                                         boolean isBlockBingo = false;
-                                        for (BlockItem blockItem : getMainActivity().blockList) {
+                                        for (BlockItem blockItem : AppConfig.blockList) {
                                             if (isBlockBingo)
                                                 break;
                                             switch (blockItem.getType()) {
@@ -282,8 +282,8 @@ public class PressRvFragment extends BaseRvFragment {
                                                     }
                                                 }
                                                 boolean isBlockBingo = false;
-                                                if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
-                                                    for (BlockItem blockItem : getMainActivity().blockList) {
+                                                if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
+                                                    for (BlockItem blockItem : AppConfig.blockList) {
                                                         if (isBlockBingo)
                                                             break;
                                                         switch (blockItem.getType()) {
@@ -343,8 +343,8 @@ public class PressRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                         boolean isBlockBingo = false;
-                                                        if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
-                                                            for (BlockItem blockItem : getMainActivity().blockList) {
+                                                        if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
+                                                            for (BlockItem blockItem : AppConfig.blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -464,160 +464,7 @@ public class PressRvFragment extends BaseRvFragment {
         mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                final String[] items = {
-                        getResources().getString(R.string.action_link)
-                        , getResources().getString(R.string.action_block_source)
-                        , getResources().getString(R.string.action_block_keywords)
-                };
-                new AlertDialog.Builder(mActivity).setItems(items,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-                                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                                        //noinspection ConstantConditions
-                                        cm.setPrimaryClip(ClipData.newPlainText("link", contents.get(position).getUrl()));
-                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
-                                                + " " + getString(R.string.successful)).show();
-                                        break;
-                                    case 1:
-                                        Observable.create(new ObservableOnSubscribe<Integer>() {
-                                            @Override
-                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                                                try {
-                                                    String newSource = contents.get(position).getSource();
-                                                    if (getMainActivity().blockList == null)
-                                                        getMainActivity().blockList = new ArrayList<>();
-                                                    boolean isAdd = true;
-                                                    if (getMainActivity().blockList.size() > 0) {
-                                                        for (BlockItem blockItem : getMainActivity().blockList) {
-                                                            if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
-                                                                isAdd = false;
-                                                        }
-                                                    }
-                                                    if (isAdd) {
-                                                        BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
-                                                        getMainActivity().blockList.add(newItem);
-                                                        e.onNext(1);
-                                                        newItem.save();
-                                                    } else {
-                                                        e.onNext(2);
-                                                    }
-                                                } catch (Exception e1) {
-                                                    e1.printStackTrace();
-                                                    e.onNext(0);
-                                                } finally {
-                                                    e.onComplete();
-                                                }
-                                            }
-                                        }).subscribeOn(Schedulers.computation())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<Integer>() {
-                                                    @Override
-                                                    public void accept(Integer i) throws Exception {
-                                                        switch (i) {
-                                                            case 0:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
-                                                                        .show();
-                                                                break;
-                                                            case 1:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.start_after_restart_list))
-                                                                        .show();
-                                                                break;
-                                                            case 2:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.repeated))
-                                                                        .show();
-                                                                break;
-                                                        }
-                                                    }
-                                                });
-                                        dialog.dismiss();
-                                        break;
-                                    case 2:
-                                        final EditText editText = new EditText(mActivity);
-                                        editText.setText(contents.get(position).getTitle());
-                                        editText.setTextColor(getResources().getColor(R.color.black));
-                                        new MaterialStyledDialog.Builder(mActivity)
-                                                .setHeaderDrawable(R.drawable.ic_edit)
-                                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
-                                                .setCustomView(editText)
-                                                .setHeaderColor(R.color.colorAccent)
-                                                .setPositiveText(R.string.save)
-                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        Observable.create(new ObservableOnSubscribe<Integer>() {
-                                                            @Override
-                                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                                                                try {
-                                                                    if (getMainActivity().blockList == null)
-                                                                        getMainActivity().blockList = new ArrayList<>();
-
-                                                                    String keywords = editText.getText().toString();
-                                                                    boolean isAdd = true;
-                                                                    if (getMainActivity().blockList.size() > 0) {
-                                                                        for (BlockItem blockItem : getMainActivity().blockList) {
-                                                                            if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
-                                                                                isAdd = false;
-                                                                        }
-                                                                    }
-                                                                    if (isAdd) {
-                                                                        BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
-                                                                        getMainActivity().blockList.add(newItem);
-                                                                        e.onNext(1);
-                                                                        newItem.save();
-                                                                    } else {
-                                                                        e.onNext(2);
-                                                                    }
-                                                                } catch (Exception e1) {
-                                                                    e1.printStackTrace();
-                                                                    e.onNext(0);
-                                                                } finally {
-                                                                    e.onComplete();
-                                                                }
-                                                            }
-                                                        }).subscribeOn(Schedulers.computation())
-                                                                .observeOn(AndroidSchedulers.mainThread())
-                                                                .subscribe(new Consumer<Integer>() {
-                                                                    @Override
-                                                                    public void accept(Integer i) throws Exception {
-                                                                        switch (i) {
-                                                                            case 0:
-                                                                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
-                                                                                        + " " + getString(R.string.fail)).showError();
-                                                                                break;
-                                                                            case 1:
-                                                                                SnackbarUtils.with(refreshLayout)
-                                                                                        .setMessage(getString(R.string.start_after_restart_list))
-                                                                                        .show();
-                                                                                break;
-                                                                            case 2:
-                                                                                SnackbarUtils.with(refreshLayout)
-                                                                                        .setMessage(getString(R.string.repeated))
-                                                                                        .show();
-                                                                                break;
-                                                                        }
-                                                                    }
-                                                                });
-                                                    }
-                                                })
-                                                .setNegativeText(getResources().getString(android.R.string.cancel))
-                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .show();
-                                        dialog.dismiss();
-                                        break;
-                                }
-                            }
-                        }).show();
+                showLongClickDialog(contents.get(position));
                 return true;
             }
         });
@@ -635,5 +482,162 @@ public class PressRvFragment extends BaseRvFragment {
             mAdapter.disableLoadMoreIfNotFullPage();
             refreshLayout.setEnableLoadMore(false);
         }
+    }
+
+    private void showLongClickDialog(PressListData item){
+        final String[] items = {
+                getResources().getString(R.string.action_link)
+                , getResources().getString(R.string.action_block_source)
+                , getResources().getString(R.string.action_block_keywords)
+        };
+        new AlertDialog.Builder(mActivity).setItems(items,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                                //noinspection ConstantConditions
+                                cm.setPrimaryClip(ClipData.newPlainText("link", item.getUrl()));
+                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
+                                        + " " + getString(R.string.successful)).show();
+                                break;
+                            case 1:
+                                Observable.create(new ObservableOnSubscribe<Integer>() {
+                                    @Override
+                                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                        try {
+                                            String newSource = item.getSource();
+                                            if (AppConfig.blockList == null)
+                                                AppConfig.blockList = new ArrayList<>();
+                                            boolean isAdd = true;
+                                            if (AppConfig.blockList.size() > 0) {
+                                                for (BlockItem blockItem : AppConfig.blockList) {
+                                                    if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
+                                                        isAdd = false;
+                                                }
+                                            }
+                                            if (isAdd) {
+                                                BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
+                                                AppConfig.blockList.add(newItem);
+                                                e.onNext(1);
+                                                newItem.save();
+                                            } else {
+                                                e.onNext(2);
+                                            }
+                                        } catch (Exception e1) {
+                                            e1.printStackTrace();
+                                            e.onNext(0);
+                                        } finally {
+                                            e.onComplete();
+                                        }
+                                    }
+                                }).subscribeOn(Schedulers.computation())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<Integer>() {
+                                            @Override
+                                            public void accept(Integer i) throws Exception {
+                                                switch (i) {
+                                                    case 0:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
+                                                                .show();
+                                                        break;
+                                                    case 1:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.start_after_restart_list))
+                                                                .show();
+                                                        break;
+                                                    case 2:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.repeated))
+                                                                .show();
+                                                        break;
+                                                }
+                                            }
+                                        });
+                                dialog.dismiss();
+                                break;
+                            case 2:
+                                final EditText editText = new EditText(mActivity);
+                                editText.setText(item.getTitle());
+                                editText.setTextColor(getResources().getColor(R.color.black));
+                                new MaterialStyledDialog.Builder(mActivity)
+                                        .setHeaderDrawable(R.drawable.ic_edit)
+                                        .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                        .setCustomView(editText)
+                                        .setHeaderColor(R.color.colorAccent)
+                                        .setPositiveText(R.string.save)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                Observable.create(new ObservableOnSubscribe<Integer>() {
+                                                    @Override
+                                                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                                        try {
+                                                            if (AppConfig.blockList == null)
+                                                                AppConfig.blockList = new ArrayList<>();
+
+                                                            String keywords = editText.getText().toString();
+                                                            boolean isAdd = true;
+                                                            if (AppConfig.blockList.size() > 0) {
+                                                                for (BlockItem blockItem : AppConfig.blockList) {
+                                                                    if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
+                                                                        isAdd = false;
+                                                                }
+                                                            }
+                                                            if (isAdd) {
+                                                                BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
+                                                                AppConfig.blockList.add(newItem);
+                                                                e.onNext(1);
+                                                                newItem.save();
+                                                            } else {
+                                                                e.onNext(2);
+                                                            }
+                                                        } catch (Exception e1) {
+                                                            e1.printStackTrace();
+                                                            e.onNext(0);
+                                                        } finally {
+                                                            e.onComplete();
+                                                        }
+                                                    }
+                                                }).subscribeOn(Schedulers.computation())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(new Consumer<Integer>() {
+                                                            @Override
+                                                            public void accept(Integer i) throws Exception {
+                                                                switch (i) {
+                                                                    case 0:
+                                                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
+                                                                                + " " + getString(R.string.fail)).showError();
+                                                                        break;
+                                                                    case 1:
+                                                                        SnackbarUtils.with(refreshLayout)
+                                                                                .setMessage(getString(R.string.start_after_restart_list))
+                                                                                .show();
+                                                                        break;
+                                                                    case 2:
+                                                                        SnackbarUtils.with(refreshLayout)
+                                                                                .setMessage(getString(R.string.repeated))
+                                                                                .show();
+                                                                        break;
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .setNegativeText(getResources().getString(android.R.string.cancel))
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
     }
 }

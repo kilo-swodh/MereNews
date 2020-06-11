@@ -58,7 +58,6 @@ public class AboutActivity extends BaseActivity {
         if (isLollipop())
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         webSettings.setBlockNetworkImage(false);
-        webView.addJavascriptInterface(this, "myWebBridge");
 
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.setDownloadListener(new DownloadListener() {

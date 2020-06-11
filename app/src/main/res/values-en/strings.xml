@@ -286,18 +286,25 @@
     <string name="time_level_4">few</string>
 
     <string name="message_save_title">Save changes or not?</string>
-    <string name="message_save_meesage">Unsaved changes will be lost</string>
+    <string name="message_save_message">Unsaved changes will be lost</string>
 
     <string name="click2detail">Click here for details</string>
 
     <string name="skeleton">Load animation</string>
     <string name="skeleton_detail">Fill in content with flicker animation</string>
 
+    <string name="auto_night">Automatic night mode</string>
+    <string name="auto_night_detail">Night mode of follow system(Android P is power saving mode)</string>
+
+    <string name="tip_to_close_auto_night">Please turn off the automatic night mode in the settings</string>
+
     <string name="haptic">FeedBack</string>
     <string name="haptic_detail">Recommended for Linear Resonant Actuator Device</string>
 
     <string name="no_image">Data Saver</string>
-    <string name="no_image_detail">Load as few pictures as possible to save data</string>
+    <string name="no_image_detail">Try not to load pictures and videos</string>
 
     <string name="support_offline">Support offline</string>
+
+    <string name="home">Home</string>
 </resources>

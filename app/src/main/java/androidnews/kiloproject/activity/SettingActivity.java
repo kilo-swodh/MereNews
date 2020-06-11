@@ -47,6 +47,8 @@ import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.BlockItem;
 import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.data.ExportBean;
+import androidnews.kiloproject.entity.net.CnbetaCommentData;
+import androidnews.kiloproject.entity.net.UpdateInfoData;
 import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.util.AlipayUtils;
@@ -57,12 +59,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_NIGHT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HAPTIC;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_NO_IMAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_PUSH_MODE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_SHOW_SKELETON;
 import static androidnews.kiloproject.system.AppConfig.QQ_KEY;
-import static androidnews.kiloproject.system.AppConfig.CHECK_UPADTE_ADDRESS;
+import static androidnews.kiloproject.system.AppConfig.CHECK_UPDATE_ADDRESS;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_LOADMORE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_REFRESH;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_BACK_EXIT;
@@ -108,6 +111,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvSkeleton;
     TextView tvSkeletonDetail;
     Switch swSkeleton;
+    TextView tvAutoNight;
+    TextView tvAutoNightDetail;
+    Switch swAutoNight;
     TextView tvHaptic;
     TextView tvHapticDetail;
     Switch swHaptic;
@@ -176,6 +182,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvSkeleton = (TextView) findViewById(R.id.tv_skeleton);
         tvSkeletonDetail = (TextView) findViewById(R.id.tv_skeleton_detail);
         swSkeleton = (Switch) findViewById(R.id.sw_skeleton);
+
+        tvAutoNight = (TextView) findViewById(R.id.tv_auto_night);
+        tvAutoNightDetail = (TextView) findViewById(R.id.tv_auto_night_detail);
+        swAutoNight = (Switch) findViewById(R.id.sw_auto_night);
 
         tvHaptic = (TextView) findViewById(R.id.tv_haptic);
         tvHapticDetail = (TextView) findViewById(R.id.tv_haptic_detail);
@@ -286,6 +296,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                     AppConfig.isShowSkeleton = isChecked;
                                     spUtils.put(CONFIG_SHOW_SKELETON, AppConfig.isShowSkeleton);
+                                }
+                            });
+
+                            swAutoNight.setChecked(AppConfig.isAutoNight);
+                            swAutoNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    AppConfig.isAutoNight = isChecked;
+                                    spUtils.put(CONFIG_AUTO_NIGHT, AppConfig.isAutoNight);
+                                    SnackbarUtils.with(toolbar).setMessage(getString(R.string.start_after_restart_app)).show();
                                 }
                             });
 
@@ -445,6 +465,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 spUtils.put(CONFIG_SHOW_SKELETON, AppConfig.isShowSkeleton);
                 break;
 
+            case R.id.tv_auto_night:
+            case R.id.tv_auto_night_detail:
+                AppConfig.isAutoNight = !AppConfig.isAutoNight;
+                swAutoNight.setChecked(AppConfig.isAutoNight);
+                spUtils.put(CONFIG_AUTO_NIGHT, AppConfig.isAutoNight);
+                break;
+
             case R.id.tv_haptic:
             case R.id.tv_haptic_detail:
                 AppConfig.isHaptic = !AppConfig.isHaptic;
@@ -584,9 +611,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                                     spUtils.put(CONFIG_PUSH_MODE, exportBean.isPushMode);
                                                     spUtils.put(CONFIG_PUSH_TIME, exportBean.pushTime);
                                                     spUtils.put(CONFIG_EASTER_EGGS, exportBean.isEasterEggs);
-                                                    spUtils.put(CONFIG_SHOW_SKELETON,exportBean.isShowSkeleton);
-                                                    spUtils.put(CONFIG_HAPTIC,exportBean.isHaptic);
-                                                    spUtils.put(CONFIG_NO_IMAGE,exportBean.isNoImage);
+                                                    spUtils.put(CONFIG_SHOW_SKELETON, exportBean.isShowSkeleton);
+                                                    spUtils.put(CONFIG_AUTO_NIGHT, exportBean.isAutoNight);
+                                                    spUtils.put(CONFIG_HAPTIC, exportBean.isHaptic);
+                                                    spUtils.put(CONFIG_NO_IMAGE, exportBean.isNoImage);
                                                     LitePal.saveAll(exportBean.blockList);
                                                     e.onNext(true);
                                                 } else
@@ -667,6 +695,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                             exportBean.currentRandomHeader = currentRandomHeader;
                                             exportBean.currentLanguage = currentLanguage;
                                             exportBean.isShowSkeleton = AppConfig.isShowSkeleton;
+                                            exportBean.isAutoNight = AppConfig.isAutoNight;
                                             exportBean.blockList = blockList;
                                             exportBean.isHaptic = AppConfig.isHaptic;
                                             exportBean.isNoImage = AppConfig.isNoImage;
@@ -765,7 +794,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_check_update_detail:
                 SnackbarUtils.with(toolbar).setMessage(getResources()
                         .getString(R.string.loading)).show();
-                EasyHttp.get(CHECK_UPADTE_ADDRESS)
+                EasyHttp.get(CHECK_UPDATE_ADDRESS)
                         .readTimeOut(30 * 1000)//局部定义读超时
                         .writeTimeOut(30 * 1000)
                         .connectTimeout(30 * 1000)
@@ -783,19 +812,27 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 if (response != null) {
                                     int newVersionCode;
                                     try {
-                                        newVersionCode = Integer.parseInt(response.trim());
+                                        UpdateInfoData updateInfo = gson.fromJson(response, UpdateInfoData.class);
+                                        newVersionCode = updateInfo.getVersion_code();
+
+                                        String des;
+                                        if (!TextUtils.isEmpty(updateInfo.getMessage()))
+                                            des = updateInfo.getMessage() + "." + getResources().getString(R.string.update_message);
+                                        else
+                                            des = getResources().getString(R.string.update_message);
+
                                         if (AppUtils.getAppVersionCode() < newVersionCode) {
                                             new MaterialStyledDialog.Builder(mActivity)
                                                     .setHeaderDrawable(R.drawable.ic_update)
                                                     .setHeaderScaleType(ImageView.ScaleType.CENTER)
                                                     .setTitle(getResources().getString(R.string.update_title))
-                                                    .setDescription(getResources().getString(R.string.update_message))
+                                                    .setDescription(des)
                                                     .setHeaderColor(R.color.colorPrimary)
                                                     .setPositiveText(android.R.string.ok)
                                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                                         @Override
                                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                            Uri uri = Uri.parse(DOWNLOAD_ADDRESS);
+                                                            Uri uri = Uri.parse(updateInfo.getAddress());
                                                             startActivity(new Intent(Intent.ACTION_VIEW, uri));
                                                         }
                                                     })

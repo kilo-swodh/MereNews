@@ -78,8 +78,4 @@ public abstract class BaseRvFragment extends BaseLazyFragment {
         mRecyclerView.setItemViewCacheSize(5);
         mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
     }
-
-    protected MainActivity getMainActivity(){
-        return (MainActivity)mActivity;
-    }
 }

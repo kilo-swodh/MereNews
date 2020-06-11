@@ -1,18 +1,24 @@
 package androidnews.kiloproject.activity;
 
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -282,10 +288,8 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (webView == null)return;
-                view.loadUrl("javascript:function setTop(){document.querySelector('.header-for-mobile').style.display=\"none\";}setTop();");
-                view.loadUrl("javascript:function setTop(){document.querySelector('.bottom-wrap').style.display=\"none\";}setTop();");
-                view.loadUrl("javascript:function setTop(){document.querySelector('.footer').style.display=\"none\";}setTop();");
-                view.loadUrl("javascript:function setTop(){document.querySelector('.global-header').style.display=\"none\";}setTop();");
+                view.loadUrl("javascript:function setTop(){document.querySelector('.Daily').style.display=\"none\";}setTop();");
+                view.loadUrl("javascript:function setTop(){document.querySelector('.view-more').style.display=\"none\";}setTop();");
                 if (isNightMode) {
                     view.loadUrl("javascript:function setTop(){document.querySelector('.headline').style.display=\"none\";}setTop();");
                     InputStream is = getResources().openRawResource(R.raw.night);
@@ -306,6 +310,35 @@ public class ZhiHuDetailActivity extends BaseDetailActivity {
                     webView.loadUrl("javascript:(function() {" + "var parent = document.getElementsByTagName('head').item(0);" + "var style = document.createElement('style');" + "style.type = 'text/css';" + "style.innerHTML = window.atob('" + nightCode + "');" + "parent.appendChild(style)" + "})();");
                 }
                 super.onProgressChanged(view, newProgress);
+            }
+        });
+
+        webView.setWebViewClient(new WebViewClient() {
+            // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理
+            // 此方法在API24被废弃，不处理POST请求
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+                WebView.HitTestResult result = view.getHitTestResult();
+                if (url.startsWith("mailto:")) {
+                    //Handle mail Urls
+                    startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(url)));
+                    return true;
+                } else if (url.startsWith("tel:")) {
+                    //Handle telephony Urls
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
+                    return true;
+                }else if (!TextUtils.isEmpty(url) && result == null) {
+                    view.loadUrl(url);
+                    return true;
+                }
+                return false;
+            }
+
+            // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理
+            // 此方法添加于API24，不处理POST请求，可拦截处理子frame的非http请求
+            @TargetApi(Build.VERSION_CODES.N)
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return shouldOverrideUrlLoading(view, request.getUrl().toString());
             }
         });
     }

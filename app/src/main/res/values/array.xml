@@ -69,44 +69,45 @@
         <item>NBA</item>
         <item>财经</item>
         <item>教育</item>
-        <item>笑话</item>
+        <item>轻松一刻</item>
         <item>古玩</item>
         <item>政务</item>
         <item>精选</item>
-        <item>空缺</item>
+        <item>暂无</item>
         <item>手机</item>
         <item>足球</item>
         <item>数码</item>
         <item>跑步</item>
         <item>历史</item>
         <item>股票</item>
-        <item>彩票</item>
-        <item>空缺</item>
+        <item>暂无</item>
+        <item>暂无</item>
         <item>CBA</item>
         <item>国足</item>
         <item>旅游</item>
-        <item>博客</item>
+        <item>暂无</item>
         <item>军事</item>
         <item>电影</item>
         <item>时尚</item>
         <item>情感</item>
-        <item>电台</item>
+        <item>暂无</item>
         <item>家居</item>
         <item>亲子</item>
         <item>汽车</item>
-        <item>空缺</item>
-        <item>论坛</item>
-        <item>房产</item>
-        <item>今日</item>
-        <item>公开课</item>
+        <item>暂无</item>
+        <item>暂无</item>
+        <item>暂无</item>
+        <item>暂无</item>
+        <item>暂无</item>
         <item>营销</item>
         <item>航空</item>
         <item>音乐</item>
-        <item>双创</item>
-        <item>佛学</item>
-        <item>天猫</item>
-        <item>京东</item>
 
+        <item>fake</item> //空
+        <item>fake</item> //空
+
+        <item>fake</item> //空
+        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
@@ -210,7 +211,7 @@
         <item>生活周刊</item>
         <item>时代周报</item>
         <item>华商报</item>
-        <item>空缺</item>
+        <item>家庭医学</item>
         <item>民主法制</item>
         <item>南方都市</item>
         <item>山西晚报</item>
@@ -221,24 +222,24 @@
         <item>中国产经</item>
         <item>北京青年报</item>
         <item>紫金山视频</item>
-        <item>张家口</item>
+        <item>余杭晨报</item>
         <item>广州青年</item>
         <item>华西社区</item>
         <item>光明日报</item>
         <item>法制日报</item>
         <item>岳阳网</item>
-        <item>唐山广播</item>
+        <item>中国消费者</item>
         <item>东方今报</item>
         <item>衡阳频道</item>
         <item>郑州晚报</item>
         <item>柯桥日报</item>
         <item>承德晚报</item>
-        <item>东盟博览</item>
+        <item>威海晚报</item>
         <item>乌市晚报</item>
         <item>壹福清</item>
         <item>新晚报</item>
         <item>大科技</item>
-        <item>长安观察</item>
+        <item>暂无</item>
         <item>南国早报</item>
         <item>呼市吧</item>
         <item>青报新媒</item>
@@ -248,10 +249,10 @@
         <item>珠江商报</item>
         <item>玉林日报</item>
         <item>大公报</item>
-        <item>华商晨报</item>
+        <item>暂无</item>
         <item>前沿时报</item>
-        <item>空缺</item>
-        <item>中国慈善</item>
+        <item>暂无</item>
+        <item>暂无</item>
         <item>诸暨日报</item>
 
         <item>fake</item> //空
@@ -303,7 +304,7 @@
 
     <string-array name="address">
         <!-- 网易 -->
-        <item>T1348647909107</item> //头条
+        <item>T1348647909107</item> //热点
         <item>T1348649580692</item> //科技
         <item>T1348648517839</item> //娱乐
         <item>T1370583240249</item> //独家
@@ -317,40 +318,40 @@
         <item>T1441074311424</item> //古玩
         <item>T1414142214384</item> //政务
         <item>T1467284926140</item> //精选
-        <item>T1397016069906</item> //暴雪
+        <item>T1368497029546</item> //
         <item>T1348649654285</item> //手机
         <item>T1348649176279</item> //足球
         <item>T1348649776727</item> //数码
         <item>T1411113472760</item> //跑步
         <item>T1368497029546</item> //历史
         <item>T1473054348939</item> //股票
-        <item>T1356600029035</item> //彩票
-        <item>T1351233117091</item> //智能
+        <item>T1356600029035</item> //
+        <item>T1351233117091</item> //
         <item>T1348649475931</item> //CBA
-        <item>T1348649503389</item> //中国足球
+        <item>T1348649503389</item> //国足
         <item>T1348654204705</item> //旅游
-        <item>T1349837698345</item> //网易博客
+        <item>T1349837698345</item> //
         <item>T1348648141035</item> //军事
         <item>T1348648650048</item> //电影
         <item>T1348650593803</item> //时尚
         <item>T1348650839000</item> //情感
-        <item>T1379038288239</item> //电台
+        <item>T1379038288239</item> //
         <item>T1348654105308</item> //家居
         <item>T1397116135282</item> //亲子
         <item>T1348654060988</item> //汽车
-        <item>T1348648037603</item> //社会
-        <item>T1349837670307</item> //论坛
-        <item>T1348654085632</item> //房产
-        <item>T1429173683626</item> //今日
-        <item>T1456394562871</item> //公开课
+        <item>T1348648037603</item> //
+        <item>T1349837670307</item> //
+        <item>T1348654085632</item> //
+        <item>T1429173683626</item> //
+        <item>T1456394562871</item> //
         <item>T1464592736048</item> //营销
         <item>T1474271789612</item> //航空
         <item>T1498701411149</item> //音乐
-        <item>T1499853820829</item> //双创
-        <item>T1504171773862</item> //佛学
-        <item>T1509448512433</item> //天猫
-        <item>T1509504918215</item> //京东
 
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
+        <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
         <item>fake</item> //空
@@ -464,103 +465,55 @@
         <item>T1419835304565</item> //世界博览
         <item>T1425636171225</item> //周末画报
         <item>T1427357998621</item> //环球人物
-        <!--<item>T1430726338930</item> //中国周刊-->
-        <!--<item>T1432628963834</item> //海外文摘-->
         <item>T1433487817762</item> //外滩画报
         <item>T1435031802301</item> //南都周刊
         <item>T1374537739895</item> //南都娱乐周刊
-        <!--<item>T1374537673827</item> //华夏地理-->
         <item>T1374538660651</item> //生活周刊
-        <!--<item>T1441511132187</item> //生命时报社-->
         <item>T1374538896985</item> //时代周报
         <item>T1374539467780</item> //华商报
-        <!--<item>T1374656046201</item> //北京晚报-->
-        <!--<item>T1374656567730</item> //东方早报-->
-        <!--<item>T1374656613350</item> //晶报-->
-        <!--<item>T1374656692299</item> //羊城晚报-->
-        <item>T1374656742862</item> //成都晚报
-        <!--<item>T1374663468688</item> //金陵晚报-->
-        <!--<item>T1374664670076</item> //海峡都市报-->
-        <!--<item>T1374664813179</item> //大河报-->
-        <!--<item>T1374664859074</item> //潇湘晨报-->
-        <!--<item>T1381388890444</item> //中国青年报-->
+        <item>T1475223906403</item> //家庭医学
         <item>T1402452375609</item> //民主与法制
         <item>T1374537849029</item> //南方都市报
         <item>T1408358090693</item> //山西晚报
         <item>T1414487688825</item> //家庭医生
-        <!--<item>T1416293760570</item> //游戏观察-->
-        <!--<item>T1420617838490</item> //每日新报-->
-        <!--<item>T1422598194178</item> //甘肃经济日报社-->
-        <!--<item>T1425105277692</item> //海西晨报-->
         <item>T1425536140071</item> //民生周报
-        <!--<item>T1432095804197</item> //瞭望东方周刊-->
         <item>T1432884273758</item> //康颐杂志
         <item>T1435198433041</item> //人民网舆情监测室
         <item>T1440129813308</item> //中国产经新闻
         <item>T1443017451668</item> //北京青年报
-        <!--<item>T1444986149986</item> //江西商报-->
-        <!--<item>T1446450247323</item> //法治山西-->
-        <!--<item>T1447321235935</item> //中国商报社法治导报-->
-        <!--<item>T1447746450708</item> //每日甘肃网-->
-        <!--<item>T1448005010650</item> //暴蜂蜜蚂-->
-        <!--<item>T1449490040715</item> //法制与社会-->
         <item>T1451460602924</item> //紫金山视频
-        <item>T1453188277662</item> //张家口新闻网
-        <!--<item>T1453453662583</item> //内蒙古晨报-->
+        <item>T1473319493382</item> //余杭晨报
         <item>T1453779161204</item> //广州青年报
         <item>T1454310147855</item> //华西社区报
-        <!--<item>T1454466263691</item> //江南晚报-->
         <item>T1456465723341</item> //光明日报
         <item>T1456902217191</item> //法制日报
         <item>T1456989131243</item> //岳阳网
-        <item>T1457403500808</item> //唐山广播电视报
+        <item>T1473238367742</item> //中国消费者报
         <item>T1457583889187</item> //东方今报
         <item>T1457594773769</item> //华声在线衡阳频道
-        <!--<item>T1457944612916</item> //市场信息报-->
-        <!--<item>T1458025198292</item> //新疆晨报-->
-        <!--<item>T1458203712103</item> //唐山晚报-->
-        <!--<item>T1458280654768</item> //中国食品-->
-        <!--<item>T1459405891882</item> //时报传媒-->
         <item>T1459496338561</item> //郑州晚报
         <item>T1460256397238</item> //绍兴市柯桥日报有限公司
         <item>T1460358206122</item> //承德晚报
-        <item>T1460451213721</item> //中国东盟博览杂志
-        <!--<item>T1460542920620</item> //明星-->
-        <!--<item>T1460717891507</item> //青报-->
+        <item>T1473138985400</item> //威海晚报
         <item>T1461040381132</item> //乌鲁木齐晚报
-        <!--<item>T1461066468896</item> //聚焦晋城-->
-        <!--<item>T1461123317667</item> //大公网河南-->
-        <!--<item>T1461143610351</item> //现代快报无锡-->
-        <!--<item>T1461224392422</item> //四川时间-->
-        <!--<item>T1461717763908</item> //闽西新闻网-->
         <item>T1461806919990</item> //壹福清
         <item>T1462260641741</item> //新晚报
-        <!--<item>T1462337924362</item> //绝灵城-->
         <item>T1462417695101</item> //大科技杂志社
-        <item>T1462511440017</item> //长安观察
-        <!--<item>T1463036974162</item> //焦作日报-->
+        <item>T1473061363849</item> //消费者报道
         <item>T1463106169903</item> //南国早报
-        <!--<item>T1463457120334</item> //环球游报-->
         <item>T1463649152673</item> //呼和浩特吧
         <item>T1464677529259</item> //青报新媒
-        <!--<item>T1465177319555</item> //青海青年报-->
         <item>T1465700224209</item> //每周文摘
-        <!--<item>T1465787063526</item> //保定晚报-->
         <item>T1465913214214</item> //东方卫报
-        <!--<item>T1466045466124</item> //内蒙古都市周末-->
         <item>T1466386762312</item> //力量湖南
         <item>T1466565927622</item> //珠江商报
         <item>T1466998061677</item> //玉林日报
-        <!--<item>T1467022679685</item> //法治甘肃网-->
         <item>T1467079994591</item> //大公报-大公网
-        <item>T1467100238109</item> //华商晨报
-        <!--<item>T1467423962658</item> //企业参考-->
+        <item>T1467100238109</item> //
         <item>T1468814169539</item> //前沿时报
-        <item>T1468983880621</item> //青年时报(空缺)
-        <item>T1469167711734</item> //中国慈善家
+        <item>T1468983880621</item> //
+        <item>T1469167711734</item> //
         <item>T1469500605873</item> //诸暨日报爱诸暨
-        <!--<item>T1470207789202</item> //焦点新闻-->
-        <!--<item>T1470300944206</item> //中国经济导报城市社会法治周刊-->
 
         <item>fake</item> //空
         <item>fake</item> //空

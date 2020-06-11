@@ -1,33 +1,21 @@
-html,body,applet,object,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,p,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,th,td {
-	background: rgba(0,0,0,0) !important;
-	color: #eeeeee !important;
-	border-color: #A0A0A0 !important;
-}
-
-div,input,button,textarea,select,option,optgroup {
-	background-color: #000 !important;
-	color: #eeeeee !important;
-	border-color: #A0A0A0 !important;
-}
-
-a,a * {
-	color: #eeeeee !important;
-	text-decoration: none !important;
-	font-weight: bold !important;
-	background-color: rgba(0,0,0,0) !important;
-}
-
-a:active,a:hover,a:active *,a:hover * {
-	color: #1F72D0 !important;
-	background-color: rgba(0,0,0,0) !important;
-}
-
-p,span {
-	font color: #FF0000 !important;
-	color: #cccccc !important;
-	background-color: rgba(0,0,0,0) !important;
-}
-
-html {
-	-webkit-filter: contrast(90%);
-}
+div,section,ul,li,a,h1,h2,h3,p,link,textarea,form,select,input,span,button,em,menu,aside,table,tr,td,nav,img,dl,dt,dd, html, body,strong{
+    background:#222222 !important;color:#888888!important;
+    border-color:#555555 !important;
+    scrollbar-arrow-color:#CCCCCC !important;
+    scrollbar-base-color:#222222 !important;
+    scrollbar-shadow-color:#222222 !important;
+    scrollbar-face-color:#222222 !important;
+    scrollbar-highlight-color:#222222 !important;
+    scrollbar-dark-shadow-color:#222222 !important;
+    scrollbar-3d-light-color:#222222 !important;
+    scrollbar-track-color:#222222 !important;}
+strong{display:block;}
+a,a *{color:#888888 !important;text-decoration:none !important;}a:visited,a:visited *,a:active,a:active *{color:#555555 !important;}
+a:hover,a:hover *{color:#888888 !important;
+    background:#222222 !important;}
+input,select,option,button,textarea{color:#888888 !important;
+    background:#222222 !important;
+    border:#555555 !important;
+    border-color: #888888 #888888 #888888 #888888 !important;}
+input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #888888 #888888 #888888 #888888 !important;}
+input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#888888 !important;background:#222222 !important; border-color: #888888 #888888 #888888 #888888 !important;}

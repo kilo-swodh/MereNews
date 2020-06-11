@@ -76,8 +76,6 @@ public class MainRvFragment extends BaseRvFragment {
     //    MainListData contents;
     List<NewMainListData> contents;
 
-    String[] goodTags;
-
     private String CACHE_LIST_DATA;
 
     private int currentPage = 0;
@@ -116,8 +114,6 @@ public class MainRvFragment extends BaseRvFragment {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                goodTags = mActivity.getResources().getStringArray(R.array.good_tag);
-
                 String json = SPUtils.getInstance().getString(CACHE_LIST_DATA, "");
                 if (!TextUtils.isEmpty(json)) {
                     contents = gson.fromJson(json, new TypeToken<List<NewMainListData>>() {
@@ -143,9 +139,9 @@ public class MainRvFragment extends BaseRvFragment {
                                         }
                                     }
                                     boolean isBlockBingo = false;
-                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
+                                    if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
                                         if (dataItem.getAds() == null) {
-                                            for (BlockItem blockItem : getMainActivity().blockList) {
+                                            for (BlockItem blockItem : AppConfig.blockList) {
                                                 if (isBlockBingo)
                                                     break;
                                                 switch (blockItem.getType()) {
@@ -167,7 +163,7 @@ public class MainRvFragment extends BaseRvFragment {
                                             for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
                                                 NewMainListData.AdsBean adItem = adIt.next();
                                                 boolean isAdBlockBingo = false;
-                                                for (BlockItem blockItem : getMainActivity().blockList) {
+                                                for (BlockItem blockItem : AppConfig.blockList) {
                                                     if (isAdBlockBingo)
                                                         break;
                                                     if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText())) {
@@ -305,7 +301,12 @@ public class MainRvFragment extends BaseRvFragment {
                                                 newList = kickRepeat(newList);
                                                 for (Iterator<NewMainListData> it = newList.iterator(); it.hasNext(); ) {
                                                     NewMainListData dataItem = it.next();
-                                                    if (dataItem == null || checkExtra(dataItem) == 2 || TextUtils.equals(dataItem.getArticleType(), "webview")) {
+                                                    if (dataItem == null ||
+                                                            checkExtra(dataItem) == 2 ||
+                                                            TextUtils.equals(dataItem.getArticleType(), "webview") ||
+                                                            dataItem.getDigest().contains("下载地址") ||
+                                                            TextUtils.isEmpty(dataItem.getLtitle())
+                                                    ) {
                                                         it.remove();
                                                         continue;
                                                     }
@@ -319,9 +320,10 @@ public class MainRvFragment extends BaseRvFragment {
                                                     }
                                                     boolean isBlockBingo = false;
                                                     boolean isHasAd = false;        //防止有ad的item因为ad而被屏蔽视为普通条目
-                                                    if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
-                                                        if (dataItem.getAds() == null) {
-                                                            for (BlockItem blockItem : getMainActivity().blockList) {
+
+                                                    if (dataItem.getAds() == null) {
+                                                        if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
+                                                            for (BlockItem blockItem : AppConfig.blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -339,22 +341,24 @@ public class MainRvFragment extends BaseRvFragment {
                                                                         break;
                                                                 }
                                                             }
-                                                        } else if (dataItem.getAds().size() > 0) {
-                                                            isHasAd = true;
-                                                            for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
-                                                                NewMainListData.AdsBean adItem = adIt.next();
-                                                                if (adItem.getSkipID().equals("00AJ0003|650617")) {   //王凯微笑
-                                                                    adIt.remove();
-                                                                    continue;
-                                                                }
-
-                                                                for (BlockItem blockItem : getMainActivity().blockList) {
+                                                        }
+                                                    } else if (dataItem.getAds().size() > 0) {
+                                                        isHasAd = true;
+                                                        for (Iterator<NewMainListData.AdsBean> adIt = dataItem.getAds().iterator(); adIt.hasNext(); ) {
+                                                            NewMainListData.AdsBean adItem = adIt.next();
+                                                            if (adItem.getSkipID().equals("00AJ0003|650617")) {   //王凯微笑
+                                                                adIt.remove();
+                                                                continue;
+                                                            }
+                                                            if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
+                                                                for (BlockItem blockItem : AppConfig.blockList) {
                                                                     if (blockItem.getType() == TYPE_KEYWORDS && adItem.getTitle().contains(blockItem.getText()))
                                                                         adIt.remove();
                                                                 }
                                                             }
                                                         }
                                                     }
+
                                                     if (isHasAd || (isGoodItem(dataItem) && !isBlockBingo)) {
                                                         contents.add(dataItem);
                                                     }
@@ -381,7 +385,12 @@ public class MainRvFragment extends BaseRvFragment {
 //                                                for (NewMainListData dataItem : retMap.get(typeStr)) {
                                                     boolean isSame = false;
 //                                                if (TextUtils.isEmpty(newBean.getSource()) && !TextUtils.isEmpty(newBean.getTAG())){
-                                                    if (!isGoodItem(dataItem) || checkExtra(dataItem) == 2 || TextUtils.equals(dataItem.getArticleType(), "webview")) {
+                                                    if (!isGoodItem(dataItem) ||
+                                                            checkExtra(dataItem) == 2 ||
+                                                            TextUtils.equals(dataItem.getArticleType(), "webview") ||
+                                                            dataItem.getDigest().contains("下载地址") ||
+                                                            TextUtils.isEmpty(dataItem.getLtitle())
+                                                    ) {
                                                         continue;
                                                     }
                                                     for (NewMainListData myBean : contents) {
@@ -401,8 +410,8 @@ public class MainRvFragment extends BaseRvFragment {
                                                             }
                                                         }
                                                         boolean isBlockBingo = false;
-                                                        if (getMainActivity().blockList != null && getMainActivity().blockList.size() > 0) {
-                                                            for (BlockItem blockItem : getMainActivity().blockList) {
+                                                        if (AppConfig.blockList != null && AppConfig.blockList.size() > 0) {
+                                                            for (BlockItem blockItem : AppConfig.blockList) {
                                                                 if (isBlockBingo)
                                                                     break;
                                                                 switch (blockItem.getType()) {
@@ -550,159 +559,7 @@ public class MainRvFragment extends BaseRvFragment {
         mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                final String[] items = {
-                        getResources().getString(R.string.action_link)
-                        , getResources().getString(R.string.action_block_source)
-                        , getResources().getString(R.string.action_block_keywords)
-                };
-                new AlertDialog.Builder(mActivity).setItems(items,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-                                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                                        //noinspection ConstantConditions
-                                        cm.setPrimaryClip(ClipData.newPlainText("link", contents.get(position).getUrl()));
-                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
-                                                + " " + getString(R.string.successful)).show();
-                                        break;
-                                    case 1:
-                                        Observable.create(new ObservableOnSubscribe<Integer>() {
-                                            @Override
-                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                                                try {
-                                                    String newSource = contents.get(position).getSource();
-                                                    if (getMainActivity().blockList == null)
-                                                        getMainActivity().blockList = new ArrayList<>();
-                                                    boolean isAdd = true;
-                                                    if (getMainActivity().blockList.size() > 0) {
-                                                        for (BlockItem blockItem : getMainActivity().blockList) {
-                                                            if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
-                                                                isAdd = false;
-                                                        }
-                                                    }
-                                                    if (isAdd) {
-                                                        BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
-                                                        getMainActivity().blockList.add(newItem);
-                                                        e.onNext(1);
-                                                        newItem.save();
-                                                    } else {
-                                                        e.onNext(2);
-                                                    }
-                                                } catch (Exception e1) {
-                                                    e1.printStackTrace();
-                                                    e.onNext(0);
-                                                } finally {
-                                                    e.onComplete();
-                                                }
-                                            }
-                                        }).subscribeOn(Schedulers.computation())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<Integer>() {
-                                                    @Override
-                                                    public void accept(Integer i) throws Exception {
-                                                        switch (i) {
-                                                            case 0:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
-                                                                        .show();
-                                                                break;
-                                                            case 1:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.start_after_restart_list))
-                                                                        .show();
-                                                                break;
-                                                            case 2:
-                                                                SnackbarUtils.with(refreshLayout)
-                                                                        .setMessage(getString(R.string.repeated))
-                                                                        .show();
-                                                                break;
-                                                        }
-                                                    }
-                                                });
-                                        dialog.dismiss();
-                                        break;
-                                    case 2:
-                                        final EditText editText = new EditText(mActivity);
-                                        editText.setText(contents.get(position).getTitle());
-                                        editText.setTextColor(getResources().getColor(R.color.black));
-                                        new MaterialStyledDialog.Builder(mActivity)
-                                                .setHeaderDrawable(R.drawable.ic_edit)
-                                                .setHeaderScaleType(ImageView.ScaleType.CENTER)
-                                                .setCustomView(editText)
-                                                .setHeaderColor(R.color.colorAccent)
-                                                .setPositiveText(R.string.save)
-                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        Observable.create(new ObservableOnSubscribe<Integer>() {
-                                                            @Override
-                                                            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                                                                try {
-                                                                    if (getMainActivity().blockList == null)
-                                                                        getMainActivity().blockList = new ArrayList<>();
-                                                                    String keywords = editText.getText().toString();
-                                                                    boolean isAdd = true;
-                                                                    if (getMainActivity().blockList.size() > 0) {
-                                                                        for (BlockItem blockItem : getMainActivity().blockList) {
-                                                                            if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
-                                                                                isAdd = false;
-                                                                        }
-                                                                    }
-                                                                    if (isAdd) {
-                                                                        BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
-                                                                        getMainActivity().blockList.add(newItem);
-                                                                        e.onNext(1);
-                                                                        newItem.save();
-                                                                    } else {
-                                                                        e.onNext(2);
-                                                                    }
-                                                                } catch (Exception e1) {
-                                                                    e1.printStackTrace();
-                                                                    e.onNext(0);
-                                                                } finally {
-                                                                    e.onComplete();
-                                                                }
-                                                            }
-                                                        }).subscribeOn(Schedulers.computation())
-                                                                .observeOn(AndroidSchedulers.mainThread())
-                                                                .subscribe(new Consumer<Integer>() {
-                                                                    @Override
-                                                                    public void accept(Integer i) throws Exception {
-                                                                        switch (i) {
-                                                                            case 0:
-                                                                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
-                                                                                        + " " + getString(R.string.fail)).showError();
-                                                                                break;
-                                                                            case 1:
-                                                                                SnackbarUtils.with(refreshLayout)
-                                                                                        .setMessage(getString(R.string.start_after_restart_list))
-                                                                                        .show();
-                                                                                break;
-                                                                            case 2:
-                                                                                SnackbarUtils.with(refreshLayout)
-                                                                                        .setMessage(getString(R.string.repeated))
-                                                                                        .show();
-                                                                                break;
-                                                                        }
-                                                                    }
-                                                                });
-                                                    }
-                                                })
-                                                .setNegativeText(getResources().getString(android.R.string.cancel))
-                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .show();
-                                        dialog.dismiss();
-                                        break;
-                                }
-                            }
-                        }).show();
+                showLongClickDialog(contents.get(position));
                 return true;
             }
         });
@@ -790,7 +647,7 @@ public class MainRvFragment extends BaseRvFragment {
                 });
     }
 
-    private boolean isGoodItem(NewMainListData data) {
+    public static boolean isGoodItem(NewMainListData data) {
         if (data.getAds() != null && data.getAds().size() > 0)
             return true;
         String mTag = data.getTAGS();
@@ -799,11 +656,12 @@ public class MainRvFragment extends BaseRvFragment {
         if (TextUtils.isEmpty(mTag))
             return true;
         else {
-            for (String gTag : goodTags) {
-                if (TextUtils.equals(gTag, mTag)) {
-                    return true;
+            if (AppConfig.goodTags != null)
+                for (String gTag : AppConfig.goodTags) {
+                    if (TextUtils.equals(gTag, mTag)) {
+                        return true;
+                    }
                 }
-            }
             return false;
         }
     }
@@ -826,5 +684,161 @@ public class MainRvFragment extends BaseRvFragment {
         if (TextUtils.equals(newList.get(1).getDocid(), newList.get(3).getDocid()))
             newList.remove(1);
         return newList;
+    }
+
+    private void showLongClickDialog(NewMainListData item) {
+        final String[] items = {
+                getResources().getString(R.string.action_link)
+                , getResources().getString(R.string.action_block_source)
+                , getResources().getString(R.string.action_block_keywords)
+        };
+        new AlertDialog.Builder(mActivity).setItems(items,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                                //noinspection ConstantConditions
+                                cm.setPrimaryClip(ClipData.newPlainText("link", item.getUrl()));
+                                SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_link)
+                                        + " " + getString(R.string.successful)).show();
+                                break;
+                            case 1:
+                                Observable.create(new ObservableOnSubscribe<Integer>() {
+                                    @Override
+                                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                        try {
+                                            String newSource = item.getSource();
+                                            if (AppConfig.blockList == null)
+                                                AppConfig.blockList = new ArrayList<>();
+                                            boolean isAdd = true;
+                                            if (AppConfig.blockList.size() > 0) {
+                                                for (BlockItem blockItem : AppConfig.blockList) {
+                                                    if (blockItem.getType() == TYPE_SOURCE && TextUtils.equals(blockItem.getText(), newSource))
+                                                        isAdd = false;
+                                                }
+                                            }
+                                            if (isAdd) {
+                                                BlockItem newItem = new BlockItem(TYPE_SOURCE, newSource);
+                                                AppConfig.blockList.add(newItem);
+                                                e.onNext(1);
+                                                newItem.save();
+                                            } else {
+                                                e.onNext(2);
+                                            }
+                                        } catch (Exception e1) {
+                                            e1.printStackTrace();
+                                            e.onNext(0);
+                                        } finally {
+                                            e.onComplete();
+                                        }
+                                    }
+                                }).subscribeOn(Schedulers.computation())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<Integer>() {
+                                            @Override
+                                            public void accept(Integer i) throws Exception {
+                                                switch (i) {
+                                                    case 0:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.action_block_source) + " " + getString(R.string.fail))
+                                                                .show();
+                                                        break;
+                                                    case 1:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.start_after_restart_list))
+                                                                .show();
+                                                        break;
+                                                    case 2:
+                                                        SnackbarUtils.with(refreshLayout)
+                                                                .setMessage(getString(R.string.repeated))
+                                                                .show();
+                                                        break;
+                                                }
+                                            }
+                                        });
+                                dialog.dismiss();
+                                break;
+                            case 2:
+                                final EditText editText = new EditText(mActivity);
+                                editText.setText(item.getTitle());
+                                editText.setTextColor(getResources().getColor(R.color.black));
+                                new MaterialStyledDialog.Builder(mActivity)
+                                        .setHeaderDrawable(R.drawable.ic_edit)
+                                        .setHeaderScaleType(ImageView.ScaleType.CENTER)
+                                        .setCustomView(editText)
+                                        .setHeaderColor(R.color.colorAccent)
+                                        .setPositiveText(R.string.save)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                Observable.create(new ObservableOnSubscribe<Integer>() {
+                                                    @Override
+                                                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                                        try {
+                                                            if (AppConfig.blockList == null)
+                                                                AppConfig.blockList = new ArrayList<>();
+                                                            String keywords = editText.getText().toString();
+                                                            boolean isAdd = true;
+                                                            if (AppConfig.blockList.size() > 0) {
+                                                                for (BlockItem blockItem : AppConfig.blockList) {
+                                                                    if (blockItem.getType() == TYPE_KEYWORDS && TextUtils.equals(blockItem.getText(), keywords))
+                                                                        isAdd = false;
+                                                                }
+                                                            }
+                                                            if (isAdd) {
+                                                                BlockItem newItem = new BlockItem(TYPE_KEYWORDS, keywords);
+                                                                AppConfig.blockList.add(newItem);
+                                                                e.onNext(1);
+                                                                newItem.save();
+                                                            } else {
+                                                                e.onNext(2);
+                                                            }
+                                                        } catch (Exception e1) {
+                                                            e1.printStackTrace();
+                                                            e.onNext(0);
+                                                        } finally {
+                                                            e.onComplete();
+                                                        }
+                                                    }
+                                                }).subscribeOn(Schedulers.computation())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(new Consumer<Integer>() {
+                                                            @Override
+                                                            public void accept(Integer i) throws Exception {
+                                                                switch (i) {
+                                                                    case 0:
+                                                                        SnackbarUtils.with(refreshLayout).setMessage(getString(R.string.action_block_keywords)
+                                                                                + " " + getString(R.string.fail)).showError();
+                                                                        break;
+                                                                    case 1:
+                                                                        SnackbarUtils.with(refreshLayout)
+                                                                                .setMessage(getString(R.string.start_after_restart_list))
+                                                                                .show();
+                                                                        break;
+                                                                    case 2:
+                                                                        SnackbarUtils.with(refreshLayout)
+                                                                                .setMessage(getString(R.string.repeated))
+                                                                                .show();
+                                                                        break;
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .setNegativeText(getResources().getString(android.R.string.cancel))
+                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
     }
 }

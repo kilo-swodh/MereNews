@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: org.litepal.android:java:3.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0a0e6219df27cf37a889423e010764ff/java-3.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0a0e6219df27cf37a889423e010764ff/java-3.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d7028318031ee9f6b733f08250c18b70/jetified-java-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d7028318031ee9f6b733f08250c18b70/jetified-java-3.0.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

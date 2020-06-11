@@ -4,15 +4,17 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{ url 'https://mirrors.huaweicloud.com/repository/maven/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:4.0.0'
 
         //APT(废弃)
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         //JAVA1.8
-        classpath'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
     }
 }
 
@@ -22,6 +24,9 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
+
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{ url 'https://mirrors.huaweicloud.com/repository/maven/' }
     }
 }
 

@@ -196,7 +196,7 @@
 
     <string name="update_title">发现一个新版本</string>
 
-    <string name="update_message">您可到应用商店更新,或点击确认进行下载安装</string>
+    <string name="update_message">您可到应用商店(酷安)更新,或点击确认进行下载安装</string>
 
     <string name="update_title_no">恭喜,当前已是最新版本</string>
     
@@ -286,18 +286,23 @@
     <string name="time_level_4">极少</string>
 
     <string name="message_save_title">是否立即应用改动？</string>
-    <string name="message_save_meesage">应用将重启以使改动生效</string>
+    <string name="message_save_message">应用将重启以使改动生效</string>
 
     <string name="click2detail">点击查看详情</string>
 
     <string name="skeleton">加载动画</string>
     <string name="skeleton_detail">使用闪烁动画填充内容</string>
 
+    <string name="auto_night">自动夜间模式</string>
+    <string name="auto_night_detail">跟随系统的夜间模式(9.0系统为省电模式)</string>
+
+    <string name="tip_to_close_auto_night">请在设置中关闭自动夜间模式后操作</string>
+
     <string name="haptic">振动反馈</string>
     <string name="haptic_detail">建议线性马达机型使用</string>
 
     <string name="no_image">省流模式</string>
-    <string name="no_image_detail">尽量不加载图片以节约流量</string>
+    <string name="no_image_detail">尽量不加载图片以及视频</string>
 
     <string name="auto">Auto</string>
 
@@ -310,4 +315,6 @@
     <string name="explorer_message">目前仅针对少数粉丝开放使用,试试看吗?注意对设备性能有一定要求哦</string>
 
     <string name="support_offline">支持离线</string>
+
+    <string name="home">首页</string>
 </resources>

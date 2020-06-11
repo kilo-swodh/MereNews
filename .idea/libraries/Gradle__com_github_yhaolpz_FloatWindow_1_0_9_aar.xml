@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.yhaolpz:FloatWindow:1.0.9@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cd417314212b7a19691d69602bb65408/jetified-FloatWindow-1.0.9/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/23d782bd51f8b44856ca63847ba253ab/jetified-FloatWindow-1.0.9/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cd417314212b7a19691d69602bb65408/jetified-FloatWindow-1.0.9/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cd417314212b7a19691d69602bb65408/jetified-FloatWindow-1.0.9/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/23d782bd51f8b44856ca63847ba253ab/jetified-FloatWindow-1.0.9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/23d782bd51f8b44856ca63847ba253ab/jetified-FloatWindow-1.0.9/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

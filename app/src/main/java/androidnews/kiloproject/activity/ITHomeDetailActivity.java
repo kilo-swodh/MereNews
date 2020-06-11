@@ -1,16 +1,22 @@
 package androidnews.kiloproject.activity;
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
@@ -48,9 +54,9 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
     private String html;
     private IThomeDetailData currentData;
     private boolean isStar = false;
+    private String currentUrl;
 
     private String newsId;
-    private String url;
     private String title;
     private String pTime;
     private String img;
@@ -66,16 +72,35 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.action_share:
-                        intent = new Intent();
-                        intent.setAction(Intent.ACTION_SEND);//设置分享行为
-                        intent.setType("text/plain");//设置分享内容的类型
-                        if (!TextUtils.isEmpty(title))
-                            intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
-                        intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
-                                + url);//添加分享内容
-                        //创建分享的Dialog
-                        intent = Intent.createChooser(intent, getString(R.string.action_share));
-                        startActivity(intent);
+                        if (!TextUtils.isEmpty(currentData.getDetail())) {    //HTML
+                            intent = new Intent();
+                            intent.setAction(Intent.ACTION_SEND);//设置分享行为
+                            intent.setType("text/plain");//设置分享内容的类型
+                            if (!TextUtils.isEmpty(title))
+                                intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
+                            intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
+                                    + currentUrl);//添加分享内容
+                            //创建分享的Dialog
+                            intent = Intent.createChooser(intent, getString(R.string.action_share));
+                            startActivity(intent);
+                        }else { //URL
+                            String title = "";
+                            try {
+                                title = currentData.getNewssource();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            intent = new Intent();
+                            intent.setAction(Intent.ACTION_SEND);//设置分享行为
+                            intent.setType("text/plain");//设置分享内容的类型
+                            if (!TextUtils.isEmpty(title))
+                                intent.putExtra(Intent.EXTRA_SUBJECT, title);//添加分享内容标题
+                            intent.putExtra(Intent.EXTRA_TEXT, "【" + title + "】"
+                                    + currentUrl);//添加分享内容
+                            //创建分享的Dialog
+                            intent = Intent.createChooser(intent, getString(R.string.action_share));
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.action_star:
                         if (isStar) {
@@ -106,15 +131,23 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         }
                         break;
                     case R.id.action_link:
-                        ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
-                        //noinspection ConstantConditions
-                        cm.setPrimaryClip(ClipData.newPlainText("link", url));
-                        SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
-                                + " " + getString(R.string.successful)).show();
+                        if (!TextUtils.isEmpty(currentData.getDetail())) {    //HTML
+                            ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                            //noinspection ConstantConditions
+                            cm.setPrimaryClip(ClipData.newPlainText("link", currentUrl));
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
+                                    + " " + getString(R.string.successful)).show();
+                        }else { //URL
+                            ClipboardManager cm = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+                            //noinspection ConstantConditions
+                            cm.setPrimaryClip(ClipData.newPlainText("link", currentUrl));
+                            SnackbarUtils.with(toolbar).setMessage(getString(R.string.action_link)
+                                    + " " + getString(R.string.successful)).show();
+                        }
                         break;
                     case R.id.action_browser:
                         try {
-                            Uri uri = Uri.parse(url);
+                            Uri uri = Uri.parse(currentUrl);
                             intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
                         }catch (Exception e){
@@ -137,7 +170,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
     protected void initSlowly() {
         Intent intent = getIntent();
         newsId = intent.getStringExtra("id");
-        url = intent.getStringExtra("url");
+        currentUrl = intent.getStringExtra("url");
         title = intent.getStringExtra("title");
         pTime = intent.getStringExtra("time");
         img = intent.getStringExtra("img");
@@ -163,42 +196,56 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                             hideSkeleton();
                             if (!TextUtils.isEmpty(response)) {
                                 currentData = new IThomeDetailData();
-                                try {
-                                    currentData.setNewssource(XmlParseUtils.getXmlElement("newssource",response));
-                                    currentData.setNewsauthor(XmlParseUtils.getXmlElement("newsauthor",response));
-                                    currentData.setDetail(XmlParseUtils.getXmlElement("detail",response)
-                                            .replace("&amp;","&")
-                                            .replace("&lt;","<")
-                                            .replace("&gt;",">")
-                                            .replace("&nbsp;"," ")
-                                            .replace("&#8226;","•")
-                                    );
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
-                                    finish();
-                                }
-                                Observable.create(new ObservableOnSubscribe<Boolean>() {
-                                    @Override
-                                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                                        e.onNext(checkStar(false));
-                                        e.onComplete();
+                                if(response.contains("detail")){    //HTML
+                                    try {
+                                        currentData.setNewssource(XmlParseUtils.getXmlElement("newssource",response));
+                                        currentData.setNewsauthor(XmlParseUtils.getXmlElement("newsauthor",response));
+                                        currentData.setDetail(XmlParseUtils.getXmlElement("detail",response)
+                                                .replace("&amp;","&")
+                                                .replace("&lt;","<")
+                                                .replace("&gt;",">")
+                                                .replace("&nbsp;"," ")
+                                                .replace("&#8226;","•")
+                                        );
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
+                                        finish();
                                     }
-                                }).subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Consumer<Boolean>() {
-                                            @Override
-                                            public void accept(Boolean aBoolean) throws Exception {
-                                                if (aBoolean) {
-                                                    isStar = true;
-                                                    try {
-                                                        toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
-                                                    } catch (Exception e) {
+                                    Observable.create(new ObservableOnSubscribe<Boolean>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                                            e.onNext(checkStar(false));
+                                            e.onComplete();
+                                        }
+                                    }).subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Consumer<Boolean>() {
+                                                @Override
+                                                public void accept(Boolean aBoolean) throws Exception {
+                                                    if (aBoolean) {
+                                                        isStar = true;
+                                                        try {
+                                                            toolbar.getMenu().findItem(R.id.action_star).setIcon(R.drawable.ic_star_ok);
+                                                        } catch (Exception e) {
+                                                        }
                                                     }
-                                                }
 //                                                refreshLayout.finishRefresh();
-                                            }
-                                        });
+                                                }
+                                            });
+                                }else { //URL
+                                    try{
+                                        currentData.setNewssource(XmlParseUtils.getXmlElement("newssource",response));
+                                        currentData.setNewsauthor(XmlParseUtils.getXmlElement("newsauthor",response));
+
+                                        currentUrl = XmlParseUtils.getXmlElement("otherlink",response);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        ToastUtils.showShort(getString(R.string.server_fail) + e.getMessage());
+                                        finish();
+                                    }
+                                }
+
                                 if (webView != null) {
                                     initWeb();
                                     loadUrl();
@@ -218,11 +265,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         return;
                     if (isNightMode)
                         html.replace("<body text=\"#333\">", "<body bgcolor=\"#212121\" body text=\"#ccc\">");
-                    if (!StringUtils.isEmpty(html)) {
-                        e.onNext(true);
-                    } else {
-                        e.onNext(false);
-                    }
+                    e.onNext(!StringUtils.isEmpty(html));
                     e.onComplete();
                 }
             }).subscribeOn(Schedulers.io())
@@ -244,68 +287,75 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
     }
 
     private void loadUrl() {
-        Observable.create(new ObservableOnSubscribe<Boolean>() {
-            @Override
-            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                String source = "";
-                String body = "";
-                if (currentData == null)
-                    return;
-                try {
-                    source = currentData.getNewsauthor();
-                    body = currentData.getDetail();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body text=\"#333\">";
-                html = "<!DOCTYPE html>" +
-                        "<html lang=\"zh\">" +
-                        "<head>" +
-                        "<meta charset=\"UTF-8\" />" +
-                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />" +
-                        "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
-                        "<title>Document</title>" +
-                        "<style type=\"text/css\">" +
-                        "body{\n" +
-                        "margin-left:18px;\n" +
-                        "margin-right:18px;\n" +
-                        "}" +
-                        "p {line-height:36px;}" +
-                        "body img{" +
-                        "width: 100%;" +
-                        "height: 100%;" +
-                        "}" +
-                        "body video{" +
-                        "width: 100%;" +
-                        "height: 100%;" +
-                        "}" +
-                        "p{margin: 25px auto}" +
-                        "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
-                        "</style>" +
-                        "</head>" +
-                        colorBody
-                        + "<p><h2>" + title + "</h2></p>"
-                        + "<p><div><div id=\"from\">" + source +
-                        "</div><div id=\"time\">" + pTime + "</div></div></p>"
-                        + "<font size=\"4\">"
-                        + body + "</font></body>" +
-                        "</html>";
-                e.onNext(true);
-                e.onComplete();
-            }
-        }).subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean b) throws Exception {
-                        getSupportActionBar().setDisplayShowTitleEnabled(false);
-                        if (b && webView != null) {
-                            webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
-//                            webView.loadData(html, "text/html; charset=UTF-8", null);
-                            saveCacheAsyn(CACHE_HISTORY);
-                        }
+        if (!TextUtils.isEmpty(currentData.getDetail())) {    //HTML
+            Observable.create(new ObservableOnSubscribe<Boolean>() {
+                @Override
+                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                    String source = "";
+                    String body = "";
+                    if (currentData == null)
+                        return;
+                    try {
+                        source = currentData.getNewsauthor();
+                        body = currentData.getDetail();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                     }
-                });
+                    String colorBody = isNightMode ? "<body bgcolor=\"#212121\" body text=\"#ccc\">" : "<body text=\"#333\">";
+                    html = "<!DOCTYPE html>" +
+                            "<html lang=\"zh\">" +
+                            "<head>" +
+                            "<meta charset=\"UTF-8\" />" +
+                            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />" +
+                            "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\" />" +
+                            "<title>Document</title>" +
+                            "<style type=\"text/css\">" +
+                            "body{\n" +
+                            "margin-left:18px;\n" +
+                            "margin-right:18px;\n" +
+                            "}" +
+                            "p {line-height:36px;}" +
+                            "body img{" +
+                            "width: 100%;" +
+                            "height: 100%;" +
+                            "}" +
+                            "body video{" +
+                            "width: 100%;" +
+                            "height: 100%;" +
+                            "}" +
+                            "p{margin: 25px auto}" +
+                            "div{width:100%;height:30px;} #from{width:auto;float:left;color:gray;} #time{width:auto;float:right;color:gray;}" +
+                            "</style>" +
+                            "</head>" +
+                            colorBody
+                            + "<p><h2>" + title + "</h2></p>"
+                            + "<p><div><div id=\"from\">" + source +
+                            "</div><div id=\"time\">" + pTime + "</div></div></p>"
+                            + "<font size=\"4\">"
+                            + body + "</font></body>" +
+                            "</html>";
+                    html = checkVideoWidth(html);
+                    e.onNext(true);
+                    e.onComplete();
+                }
+            }).subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean b) throws Exception {
+                            getSupportActionBar().setDisplayShowTitleEnabled(false);
+                            if (b && webView != null) {
+                                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", "about:blank");
+//                            webView.loadData(html, "text/html; charset=UTF-8", null);
+                                saveCacheAsyn(CACHE_HISTORY);
+                            }
+                        }
+                    });
+        }else {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            webView.loadUrl(currentUrl);
+            saveCacheAsyn(CACHE_HISTORY);
+        }
     }
 
     private void saveCacheAsyn(int type) {
@@ -332,7 +382,7 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
                         html,
                         type,
                         TYPE_ITHOME_START);
-                cacheNews.setUrl(url);
+                cacheNews.setUrl(currentUrl);
                 cacheNews.setTimeStr(pTime);
                 cacheNews.save();
             }
@@ -360,6 +410,20 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
         return false;
     }
 
+  private String checkVideoWidth(String html){
+        int index = html.indexOf("<iframe");
+        if (index != -1){
+            int wStart = html.indexOf("width=\"", index) + 7;
+            int wEnd = html.indexOf("\"", wStart);
+            html = html.substring(0,wStart) + "100%" + html.substring(wEnd,html.length());
+
+            int hStart = html.indexOf("height=\"", wEnd);
+            int hEnd = html.indexOf("\"", hStart + 8);
+            html = html.substring(0,hStart) + html.substring(hEnd,html.length());
+        }
+        return html;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -379,7 +443,37 @@ public class ITHomeDetailActivity extends BaseDetailActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (webView == null)return;
+                webView.loadUrl("javascript:function setTop(){document.querySelector('.ft').style.display=\"none\";}setTop();");
                 webView.loadUrl("javascript:document.body.style.paddingBottom=\"" + ConvertUtils.dp2px(16) + "px\"; void 0");
+            }
+        });
+
+        webView.setWebViewClient(new WebViewClient() {
+            // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理
+            // 此方法在API24被废弃，不处理POST请求
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+                WebView.HitTestResult result = view.getHitTestResult();
+                if (url.startsWith("mailto:")) {
+                    //Handle mail Urls
+                    startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(url)));
+                    return true;
+                } else if (url.startsWith("tel:")) {
+                    //Handle telephony Urls
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(url)));
+                    return true;
+                }else if (!TextUtils.isEmpty(url) && result == null) {
+                    view.loadUrl(url);
+                    return true;
+                }
+                return false;
+            }
+
+            // 拦截页面加载，返回true表示宿主app拦截并处理了该url，否则返回false由当前WebView处理
+            // 此方法添加于API24，不处理POST请求，可拦截处理子frame的非http请求
+            @TargetApi(Build.VERSION_CODES.N)
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return shouldOverrideUrlLoading(view, request.getUrl().toString());
             }
         });
     }

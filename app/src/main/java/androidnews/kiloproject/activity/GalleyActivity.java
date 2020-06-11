@@ -39,7 +39,7 @@ import androidnews.kiloproject.widget.PinchImageView;
 
 import static androidnews.kiloproject.system.AppConfig.isSwipeBack;
 
-public class GalleyActivity extends BaseActivity implements View.OnClickListener {
+public class GalleyActivity extends BaseActivity{
 
     ViewPager galleyViewpager;
     TextView tvGalleyTitle;
@@ -72,8 +72,6 @@ public class GalleyActivity extends BaseActivity implements View.OnClickListener
                 Resources res = getResources();
                 int dimNor = res.getDimensionPixelSize(R.dimen.margin_normal);
                 int dimLarge = res.getDimensionPixelSize(R.dimen.margin_large);
-                ConstraintLayout.LayoutParams lpPage = (ConstraintLayout.LayoutParams) tvGalleyPage.getLayoutParams();
-                lpPage.setMargins(dimNor, 0, 0, dimLarge + navHeight);
 
                 ConstraintLayout.LayoutParams lpDownLoad = (ConstraintLayout.LayoutParams) btnGalleyDownload.getLayoutParams();
                 lpDownLoad.setMargins(0, 0, dimNor, dimLarge + navHeight);

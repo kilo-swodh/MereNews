@@ -13,8 +13,15 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
 
-    <uses-sdk tools:overrideLibrary="cn.jzvd,jp.wasabeef.takt,
-    com.xw.repo.bubbleseekbar,com.example.fixedfloatwindow" />
+    <uses-sdk tools:overrideLibrary="
+    cn.jzvd,jp.wasabeef.takt,
+    com.xw.repo.bubbleseekbar,
+    com.example.fixedfloatwindow,
+    com.scwang.smart.refresh.layout.kernel,
+    com.scwang.smart.refresh.header.material,
+    com.scwang.smart.refresh.footer.classics,
+    com.scwang.smart.drawable.paint
+" />
 
     <application
         android:name="androidnews.kiloproject.system.MyApplication"
@@ -67,6 +74,8 @@
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppThemeMain" />
+
+        <activity android:name=".activity.NewsMainActivity"/>
 
         <activity android:name=".activity.AboutActivity" />
 

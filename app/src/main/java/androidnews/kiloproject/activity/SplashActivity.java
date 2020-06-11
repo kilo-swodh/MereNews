@@ -43,12 +43,15 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidnews.kiloproject.entity.data.CacheNews.CACHE_COLLECTION;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_AUTO_NIGHT;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_HIGH_RAM;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LANGUAGE;
 import static androidnews.kiloproject.system.AppConfig.CONFIG_LAST_LAUNCH;
+import static androidnews.kiloproject.system.AppConfig.CONFIG_NIGHT_MODE;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_MULTI;
 import static androidnews.kiloproject.system.AppConfig.LIST_TYPE_SINGLE;
 import static androidnews.kiloproject.system.AppConfig.PUSH_WORK_NAME;
+import static androidnews.kiloproject.system.AppConfig.isAutoNight;
 import static androidnews.kiloproject.system.AppConfig.listType;
 import static androidnews.kiloproject.system.AppConfig.isNightMode;
 
@@ -61,6 +64,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 SPUtils spUtils = SPUtils.getInstance();
+                AppConfig.goodTags = getResources().getStringArray(R.array.good_tag);
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                     initShortsCut();
@@ -75,11 +79,12 @@ public class SplashActivity extends AppCompatActivity {
                         AppConfig.isHighRam = true;
                         spUtils.put(CONFIG_HIGH_RAM, true);
                     }
-                } else
-                    AppConfig.isHighRam = spUtils.getBoolean(CONFIG_HIGH_RAM);
+                }
+
                 spUtils.put(CONFIG_LAST_LAUNCH, System.currentTimeMillis());
 
                 checkPushWork();
+
                 e.onNext(true);
                 e.onComplete();
             }
@@ -90,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         new WebView(SplashActivity.this);
                         applyConfig();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, NewsMainActivity.class));
                         finish();
                     }
                 });
@@ -124,13 +129,28 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void applyConfig() {
-        if (isNightMode)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else {
+        if (isAutoNight){
+            int currentNightMode = getResources().getConfiguration().uiMode
+                    & Configuration.UI_MODE_NIGHT_MASK;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    // Night mode is not active, we're in day time
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    // We don't know what mode we're in, assume notnight
+                    isNightMode = false;
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    // Night mode is active, we're at night!
+                    isNightMode = true;
+                    break;
+            }
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(isNightMode ? AppCompatDelegate.MODE_NIGHT_YES :
+                    AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         int language = SPUtils.getInstance().getInt(CONFIG_LANGUAGE);
@@ -190,7 +210,7 @@ public class SplashActivity extends AppCompatActivity {
         if (notifyWork != null) {
 //            notifyWork.setConstraints(myCoustrain);
             PeriodicWorkRequest workRequest = notifyWork.build();
-            WorkManager.getInstance().enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, workRequest);
+            WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(PUSH_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, workRequest);
         }
     }
 }

@@ -93,7 +93,6 @@
         android:text="1/1"
         android:textColor="@color/white"
         android:textSize="@dimen/text_mini"
-        android:onClick="onClick"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginLeft="@dimen/margin_normal"
         app:layout_constraintTop_toTopOf="@+id/btn_galley_download"

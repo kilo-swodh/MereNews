@@ -22,12 +22,13 @@ import androidnews.kiloproject.entity.net.NewMainListData;
 import androidnews.kiloproject.push.NotifyWork;
 import androidnews.kiloproject.system.AppConfig;
 
+import static androidnews.kiloproject.fragment.MainRvFragment.isGoodItem;
 import static androidnews.kiloproject.system.AppConfig.CACHE_LAST_PUSH_ID;
 
 
 public class PushIntentService extends IntentService {
 
-    private String typeStr = "T1429173683626";
+    private String typeStr = "T1348647853363";
 
     public PushIntentService() {
         super("Push service");
@@ -64,8 +65,12 @@ public class PushIntentService extends IntentService {
                                         }.getType());
                                 NewMainListData mData = null;
                                 String lastId = SPUtils.getInstance().getString(CACHE_LAST_PUSH_ID);
-                                for (int i = 0; i < 5; i++) {
+                                for (int i = 0; i < 7; i++) {
                                     NewMainListData newMainListData = retMap.get(typeStr).get(i);
+                                    if (!isGoodItem(newMainListData)
+                                            || TextUtils.isEmpty(newMainListData.getSkipID())
+                                            || TextUtils.equals(newMainListData.getSkipType(), "photoset"))
+                                        continue;
                                     if (!lastId.contains(newMainListData.getDocid())) {
                                         mData = newMainListData;
                                         break;

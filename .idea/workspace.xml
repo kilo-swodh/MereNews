@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="4" />
-  </component>
   <component name="AndroidLayouts">
     <shared>
-      <config>
-        <device id="pixel_2" />
-        <device id="pixel_3" />
-        <device id="Nexus 6" />
-        <target>android-28</target>
-      </config>
+      <config />
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
-  </component>
-  <component name="AvailableLibraryUpdateStorage">
-    <last-search-timestamp>1562247749904</last-search-timestamp>
-  </component>
-  <component name="CMakeSettings">
-    <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
-    </configurations>
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa42d13d-cfe4-454d-b4b8-4ca23ad7c64f" name="Default" comment="v1.2.1-fixed">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+    <list default="true" id="a9cd0cd8-6ec4-421f-8b4d-b294fdce9b56" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsMainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BottomNavDrawerFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainHostFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/fab_hide.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/fab_show.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/fade_in.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/fade_out.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/shr_next_button_state_list_anim.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/slide_in_left.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/slide_in_right.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/slide_out_left.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/animator/slide_out_right.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-night/ic_arrow_down_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-night/ic_arrow_up_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_down_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_up_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_news.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/main_bottom_menu.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/motion.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/PressRvFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/PressRvFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recyclerview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-en/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-en/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -52,157 +75,16 @@
       </state>
     </system>
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="MereNews" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="35" column="34" lean-forward="true" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2000">
-              <caret line="130" column="72" selection-start-line="130" selection-start-column="72" selection-end-line="130" selection-end-column="72" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="75" column="76" selection-start-line="75" selection-start-column="76" selection-end-line="75" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1350">
-              <caret line="97" column="52" selection-start-line="97" selection-start-column="52" selection-end-line="97" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.1.0/9865019bbd2d95e41dede3d8ebf964aa93f97766/appcompat-1.1.0-sources.jar!/androidx/appcompat/app/AppCompatDelegate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2600">
-              <caret line="149" column="28" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="Class" />
-        <option value="layoutResourceFile_vertical" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>swDisNotice</find>
-      <find>zoom</find>
-      <find>NewMainListData newMainListData = retMap.get(typeStr).get(i);</find>
-      <find>app:navigationIcon=&quot;?attr/homeAsUpIndicator&quot;</find>
-      <find>180</find>
-      <find>setDomStorageEnabled</find>
-      <find>.RED</find>
-      <find>成都</find>
-      <find>chengdu</find>
-      <find>cheng</find>
-      <find>下载</find>
-      <find>isSwipeBack</find>
-      <find>replyCount</find>
-      <find>gravi</find>
-      <find>postid</find>
-      <find>center_</find>
-      <find>.subscribeOn(Schedulers.io())</find>
-      <find>menu</find>
-      <find>sendbr</find>
-      <find>#FFA000</find>
-      <find>bg_label_normal</find>
-      <find>floatwindow.</find>
-      <find>FloatWindow.</find>
-      <find>public void onMessageEvent(MessageEvent event)</find>
-      <find>eventbus</find>
-      <find>@Subscribe(threadMode</find>
-      <find>event</find>
-      <find>MODE_NIGHT_YES</find>
-      <find>version_</find>
-      <find>update</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>RandomHeader</replace>
-      <replace>NewMainListData</replace>
-      <replace>VideoRvFragment</replace>
-      <replace>@dimen/text_small</replace>
-      <replace>BlockItem</replace>
-      <replace>mActivity</replace>
-      <replace>blockArray</replace>
-      <replace>androidnews.kiloproject.widget</replace>
-      <replace>AppConfig.isAutoRefresh</replace>
-      <replace>AppConfig.isBackExit</replace>
-      <replace>AppConfig.isHighRam</replace>
-      <replace>android:elevation=&quot;@dimen/elevation_toolbar&quot;</replace>
-      <replace>&lt;dimen name=&quot;elevation_mid&quot;&gt;4dp&lt;/dimen&gt;</replace>
-      <replace>android:elevation=&quot;@dimen/el&quot;</replace>
-      <replace>android:elevation=&quot;@dimen/elevation_mid&quot;</replace>
-      <replace>com.google.android.material.card.MaterialCardView</replace>
-      <replace>sw_push_sound</replace>
-      <replace>view_push_time</replace>
-      <replace>CACHE_LAST_PUSH_ID</replace>
-      <replace>CACHE_LAST_PUSH_TIME</replace>
-      <replace>GET_IT_HOME</replace>
-      <replace>GET_CNBETA</replace>
-      <replace>GET_CNBETA_REFRESH</replace>
-      <replace>GET_CNBETA_LOADMORE</replace>
-      <replace>contents</replace>
-      <replace>CnBetaListData.ResultBean</replace>
-      <replace>@dimen/margin_normal</replace>
-      <replace>holder</replace>
-      <replace>androidnews.kiloproject.activity</replace>
-      <replace>androidnews.kiloproject</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>D:\Kilo Lab\Android\AndroidNews\app</dir>
-    </dirStrings>
-  </component>
   <component name="GenerateSignedApkSettings">
-    <option name="EXPORT_PRIVATE_KEY" value="false" />
     <option name="KEY_STORE_PATH" value="D:\Kilo Lab\myAppKey.jks" />
     <option name="KEY_ALIAS" value="dnfoo6" />
     <option name="REMEMBER_PASSWORDS" value="true" />
@@ -211,213 +93,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/web/MWebChromeClient.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_setting.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/CnBetaRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CommentActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_channel_sort.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_drag_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_channel.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_h5.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_notification.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/entity/data/ExportBean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NotificationActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/ITHomeDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/assets/about.html" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/CnBetaDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/OtherAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/DragGrid.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-en/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/CacheNewsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/ChannelFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/service/PushIntentService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/util/PollingUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/push/NotifyWork.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/array.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-en/array.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_galley.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/entity/net/NewMainListData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-night/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/color-night/navigation_menu_item_color.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/color/navigation_menu_item_color.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_card_linear_extra.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/proguard-rules.pro" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-      </list>
-    </option>
+  <component name="ProjectId" id="1b9wkPma9yAGLYIGCyz9PDtSmZa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="width" value="1653" />
-    <option name="height" value="1056" />
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="androidnews" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="androidnews" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="kiloproject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="androidnews" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="kiloproject" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="androidnews" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="kiloproject" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MereNews" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DEBUGGABLE_DEVICE" value="oneplus-oneplus_a3000-6c96e7c3" />
-    <property name="DEBUGGABLE_PROCESS" value="androidnews.kiloproject" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="f5a0a990" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-10-02T02:06:58.796Z" />
-    <property name="ExportApk.ApkPath" value="D:\Kilo Lab\Android\MereNews\app\release" />
-    <property name="ExportApk.BuildType" value="release" />
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ApkExportedModule" value="app" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="emulator-5554" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-01-10T03:38:41.418Z" />
+    <property name="ExportApk.ApkPath" value="D:\Kilo Lab\Android\MereNews\app" />
     <property name="ExportApk.BuildVariants" value="release" />
-    <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="ExportApk.SignV2" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="sett&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;main&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;BaseDetailActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.BaseDetailActivity&#10;ZhiHuDetailActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.ZhiHuDetailActivity&#10;MaterialViewPagerImageHelper&#9;PSI&#9;JAVA://androidnews.kiloproject.widget.materialviewpager.header.MaterialViewPagerImageHelper&#10;MainRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;app&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/system/MyApplication.java&#10;cache&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CacheActivity&#10;baseac&#9;PSI&#9;JAVA://androidnews.kiloproject.system.base.BaseActivity&#10;splas&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;news&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;settin&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/res/layout/activity_setting.xml&#10;block&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/res/layout/layout_block_item.xml&#10;detail&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;spl&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;splash&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;setting&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java&#10;sm&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/SmartisanRvFragment.java&#10;ithom&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/ITHomeRvFragment.java&#10;base&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/BaseRvFragment.java&#10;BallPulseFooter&#9;FILE&#9;jar://C:/Users/45556/.gradle/caches/modules-2/files-2.1/com.scwang.smartrefresh/SmartRefreshLayout/1.1.0-alpha-15/cfbfc6992d1a0910997a26e74f6b981e9ead3191/SmartRefreshLayout-1.1.0-alpha-15-sources.jar!/com/scwang/smartrefresh/layout/footer/BallPulseFooter.java&#10;hasNotchScreen&#9;PSI&#9;JAVA://com.gyf.barlibrary.BarConfig#hasNotchScreen&#10;guokrde&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.GuoKrDetailActivity&#10;deta&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;my&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/system/MyApplication.java&#10;guokr&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/GuoKrRvFragment.java&#10;mainfra&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;maina&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/adapter/MainRvAdapter.java&#10;SmartisanRvFragment&#9;PSI&#9;JAVA://androidnews.kiloproject.fragment.SmartisanRvFragment&#10;ITHomeRvFragment&#9;PSI&#9;JAVA://androidnews.kiloproject.fragment.ITHomeRvFragment&#10;MainActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;NewsDetailActivity&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;ZhihuRvFragment&#9;FILE&#9;file://D:/Kilo Lab/Android/MereNews/app/src/main/java/androidnews/kiloproject/fragment/ZhihuRvFragment.java&#10;sma&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.SmartisanDetailActivity&#10;mainfr&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java&#10;mainad&#9;PSI&#9;JAVA://androidnews.kiloproject.adapter.MainRvAdapter&#10;CommentActivity&#9;PSI&#9;JAVA://androidnews.kiloproject.activity.CommentActivity&#10;Main&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java&#10;channe&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;Gall&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;based&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java&#10;newsd&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;cac&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ChannelActivity.java&#10;zhihu&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/ZhiHuDetailActivity.java&#10;newde&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java&#10;ChannelItem&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/bean/data/ChannelItem.java&#10;gal&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;ga&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java&#10;spla&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java&#10;gall&#9;FILE&#9;file://D:/Kilo Lab/Android/AndroidNews/app/src/main/java/androidnews/kiloproject/activity/GalleyActivity.java" />
-    <property name="algorithm" value="Scalr" />
-    <property name="android.profiler.active" value="true" />
-    <property name="android.project.structure.last.selected" value="app" />
-    <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="device.picker.selection" value="emulator-5554" />
-    <property name="format" value="PNG" />
-    <property name="lastFolderRoot" value="E:/pic_splash.png" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Test" />
-    <property name="method" value="Automatic" />
-    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Android_W/android/AnimalCrossingTools-Android-digger" />
+    <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="resolutions" value="XXXHDPI&#10;XXHDPI" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="http.proxy" />
     <property name="show.migrate.to.gradle.popup" value="false" />
-    <property name="sourceResolution" value="XXXHDPI" />
-  </component>
-  <component name="PsdUISettings">
-    <option name="MODULE_TAB" value="Signing Configs" />
-    <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
-  </component>
-  <component name="RecentsManager">
-    <key name="android.template.packageName">
-      <recent name="androidnews.kiloproject.fragment" />
-    </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="androidnews.kiloproject.bean.data" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Kilo Lab\Android\MereNews\app\src\main\res\anim" />
-      <recent name="D:\Kilo Lab\Android\AndroidNews\app\src\main\res\drawable-hdpi" />
-      <recent name="D:\Kilo Lab\Android\AndroidNews\app\src\main\java\androidnews\kiloproject\adapter" />
-      <recent name="D:\Kilo Lab\Android\AndroidNews\app\src\main\java\androidnews\kiloproject\widget" />
-    </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-    </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -439,9 +142,7 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
-      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEBUGGER_TYPE" value="Auto" />
@@ -470,33 +171,12 @@
       <Profilers>
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />
         <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -505,603 +185,108 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fa42d13d-cfe4-454d-b4b8-4ca23ad7c64f" name="Default" comment="" />
-      <created>1538048804767</created>
+      <changelist id="a9cd0cd8-6ec4-421f-8b4d-b294fdce9b56" name="Default Changelist" comment="" />
+      <created>1576650052224</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1538048804767</updated>
+      <updated>1576650052224</updated>
     </task>
-    <task id="LOCAL-00001" summary="beta20">
-      <created>1540476145953</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1540476145953</updated>
-    </task>
-    <task id="LOCAL-00002" summary="v1.1.2">
-      <created>1545224754897</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1545224754898</updated>
-    </task>
-    <task id="LOCAL-00003" summary="v1.1.8">
-      <created>1562585394760</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1562585394760</updated>
-    </task>
-    <task id="LOCAL-00004" summary="v1.1.9">
-      <created>1563674672563</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1563674672563</updated>
-    </task>
-    <task id="LOCAL-00005" summary="v1.2.0">
-      <created>1565878827429</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1565878827429</updated>
-    </task>
-    <task id="LOCAL-00006" summary="v1.2.0-fixed">
-      <created>1565965608640</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1565965608640</updated>
-    </task>
-    <task id="LOCAL-00007" summary="v1.2.1">
-      <created>1567688540738</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1567688540738</updated>
-    </task>
-    <task id="LOCAL-00008" summary="v1.2.1">
-      <created>1567690171061</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1567690171061</updated>
-    </task>
-    <task id="LOCAL-00009" summary="v1.2.1-fixed">
-      <created>1568036674537</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1568036674537</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1653" height="1056" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498452" visible="true" weight="0.17014548" />
-      <window_info id="Structure" order="1" sideWeight="0.501548" side_tool="true" weight="0.15182403" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Build Variants" order="3" side_tool="true" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Favorites" order="5" sideWeight="0.5007825" side_tool="true" weight="0.20922747" />
-      <window_info id="Captures" order="6" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.6668455" weight="0.17988826" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946353" weight="0.32995495" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6880531" weight="0.35642457" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946353" weight="0.32995495" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.7798861" visible="true" weight="0.273743" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" sideWeight="0.83154505" weight="0.4132883" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.22011386" side_tool="true" visible="true" weight="0.273743" />
-      <window_info anchor="bottom" id="Logcat" order="10" sideWeight="0.819206" weight="0.32402235" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49731758" weight="0.30726257" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.48873392" weight="0.34972066" />
-      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49839056" visible="true" weight="0.32960895" />
-      <window_info anchor="bottom" id="Inspection Results" order="14" sideWeight="0.49570817" weight="0.3322072" />
-      <window_info anchor="bottom" id="Flutter Performance" order="15" side_tool="true" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
-      <window_info anchor="right" id="Gradle" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Assistant" order="9" weight="0.3299356" />
-      <window_info anchor="right" id="Flutter Inspector" order="10" />
-      <window_info anchor="right" id="Flutter Outline" order="11" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20922747" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Build Variants" order="3" side_tool="true" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info id="Captures" order="6" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.67650217" weight="0.28938547" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946353" weight="0.32995495" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7167382" weight="0.24469274" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946353" weight="0.32995495" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.8401288" visible="true" weight="0.10167598" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" sideWeight="0.83154505" weight="0.4132883" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.15987125" side_tool="true" visible="true" weight="0.10167598" />
-      <window_info anchor="bottom" id="Logcat" order="10" sideWeight="0.83744633" weight="0.31843576" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49892703" weight="0.5292793" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49195278" weight="0.3524775" />
-      <window_info active="true" anchor="bottom" id="Messages" order="13" sideWeight="0.49946353" visible="true" weight="0.32995495" />
-      <window_info anchor="bottom" id="Inspection Results" order="14" sideWeight="0.49570817" weight="0.3322072" />
-      <window_info anchor="bottom" id="Flutter Performance" order="15" side_tool="true" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
-      <window_info anchor="right" id="Gradle" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="right" id="Assistant" order="9" weight="0.3299356" />
-      <window_info anchor="right" id="Flutter Inspector" order="10" />
-      <window_info anchor="right" id="Flutter Outline" order="11" />
-    </layout-to-restore>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="beta20" />
-    <MESSAGE value="v1.1.2" />
-    <MESSAGE value="v1.1.8" />
-    <MESSAGE value="v1.1.9" />
-    <MESSAGE value="v1.2.0" />
-    <MESSAGE value="v1.2.0-fixed" />
-    <MESSAGE value="v1.2.1" />
-    <MESSAGE value="v1.2.1-fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.2.1-fixed" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="setValue">
-      <expression>
-        <expression-string>&quot;{\&quot;T1348647909107\&quot;:[{\&quot;template\&quot;:\&quot;normal1\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:17:44\&quot;,\&quot;postid\&quot;:\&quot;PHOT263V6000100A\&quot;,\&quot;source\&quot;:\&quot;视觉中国\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;title\&quot;:\&quot;印尼狮航遇难者未婚妻独自办婚礼\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:17:44\&quot;,\&quot;hasImg\&quot;:1,\&quot;topic_background\&quot;:\&quot;http://img2.cache.netease.com/m/newsapp/reading/cover1/C1348646712614.jpg\&quot;,\&quot;digest\&quot;:\&quot;\&quot;,\&quot;photosetID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;boardid\&quot;:\&quot;photoview_bbs\&quot;,\&quot;alias\&quot;:\&quot;Top News\&quot;,\&quot;hasAD\&quot;:1,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/d0ed712208a6470fb7914c7d4e559c1d.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 17:43:46\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;,\&quot;hasHead\&quot;:1,\&quot;imgType\&quot;:1,\&quot;order\&quot;:1,\&quot;editor\&quot;:[],\&quot;votecount\&quot;:156,\&quot;hasCover\&quot;:false,\&quot;docid\&quot;:\&quot;9IG74V5H00963VRO_E0OIRNF4bjzhaoyapingupdateDoc\&quot;,\&quot;tname\&quot;:\&quot;头条\&quot;,\&quot;priority\&quot;:666,\&quot;ads\&quot;:[{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297830\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;印尼狮航遇难者未婚妻独自办婚礼\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AO0001|2297830\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297810\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;艺术家去世 妻子花8万美元剥皮保存纹身\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297810\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297809\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;金沙江堰塞湖泄流致交通设施损毁\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297809\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AO0001|2297806\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;美副总统会晤时迟到 文在寅等到打盹\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AO0001|2297806\&quot;},{\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;skipID\&quot;:\&quot;00AP0001|2297800\&quot;,\&quot;tag\&quot;:\&quot;photoset\&quot;,\&quot;title\&quot;:\&quot;\\\&quot;双十一\\\&quot;快递高峰:物流公司连夜工作\&quot;,\&quot;imgsrc\&quot;:\&quot;bigimg\&quot;,\&quot;url\&quot;:\&quot;00AP0001|2297800\&quot;}],\&quot;ename\&quot;:\&quot;androidnews\&quot;,\&quot;replyCount\&quot;:186,\&quot;imgsum\&quot;:3,\&quot;hasIcon\&quot;:false,\&quot;skipType\&quot;:\&quot;photoset\&quot;,\&quot;cid\&quot;:\&quot;C1348646712614\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P00UES000189FH\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:35:56\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P00UES000189FH.html\&quot;,\&quot;source\&quot;:\&quot;新华社\&quot;,\&quot;postid\&quot;:\&quot;E0P00UES000189FH\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:521,\&quot;title\&quot;:\&quot;习近平同建交太平洋岛国领导人举行会晤\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:35:56\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P00UES000189FH.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;习近平同建交太平洋岛国领导人举行会晤\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新华社莫尔兹比港11月16日电（记者李忠发骆珺孙浩）国家主席习近平16日在莫尔兹比港同巴布亚新几内亚总理奥尼尔、密克罗尼西亚联邦总统克里斯琴、萨摩亚总理图伊拉埃\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:33:49\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0OC9FKO000189FH\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 17:30:09\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/15/E0OC9FKO000189FH.html\&quot;,\&quot;source\&quot;:\&quot;新华网$\&quot;,\&quot;postid\&quot;:\&quot;E0OC9FKO000189FH\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:520,\&quot;title\&quot;:\&quot;习近平出席巴新独立大道移交启用仪式\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 17:30:09\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/15/E0OC9FKO000189FH.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;习近平出席巴新独立大道移交启用仪式\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新华社莫尔兹比港11月16日电（记者霍小光骆珺）国家主席习近平16日在莫尔兹比港和巴布亚新几内亚总理奥尼尔共同出席中国援建的独立大道移交启用仪式。习近平抵达独立\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 15:48:57\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:15953,\&quot;docid\&quot;:\&quot;E0OG7JFI0001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:43:55\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/16/E0OG7JFI0001875N.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0OG7JFI0001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:131,\&quot;title\&quot;:\&quot;这位头发已白80后官员火了 因显老被质疑年龄造假\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:34\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/16/E0OG7JFI0001875N.html\&quot;,\&quot;replyCount\&quot;:3088,\&quot;ltitle\&quot;:\&quot;这位头发已白80后官员火了 因显老被质疑年龄造假\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;15日，云南省楚雄州委组织部发布一批干部任期公示引发社会关注。其中，出生于1980年8月、现任大姚县湾碧乡党委书记的李忠凯，拟任提名为大姚县政协副主席候选人。公\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/f74d3b5f8fbd4d639c7278ca3b88fa8b.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 16:57:50\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1586,\&quot;docid\&quot;:\&quot;E0OMUHR30001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:57:53\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/18/E0OMUHR30001899N.html\&quot;,\&quot;source\&quot;:\&quot;外交部网站\&quot;,\&quot;postid\&quot;:\&quot;E0OMUHR30001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:129,\&quot;title\&quot;:\&quot;美国副总统称南海不属于任何一个国家 外交部回应\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:57:53\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/18/E0OMUHR30001899N.html\&quot;,\&quot;replyCount\&quot;:1608,\&quot;ltitle\&quot;:\&quot;美国副总统称南海不属于任何一个国家 外交部回应\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;问：14日，李克强总理在新加坡出席第21次中国—东盟领导人会议时表示，中方愿同东盟国家共同努力，争取未来3年内完成“南海行为准则”磋商。中方提出这样的愿景有何考\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/6110850cc91047359e0efd4affa8b809.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 18:55:13\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:4546,\&quot;docid\&quot;:\&quot;E0OFJ9Q600258105\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:25:05\&quot;,\&quot;url_3w\&quot;:\&quot;http://money.163.com/18/1116/16/E0OFJ9Q600258105.html\&quot;,\&quot;source\&quot;:\&quot;央视新闻\&quot;,\&quot;postid\&quot;:\&quot;E0OFJ9Q600258105\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:129,\&quot;title\&quot;:\&quot;油价大降创近4年之最 这次省的钱是以往3倍\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:40\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/money/18/1116/16/E0OFJ9Q600258105.html\&quot;,\&quot;replyCount\&quot;:417,\&quot;ltitle\&quot;:\&quot;油价大降创近4年之最 这次省的钱是以往3倍\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;根据国家发改委消息，新一轮成品油调价窗口将于今天（11月16日）24时开启。据国家发改委价格监测中心监测，本轮成品油调价周期内（11月2日—11月15日），国际\&quot;,\&quot;boardid\&quot;:\&quot;money_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/a1528fbf9200409cba92adc5ab584e6b.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 16:46:44\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:18755,\&quot;docid\&quot;:\&quot;E0O8C6B20001899O\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 18:26:22\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/14/E0O8C6B20001899O.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0O8C6B20001899O\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:128,\&quot;title\&quot;:\&quot;副局长因洗澡错过电话被党内警告 官方:撤销处分\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 18:01:45\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/14/E0O8C6B20001899O.html\&quot;,\&quot;replyCount\&quot;:9620,\&quot;ltitle\&quot;:\&quot;副局长因洗澡错过电话被党内警告 官方:撤销处分\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;16日，安徽省滁州市全椒县委针对备受关注的“副局长晚间洗澡未接巡查组电话被处分”做出回应。通报称，近日，相关媒体报道了“全椒县农村公路局扶贫干部张伟在省脱贫攻坚\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/0277e47f07494d87bc5030bf1e0c8e9c.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 14:40:31\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:513,\&quot;docid\&quot;:\&quot;E0P0FMKM00038FO9\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:47:32\&quot;,\&quot;url_3w\&quot;:\&quot;http://ent.163.com/18/1116/21/E0P0FMKM00038FO9.html\&quot;,\&quot;source\&quot;:\&quot;网易娱乐\&quot;,\&quot;postid\&quot;:\&quot;E0P0FMKM00038FO9\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:125,\&quot;title\&quot;:\&quot;马蓉发怒再怼王宝强：看看到底谁是真孙子 \&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:47:32\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/ent/18/1116/21/E0P0FMKM00038FO9.html\&quot;,\&quot;replyCount\&quot;:607,\&quot;ltitle\&quot;:\&quot;马蓉发怒再怼王宝强：看看到底谁是真孙子 \&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;网易娱乐11月16日报道16日晚，马蓉爆粗口再发文怼王宝强：您也可以选择继续当“老实人”装孙子，近期我会不定时更新微博，看看到底谁是真孙子?全文：先知情人爆料，\&quot;,\&quot;boardid\&quot;:\&quot;ent2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/b5642acd675a43b1b91f97dea16d0f5b.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:41:52\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P232L10001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/22/E0P232L10001875N.html\&quot;,\&quot;source\&quot;:\&quot;政知圈\&quot;,\&quot;postid\&quot;:\&quot;E0P232L10001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;丈夫获无期13年后 外逃女贪官被没收23套上海房产\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/22/E0P232L10001875N.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;丈夫获无期13年后 外逃女贪官被没收23套上海房产\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;今天的话题，来说一个外逃女贪官。11月15日，黄艳兰案一审宣判，这个案子的特别之处在于，黄艳兰是外逃十几年的女贪官，至今仍未归案；其二，该案一审开庭和宣判时，黄\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/c38d00f2d0174fd1bd8ff05b0cfd74fa.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 22:09:56\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:23,\&quot;docid\&quot;:\&quot;E0P1KPKB0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/22/E0P1KPKB0001899N.html\&quot;,\&quot;source\&quot;:\&quot;北青网-北京青年报\&quot;,\&quot;postid\&quot;:\&quot;E0P1KPKB0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;白血病男童被父亲放弃 医生:若化疗顺利费用约10万\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/22/E0P1KPKB0001899N.html\&quot;,\&quot;replyCount\&quot;:29,\&quot;ltitle\&quot;:\&quot;白血病男童被父亲放弃 医生:若化疗顺利费用约10万\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;近日，有媒体报道江苏省淮安市一8岁男童强强（化名）患有白血病，其父因担心“人财两空”放弃治疗，孩子母亲和当地村委会多次调解无果。今日，在爱心人士的帮助下，强强已\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/cf0b269d26024812846e4960abd47cd6.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 22:02:08\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:9,\&quot;docid\&quot;:\&quot;E0P159EA0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P159EA0001899N.html\&quot;,\&quot;source\&quot;:\&quot;中国交通广播电视台\&quot;,\&quot;postid\&quot;:\&quot;E0P159EA0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;老大爷碰瓷演技堪称专业:假装被碰 再踉跄几步跌倒\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:05:21\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P159EA0001899N.html\&quot;,\&quot;replyCount\&quot;:13,\&quot;ltitle\&quot;:\&quot;老大爷碰瓷演技堪称专业:假装被碰 再踉跄几步跌倒\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;11月14日,网友爆料,上海某路口,一辆红色宝马车正在正常行驶,突然,旁边的一位老大爷胳膊触碰宝马车后视镜,然后假装摔倒在地,通过调取监控发现,这名老人多次作案\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/395a5911689040ff8bb3046d58e6b407.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:53:40\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P07DT60001875P\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P07DT60001875P.html\&quot;,\&quot;source\&quot;:\&quot;中国纪检监察报\&quot;,\&quot;postid\&quot;:\&quot;E0P07DT60001875P\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;147户村民苦等产权证8年 只因5个村干部忙于竞选\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:12:38\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P07DT60001875P.html\&quot;,\&quot;replyCount\&quot;:0,\&quot;ltitle\&quot;:\&quot;147户村民苦等产权证8年 只因5个村干部忙于竞选\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;“这个房本我盼了8年了，终于要发下来啦！”近日，在重庆市綦江区永新镇建设村村务公示栏上，一份关于建设村147户宅基地及房屋申请登记情况的公示表特别醒目，村民们围\&quot;,\&quot;boardid\&quot;:\&quot;news_shehui7_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/61f4eac40cc84e709423f52194fc680e.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:37:21\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1832,\&quot;docid\&quot;:\&quot;E0OQIT9V0001875O\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:11:49\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/19/E0OQIT9V0001875O.html\&quot;,\&quot;source\&quot;:\&quot;环球时报-环球网\&quot;,\&quot;postid\&quot;:\&quot;E0OQIT9V0001875O\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;普京在新加坡参会时走过安检门 报警器突然响了\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:11:49\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/19/E0OQIT9V0001875O.html\&quot;,\&quot;replyCount\&quot;:2024,\&quot;ltitle\&quot;:\&quot;普京在新加坡参会时走过安检门 报警器突然响了\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;@环球网【普京在新加坡参会时走过安检门，报警器突然响了...】当地时间11月14日，俄罗斯总统普京在新加坡出席俄罗斯-东盟峰会。在进入会场时，会场工作人员引导普\&quot;,\&quot;boardid\&quot;:\&quot;news_guoji2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/ca05737e00774fb19e595ed5067ec5a9.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 19:58:46\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:10260,\&quot;docid\&quot;:\&quot;E0O4E1HU0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:11:07\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/13/E0O4E1HU0001899N.html\&quot;,\&quot;source\&quot;:\&quot;都市快报\&quot;,\&quot;postid\&quot;:\&quot;E0O4E1HU0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:122,\&quot;title\&quot;:\&quot;历时22年的浙江“第一悬案”告破 幕后英雄曝光\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:11:07\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/13/E0O4E1HU0001899N.html\&quot;,\&quot;replyCount\&quot;:8579,\&quot;ltitle\&quot;:\&quot;历时22年的浙江“第一悬案”告破 幕后英雄曝光\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;今天，我们要给大家介绍历时22年之久、浙江“第一悬案”告破的幕后英雄之一——绍兴市公安局刑事科学技术研究所，在“第一悬案”中，有三起案件涉及绍兴，绍兴市公安局刑\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/cec3c396c76e40e9a22f58c754cae78a.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 13:31:38\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:5,\&quot;docid\&quot;:\&quot;E0OVVC5A0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0OVVC5A0001899N.html\&quot;,\&quot;source\&quot;:\&quot;澎湃新闻\&quot;,\&quot;postid\&quot;:\&quot;E0OVVC5A0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;女子遭狗咬住院被人办出院手续 狗主人称其想敲诈\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0OVVC5A0001899N.html\&quot;,\&quot;replyCount\&quot;:10,\&quot;ltitle\&quot;:\&quot;女子遭狗咬住院被人办出院手续 狗主人称其想敲诈\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;黄建华的诊断病历。被一条拉布拉多犬咬伤住院近1月后，狗主人在未有沟通、也未告知病人及家属的情况下，单方面赴医院给伤者办理了出院手续。日前，南京市民黄女士向澎湃新\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/2e3654dfd90345a08d515a20069bff83.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:32:57\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:0,\&quot;docid\&quot;:\&quot;E0P0L83S000187VE\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0P0L83S000187VE.html\&quot;,\&quot;source\&quot;:\&quot;澎湃新闻\&quot;,\&quot;postid\&quot;:\&quot;E0P0L83S000187VE\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;说好集赞免费吃大餐酒店不认账 400名大学生维权\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 22:01:54\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0P0L83S000187VE.html\&quot;,\&quot;replyCount\&quot;:1,\&quot;ltitle\&quot;:\&quot;说好集赞免费吃大餐酒店不认账 400名大学生维权\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;11月15日，@中南财经政法大学旁一酒店发布集赞换代金券免费吃大餐活动，约400位学生前来兑换时，酒店却不予兑换。现场很多都是中南财经政法大学法学院的学生，积极\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/0204167ae2084d3fbd7b7b5db1109a82.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:28:00\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1676,\&quot;docid\&quot;:\&quot;BTIPOV8G051485AA\&quot;,\&quot;lmodify\&quot;:\&quot;2016-08-04 19:40:43\&quot;,\&quot;url_3w\&quot;:\&quot;\&quot;,\&quot;source\&quot;:\&quot;军报记者\&quot;,\&quot;postid\&quot;:\&quot;BTIPOV8G051485AA\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:80,\&quot;title\&quot;:\&quot;盘点里约奥运会代表团里的中国军人\&quot;,\&quot;mtime\&quot;:\&quot;2016-08-04 19:40:43\&quot;,\&quot;url\&quot;:\&quot;http://mp.weixin.qq.com/s?timestamp=1470224428&amp;src=3&amp;ver=1&amp;signature=pp6dsHPvtd9ryjzdCH-v9IC27c*IVWTf0P0-L8wWpgaezGH17dXey4C1XASANmEuPogEC2W-aN6dtKpVF3z874VKeeADFzbhfTV*ofcmGFdAhdP6os*fOpav4fQQOv6aXvNmQh2iJrIoUYW2Zf8iIkze570kvDH8SN0h2LJmpSs=\&quot;,\&quot;replyCount\&quot;:1892,\&quot;ltitle\&quot;:\&quot;盘点里约奥运会代表团里的中国军人\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;里约奥运会就要开幕啦！全世界人民都在翘首以盼。7月18日，里约奥运会中国代表团在北京正式成立。在往年的奥运会中，中国军人队员的赛场表现可圈可点，从军人集体里也走\&quot;,\&quot;boardid\&quot;:\&quot;dy_wemedia_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/3dfd1faf09834848abbf7a4c8a824b3b20160804114238.jpeg\&quot;,\&quot;ptime\&quot;:\&quot;2016-08-03 20:17:23\&quot;,\&quot;daynum\&quot;:\&quot;17016\&quot;},{\&quot;votecount\&quot;:4,\&quot;docid\&quot;:\&quot;E0OU6U9I0001899N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 21:21:00\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/21/E0OU6U9I0001899N.html\&quot;,\&quot;source\&quot;:\&quot;国是直通车\&quot;,\&quot;postid\&quot;:\&quot;E0OU6U9I0001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;民办教育出新政 因虐童案而\\\&quot;凉\\\&quot;的红黄蓝股价暴跌\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 21:21:00\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/21/E0OU6U9I0001899N.html\&quot;,\&quot;replyCount\&quot;:2,\&quot;ltitle\&quot;:\&quot;民办教育出新政 因虐童案而\\\&quot;凉\\\&quot;的红黄蓝股价暴跌\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;毫无征兆的政策冲击。一份文件，让红黄蓝“凉了半截”。15日，国务院式发布《关于学前教育深化改革规范发展的若干意见》。其中规定，民办园一律不准单独或作为一部分资产\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/ed8317161e234f0481b1585d7680b537.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 21:02:08\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:8672,\&quot;docid\&quot;:\&quot;E0OQR0BA0001875N\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:47:03\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/20/E0OQR0BA0001875N.html\&quot;,\&quot;source\&quot;:\&quot;人民网-人民日报\&quot;,\&quot;postid\&quot;:\&quot;E0OQR0BA0001875N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;80后干部竟头发花白 官方:慎重起见 深入核查过了\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:11:29\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/20/E0OQR0BA0001875N.html\&quot;,\&quot;replyCount\&quot;:9464,\&quot;ltitle\&quot;:\&quot;80后干部竟头发花白 官方:慎重起见 深入核查过了\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;2018年11月15日，《中共楚雄州委组织部州管干部任前公示公告》楚组干任公示[2018]第6号发布后，部分网友认为李忠凯同志照片和年龄差距较大，置疑其年龄不真\&quot;,\&quot;boardid\&quot;:\&quot;news_guonei8_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/c7507747eece4e7f854757516fb77c1f.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 20:03:11\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:1072,\&quot;docid\&quot;:\&quot;E0ONETFK0001875P\&quot;,\&quot;skipID\&quot;:\&quot;S1542367712196\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 20:54:29\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/19/E0ONETFK0001875P.html\&quot;,\&quot;source\&quot;:\&quot;新京报\&quot;,\&quot;postid\&quot;:\&quot;E0ONETFK0001875P\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;歌手卢庚戌现身北大第一医院 向郑成月捐款2万元\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 20:54:29\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/19/E0ONETFK0001875P.html\&quot;,\&quot;specialID\&quot;:\&quot;S1542367712196\&quot;,\&quot;replyCount\&quot;:1121,\&quot;ltitle\&quot;:\&quot;歌手卢庚戌现身北大第一医院 向郑成月捐款2万元\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;新京报讯今日（16日）下午，歌手卢庚戌现身北京大学第一医院，探望郑成月，现场捐赠2万元。在经纪人的陪同下，水木年华卢庚戌穿着黑色羽绒服，来到北京大学第一医院。其\&quot;,\&quot;skipType\&quot;:\&quot;special\&quot;,\&quot;boardid\&quot;:\&quot;news_shehui7_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/2f85f2a879424c268781e8957bb60d6c.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 19:04:09\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;},{\&quot;votecount\&quot;:820,\&quot;docid\&quot;:\&quot;E0OML5M30001899N\&quot;,\&quot;skipID\&quot;:\&quot;S1539754809952\&quot;,\&quot;lmodify\&quot;:\&quot;2018-11-16 19:59:32\&quot;,\&quot;url_3w\&quot;:\&quot;http://news.163.com/18/1116/18/E0OML5M30001899N.html\&quot;,\&quot;source\&quot;:\&quot;环球时报-环球网\&quot;,\&quot;postid\&quot;:\&quot;E0OML5M30001899N\&quot;,\&quot;ua\&quot;:\&quot;NTES Android\&quot;,\&quot;priority\&quot;:121,\&quot;title\&quot;:\&quot;土耳其方面爆出卡舒吉案新证据 包括另一段录音\&quot;,\&quot;mtime\&quot;:\&quot;2018-11-16 19:29:01\&quot;,\&quot;url\&quot;:\&quot;http://3g.163.com/news/18/1116/18/E0OML5M30001899N.html\&quot;,\&quot;specialID\&quot;:\&quot;S1539754809952\&quot;,\&quot;replyCount\&quot;:891,\&quot;ltitle\&quot;:\&quot;土耳其方面爆出卡舒吉案新证据 包括另一段录音\&quot;,\&quot;subtitle\&quot;:\&quot;\&quot;,\&quot;digest\&quot;:\&quot;[环球网综合报道]据法新社11月16日报道，土耳其一家报纸周五报道说，土耳其有更多的证据反驳沙特关于卡舒吉遇害案的说法，其中包括有第二段录音。法新社援引土耳其《\&quot;,\&quot;skipType\&quot;:\&quot;special\&quot;,\&quot;boardid\&quot;:\&quot;news2_bbs\&quot;,\&quot;imgsrc\&quot;:\&quot;http://cms-bucket.nosdn.127.net/2018/11/16/37d68dad6b9f4531864f000eded9be39.png\&quot;,\&quot;ptime\&quot;:\&quot;2018-11-16 18:50:06\&quot;,\&quot;daynum\&quot;:\&quot;17851\&quot;}]}&quot;</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
+  <component name="WindowStateProjectService">
+    <state x="358" y="186" key="#PSD" timestamp="1591628757043">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="358" y="186" key="#PSD/0.0.1920.1040@0.0.1920.1040" timestamp="1591628757043" />
+    <state x="721" y="160" key="#com.intellij.ide.util.MemberChooser" timestamp="1591711793674">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="721" y="160" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1591711793674" />
+    <state x="540" y="266" key="AndroidCreateResourceFileDialog" timestamp="1591708852908">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="266" key="AndroidCreateResourceFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1591708852908" />
+    <state x="100" y="100" width="1720" height="840" key="DiffContextDialog" timestamp="1591712789954">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="100" y="100" width="1720" height="840" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1591712789954" />
+    <state x="690" y="216" key="FileChooserDialogImpl" timestamp="1590928052640">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="216" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1590928052640" />
+    <state width="1921" height="223" key="GridCell.Tab.0.bottom" timestamp="1591713244864">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="223" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1591713244864" />
+    <state width="1921" height="223" key="GridCell.Tab.0.center" timestamp="1591713244864">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="223" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1591713244864" />
+    <state width="1921" height="223" key="GridCell.Tab.0.left" timestamp="1591713244864">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="223" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1591713244864" />
+    <state width="1921" height="223" key="GridCell.Tab.0.right" timestamp="1591713244864">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="223" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1591713244864" />
+    <state width="1259" height="292" key="GridCell.Tab.1.bottom" timestamp="1591195014222">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1259" height="292" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1591195014222" />
+    <state width="1259" height="292" key="GridCell.Tab.1.center" timestamp="1591195014222">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1259" height="292" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1591195014222" />
+    <state width="1259" height="292" key="GridCell.Tab.1.left" timestamp="1591195014222">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1259" height="292" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1591195014222" />
+    <state width="1259" height="292" key="GridCell.Tab.1.right" timestamp="1591195014222">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1259" height="292" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1591195014222" />
+    <state x="495" y="144" key="NewModule_or_Project.wizard" timestamp="1591793999026">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="495" y="144" key="NewModule_or_Project.wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1591793999026" />
+    <state x="330" y="75" key="SettingsEditor" timestamp="1591793578912">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="330" y="75" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1591793578912" />
+    <state x="807" y="416" key="VCS.EditChangelistDialog" timestamp="1591017303622">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="807" y="416" key="VCS.EditChangelistDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1591017303622" />
+    <state x="528" y="176" width="1009" height="778" key="find.popup" timestamp="1591793366176">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="528" y="176" width="1009" height="778" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591793366176" />
+    <state width="375" height="245" key="javadoc.popup.new" timestamp="1591793359424">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="375" height="245" key="javadoc.popup.new/0.0.1920.1040@0.0.1920.1040" timestamp="1591793359424" />
+    <state x="231" y="200" width="1475" height="715" key="psd.add.library.dependency.panel.dimension" timestamp="1591628754242">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="231" y="200" width="1475" height="715" key="psd.add.library.dependency.panel.dimension/0.0.1920.1040@0.0.1920.1040" timestamp="1591628754242" />
+    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup" timestamp="1591713732791">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591713732791" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_battery_20.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_battery_50.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/item_delecte_shape.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_visibility_off.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_warning.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/block_items.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.ksoichiro/android-observablescrollview/1.6.0/e1d8541d72ed39d8bde519cb291ebb92ddfcffd3/android-observablescrollview-1.6.0-sources.jar!/com/github/ksoichiro/android/observablescrollview/ObservableWebView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_h5.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/AboutActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="30" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/widget/materialviewpager/MaterialViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="351" column="40" selection-start-line="351" selection-start-column="40" selection-end-line="351" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2ef4e6fd2ccbbd332c4d62fcf5e89077/material-1.0.0/jars/classes.jar!/com/google/android/material/navigation/NavigationView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-104">
-          <caret line="111" column="17" selection-start-line="111" selection-start-column="13" selection-end-line="111" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/color-night/navigation_menu_item_color.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="279" column="48" selection-start-line="279" selection-start-column="48" selection-end-line="279" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/entity/net/NewMainListData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="778" column="16" lean-forward="true" selection-start-line="778" selection-start-column="16" selection-end-line="778" selection-end-column="16" />
-          <folding>
-            <element signature="e#12693#12694#0" expanded="true" />
-            <element signature="e#12727#12728#0" expanded="true" />
-            <element signature="e#12781#12782#0" expanded="true" />
-            <element signature="e#12827#12828#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_card_linear_extra.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="95" column="48" lean-forward="true" selection-start-line="95" selection-start-column="48" selection-end-line="95" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/push/NotifyWork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/service/PushIntentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="40" selection-start-column="40" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/drawer_header.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/color/navigation_menu_item_color.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_back.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="56" lean-forward="true" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_about.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/danmu_bg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_video.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-en/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/adapter/ChannelPagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_items.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/detail_items.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/release/release/app-release.apk">
-      <provider selected="true" editor-type-id="apk-viewer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="128" column="3" lean-forward="true" selection-start-line="128" selection-start-column="3" selection-end-line="128" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/NewsDetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="170" column="92" lean-forward="true" selection-start-line="170" selection-start-column="92" selection-end-line="170" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/BaseDetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6125">
-          <caret line="288" column="11" selection-start-line="288" selection-start-column="11" selection-end-line="288" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SettingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7550">
-          <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-night/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="329" column="22" lean-forward="true" selection-start-line="329" selection-start-column="22" selection-end-line="329" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="131" column="26" selection-start-line="131" selection-start-column="17" selection-end-line="131" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/base/BaseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="146" column="24" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/content/res/Configuration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="689" column="28" selection-start-line="689" selection-start-column="28" selection-end-line="689" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/activity/SplashActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="130" column="72" selection-start-line="130" selection-start-column="72" selection-end-line="130" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/MyApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="97" column="52" selection-start-line="97" selection-start-column="52" selection-end-line="97" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.1.0/9865019bbd2d95e41dede3d8ebf964aa93f97766/appcompat-1.1.0-sources.jar!/androidx/appcompat/app/AppCompatDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2600">
-          <caret line="149" column="28" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="35" column="34" lean-forward="true" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/system/AppConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="75" column="76" selection-start-line="75" selection-start-column="76" selection-end-line="75" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>Invalid</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>app</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Gradle: android.arch.core:common:1.1.1@jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/androidnews/kiloproject/fragment/MainRvFragment.java</url>
+          <line>290</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

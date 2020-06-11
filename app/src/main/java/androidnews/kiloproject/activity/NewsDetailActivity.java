@@ -49,6 +49,7 @@ import java.util.List;
 import androidnews.kiloproject.R;
 import androidnews.kiloproject.entity.data.CacheNews;
 import androidnews.kiloproject.entity.net.NewsDetailData;
+import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.util.GlideUtils;
 import androidnews.kiloproject.widget.MyJzvdStd;
 import cn.jzvd.Jzvd;
@@ -75,7 +76,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
     private FrameLayout videoLayout;
 
     private int type = 0;
-    public static final int TPYE_AUDIO = 1024;
+    public static final int TYPE_AUDIO = 1024;
 
     private List<NewsDetailData.VideoBean> videoList = new ArrayList();
     private int videoIndex = 0;
@@ -393,20 +394,30 @@ public class NewsDetailActivity extends BaseDetailActivity {
                         "</html>";
                 if (currentData.getVideo() != null) {
                     for (NewsDetailData.VideoBean videoBean : currentData.getVideo()) {
-                        String mediaUrl = videoBean.getUrl_mp4();
+                        String mediaUrl = videoBean.getM3u8Hd_url();
                         if (TextUtils.isEmpty(mediaUrl)) {
-                            mediaUrl = videoBean.getUrl_mp4();
+                            mediaUrl = videoBean.getM3u8_url();
+                        }
+                        if (TextUtils.isEmpty(mediaUrl)) {
+                            mediaUrl = videoBean.getMp4Hd_url();
+                        }
+                        if (TextUtils.isEmpty(mediaUrl)) {
+                            mediaUrl = videoBean.getMp4_url();
                         }
 
                         if (mediaUrl.endsWith(".mp3")) {       //音频
                             html = html.replace(videoBean.getRef(),
                                     "<audio  src=\"" + mediaUrl +
                                             "\" controls=\"controls\" src=\"" + videoBean.getCover() + "\"></audio >");
-                            type = TPYE_AUDIO;
+                            type = TYPE_AUDIO;
                         } else {
-                            html = html.replace(videoBean.getRef(),
-                                    "<video src=\"" + mediaUrl +
-                                            "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"type=\"video/mp4\"></video>");
+                            if (AppConfig.isNoImage)
+                                html = html.replace(videoBean.getRef(),
+                                        "<img src=\"" + videoBean.getCover() + "\"");
+                            else
+                                html = html.replace(videoBean.getRef(),
+                                        "<video src=\"" + mediaUrl +
+                                                "\" controls=\"controls\" poster=\"" + videoBean.getCover() + "\"type=\"video/mp4\"></video>");
                             videoList.add(videoBean);
                         }
                     }
@@ -634,7 +645,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (type != TPYE_AUDIO)
+        if (type != TYPE_AUDIO)
             webView.onPause();
         if (videoList.size() > 0)
             Jzvd.releaseAllVideos();
@@ -643,7 +654,7 @@ public class NewsDetailActivity extends BaseDetailActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (type != TPYE_AUDIO)
+        if (type != TYPE_AUDIO)
             webView.onResume();
     }
 
@@ -653,43 +664,5 @@ public class NewsDetailActivity extends BaseDetailActivity {
             return;
         }
         super.onBackPressed();
-    }
-
-    @Override
-    public void setRequestedOrientation(int requestedOrientation) {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
-            LogUtils.d("avoid calling setRequestedOrientation when Oreo.");
-            return;
-        }
-        super.setRequestedOrientation(requestedOrientation);
-    }
-
-    private boolean isTranslucentOrFloating(){
-        boolean isTranslucentOrFloating = false;
-        try {
-            int [] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
-            final TypedArray ta = obtainStyledAttributes(styleableRes);
-            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
-            m.setAccessible(true);
-            isTranslucentOrFloating = (boolean)m.invoke(null, ta);
-            m.setAccessible(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isTranslucentOrFloating;
-    }
-
-    private boolean fixOrientation(){
-        try {
-            Field field = Activity.class.getDeclaredField("mActivityInfo");
-            field.setAccessible(true);
-            ActivityInfo o = (ActivityInfo)field.get(this);
-            o.screenOrientation = -1;
-            field.setAccessible(false);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

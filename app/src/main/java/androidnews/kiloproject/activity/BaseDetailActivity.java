@@ -2,6 +2,7 @@ package androidnews.kiloproject.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -39,6 +40,9 @@ import androidnews.kiloproject.system.AppConfig;
 import androidnews.kiloproject.system.base.BaseActivity;
 import androidnews.kiloproject.util.FileCompatUtils;
 
+import static androidnews.kiloproject.system.AppConfig.isAutoNight;
+import static androidnews.kiloproject.system.AppConfig.isNightMode;
+
 
 public class BaseDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
 
@@ -53,13 +57,27 @@ public class BaseDetailActivity extends BaseActivity implements ObservableScroll
         setContentView(R.layout.activity_detail);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         webView = (ObservableWebView) findViewById(R.id.web_news);
+
         webView.setBackgroundColor(0);
         webView.getBackground().setAlpha(0);
-//        if (ScreenUtils.getScreenWidth() * 2 > ScreenUtils.getScreenHeight())
         webView.setScrollViewCallbacks(this);
-//        webView.setDrawingCacheEnabled(true);
-//        webView.buildDrawingCache();
-//        webView.buildLayer();
+
+        if (isAutoNight) {
+            int currentNightMode = getResources().getConfiguration().uiMode
+                    & Configuration.UI_MODE_NIGHT_MASK;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    // Night mode is not active, we're in day time
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    // We don't know what mode we're in, assume notnight
+                    isNightMode = false;
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    // Night mode is active, we're at night!
+                    isNightMode = true;
+                    break;
+            }
+        }
 
         initListener();
 
