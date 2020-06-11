@@ -95,7 +95,8 @@ public class SplashActivity extends AppCompatActivity {
                     public void accept(Boolean aBoolean) throws Exception {
                         new WebView(SplashActivity.this);
                         applyConfig();
-                        startActivity(new Intent(SplashActivity.this, NewsMainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//                        startActivity(new Intent(SplashActivity.this, NewsMainActivity.class));
                         finish();
                     }
                 });
